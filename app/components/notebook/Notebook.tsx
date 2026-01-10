@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from 'react'
 import Page from './Page'
 import Cover from './Cover'
+import useNotebookPagination from '../useNotebookPagination'
 
 type Sheet =
   | { type: 'cover'; side: 'front' | 'back' }
@@ -31,34 +32,11 @@ const sheets: Sheet[] = [
 ]
 
 const Notebook = () => {
-  const [leftIndex, setLeftIndex] = useState(0)
-  const [pagesPerView, setPagesPerView] = useState(1)
-
-  useEffect(() => {
-    const update = () => {
-      setPagesPerView(window.innerWidth >= 768 ? 2 : 1)
-    }
-
-    update()
-    window.addEventListener('resize', update)
-    return () => window.removeEventListener('resize', update)
-  }, [])
-
-  const maxLeftIndex = Math.max(0, sheets.length - pagesPerView)
-  const safeLeftIndex = Math.min(leftIndex, maxLeftIndex)
-
-  const visibleSheets = sheets.slice(
-    safeLeftIndex,
-    safeLeftIndex + pagesPerView
-  )
-
+  const { visibleItems, prev, next } = useNotebookPagination(sheets)
   return (
     <div>
-      <p>Left index: {safeLeftIndex}</p>
-      <p>Pages per view: {pagesPerView}</p>
-
       <section className="spread">
-        {visibleSheets.map((sheet, i) => {
+        {visibleItems.map((sheet, i) => {
           if (sheet.type === 'cover') {
             return <Cover key={i} side={sheet.side} />
           }
@@ -71,21 +49,16 @@ const Notebook = () => {
         })}
       </section>
 
-      <button
-        onClick={() => setLeftIndex((i) => Math.max(0, i - pagesPerView))}
-      >
-        Prev
-      </button>
+      <button onClick={prev}>Prev</button>
 
-      <button
-        onClick={() =>
-          setLeftIndex((i) => Math.min(i + pagesPerView, maxLeftIndex))
-        }
-      >
-        Next
-      </button>
+      <button onClick={next}>Next</button>
     </div>
   )
 }
 
 export default Notebook
+
+/*
+TODO: Basic styling for notebook and pages. 
+TODO: Add pages dynamically. 
+*/
