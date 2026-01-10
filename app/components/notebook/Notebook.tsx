@@ -33,25 +33,31 @@ const sheets: Sheet[] = [
 
 const Notebook = () => {
   const { visibleItems, prev, next } = useNotebookPagination(sheets)
+
   return (
-    <div>
-      <section className="spread">
-        {visibleItems.map((sheet, i) => {
-          if (sheet.type === 'cover') {
-            return <Cover key={i} side={sheet.side} />
-          }
+    <div className="p-4 flex flex-col items-center w-full m-4">
+      {/* NOTEBOOK BODY */}
+      <div className="border-2 border-blue-500 w-full flex justify-center h-[50vh] min-h-[300px] max-h-[600px]">
+        <section className="text-center flex justify-center items-center w-full h-full">
+          {visibleItems.map((sheet, i) => (
+            <div
+              key={i}
+              className="flex-1 flex justify-center items-stretch p-2 border-2 "
+            >
+              {sheet.type === 'cover' && <Cover side={sheet.side} />}
+              {sheet.type === 'page' && (
+                <Page title={sheet.title} content={sheet.content} />
+              )}
+              {sheet.type === 'blank' && <div className="blank-page flex-1" />}
+            </div>
+          ))}
+        </section>
+      </div>
 
-          if (sheet.type === 'page') {
-            return <Page key={i} title={sheet.title} content={sheet.content} />
-          }
-
-          return <div key={i} className="blank-page" />
-        })}
-      </section>
-
-      <button onClick={prev}>Prev</button>
-
-      <button onClick={next}>Next</button>
+      <div className="mt-4 flex gap-4">
+        <button onClick={prev}>Prev</button>
+        <button onClick={next}>Next</button>
+      </div>
     </div>
   )
 }
