@@ -1,45 +1,98 @@
 import React from 'react'
+import Image from 'next/image'
 
-const About = () => {
-  return (
-    <section className="space-y-4">
-      <h2 className="text-xl font-semibold">About</h2>
+export const aboutBlocks: React.ReactNode[] = [
+  // HEADER
+  <section key="header1" className="flex items-center gap-4 mb-6">
+    <div>
+      <h1> TESTING MY ABOUT PAGE</h1>
+    </div>
+  </section>,
+  // HEADER
+  <section key="header2" className="flex items-center gap-4 mb-6">
+    <div>
+      <h1> TESTING MY ABOUT PAGE</h1>
+    </div>
+  </section>,
+  // HEADER
+  <section key="header3" className="flex items-center gap-4 mb-6">
+    <div>
+      <h1> TESTING MY ABOUT PAGE</h1>
+      <h1> TESTING MY ABOUT PAGE</h1>
+      <h1> TESTING MY ABOUT PAGE</h1>
+      <h1> TESTING MY ABOUT PAGE</h1>
+      <h1> TESTING MY ABOUT PAGE</h1>
+      <h1> TESTING MY ABOUT PAGE</h1>
+    </div>
+  </section>,
+  // HEADER
+  <section key="header4" className="flex items-center gap-4 mb-6">
+    <div>
+      <h1> TESTING MY ABOUT PAGE</h1>
+    </div>
+  </section>,
+  // HEADER
+  <section key="header5" className="flex items-center gap-4 mb-6">
+    <div>
+      <h1> TESTING MY ABOUT PAGE</h1>
+    </div>
+  </section>,
+  // HEADER
+  <section key="header6" className="flex items-center gap-4 mb-6">
+    <div>
+      <h1> TESTING MY ABOUT PAGE</h1>
+    </div>
+  </section>,
+  // HEADER
+  <section key="header7" className="flex items-center gap-4 mb-6">
+    <div>
+      <h1> TESTING MY ABOUT PAGE</h1>
+    </div>
+  </section>,
+  // HEADER
+  <section key="header8" className="flex items-center gap-4 mb-6">
+    <div>
+      <h1> TESTING MY ABOUT PAGE</h1>
+    </div>
+  </section>,
+  // HEADER
+  <section key="header9" className="flex items-center gap-4 mb-6">
+    <div>
+      <h1> TESTING MY ABOUT PAGE</h1>
+    </div>
+  </section>,
+  // HEADER
+  <section key="header10" className="flex items-center gap-4 mb-6">
+    <div>
+      <h1> TESTING MY ABOUT PAGE</h1>
+    </div>
+  </section>,
+  // HEADER
+  <section key="header11" className="flex items-center gap-4 mb-6">
+    <div>
+      <h1> TESTING MY ABOUT PAGE</h1>
+    </div>
+  </section>,
+  // HEADER
+  <section key="header12" className="flex items-center gap-4 mb-6">
+    <div>
+      <h1> TESTING MY ABOUT PAGE</h1>
+    </div>
+  </section>,
+  // HEADER
+  <section key="header13" className="flex items-center gap-4 mb-6">
+    <div>
+      <h1> TESTING MY ABOUT PAGE</h1>
+    </div>
+  </section>,
+  // HEADER
+  <section key="header14" className="flex items-center gap-4 mb-6">
+    <div>
+      <h1> TESTING MY ABOUT PAGE</h1>
+    </div>
+  </section>,
+]
 
-      <p>
-        I am a web developer focused on clean UI, predictable behavior, and not
-        reinventing wheels that already work.
-      </p>
-
-      <p>
-        My work leans toward front-end architecture, layout systems, and fixing
-        things that mysteriously broke overnight.
-      </p>
-
-      <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim, rem! Rem
-        debitis soluta repellendus quam, ullam eum non quo officiis atque at ea,
-        in cum impedit incidunt sapiente, magnam facilis.
-      </p>
-
-      <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim, rem! Rem
-        debitis soluta repellendus quam, ullam eum non quo officiis atque at ea,
-        in cum impedit incidunt sapiente, magnam facilis.
-      </p>
-
-      <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim, rem! Rem
-        debitis soluta repellendus quam, ullam eum non quo officiis atque at ea,
-        in cum impedit incidunt sapiente, magnam facilis.
-      </p>
-
-      <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim, rem! Rem
-        debitis soluta repellendus quam, ullam eum non quo officiis atque at ea,
-        in cum impedit incidunt sapiente, magnam facilis.
-      </p>
-    </section>
-  )
+export default function About() {
+  return <div className="w-full h-full text-left text-sm">{aboutBlocks}</div>
 }
-
-export default About
