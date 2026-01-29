@@ -32,6 +32,8 @@ export const aboutBlocks: React.ReactNode[] = [
       <h1> TESTING MY ABOUT PAGE</h1>
       <h1> TESTING MY ABOUT PAGE</h1>
       <h1> TESTING MY ABOUT PAGE</h1>
+      <h1> TESTING MY ABOUT PAGE</h1>
+      <h1> TESTING MY ABOUT PAGE</h1>
     </div>
   </section>,
   // HEADER
@@ -49,7 +51,69 @@ export const aboutBlocks: React.ReactNode[] = [
     className="flex items-center gap-4 mb-6 border-2 border-green-700"
   >
     <div>
-      <h1> TESTING MY ABOUT PAGE</h1>
+      <h1>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet maiores
+        neque, quam porro, eaque, quos adipisci veritatis cupiditate blanditiis
+        error consequatur dolores exercitationem nobis accusantium autem
+        consequuntur velit expedita quaerat? Lorem ipsum dolor sit amet,
+        consectetur adipisicing elit. Laborum placeat adipisci tenetur, quidem
+        repudiandae ab voluptas sunt. Delectus, totam, aliquam consequuntur eos
+        voluptates magni, fugit quis iusto consequatur voluptate earum.
+      </h1>
+      <h1>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet maiores
+        neque, quam porro, eaque, quos adipisci veritatis cupiditate blanditiis
+        error consequatur dolores exercitationem nobis accusantium autem
+        consequuntur velit expedita quaerat? Lorem ipsum dolor sit amet,
+        consectetur adipisicing elit. Laborum placeat adipisci tenetur, quidem
+        repudiandae ab voluptas sunt. Delectus, totam, aliquam consequuntur eos
+        voluptates magni, fugit quis iusto consequatur voluptate earum.
+      </h1>
+      <h1>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet maiores
+        neque, quam porro, eaque, quos adipisci veritatis cupiditate blanditiis
+        error consequatur dolores exercitationem nobis accusantium autem
+        consequuntur velit expedita quaerat? Lorem ipsum dolor sit amet,
+        consectetur adipisicing elit. Laborum placeat adipisci tenetur, quidem
+        repudiandae ab voluptas sunt. Delectus, totam, aliquam consequuntur eos
+        voluptates magni, fugit quis iusto consequatur voluptate earum.
+      </h1>
+      <h1>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet maiores
+        neque, quam porro, eaque, quos adipisci veritatis cupiditate blanditiis
+        error consequatur dolores exercitationem nobis accusantium autem
+        consequuntur velit expedita quaerat? Lorem ipsum dolor sit amet,
+        consectetur adipisicing elit. Laborum placeat adipisci tenetur, quidem
+        repudiandae ab voluptas sunt. Delectus, totam, aliquam consequuntur eos
+        voluptates magni, fugit quis iusto consequatur voluptate earum.
+      </h1>
+      <h1>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet maiores
+        neque, quam porro, eaque, quos adipisci veritatis cupiditate blanditiis
+        error consequatur dolores exercitationem nobis accusantium autem
+        consequuntur velit expedita quaerat? Lorem ipsum dolor sit amet,
+        consectetur adipisicing elit. Laborum placeat adipisci tenetur, quidem
+        repudiandae ab voluptas sunt. Delectus, totam, aliquam consequuntur eos
+        voluptates magni, fugit quis iusto consequatur voluptate earum.
+      </h1>
+      <h1>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet maiores
+        neque, quam porro, eaque, quos adipisci veritatis cupiditate blanditiis
+        error consequatur dolores exercitationem nobis accusantium autem
+        consequuntur velit expedita quaerat? Lorem ipsum dolor sit amet,
+        consectetur adipisicing elit. Laborum placeat adipisci tenetur, quidem
+        repudiandae ab voluptas sunt. Delectus, totam, aliquam consequuntur eos
+        voluptates magni, fugit quis iusto consequatur voluptate earum.
+      </h1>
+      <h1>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet maiores
+        neque, quam porro, eaque, quos adipisci veritatis cupiditate blanditiis
+        error consequatur dolores exercitationem nobis accusantium autem
+        consequuntur velit expedita quaerat? Lorem ipsum dolor sit amet,
+        consectetur adipisicing elit. Laborum placeat adipisci tenetur, quidem
+        repudiandae ab voluptas sunt. Delectus, totam, aliquam consequuntur eos
+        voluptates magni, fugit quis iusto consequatur voluptate earum.
+      </h1>
     </div>
   </section>,
   // HEADER
@@ -121,7 +185,15 @@ export const aboutBlocks: React.ReactNode[] = [
     className="flex items-center gap-4 mb-6 border-2 border-green-700"
   >
     <div>
-      <h1> TESTING MY ABOUT PAGE</h1>
+      <h1>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet maiores
+        neque, quam porro, eaque, quos adipisci veritatis cupiditate blanditiis
+        error consequatur dolores exercitationem nobis accusantium autem
+        consequuntur velit expedita quaerat? Lorem ipsum dolor sit amet,
+        consectetur adipisicing elit. Laborum placeat adipisci tenetur, quidem
+        repudiandae ab voluptas sunt. Delectus, totam, aliquam consequuntur eos
+        voluptates magni, fugit quis iusto consequatur voluptate earum.
+      </h1>
     </div>
   </section>,
   // HEADER
