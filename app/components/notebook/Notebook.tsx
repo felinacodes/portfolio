@@ -23,62 +23,27 @@ type Section = {
   id: string
   render: () => React.ReactNode
 }
-
-const contentSections = {
-  intro: IntroBlocks,
-  about: aboutBlocks,
-  educationBlocks: EducationBlocks,
-  skills: SkillsBlocks,
-  projects: ProjectsBlocks,
-  contact: ContactBlocks,
-  leaveSomething: LeaveSomethingBlocks,
+type SectionConfig = {
+  key: string
+  blocks: React.ReactNode[]
 }
 
-const introPages = contentSections.intro
-const aboutPages = contentSections.about
-const educationPages = contentSections.educationBlocks
-const skillsPages = contentSections.skills
-const projectPages = contentSections.projects
-const contactPages = contentSections.contact
-const leaveSomethingPages = contentSections.leaveSomething
-
-const sections: Section[] = [
-  ...introPages.map((p, i) => ({
-    id: `intro-${i}`,
-    // render: () => <div className="">{p}</div>,
-    render: () => p,
-  })),
-  ...aboutPages.map((p, i) => ({
-    id: `about-${i}`,
-    // render: () => <div className="">{p}</div>,
-    render: () => p,
-  })),
-  ...educationPages.map((p, i) => ({
-    id: `education-${i}`,
-    // render: () => <div className="">{p}</div>,
-    render: () => p,
-  })),
-  ...skillsPages.map((p, i) => ({
-    id: `skills-${i}`,
-    // render: () => <div className="">{p}</div>,
-    render: () => p,
-  })),
-  ...projectPages.map((p, i) => ({
-    id: `projects-${i}`,
-    // render: () => <div className="">{p}</div>,
-    render: () => p,
-  })),
-  ...contactPages.map((p, i) => ({
-    id: `contact-${i}`,
-    // render: () => <div className="">{p}</div>,
-    render: () => p,
-  })),
-  ...leaveSomethingPages.map((p, i) => ({
-    id: `leaveSomething-${i}`,
-    // render: () => <div className="">{p}</div>,
-    render: () => p,
-  })),
+const SECTION_CONFIG: SectionConfig[] = [
+  { key: 'intro', blocks: IntroBlocks },
+  { key: 'about', blocks: aboutBlocks },
+  { key: 'education', blocks: EducationBlocks },
+  { key: 'skills', blocks: SkillsBlocks },
+  { key: 'projects', blocks: ProjectsBlocks },
+  { key: 'contact', blocks: ContactBlocks },
+  { key: 'leaveSomething', blocks: LeaveSomethingBlocks },
 ]
+
+const sections: Section[] = SECTION_CONFIG.flatMap(({ key, blocks }) =>
+  blocks.map((block, index) => ({
+    id: `${key}-${index}`,
+    render: () => block,
+  })),
+)
 
 const sheets: Sheet[] = [
   { type: 'cover', side: 'front' },
@@ -92,7 +57,6 @@ const sheets: Sheet[] = [
 ]
 
 const Notebook = () => {
-  // Paginate after heights + pageHeight are available
   const outerRef = useRef<HTMLDivElement | null>(null)
   const [height, setHeight] = useState<number>(0)
   const [measuredHeights, setMeasuredHeights] = useState<
@@ -164,7 +128,6 @@ const Notebook = () => {
 export default Notebook
 
 /* WEEK 2 TO DO 
-1. Create the rest of the sections placeholders.
 2. Add bookmarks. 
 3. Fix basic notebook layout.
 */
