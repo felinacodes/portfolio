@@ -4,8 +4,13 @@ import React, { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import Page from './Page'
 import Cover from './Cover'
 import useNotebookPagination from '../useNotebookPagination'
-import { bioBlocks } from './pages/Bio'
 import { aboutBlocks } from './pages/About'
+import { IntroBlocks } from './pages/Intro'
+import { EducationBlocks } from './pages/Education'
+import { SkillsBlocks } from './pages/Skills'
+import { ProjectsBlocks } from './pages/Projects'
+import { ContactBlocks } from './pages/Contact'
+import { LeaveSomethingBlocks } from './pages/LeaveSomething'
 import MeasureBlocks from './MeasureBlocks'
 // import useMeasure from '../useMeasure'
 
@@ -20,21 +25,58 @@ type Section = {
 }
 
 const contentSections = {
-  bio: bioBlocks,
+  intro: IntroBlocks,
   about: aboutBlocks,
+  educationBlocks: EducationBlocks,
+  skills: SkillsBlocks,
+  projects: ProjectsBlocks,
+  contact: ContactBlocks,
+  leaveSomething: LeaveSomethingBlocks,
 }
 
-const bioPages = contentSections.bio
+const introPages = contentSections.intro
 const aboutPages = contentSections.about
+const educationPages = contentSections.educationBlocks
+const skillsPages = contentSections.skills
+const projectPages = contentSections.projects
+const contactPages = contentSections.contact
+const leaveSomethingPages = contentSections.leaveSomething
 
 const sections: Section[] = [
-  ...bioPages.map((p, i) => ({
-    id: `bio-${i}`,
-    render: () => <div className="">{p}</div>,
+  ...introPages.map((p, i) => ({
+    id: `intro-${i}`,
+    // render: () => <div className="">{p}</div>,
+    render: () => p,
   })),
   ...aboutPages.map((p, i) => ({
     id: `about-${i}`,
-    render: () => <div className="">{p}</div>,
+    // render: () => <div className="">{p}</div>,
+    render: () => p,
+  })),
+  ...educationPages.map((p, i) => ({
+    id: `education-${i}`,
+    // render: () => <div className="">{p}</div>,
+    render: () => p,
+  })),
+  ...skillsPages.map((p, i) => ({
+    id: `skills-${i}`,
+    // render: () => <div className="">{p}</div>,
+    render: () => p,
+  })),
+  ...projectPages.map((p, i) => ({
+    id: `projects-${i}`,
+    // render: () => <div className="">{p}</div>,
+    render: () => p,
+  })),
+  ...contactPages.map((p, i) => ({
+    id: `contact-${i}`,
+    // render: () => <div className="">{p}</div>,
+    render: () => p,
+  })),
+  ...leaveSomethingPages.map((p, i) => ({
+    id: `leaveSomething-${i}`,
+    // render: () => <div className="">{p}</div>,
+    render: () => p,
   })),
 ]
 
