@@ -1,8 +1,15 @@
-@import "tailwindcss";
+@import 'tailwindcss';
+
+html,
+body,
+:root {
+  height: 100%;
+}
 
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  height: 100%;
 }
 
 @theme inline {

@@ -14,22 +14,26 @@ export default function MeasureBlocks({ blocks, width, onMeasured }: Props) {
       (el) => el?.getBoundingClientRect().height || 0,
     )
     onMeasured?.(heights)
+    console.log('measured heights', heights, 'width:', width)
   }, [blocks, onMeasured, width])
 
   return (
-    <div className="absolute -left-[9999px] top-0" style={{ width }}>
-      <Page>
-        {blocks.map((block, i) => (
-          <div
-            key={i}
-            ref={(el) => {
-              if (el) refs.current[i] = el
-            }}
-          >
-            {block}
-          </div>
-        ))}
-      </Page>
+    <div
+      className="absolute -left-[9999px] top-0"
+      style={{ width: width || 'auto' }}
+    >
+      {/* <Page> */}
+      {blocks.map((block, i) => (
+        <div
+          key={i}
+          ref={(el) => {
+            if (el) refs.current[i] = el
+          }}
+        >
+          {block}
+        </div>
+      ))}
+      {/* </Page> */}
     </div>
   )
 }
