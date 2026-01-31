@@ -11,10 +11,11 @@ import { SkillsBlocks } from './pages/Skills'
 import { ProjectsBlocks } from './pages/Projects'
 import { ContactBlocks } from './pages/Contact'
 import { LeaveSomethingBlocks } from './pages/LeaveSomething'
+import Bookmarks from './Bookmarks'
 import MeasureBlocks from './MeasureBlocks'
 // import useMeasure from '../useMeasure'
 
-type Sheet =
+export type Sheet =
   | { type: 'cover'; side: 'front' | 'back' }
   | { type: 'page'; id: string; render: () => React.ReactNode }
   | { type: 'blank' }
@@ -63,8 +64,29 @@ const Notebook = () => {
     Record<string, number[]>
   >({})
 
-  const { pagesPerView, visibleItems, prev, next } =
+  const { pagesPerView, visibleItems, prev, next, goToIndex } =
     useNotebookPagination(sheets)
+
+  useEffect(() => {
+    const handleHash = () => {
+      const hashId = window.location.hash.slice(1) // remove the #
+
+      if (!hashId) return
+
+      const pageSheet = sheets.find(
+        (sheet): sheet is Extract<Sheet, { type: 'page' }> =>
+          sheet.type === 'page' && sheet.id.startsWith(hashId),
+      )
+
+      if (pageSheet) {
+        goToIndex(pageSheet.id)
+      }
+    }
+
+    handleHash()
+    window.addEventListener('hashchange', handleHash)
+    return () => window.removeEventListener('hashchange', handleHash)
+  }, [goToIndex])
 
   useEffect(() => {
     const getHeight = () => {
@@ -102,7 +124,10 @@ const Notebook = () => {
               <div className="w-full h-full">
                 {sheet.type === 'cover' && <Cover side={sheet.side} />}
                 {sheet.type === 'page' && (
-                  <div className="w-full  h-full flex-1  flex border-10 border-yellow-500">
+                  <div
+                    id={sheet.id}
+                    className="w-full  h-full flex-1  flex border-10 border-yellow-500"
+                  >
                     <Page ref={outerRef}>{sheet.render()}</Page>
                   </div>
                 )}
@@ -121,13 +146,18 @@ const Notebook = () => {
         <button onClick={prev}>Prev</button>
         <button onClick={next}>Next</button>
       </div>
+      <div>
+        <Bookmarks
+          sectionIds={sections.map((s) => s.id)}
+          goToIndex={goToIndex}
+        />
+      </div>
     </div>
   )
 }
 
 export default Notebook
 
-/* WEEK 2 TO DO 
-2. Add bookmarks. 
+/* WEEK 2 TO DO  
 3. Fix basic notebook layout.
 */

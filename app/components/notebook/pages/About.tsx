@@ -3,6 +3,7 @@ import Image from 'next/image'
 
 export const aboutBlocks: React.ReactNode[] = [
   <section
+    id="about"
     key="about-me"
     className="gap-4 flex flex-col p-4 m-2 border-2 border-green-200 items-center justify-center"
   >
@@ -22,7 +23,7 @@ export const aboutBlocks: React.ReactNode[] = [
       🙃)
     </p>
   </section>,
-  <p key="focus-area">
+  <p id="test" key="focus-area">
     I currently focus on Front-end Devolpment and specifically highly
     interactive and responsive user interfaces using React and Next.js. I care
     about clean code, maintainability, and creating user experiences that are
