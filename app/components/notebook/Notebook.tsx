@@ -24,6 +24,7 @@ type Section = {
   id: string
   render: () => React.ReactNode
 }
+
 type SectionConfig = {
   key: string
   blocks: React.ReactNode[]
@@ -157,7 +158,3 @@ const Notebook = () => {
 }
 
 export default Notebook
-
-/* WEEK 2 TO DO  
-3. Fix basic notebook layout.
-*/

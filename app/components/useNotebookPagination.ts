@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo } from 'react'
+import React, { useEffect, useState, useMemo, useCallback } from 'react'
 import type { Sheet } from './notebook/Notebook'
 
 export function useNotebookPagination(items: Sheet[]) {
@@ -30,14 +30,25 @@ export function useNotebookPagination(items: Sheet[]) {
     [items, safeLeftIndex, pagesPerView],
   )
 
-  const prev = () => setLeftIndex((i) => Math.max(0, i - pagesPerView))
-  const next = () =>
-    setLeftIndex((i) => Math.min(i + pagesPerView, maxLeftIndex))
-
-  const goToIndex = (id: string) => {
-    const index = items.findIndex((i) => i.type === 'page' && i.id === id)
-    if (index !== -1) setLeftIndex(index)
+  const prev = () => {
+    setLeftIndex((i) => Math.max(0, i - pagesPerView))
   }
+  const next = () => {
+    setLeftIndex((i) => Math.min(i + pagesPerView, maxLeftIndex))
+  }
+
+  // const goToIndex = (id: string) => {
+  //   const index = items.findIndex((i) => i.type === 'page' && i.id === id)
+  //   if (index !== -1) setLeftIndex(index)
+  // }
+
+  const goToIndex = useCallback(
+    (id: string) => {
+      const index = items.findIndex((i) => i.type === 'page' && i.id === id)
+      if (index !== -1) setLeftIndex(index)
+    },
+    [items],
+  )
 
   return {
     pagesPerView,
