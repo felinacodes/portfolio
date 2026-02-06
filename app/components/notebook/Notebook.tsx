@@ -106,7 +106,7 @@ const Notebook = () => {
       clearTimeout(timeout)
       window.removeEventListener('resize', update)
     }
-  }, [isOpen, isTwoPages])
+  }, [isOpen, isTwoPages, pagesPerView]) // Keep pagesPerview as dependency fixes bugs when changing between sizes and using bookmarks.
 
   const { visibleItems, prev, next, goToIndex } = useNotebookPagination(
     sheets,
@@ -119,12 +119,6 @@ const Notebook = () => {
 
   useEffect(() => {
     const handleHash = () => {
-      console.log('handleHash effect')
-
-      // if (ignoreNextHashRef.current) {
-      //   ignoreNextHashRef.current = false
-      //   return
-      // }
       const hashId = window.location.hash.slice(1) // remove the #
 
       if (!hashId) return

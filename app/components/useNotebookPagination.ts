@@ -17,9 +17,9 @@ export function useNotebookPagination(
     const slice = items.slice(safeLeftIndex, safeLeftIndex + pagesPerView)
     // console.log(`slice: ${slice}`)
     // console.table(slice)
-    console.log(
-      `from slice: safeLeftIndex: ${safeLeftIndex} pagesPerView: ${pagesPerView}`,
-    )
+    // console.log(
+    //   `from slice: safeLeftIndex: ${safeLeftIndex} pagesPerView: ${pagesPerView}`,
+    // )
 
     return slice
   }, [items, safeLeftIndex, pagesPerView])
@@ -45,21 +45,21 @@ export function useNotebookPagination(
   // console.log({ items })  //ASK HERE
 
   const prev = () => {
-    console.log(items)
+    // console.log(items)
 
     const newIndex = Math.max(0, leftIndex - pagesPerView)
     setLeftIndex(newIndex)
     if (newIndex === 0) setIsOpen(false)
     else setIsOpen(true)
 
-    console.log(
-      `from: prev : leftindex: ${leftIndex} maxLeftIndex: ${maxLeftIndex} isOpen: ${isOpen} newIndex: ${newIndex}`,
-    )
+    // console.log(
+    //   `from: prev : leftindex: ${leftIndex} maxLeftIndex: ${maxLeftIndex} isOpen: ${isOpen} newIndex: ${newIndex}`,
+    // )
   }
 
   const next = () => {
     if (isSetTwoPages && leftIndex - 1 === maxLeftIndex) return //BUG FIX - where pressing 2 times next and then prev returns to two plank pages
-    console.log(items)
+    // console.log(items)
 
     const newIndex = Math.min(leftIndex + pagesPerView, maxLeftIndex)
     setLeftIndex(newIndex)
@@ -67,9 +67,9 @@ export function useNotebookPagination(
     else setIsOpen(true)
     // console.log(isOpen)
 
-    console.log(
-      `from: next : leftindex: ${leftIndex} maxLeftIndex: ${maxLeftIndex} isOpen: ${isOpen} newIndex: ${newIndex}`,
-    )
+    // console.log(
+    //   `from: next : leftindex: ${leftIndex} maxLeftIndex: ${maxLeftIndex} isOpen: ${isOpen} newIndex: ${newIndex}`,
+    // )
   }
 
   // const goToIndex = (id: string) => {
@@ -80,12 +80,19 @@ export function useNotebookPagination(
   const goToIndex = useCallback(
     (id: string) => {
       setIsOpen(true)
-      console.log('useCallback')
-      const index = items.findIndex((i) => i.type === 'page' && i.id === id)
-
-      if (index !== -1) setLeftIndex(index)
+      console.log(`goToIndex: ${id}`)
+      const index = allItems.findIndex((i) => i.type === 'page' && i.id === id)
+      console.log(`index: ${index}`)
+      // console.log(`leftIndex: ${leftIndex}`)
+      // console.log(items)
+      if (index !== -1) {
+        console.log(`in if`)
+        setLeftIndex(index)
+      }
+      console.log(items)
+      console.log(allItems)
     },
-    [items, setIsOpen],
+    [allItems, items, setIsOpen],
   )
 
   return {

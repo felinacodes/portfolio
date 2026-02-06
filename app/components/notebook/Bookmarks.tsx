@@ -8,6 +8,7 @@ interface BookmarkProps {
 
 const Bookmarks = ({ sectionIds, goToIndex, setIsOpen }: BookmarkProps) => {
   function handleClick(id: string) {
+    // console.log(`handleClick: ${id}`)
     // ignoreNe
     goToIndex(id)
     // setIsOpen(true)

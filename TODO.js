@@ -1,7 +1,6 @@
 /* WEEK 3 TO DO
 
-
-1. Create Cover logic
+1. Handle hashes 
 2. Create Cover layout
 3. Create Page numbering
 4. Create basic page layout.
