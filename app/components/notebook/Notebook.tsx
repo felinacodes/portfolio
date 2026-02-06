@@ -16,7 +16,7 @@ import MeasureBlocks from './MeasureBlocks'
 // import useMeasure from '../useMeasure'
 
 export type Sheet =
-  | { type: 'cover'; side: 'front' | 'back' }
+  | { type: 'cover'; side: 'front' | 'back'; face: 'inside' | 'outside' }
   | { type: 'page'; id: string; render: () => React.ReactNode }
   | { type: 'blank' }
 
@@ -40,6 +40,12 @@ const SECTION_CONFIG: SectionConfig[] = [
   { key: 'leaveSomething', blocks: LeaveSomethingBlocks },
 ]
 
+// const sections: Section[] = SECTION_CONFIG.flatMap(({ key, blocks }) =>
+//   blocks.map((block, index) => ({
+//     id: `${key}-${index}`,
+//     render: () => block,
+//   })),
+// )
 const sections: Section[] = SECTION_CONFIG.flatMap(({ key, blocks }) =>
   blocks.map((block, index) => ({
     id: `${key}-${index}`,
@@ -48,14 +54,18 @@ const sections: Section[] = SECTION_CONFIG.flatMap(({ key, blocks }) =>
 )
 
 const sheets: Sheet[] = [
-  { type: 'cover', side: 'front' },
+  { type: 'cover', side: 'front', face: 'outside' },
+  { type: 'cover', side: 'front', face: 'inside' },
   ...sections.map((s) => ({
     type: 'page' as const,
     id: s.id,
     render: s.render,
   })),
   { type: 'blank' },
-  { type: 'cover', side: 'back' },
+  { type: 'blank' },
+  // { type: 'blank' },
+  { type: 'cover', side: 'back', face: 'inside' },
+  { type: 'cover', side: 'back', face: 'outside' },
 ]
 
 const Notebook = () => {
@@ -64,12 +74,57 @@ const Notebook = () => {
   const [measuredHeights, setMeasuredHeights] = useState<
     Record<string, number[]>
   >({})
+  const [isOpen, setIsOpen] = useState(false)
+  const [pagesPerView, setPagesPerView] = useState(1)
+  const [isTwoPages, setIsTwoPages] = useState(false)
+  const ignoreNextHashRef = useRef(false)
 
-  const { pagesPerView, visibleItems, prev, next, goToIndex } =
-    useNotebookPagination(sheets)
+  const filteredSheets =
+    pagesPerView === 1
+      ? sheets.filter(
+          (sheet) => !(sheet.type === 'cover' && sheet.face === 'inside'),
+        )
+      : sheets
+
+  useEffect(() => {
+    let timeout: NodeJS.Timeout
+    const update = () => {
+      clearTimeout(timeout)
+      timeout = setTimeout(() => {
+        if (!isOpen) {
+          setPagesPerView(1)
+          return
+        }
+        setPagesPerView(window.innerWidth >= 768 ? 2 : 1)
+        setIsTwoPages(window.innerWidth >= 768 ? true : false)
+      }, 100) // 100ms delay
+    }
+
+    update()
+    window.addEventListener('resize', update)
+    return () => {
+      clearTimeout(timeout)
+      window.removeEventListener('resize', update)
+    }
+  }, [isOpen, isTwoPages])
+
+  const { visibleItems, prev, next, goToIndex } = useNotebookPagination(
+    sheets,
+    filteredSheets,
+    pagesPerView,
+    isOpen,
+    setIsOpen,
+    isTwoPages,
+  )
 
   useEffect(() => {
     const handleHash = () => {
+      console.log('handleHash effect')
+
+      // if (ignoreNextHashRef.current) {
+      //   ignoreNextHashRef.current = false
+      //   return
+      // }
       const hashId = window.location.hash.slice(1) // remove the #
 
       if (!hashId) return
@@ -87,7 +142,8 @@ const Notebook = () => {
     handleHash()
     window.addEventListener('hashchange', handleHash)
     return () => window.removeEventListener('hashchange', handleHash)
-  }, [goToIndex])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []) //URL ONLY
 
   useEffect(() => {
     const getHeight = () => {
@@ -111,19 +167,28 @@ const Notebook = () => {
 
   return (
     <div>
+      <h1 className="text-center">{isOpen ? 'Open' : 'Closed'}</h1>
       <div className="w-[80vw] h-[80vh] min-h-[300px] max-h-[800px] flex border-4 border-gray-500">
-        {visibleItems.map((sheet) => {
+        {visibleItems.map((sheet, i) => {
           const key =
             sheet.type === 'page'
               ? sheet.id
               : sheet.type === 'cover'
-                ? `cover-${sheet.side}`
-                : 'blank'
+                ? `cover-${sheet.side}-${sheet.face}`
+                : `blank-${i}`
 
           return (
             <div key={key} className="flex-1 p-2 border-5 border-pink-500">
               <div className="w-full h-full">
-                {sheet.type === 'cover' && <Cover side={sheet.side} />}
+                {sheet.type === 'cover' && (
+                  <Cover
+                    side={sheet.side}
+                    face={sheet.face}
+                    isOpen={isOpen}
+                    setIsOpen={setIsOpen}
+                    pagesPerView={pagesPerView}
+                  />
+                )}
                 {sheet.type === 'page' && (
                   <div
                     id={sheet.id}
@@ -151,6 +216,7 @@ const Notebook = () => {
         <Bookmarks
           sectionIds={sections.map((s) => s.id)}
           goToIndex={goToIndex}
+          setIsOpen={setIsOpen}
         />
       </div>
     </div>

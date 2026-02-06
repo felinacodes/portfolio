@@ -3,11 +3,14 @@ import React from 'react'
 interface BookmarkProps {
   sectionIds: string[]
   goToIndex: (id: string) => void
+  setIsOpen: (isOpen: boolean) => void
 }
 
-const Bookmarks = ({ sectionIds, goToIndex }: BookmarkProps) => {
+const Bookmarks = ({ sectionIds, goToIndex, setIsOpen }: BookmarkProps) => {
   function handleClick(id: string) {
+    // ignoreNe
     goToIndex(id)
+    // setIsOpen(true)
   }
 
   const transform = (s: string) => {
