@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useEffect, useLayoutEffect, useRef, useState } from 'react'
+import React, { use, useEffect, useLayoutEffect, useRef, useState } from 'react'
 import Page from './Page'
 import Cover from './Cover'
 import useNotebookPagination from '../useNotebookPagination'
@@ -13,12 +13,18 @@ import { ContactBlocks } from './pages/Contact'
 import { LeaveSomethingBlocks } from './pages/LeaveSomething'
 import Bookmarks from './Bookmarks'
 import MeasureBlocks from './MeasureBlocks'
+import Bookmark from './Bookmark'
 // import useMeasure from '../useMeasure'
 
 export type Sheet =
-  | { type: 'cover'; side: 'front' | 'back'; face: 'inside' | 'outside' }
+  | {
+      type: 'cover'
+      side: 'front' | 'back'
+      face: 'inside' | 'outside'
+      id: string
+    }
   | { type: 'page'; id: string; render: () => React.ReactNode }
-  | { type: 'blank' }
+  | { type: 'blank'; id: string; render: () => React.ReactNode }
 
 type Section = {
   id: string
@@ -38,14 +44,9 @@ const SECTION_CONFIG: SectionConfig[] = [
   { key: 'projects', blocks: ProjectsBlocks },
   { key: 'contact', blocks: ContactBlocks },
   { key: 'leaveSomething', blocks: LeaveSomethingBlocks },
+  { key: 'random', blocks: LeaveSomethingBlocks },
 ]
 
-// const sections: Section[] = SECTION_CONFIG.flatMap(({ key, blocks }) =>
-//   blocks.map((block, index) => ({
-//     id: `${key}-${index}`,
-//     render: () => block,
-//   })),
-// )
 const sections: Section[] = SECTION_CONFIG.flatMap(({ key, blocks }) =>
   blocks.map((block, index) => ({
     id: `${key}-${index}`,
@@ -53,19 +54,40 @@ const sections: Section[] = SECTION_CONFIG.flatMap(({ key, blocks }) =>
   })),
 )
 
-const sheets: Sheet[] = [
-  { type: 'cover', side: 'front', face: 'outside' },
-  { type: 'cover', side: 'front', face: 'inside' },
+const numberOfBlanks = 2
+
+const TwoPagesheets: Sheet[] = [
+  { type: 'cover', side: 'front', face: 'outside', id: 'cover-front-outside' },
+  { type: 'cover', side: 'front', face: 'inside', id: 'cover-front-inside' },
   ...sections.map((s) => ({
     type: 'page' as const,
     id: s.id,
     render: s.render,
   })),
-  { type: 'blank' },
-  { type: 'blank' },
+  ...Array.from({ length: numberOfBlanks }, (_, i) => ({
+    type: 'blank' as const,
+    id: `blank-${i}`,
+    render: () => null, // blank page has nothing to render
+  })),
   // { type: 'blank' },
-  { type: 'cover', side: 'back', face: 'inside' },
-  { type: 'cover', side: 'back', face: 'outside' },
+  { type: 'cover', side: 'back', face: 'inside', id: 'cover-back-inside' },
+  { type: 'cover', side: 'back', face: 'outside', id: 'cover-back-outside' },
+]
+
+const OnePagesheets: Sheet[] = [
+  { type: 'cover', side: 'front', face: 'outside', id: 'cover-front-outside' },
+  ...sections.map((s) => ({
+    type: 'page' as const,
+    id: s.id,
+    render: s.render,
+  })),
+  ...Array.from({ length: numberOfBlanks - 1 }, (_, i) => ({
+    type: 'blank' as const,
+    id: `blank-${i}`,
+    render: () => null, // blank page has nothing to render
+  })),
+  // { type: 'blank' }
+  { type: 'cover', side: 'back', face: 'outside', id: 'cover-back-outside' },
 ]
 
 const Notebook = () => {
@@ -77,90 +99,142 @@ const Notebook = () => {
   const [isOpen, setIsOpen] = useState(false)
   const [pagesPerView, setPagesPerView] = useState(1)
   const [isTwoPages, setIsTwoPages] = useState(false)
+  const [bookmarkedPage, setBookmarkedPage] = useState('')
   const ignoreNextHashRef = useRef(false)
 
-  const filteredSheets =
-    pagesPerView === 1
-      ? sheets.filter(
-          (sheet) => !(sheet.type === 'cover' && sheet.face === 'inside'),
-        )
-      : sheets
-
+  // HANDLE IF THE NOTEBOOK IS TWO OR ONE PAGE
   useEffect(() => {
     let timeout: NodeJS.Timeout
     const update = () => {
       clearTimeout(timeout)
       timeout = setTimeout(() => {
-        if (!isOpen) {
-          setPagesPerView(1)
-          return
-        }
-        setPagesPerView(window.innerWidth >= 768 ? 2 : 1)
+        // setPagesPerView(window.innerWidth >= 768 ? 2 : 1)
         setIsTwoPages(window.innerWidth >= 768 ? true : false)
-      }, 100) // 100ms delay
+      }, 100)
     }
 
     update()
     window.addEventListener('resize', update)
+
     return () => {
       clearTimeout(timeout)
       window.removeEventListener('resize', update)
     }
-  }, [isOpen, isTwoPages, pagesPerView]) // Keep pagesPerview as dependency fixes bugs when changing between sizes and using bookmarks.
+  }, [isTwoPages]) // Keep pagesPerview as dependency fixes bugs when changing between sizes and using bookmarks.
 
   const { visibleItems, prev, next, goToIndex } = useNotebookPagination(
-    sheets,
-    filteredSheets,
+    isTwoPages ? TwoPagesheets : OnePagesheets,
     pagesPerView,
     isOpen,
     setIsOpen,
     isTwoPages,
   )
 
+  // HANDLE HOW MANY PAGES TO SHOW
   useEffect(() => {
-    const handleHash = () => {
-      const hashId = window.location.hash.slice(1) // remove the #
+    const pages = isTwoPages && isOpen ? 2 : 1
+    setPagesPerView(pages)
+    console.log('setting pages per view ', pages)
+  }, [pagesPerView, isTwoPages, isOpen, visibleItems])
 
-      if (!hashId) return
+  // useEffect(() => {
+  //   const left = visibleItems[0]
+  //   const right = visibleItems[1]
 
-      const pageSheet = sheets.find(
-        (sheet): sheet is Extract<Sheet, { type: 'page' }> =>
-          sheet.type === 'page' && sheet.id.startsWith(hashId),
-      )
+  //   console.log('left', left)
+  //   console.log('right', right)
+  //   if (!left) return
 
-      if (pageSheet) {
-        goToIndex(pageSheet.id)
+  //   if (
+  //     left.type === 'cover' &&
+  //     left.side === 'back'
+  //     // left.side === 'back' &&
+  //     // left.face === 'inside'
+  //   ) {
+  //     console.log('setting isopen to false from first if')
+  //     setIsOpen(false)
+  //   } else if (
+  //     left.type === 'cover' &&
+  //     left.side === 'front' &&
+  //     left.face === 'outside'
+  //   ) {
+  //     console.log('setting isopen to false')
+  //     setIsOpen(false)
+  //   } else {
+  //     console.log('setting isopen to true')
+  //     setIsOpen(true)
+  //   }
+  // }, [visibleItems])
+
+  // useEffect(() => {
+  //   console.log('called effect hash')
+  //   const handleHash = () => {
+  //     const hashId = window.location.hash.slice(1) // remove the #
+
+  //     if (!hashId) return
+
+  //     const pageSheet = sheets.find(
+  //       // WAS sheets
+  //       (sheet): sheet is Extract<Sheet, { type: 'page' }> =>
+  //         sheet.type === 'page' && sheet.id.startsWith(hashId),
+  //     )
+
+  //     if (pageSheet) {
+  //       goToIndex(pageSheet.id)
+  //     }
+  //   }
+
+  useEffect(() => {
+    console.log('visible items effect called')
+    console.log('visible items', visibleItems)
+    if (visibleItems.some((i) => i.type === 'cover' && i.face === 'outside')) {
+      {
+        setIsOpen(false)
+        return
       }
     }
-
-    handleHash()
-    window.addEventListener('hashchange', handleHash)
-    return () => window.removeEventListener('hashchange', handleHash)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []) //URL ONLY
-
-  useEffect(() => {
-    const getHeight = () => {
-      if (!outerRef.current) return
-      const pageHeight = outerRef.current.getBoundingClientRect()
-      setHeight(pageHeight.height)
-    }
-
-    // Use requestAnimationFrame to ensure DOM has painted
-    const rafId = requestAnimationFrame(() => {
-      getHeight()
-    })
-
-    window.addEventListener('resize', getHeight)
-
-    return () => {
-      cancelAnimationFrame(rafId)
-      window.removeEventListener('resize', getHeight)
-    }
+    setIsOpen(true)
   }, [visibleItems])
+
+  //   handleHash()
+  //   window.addEventListener('hashchange', handleHash)
+  //   return () => window.removeEventListener('hashchange', handleHash)
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, []) //URL ONLY
+
+  // useEffect(() => {
+  //   console.log('called effect height')
+  //   const getHeight = () => {
+  //     if (!outerRef.current) return
+  //     const pageHeight = outerRef.current.getBoundingClientRect()
+  //     setHeight(pageHeight.height)
+  //   }
+
+  //   // Use requestAnimationFrame to ensure DOM has painted
+  //   const rafId = requestAnimationFrame(() => {
+  //     getHeight()
+  //   })
+
+  //   window.addEventListener('resize', getHeight)
+
+  //   return () => {
+  //     cancelAnimationFrame(rafId)
+  //     window.removeEventListener('resize', getHeight)
+  //   }
+  // }, [visibleItems])
 
   return (
     <div>
+      {/* <button onClick={() => goToIndex(bookmarkedPage)}>
+        Open On Bookmark
+      </button>
+      <Bookmark
+        visibleItems={visibleItems}
+        pageIds={sections.map((s) => s.id)}
+        goToIndex={goToIndex}
+        setIsOpen={setIsOpen}
+        setBookmarkedPage={setBookmarkedPage}
+      /> */}
       <h1 className="text-center">{isOpen ? 'Open' : 'Closed'}</h1>
       <div className="w-[80vw] h-[80vh] min-h-[300px] max-h-[800px] flex border-4 border-gray-500">
         {visibleItems.map((sheet, i) => {
@@ -173,6 +247,7 @@ const Notebook = () => {
 
           return (
             <div key={key} className="flex-1 p-2 border-5 border-pink-500">
+              <h2>{sheet.id}</h2>
               <div className="w-full h-full">
                 {sheet.type === 'cover' && (
                   <Cover

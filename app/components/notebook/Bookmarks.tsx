@@ -7,9 +7,11 @@ interface BookmarkProps {
 }
 
 const Bookmarks = ({ sectionIds, goToIndex, setIsOpen }: BookmarkProps) => {
+  // console.log('sectionIds', sectionIds)
   function handleClick(id: string) {
     // console.log(`handleClick: ${id}`)
     // ignoreNe
+    // setIsOpen(true)
     goToIndex(id)
     // setIsOpen(true)
   }

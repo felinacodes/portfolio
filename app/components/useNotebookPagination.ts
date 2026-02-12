@@ -2,97 +2,142 @@ import React, { useEffect, useState, useMemo, useCallback } from 'react'
 import type { Sheet } from './notebook/Notebook'
 
 export function useNotebookPagination(
-  allItems: Sheet[],
+  // allItems: Sheet[],
   items: Sheet[],
   pagesPerView: number,
   isOpen: boolean,
   setIsOpen: (isOpen: boolean) => void,
   isSetTwoPages: boolean,
 ) {
+  // console.log('called useNotebookPagination', items)
+  // console.log('pagesPerView', pagesPerView)
+  // console.log('isSetTwoPages', isSetTwoPages)
+  // console.log('isOpen', isOpen)
+
   const [leftIndex, setLeftIndex] = useState(0)
   const maxLeftIndex = Math.max(0, items.length - pagesPerView)
-  const safeLeftIndex = Math.min(leftIndex, maxLeftIndex)
+  // const [visibleItems, setVisibleItems] = useState<Sheet[]>([items[0]])
 
   const visibleItems = useMemo(() => {
-    const slice = items.slice(safeLeftIndex, safeLeftIndex + pagesPerView)
-    // console.log(`slice: ${slice}`)
-    // console.table(slice)
-    // console.log(
-    //   `from slice: safeLeftIndex: ${safeLeftIndex} pagesPerView: ${pagesPerView}`,
-    // )
+    // console.log('called useMemo visibleItems')
+    // console.log('leftIndex', leftIndex)
+    // console.log('pagesPerView', pagesPerView)
+    // console.log('maxLeftIndex', maxLeftIndex)
+    // console.log(items.slice(leftIndex, leftIndex + pagesPerView))
+    const visible = items.slice(leftIndex, leftIndex + pagesPerView)
+    // console.log('visible', visible)
+    return visible
+    // return items.slice(leftIndex, leftIndex + pagesPerView)
+  }, [items, leftIndex, pagesPerView])
 
-    return slice
-  }, [items, safeLeftIndex, pagesPerView])
+  // const visibleItems = items.slice(leftIndex, leftIndex + pagesPerView)
 
   // useEffect(() => {
-  //   // console.log('STATE COMMITTED', { leftIndex, maxLeftIndex, isOpen })
-  //   console.log(`isSetTwoPages: ${isSetTwoPages}`)
-  //   console.log(`PagesPerView: ${pagesPerView}`)
-  // }, [leftIndex, maxLeftIndex, isOpen])
+  //   console.log('called useEffect visibleItems')
+  //   console.log('leftIndex', leftIndex)
+  //   console.log('pagesPerView', pagesPerView)
+  //   const temp = items.slice(leftIndex, leftIndex + pagesPerView)
+  //   setVisibleItems(temp)
+  // }, [leftIndex])
 
-  // const visibleItems = useMemo(() => {
-  //   const slice = items.slice(safeLeftIndex, safeLeftIndex + pagesPerView)
+  // useEffect(() => {
+  //   const current = items[leftIndex]
 
-  //   if (pagesPerView === 1) {
-  //     return slice.filter(
-  //       (item) => !(item.type === 'cover' && item.face === 'inside'),
-  //     )
+  //   if (!current) return
+
+  //   if (current.type === 'cover') {
+  //     setIsOpen(false)
+  //   } else {
+  //     setIsOpen(true)
   //   }
-  //   console.log(slice)
-  //   return slice
-  // }, [items, safeLeftIndex, pagesPerView])
-
-  // console.log({ items })  //ASK HERE
+  // }, [leftIndex, items])
 
   const prev = () => {
-    // console.log(items)
+    console.log('from prev', visibleItems)
 
-    const newIndex = Math.max(0, leftIndex - pagesPerView)
+    // if (
+    //   visibleItems[0].type === 'cover' &&
+    //   visibleItems[0].side === 'back' &&
+    //   visibleItems[0].face === 'outside'
+    // ) {
+    //   console.log('from prev setIsOpen to false')
+    //   setIsOpen(true)
+    //   // return
+    // } else {
+    //   setIsOpen(false)
+    // }
+    let newIndex = Math.max(0, leftIndex - pagesPerView)
+    if (items[newIndex].type === 'cover' && items[newIndex].face === 'inside') {
+      console.log('in if')
+      newIndex -= 1
+    }
+    console.log('leftIndex', leftIndex)
+    console.log('newIndex', newIndex)
+    console.log('maxLeftIndex', maxLeftIndex)
+    console.log('pagesPerView', pagesPerView)
+    console.log('end of prev')
     setLeftIndex(newIndex)
-    if (newIndex === 0) setIsOpen(false)
-    else setIsOpen(true)
-
-    // console.log(
-    //   `from: prev : leftindex: ${leftIndex} maxLeftIndex: ${maxLeftIndex} isOpen: ${isOpen} newIndex: ${newIndex}`,
-    // )
+    // if (newIndex === 0) {
+    //   setIsOpen(false)
+    // } else {
+    //   setIsOpen(true)
+    // }
+    // setLeftIndex((prevIndex) => Math.max(0, prevIndex - pagesPerView))
   }
 
   const next = () => {
-    if (isSetTwoPages && leftIndex - 1 === maxLeftIndex) return //BUG FIX - where pressing 2 times next and then prev returns to two plank pages
-    // console.log(items)
+    // if (leftIndex === items.length) return
+    let newIndex = Math.min(leftIndex + pagesPerView, maxLeftIndex)
+    if (items[newIndex].type === 'cover' && items[newIndex].face === 'inside') {
+      console.log('in if')
+      newIndex += 1
+    }
+    console.log('leftIndex', leftIndex)
+    console.log('pagesPerView', pagesPerView)
+    console.log('maxLeftIndex', maxLeftIndex)
+    const nextItem = items[newIndex]
+    let item = items.filter((item, i) => i === newIndex)
+    console.log('from next: setting neew index to', item)
+    // If we are about to land on back inside cover,
+    // close the book and move directly to back outside
 
-    const newIndex = Math.min(leftIndex + pagesPerView, maxLeftIndex)
+    // if (
+    //   nextItem?.type === 'cover' &&
+    //   nextItem.side === 'back' &&
+    //   nextItem.face === 'inside'
+    // ) {
+    //   console.log('from next setIsOpen to false')
+    //   setIsOpen(false)
+
+    //   const outsideIndex = items.findIndex(
+    //     (i) => i.type === 'cover' && i.side === 'back' && i.face === 'outside',
+    //   )
+
+    //   console.log('form next outsideIndex', outsideIndex)
+    //   if (outsideIndex !== -1) {
+    //     console.log('from next setting leftIndex to outsideIndex')
+    //     setLeftIndex(outsideIndex)
+    //     return
+    //   }
+    // } else {
+    //   setIsOpen(true)
+    // }
+
     setLeftIndex(newIndex)
-    if (newIndex === maxLeftIndex) setIsOpen(false)
-    else setIsOpen(true)
-    // console.log(isOpen)
-
-    // console.log(
-    //   `from: next : leftindex: ${leftIndex} maxLeftIndex: ${maxLeftIndex} isOpen: ${isOpen} newIndex: ${newIndex}`,
-    // )
   }
-
-  // const goToIndex = (id: string) => {
-  //   const index = items.findIndex((i) => i.type === 'page' && i.id === id)
-  //   if (index !== -1) setLeftIndex(index)
-  // }
 
   const goToIndex = useCallback(
     (id: string) => {
+      // console.log('called goToindex')
+      // console.log(`goToindex with id: ${id}`)
       setIsOpen(true)
-      console.log(`goToIndex: ${id}`)
-      const index = allItems.findIndex((i) => i.type === 'page' && i.id === id)
-      console.log(`index: ${index}`)
-      // console.log(`leftIndex: ${leftIndex}`)
-      // console.log(items)
-      if (index !== -1) {
-        console.log(`in if`)
-        setLeftIndex(index)
-      }
-      console.log(items)
-      console.log(allItems)
+      const index = items.findIndex((i) => i.type === 'page' && i.id === id)
+      // console.log('items in goToindex', items)
+      // console.log('index', index)
+      if (index !== -1) setLeftIndex(index)
     },
-    [allItems, items, setIsOpen],
+
+    [items, setIsOpen],
   )
 
   return {
