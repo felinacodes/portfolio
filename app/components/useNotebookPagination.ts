@@ -88,7 +88,11 @@ export function useNotebookPagination(
   const next = () => {
     // if (leftIndex === items.length) return
     let newIndex = Math.min(leftIndex + pagesPerView, maxLeftIndex)
-    if (items[newIndex].type === 'cover' && items[newIndex].face === 'inside') {
+    if (
+      items[newIndex].type === 'cover' &&
+      items[newIndex].face === 'inside' &&
+      items[newIndex].side === 'back'
+    ) {
       console.log('in if')
       newIndex += 1
     }

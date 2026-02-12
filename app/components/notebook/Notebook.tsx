@@ -45,6 +45,8 @@ const SECTION_CONFIG: SectionConfig[] = [
   { key: 'contact', blocks: ContactBlocks },
   { key: 'leaveSomething', blocks: LeaveSomethingBlocks },
   { key: 'random', blocks: LeaveSomethingBlocks },
+  { key: 'random2', blocks: LeaveSomethingBlocks },
+  { key: 'random3', blocks: LeaveSomethingBlocks },
 ]
 
 const sections: Section[] = SECTION_CONFIG.flatMap(({ key, blocks }) =>
@@ -54,7 +56,12 @@ const sections: Section[] = SECTION_CONFIG.flatMap(({ key, blocks }) =>
   })),
 )
 
-const numberOfBlanks = 2
+const numberOfBlanks = sections.length % 2 === 0 ? 2 : 3
+// const numberOfBlanks = 3
+
+console.log('sections length ', sections.length)
+console.log(sections.length % 2 === 0)
+console.log('number of blanks', numberOfBlanks)
 
 const TwoPagesheets: Sheet[] = [
   { type: 'cover', side: 'front', face: 'outside', id: 'cover-front-outside' },
