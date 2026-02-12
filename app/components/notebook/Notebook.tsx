@@ -59,9 +59,9 @@ const sections: Section[] = SECTION_CONFIG.flatMap(({ key, blocks }) =>
 const numberOfBlanks = sections.length % 2 === 0 ? 2 : 3
 // const numberOfBlanks = 3
 
-console.log('sections length ', sections.length)
-console.log(sections.length % 2 === 0)
-console.log('number of blanks', numberOfBlanks)
+// console.log('sections length ', sections.length)
+// console.log(sections.length % 2 === 0)
+// console.log('number of blanks', numberOfBlanks)
 
 const TwoPagesheets: Sheet[] = [
   { type: 'cover', side: 'front', face: 'outside', id: 'cover-front-outside' },
@@ -141,7 +141,7 @@ const Notebook = () => {
   useEffect(() => {
     const pages = isTwoPages && isOpen ? 2 : 1
     setPagesPerView(pages)
-    console.log('setting pages per view ', pages)
+    // console.log('setting pages per view ', pages)
   }, [pagesPerView, isTwoPages, isOpen, visibleItems])
 
   // useEffect(() => {
@@ -192,8 +192,8 @@ const Notebook = () => {
   //   }
 
   useEffect(() => {
-    console.log('visible items effect called')
-    console.log('visible items', visibleItems)
+    // console.log('visible items effect called')
+    // console.log('visible items', visibleItems)
     if (visibleItems.some((i) => i.type === 'cover' && i.face === 'outside')) {
       {
         setIsOpen(false)

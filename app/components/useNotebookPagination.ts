@@ -1,5 +1,6 @@
-import React, { useEffect, useState, useMemo, useCallback } from 'react'
+import React, { useEffect, useState, useMemo, useCallback, use } from 'react'
 import type { Sheet } from './notebook/Notebook'
+import { isSet } from 'util/types'
 
 export function useNotebookPagination(
   // allItems: Sheet[],
@@ -18,17 +19,28 @@ export function useNotebookPagination(
   const maxLeftIndex = Math.max(0, items.length - pagesPerView)
   // const [visibleItems, setVisibleItems] = useState<Sheet[]>([items[0]])
 
+  // useEffect(() => {
+  //   setLeftIndex(0)
+  // }, [isSetTwoPages])
+
   const visibleItems = useMemo(() => {
     // console.log('called useMemo visibleItems')
     // console.log('leftIndex', leftIndex)
     // console.log('pagesPerView', pagesPerView)
     // console.log('maxLeftIndex', maxLeftIndex)
     // console.log(items.slice(leftIndex, leftIndex + pagesPerView))
-    const visible = items.slice(leftIndex, leftIndex + pagesPerView)
-    // console.log('visible', visible)
+
+    let visible = items.slice(leftIndex, leftIndex + pagesPerView)
+
+    //BUG FIX : resizing from 2 pages to 1 while on last pages that don't
+    //exist in 1 page notebook
+    if (leftIndex > maxLeftIndex) {
+      visible = items.slice(leftIndex - 1, leftIndex + pagesPerView)
+    }
+
     return visible
     // return items.slice(leftIndex, leftIndex + pagesPerView)
-  }, [items, leftIndex, pagesPerView])
+  }, [items, leftIndex, pagesPerView, maxLeftIndex])
 
   // const visibleItems = items.slice(leftIndex, leftIndex + pagesPerView)
 
@@ -67,15 +79,20 @@ export function useNotebookPagination(
     //   setIsOpen(false)
     // }
     let newIndex = Math.max(0, leftIndex - pagesPerView)
-    if (items[newIndex].type === 'cover' && items[newIndex].face === 'inside') {
-      console.log('in if')
+    const sheet = items[newIndex]
+
+    if (
+      sheet.type === 'cover' &&
+      sheet.face === 'inside' &&
+      sheet.side === 'back'
+    ) {
       newIndex -= 1
     }
-    console.log('leftIndex', leftIndex)
-    console.log('newIndex', newIndex)
-    console.log('maxLeftIndex', maxLeftIndex)
-    console.log('pagesPerView', pagesPerView)
-    console.log('end of prev')
+    // console.log('leftIndex', leftIndex)
+    // console.log('newIndex', newIndex)
+    // console.log('maxLeftIndex', maxLeftIndex)
+    // console.log('pagesPerView', pagesPerView)
+    // console.log('end of prev')
     setLeftIndex(newIndex)
     // if (newIndex === 0) {
     //   setIsOpen(false)
@@ -88,20 +105,21 @@ export function useNotebookPagination(
   const next = () => {
     // if (leftIndex === items.length) return
     let newIndex = Math.min(leftIndex + pagesPerView, maxLeftIndex)
+    const sheet = items[newIndex]
     if (
-      items[newIndex].type === 'cover' &&
-      items[newIndex].face === 'inside' &&
-      items[newIndex].side === 'back'
+      sheet.type === 'cover' &&
+      sheet.face === 'inside' &&
+      sheet.side === 'back'
     ) {
       console.log('in if')
       newIndex += 1
     }
-    console.log('leftIndex', leftIndex)
-    console.log('pagesPerView', pagesPerView)
-    console.log('maxLeftIndex', maxLeftIndex)
-    const nextItem = items[newIndex]
-    let item = items.filter((item, i) => i === newIndex)
-    console.log('from next: setting neew index to', item)
+    // console.log('leftIndex', leftIndex)
+    // console.log('pagesPerView', pagesPerView)
+    // console.log('maxLeftIndex', maxLeftIndex)
+    // const nextItem = items[newIndex]
+    // let item = items.filter((item, i) => i === newIndex)
+    // console.log('from next: setting neew index to', item)
     // If we are about to land on back inside cover,
     // close the book and move directly to back outside
 
