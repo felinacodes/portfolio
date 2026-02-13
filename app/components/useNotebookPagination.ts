@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo, useCallback, use } from 'react'
+import React, { useEffect, useState, useMemo, useCallback } from 'react'
 import type { Sheet } from './notebook/Notebook'
 import { isSet } from 'util/types'
 
@@ -23,6 +23,12 @@ export function useNotebookPagination(
   //   setLeftIndex(0)
   // }, [isSetTwoPages])
 
+  useEffect(() => {
+    // bug fix for when resizing from 2 pages to 1 page while on last pages that don't exist in 1 page notebook
+    // eslint-disable-next-line
+    setLeftIndex((prev) => Math.min(prev, maxLeftIndex))
+  }, [maxLeftIndex])
+
   const visibleItems = useMemo(() => {
     // console.log('called useMemo visibleItems')
     // console.log('leftIndex', leftIndex)
@@ -30,17 +36,17 @@ export function useNotebookPagination(
     // console.log('maxLeftIndex', maxLeftIndex)
     // console.log(items.slice(leftIndex, leftIndex + pagesPerView))
 
-    let visible = items.slice(leftIndex, leftIndex + pagesPerView)
+    const visible = items.slice(leftIndex, leftIndex + pagesPerView)
 
     //BUG FIX : resizing from 2 pages to 1 while on last pages that don't
     //exist in 1 page notebook
-    if (leftIndex > maxLeftIndex) {
-      visible = items.slice(leftIndex - 1, leftIndex + pagesPerView)
-    }
+    // if (leftIndex > maxLeftIndex) {
+    //   visible = items.slice(leftIndex - 1, leftIndex + pagesPerView)
+    // }
 
     return visible
     // return items.slice(leftIndex, leftIndex + pagesPerView)
-  }, [items, leftIndex, pagesPerView, maxLeftIndex])
+  }, [items, leftIndex, pagesPerView])
 
   // const visibleItems = items.slice(leftIndex, leftIndex + pagesPerView)
 
