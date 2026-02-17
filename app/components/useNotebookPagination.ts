@@ -27,7 +27,13 @@ export function useNotebookPagination(
     // bug fix for when resizing from 2 pages to 1 page while on last pages that don't exist in 1 page notebook
     // eslint-disable-next-line
     setLeftIndex((prev) => Math.min(prev, maxLeftIndex))
+    // console.log('max left index useeffect:', maxLeftIndex)
   }, [maxLeftIndex])
+
+  // const correctIndexBetweenViews = useCallback(() => {
+  //   console.log('from correctIndexBetweenViews: leftIndex', leftIndex)
+  //   setLeftIndex((prev) => prev + 1)
+  // }, [isSetTwoPages, leftIndex])
 
   const visibleItems = useMemo(() => {
     // console.log('called useMemo visibleItems')
@@ -37,6 +43,7 @@ export function useNotebookPagination(
     // console.log(items.slice(leftIndex, leftIndex + pagesPerView))
 
     const visible = items.slice(leftIndex, leftIndex + pagesPerView)
+    // console.log('visible items in visible', visible)
 
     //BUG FIX : resizing from 2 pages to 1 while on last pages that don't
     //exist in 1 page notebook
@@ -71,7 +78,7 @@ export function useNotebookPagination(
   // }, [leftIndex, items])
 
   const prev = () => {
-    console.log('from prev', visibleItems)
+    // console.log('from prev', visibleItems)
 
     // if (
     //   visibleItems[0].type === 'cover' &&
@@ -117,7 +124,7 @@ export function useNotebookPagination(
       sheet.face === 'inside' &&
       sheet.side === 'back'
     ) {
-      console.log('in if')
+      // console.log('in if')
       newIndex += 1
     }
     // console.log('leftIndex', leftIndex)
@@ -154,18 +161,47 @@ export function useNotebookPagination(
     setLeftIndex(newIndex)
   }
 
+  // const fixLeftIndex = useCallback(() => {
+  //   if (!isSetTwoPages) return
+  //   setLeftIndex((prev) => prev + 1)
+  // }, [isSetTwoPages])
+
+  // const goToIndex = useCallback(
+  //   (id: string) => {
+  //     console.log('called goToindex')
+  //     // console.log('called goToindex')
+  //     // console.log(`goToindex with id: ${id}`)
+  //     setIsOpen(true)
+  //     const index = items.findIndex((i) => i.type === 'page' && i.id === id)
+  //     // console.log('items in goToindex', items)
+  //     // console.log('index', index)
+  //     console.log('newIndex', index)
+  //     if (index !== -1) setLeftIndex(index)
+  //   },
+
+  //   [items, setIsOpen],
+  // )
+
   const goToIndex = useCallback(
     (id: string) => {
-      // console.log('called goToindex')
-      // console.log(`goToindex with id: ${id}`)
       setIsOpen(true)
-      const index = items.findIndex((i) => i.type === 'page' && i.id === id)
-      // console.log('items in goToindex', items)
-      // console.log('index', index)
-      if (index !== -1) setLeftIndex(index)
-    },
 
-    [items, setIsOpen],
+      const index = items.findIndex((i) => i.type === 'page' && i.id === id)
+
+      if (index === -1) return
+
+      let newIndex = index
+
+      if (isSetTwoPages === true) {
+        // force alignment to even index (left page of spread)
+        newIndex = index % 2 === 0 ? index - 1 : index
+      }
+
+      // console.log('newIndex', newIndex)
+      // console.log('pagesPerView', pagesPerView)
+      setLeftIndex(newIndex)
+    },
+    [items, setIsOpen, isSetTwoPages],
   )
 
   return {

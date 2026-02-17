@@ -44,9 +44,6 @@ const SECTION_CONFIG: SectionConfig[] = [
   { key: 'projects', blocks: ProjectsBlocks },
   { key: 'contact', blocks: ContactBlocks },
   { key: 'leaveSomething', blocks: LeaveSomethingBlocks },
-  { key: 'random', blocks: LeaveSomethingBlocks },
-  { key: 'random2', blocks: LeaveSomethingBlocks },
-  { key: 'random3', blocks: LeaveSomethingBlocks },
 ]
 
 const sections: Section[] = SECTION_CONFIG.flatMap(({ key, blocks }) =>
@@ -62,6 +59,12 @@ const numberOfBlanks = sections.length % 2 === 0 ? 2 : 3
 // console.log('sections length ', sections.length)
 // console.log(sections.length % 2 === 0)
 // console.log('number of blanks', numberOfBlanks)
+
+export const transform = (s: string) => {
+  if (!s) return
+  // console.log('transforming id: ', s)
+  return s.slice(0, s.indexOf('-'))
+}
 
 const TwoPagesheets: Sheet[] = [
   { type: 'cover', side: 'front', face: 'outside', id: 'cover-front-outside' },
@@ -108,6 +111,9 @@ const Notebook = () => {
   const [isTwoPages, setIsTwoPages] = useState(false)
   const [bookmarkedPage, setBookmarkedPage] = useState('')
   const ignoreNextHashRef = useRef(false)
+  const [active, setActive] = React.useState<string>('')
+
+  const correctSheet = isTwoPages ? TwoPagesheets : OnePagesheets
 
   // HANDLE IF THE NOTEBOOK IS TWO OR ONE PAGE
   useEffect(() => {
@@ -130,7 +136,8 @@ const Notebook = () => {
   }, [isTwoPages]) // Keep pagesPerview as dependency fixes bugs when changing between sizes and using bookmarks.
 
   const { visibleItems, prev, next, goToIndex } = useNotebookPagination(
-    isTwoPages ? TwoPagesheets : OnePagesheets,
+    // isTwoPages ? TwoPagesheets : OnePagesheets,
+    correctSheet,
     pagesPerView,
     isOpen,
     setIsOpen,
@@ -180,7 +187,7 @@ const Notebook = () => {
 
   //     if (!hashId) return
 
-  //     const pageSheet = sheets.find(
+  //     const pageSheet = correctSheet.find(
   //       // WAS sheets
   //       (sheet): sheet is Extract<Sheet, { type: 'page' }> =>
   //         sheet.type === 'page' && sheet.id.startsWith(hashId),
@@ -190,7 +197,13 @@ const Notebook = () => {
   //       goToIndex(pageSheet.id)
   //     }
   //   }
+  //   handleHash()
+  //   // window.addEventListener('hashchange', handleHash)
+  //   return () => window.removeEventListener('hashchange', handleHash)
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, []) //URL ONLY
 
+  //OPEN - CLOSE LOGIC
   useEffect(() => {
     // console.log('visible items effect called')
     // console.log('visible items', visibleItems)
@@ -202,6 +215,45 @@ const Notebook = () => {
     }
     setIsOpen(true)
   }, [visibleItems])
+
+  useEffect(() => {
+    // console.log('bookmark visibleItem', visibleItems)
+    // const visibleId = visibleItem?.id
+    const visibleIds = visibleItems.map((item) => transform(item.id))
+    const compare = visibleIds.some((id) => id === transform(active))
+    console.log('visible ids are: ', visibleIds)
+    console.log('active', active)
+    console.log('compare', compare)
+    if (!compare) {
+      // setActive('') // This just removes current active bookmark
+      if (visibleIds[0] !== 'cover')
+        setActive(visibleItems[0]?.id) // This changes active bookmark to follow nav
+      else setActive(visibleItems[1]?.id) // This changes active bookmark to follow nav
+    }
+    // setActive(visibleItems[0]?.id)
+    // console.log('visible ids are: ', visibleIds)
+    // if (transform(visibleId || '') !== transform(active)) {
+    //   // console.log
+    //   setActive('')
+    // }
+    // setActive(visibleId || '')
+  }, [visibleItems, setActive, active])
+
+  // useEffect(() => {
+  //   // const visibleIds = visibleItems.map((item) => transform(item.id))
+  //   setActive(visibleItems[0]?.id)
+  // }, [isTwoPages, setActive, visibleItems])
+
+  // HANDLE CHANGING NOTEBOOK PAGE VIEWS WITH A BOOKKMARK ACTIVE
+  // useEffect(() => {
+  //   //   // const hash = window.location.hash.slice(1)
+  //   //   // console.log('hash', hash)
+  //   if (active) {
+  //     goToIndex(active)
+  //   }
+  // }, [isTwoPages, active])
+
+  // //REMOVE ACTIVE IF NOT VISIBLE
 
   //   handleHash()
   //   window.addEventListener('hashchange', handleHash)
@@ -293,6 +345,9 @@ const Notebook = () => {
           sectionIds={sections.map((s) => s.id)}
           goToIndex={goToIndex}
           setIsOpen={setIsOpen}
+          active={active}
+          setActive={setActive}
+          visibleItems={visibleItems}
         />
       </div>
     </div>
