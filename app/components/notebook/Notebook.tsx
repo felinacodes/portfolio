@@ -14,7 +14,6 @@ import { LeaveSomethingBlocks } from './pages/LeaveSomething'
 import Bookmarks from './Bookmarks'
 import MeasureBlocks from './MeasureBlocks'
 import Bookmark from './Bookmark'
-import { isSet } from 'util/types'
 // import useMeasure from '../useMeasure'
 
 export type Sheet =
@@ -112,6 +111,8 @@ const Notebook = () => {
   const [isTwoPages, setIsTwoPages] = useState(false)
   const [bookmarkedPage, setBookmarkedPage] = useState('')
   const ignoreNextHashRef = useRef(false)
+  const didHandleInitialHash = useRef(false)
+
   const [active, setActive] = React.useState<string>('')
 
   const correctSheet = isTwoPages ? TwoPagesheets : OnePagesheets
@@ -195,8 +196,10 @@ const Notebook = () => {
       )
 
       if (pageSheet) {
-        console.log('pagesheet is: ', pageSheet.id)
+        // console.log('pagesheet is: ', pageSheet.id)
+        ignoreNextHashRef.current = true
         goToIndex(pageSheet.id)
+        // setActive('intro-0')
       }
     }
     handleHash()
@@ -219,18 +222,37 @@ const Notebook = () => {
   }, [visibleItems])
 
   useEffect(() => {
+    // if (ignoreNextHashRef.current) {
+    //   const hash = window.location.hash.slice(1)
+    //   ignoreNextHashRef.current = false
+    //   setActive('intro-0')
+    //   return
+    // }
     // console.log('bookmark visibleItem', visibleItems)
     // const visibleId = visibleItem?.id
     const visibleIds = visibleItems.map((item) => transform(item.id))
     const compare = visibleIds.some((id) => id === transform(active))
+    // console.log('active is: ', active)
     // console.log('visible ids are: ', visibleIds)
-    // console.log('active', active)
-    // console.log('compare', compare)
+    // console.log('compare is: ', compare)
     if (!compare) {
+      // console.log('hash : ', window.location.hash)
       // setActive('') // This just removes current active bookmark
-      if (visibleIds[0] !== 'cover')
+      if (visibleIds[0] !== 'cover') {
         setActive(visibleItems[0]?.id) // This changes active bookmark to follow nav
-      else setActive(visibleItems[1]?.id) // This changes active bookmark to follow nav
+      } else {
+        setActive(visibleItems[1]?.id) // This changes active bookmark to follow nav
+      }
+    } // FIXES FOR FIRST AND LAST PAGES NAV IN TWO PAGES MODE.
+    else {
+      if (active === 'cover-front-inside') {
+        setActive(visibleItems[1]?.id)
+      } else if (
+        active === 'cover-back-outside' ||
+        active.startsWith('blank')
+      ) {
+        setActive(visibleItems[0]?.id)
+      }
     }
     // setActive(visibleItems[0]?.id)
     // console.log('visible ids are: ', visibleIds)
@@ -239,7 +261,17 @@ const Notebook = () => {
     //   setActive('')
     // }
     // setActive(visibleId || '')
+    // console.log('this effect runs when?')
   }, [visibleItems, setActive, active])
+
+  // useEffect(() => {
+  //   console.log('initial load')
+  //   console.log(ignoreNextHashRef.current)
+  //   if (ignoreNextHashRef.current) {
+  //     console.log('in if')
+  //     setActive('intro')
+  //   }
+  // }, [])
 
   // useEffect(() => {
   //   // const visibleIds = visibleItems.map((item) => transform(item.id))
