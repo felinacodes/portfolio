@@ -14,6 +14,7 @@ import { LeaveSomethingBlocks } from './pages/LeaveSomething'
 import Bookmarks from './Bookmarks'
 import MeasureBlocks from './MeasureBlocks'
 import Bookmark from './Bookmark'
+import { isSet } from 'util/types'
 // import useMeasure from '../useMeasure'
 
 export type Sheet =
@@ -180,28 +181,29 @@ const Notebook = () => {
   //   }
   // }, [visibleItems])
 
-  // useEffect(() => {
-  //   console.log('called effect hash')
-  //   const handleHash = () => {
-  //     const hashId = window.location.hash.slice(1) // remove the #
+  useEffect(() => {
+    // console.log('called effect hash')
+    const handleHash = () => {
+      const hashId = window.location.hash.slice(1) // remove the #
 
-  //     if (!hashId) return
+      if (!hashId) return
 
-  //     const pageSheet = correctSheet.find(
-  //       // WAS sheets
-  //       (sheet): sheet is Extract<Sheet, { type: 'page' }> =>
-  //         sheet.type === 'page' && sheet.id.startsWith(hashId),
-  //     )
+      const pageSheet = correctSheet.find(
+        // WAS sheets
+        (sheet): sheet is Extract<Sheet, { type: 'page' }> =>
+          sheet.type === 'page' && sheet.id.startsWith(hashId),
+      )
 
-  //     if (pageSheet) {
-  //       goToIndex(pageSheet.id)
-  //     }
-  //   }
-  //   handleHash()
-  //   // window.addEventListener('hashchange', handleHash)
-  //   return () => window.removeEventListener('hashchange', handleHash)
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, []) //URL ONLY
+      if (pageSheet) {
+        console.log('pagesheet is: ', pageSheet.id)
+        goToIndex(pageSheet.id)
+      }
+    }
+    handleHash()
+    // window.addEventListener('hashchange', handleHash)
+    return () => window.removeEventListener('hashchange', handleHash)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isTwoPages]) //URL ONLY
 
   //OPEN - CLOSE LOGIC
   useEffect(() => {
@@ -221,9 +223,9 @@ const Notebook = () => {
     // const visibleId = visibleItem?.id
     const visibleIds = visibleItems.map((item) => transform(item.id))
     const compare = visibleIds.some((id) => id === transform(active))
-    console.log('visible ids are: ', visibleIds)
-    console.log('active', active)
-    console.log('compare', compare)
+    // console.log('visible ids are: ', visibleIds)
+    // console.log('active', active)
+    // console.log('compare', compare)
     if (!compare) {
       // setActive('') // This just removes current active bookmark
       if (visibleIds[0] !== 'cover')

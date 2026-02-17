@@ -184,10 +184,11 @@ export function useNotebookPagination(
 
   const goToIndex = useCallback(
     (id: string) => {
+      console.log('called goToindex with id: ', id)
       setIsOpen(true)
 
       const index = items.findIndex((i) => i.type === 'page' && i.id === id)
-
+      console.log('setting index: ', index)
       if (index === -1) return
 
       let newIndex = index

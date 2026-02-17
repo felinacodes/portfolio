@@ -55,6 +55,7 @@ const Bookmarks = ({
     // console.log('handleClick: ', id)
     // console.log('active before click: ', active)
     if (transform(active) === id) return
+    console.log('go to index from bookmark:', id)
     goToIndex(id)
     setActive(id)
     // console.log('active', active)
