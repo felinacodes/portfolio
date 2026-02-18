@@ -114,6 +114,7 @@ const Notebook = () => {
   const didHandleInitialHash = useRef(false)
 
   const [active, setActive] = React.useState<string>('')
+  // const [focusedPage, setFocusedPage] = React.useState<string>('')
 
   const correctSheet = isTwoPages ? TwoPagesheets : OnePagesheets
 
@@ -316,9 +317,22 @@ const Notebook = () => {
   //   }
   // }, [visibleItems])
 
+  // Custom Boomark logic
+  useEffect(() => {
+    const saved = localStorage.getItem('notebook-bookmark')
+    if (saved) {
+      setBookmarkedPage(saved)
+    }
+  }, [])
+
+  useEffect(() => {
+    if (!bookmarkedPage) return
+    localStorage.setItem('notebook-bookmark', bookmarkedPage)
+  }, [bookmarkedPage])
+
   return (
     <div>
-      {/* <button onClick={() => goToIndex(bookmarkedPage)}>
+      <button onClick={() => goToIndex(bookmarkedPage)}>
         Open On Bookmark
       </button>
       <Bookmark
@@ -327,7 +341,7 @@ const Notebook = () => {
         goToIndex={goToIndex}
         setIsOpen={setIsOpen}
         setBookmarkedPage={setBookmarkedPage}
-      /> */}
+      />
       <h1 className="text-center">{isOpen ? 'Open' : 'Closed'}</h1>
       <div className="w-[80vw] h-[80vh] min-h-[300px] max-h-[800px] flex border-4 border-gray-500">
         {visibleItems.map((sheet, i) => {

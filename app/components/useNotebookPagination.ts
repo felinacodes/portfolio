@@ -16,6 +16,7 @@ export function useNotebookPagination(
   // console.log('isOpen', isOpen)
 
   const [leftIndex, setLeftIndex] = useState(0)
+  const [focusedPage, setFocusedPage] = React.useState<string>('')
   const maxLeftIndex = Math.max(0, items.length - pagesPerView)
   // const [visibleItems, setVisibleItems] = useState<Sheet[]>([items[0]])
 
@@ -184,11 +185,11 @@ export function useNotebookPagination(
 
   const goToIndex = useCallback(
     (id: string) => {
-      // console.log('called goToindex with id: ', id)
+      console.log('called goToindex with id: ', id)
       setIsOpen(true)
 
       const index = items.findIndex((i) => i.type === 'page' && i.id === id)
-      // console.log('setting index: ', index)
+      // const index = items.findIndex((i) => i.id === id) // This enables bookmarking blanks as well (page might not exist on 1page view)
       if (index === -1) return
 
       let newIndex = index
