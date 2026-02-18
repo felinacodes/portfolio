@@ -1,6 +1,6 @@
 'use client'
 
-import React, { use, useEffect, useLayoutEffect, useRef, useState } from 'react'
+import React, { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import Page from './Page'
 import Cover from './Cover'
 import useNotebookPagination from '../useNotebookPagination'
@@ -54,15 +54,9 @@ const sections: Section[] = SECTION_CONFIG.flatMap(({ key, blocks }) =>
 )
 
 const numberOfBlanks = sections.length % 2 === 0 ? 2 : 3
-// const numberOfBlanks = 3
-
-// console.log('sections length ', sections.length)
-// console.log(sections.length % 2 === 0)
-// console.log('number of blanks', numberOfBlanks)
 
 export const transform = (s: string) => {
   if (!s) return
-  // console.log('transforming id: ', s)
   return s.slice(0, s.indexOf('-'))
 }
 
@@ -110,11 +104,7 @@ const Notebook = () => {
   const [pagesPerView, setPagesPerView] = useState(1)
   const [isTwoPages, setIsTwoPages] = useState(false)
   const [bookmarkedPage, setBookmarkedPage] = useState('')
-  const ignoreNextHashRef = useRef(false)
-  const didHandleInitialHash = useRef(false)
-
   const [active, setActive] = React.useState<string>('')
-  // const [focusedPage, setFocusedPage] = React.useState<string>('')
 
   const correctSheet = isTwoPages ? TwoPagesheets : OnePagesheets
 
@@ -136,7 +126,7 @@ const Notebook = () => {
       clearTimeout(timeout)
       window.removeEventListener('resize', update)
     }
-  }, [isTwoPages]) // Keep pagesPerview as dependency fixes bugs when changing between sizes and using bookmarks.
+  }, [isTwoPages]) // removing this makes index go to bookmark page everytime pages view changes
 
   const { visibleItems, prev, next, goToIndex } = useNotebookPagination(
     // isTwoPages ? TwoPagesheets : OnePagesheets,
@@ -151,40 +141,10 @@ const Notebook = () => {
   useEffect(() => {
     const pages = isTwoPages && isOpen ? 2 : 1
     setPagesPerView(pages)
-    // console.log('setting pages per view ', pages)
   }, [pagesPerView, isTwoPages, isOpen, visibleItems])
 
-  // useEffect(() => {
-  //   const left = visibleItems[0]
-  //   const right = visibleItems[1]
-
-  //   console.log('left', left)
-  //   console.log('right', right)
-  //   if (!left) return
-
-  //   if (
-  //     left.type === 'cover' &&
-  //     left.side === 'back'
-  //     // left.side === 'back' &&
-  //     // left.face === 'inside'
-  //   ) {
-  //     console.log('setting isopen to false from first if')
-  //     setIsOpen(false)
-  //   } else if (
-  //     left.type === 'cover' &&
-  //     left.side === 'front' &&
-  //     left.face === 'outside'
-  //   ) {
-  //     console.log('setting isopen to false')
-  //     setIsOpen(false)
-  //   } else {
-  //     console.log('setting isopen to true')
-  //     setIsOpen(true)
-  //   }
-  // }, [visibleItems])
-
+  // HANDLE HASH
   useEffect(() => {
-    // console.log('called effect hash')
     const handleHash = () => {
       const hashId = window.location.hash.slice(1) // remove the #
 
@@ -197,22 +157,17 @@ const Notebook = () => {
       )
 
       if (pageSheet) {
-        // console.log('pagesheet is: ', pageSheet.id)
-        ignoreNextHashRef.current = true
+        console.log('going to page', pageSheet.id)
         goToIndex(pageSheet.id)
-        // setActive('intro-0')
       }
     }
     handleHash()
-    // window.addEventListener('hashchange', handleHash)
     return () => window.removeEventListener('hashchange', handleHash)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isTwoPages]) //URL ONLY
+  }, [isTwoPages]) // WAS URL ONLY
 
   //OPEN - CLOSE LOGIC
   useEffect(() => {
-    // console.log('visible items effect called')
-    // console.log('visible items', visibleItems)
     if (visibleItems.some((i) => i.type === 'cover' && i.face === 'outside')) {
       {
         setIsOpen(false)
@@ -223,22 +178,9 @@ const Notebook = () => {
   }, [visibleItems])
 
   useEffect(() => {
-    // if (ignoreNextHashRef.current) {
-    //   const hash = window.location.hash.slice(1)
-    //   ignoreNextHashRef.current = false
-    //   setActive('intro-0')
-    //   return
-    // }
-    // console.log('bookmark visibleItem', visibleItems)
-    // const visibleId = visibleItem?.id
     const visibleIds = visibleItems.map((item) => transform(item.id))
     const compare = visibleIds.some((id) => id === transform(active))
-    // console.log('active is: ', active)
-    // console.log('visible ids are: ', visibleIds)
-    // console.log('compare is: ', compare)
     if (!compare) {
-      // console.log('hash : ', window.location.hash)
-      // setActive('') // This just removes current active bookmark
       if (visibleIds[0] !== 'cover') {
         setActive(visibleItems[0]?.id) // This changes active bookmark to follow nav
       } else {
@@ -247,75 +189,17 @@ const Notebook = () => {
     } // FIXES FOR FIRST AND LAST PAGES NAV IN TWO PAGES MODE.
     else {
       if (active === 'cover-front-inside') {
+        console.log('in set active')
         setActive(visibleItems[1]?.id)
       } else if (
         active === 'cover-back-outside' ||
         active.startsWith('blank')
       ) {
+        console.log('in else set active')
         setActive(visibleItems[0]?.id)
       }
     }
-    // setActive(visibleItems[0]?.id)
-    // console.log('visible ids are: ', visibleIds)
-    // if (transform(visibleId || '') !== transform(active)) {
-    //   // console.log
-    //   setActive('')
-    // }
-    // setActive(visibleId || '')
-    // console.log('this effect runs when?')
   }, [visibleItems, setActive, active])
-
-  // useEffect(() => {
-  //   console.log('initial load')
-  //   console.log(ignoreNextHashRef.current)
-  //   if (ignoreNextHashRef.current) {
-  //     console.log('in if')
-  //     setActive('intro')
-  //   }
-  // }, [])
-
-  // useEffect(() => {
-  //   // const visibleIds = visibleItems.map((item) => transform(item.id))
-  //   setActive(visibleItems[0]?.id)
-  // }, [isTwoPages, setActive, visibleItems])
-
-  // HANDLE CHANGING NOTEBOOK PAGE VIEWS WITH A BOOKKMARK ACTIVE
-  // useEffect(() => {
-  //   //   // const hash = window.location.hash.slice(1)
-  //   //   // console.log('hash', hash)
-  //   if (active) {
-  //     goToIndex(active)
-  //   }
-  // }, [isTwoPages, active])
-
-  // //REMOVE ACTIVE IF NOT VISIBLE
-
-  //   handleHash()
-  //   window.addEventListener('hashchange', handleHash)
-  //   return () => window.removeEventListener('hashchange', handleHash)
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, []) //URL ONLY
-
-  // useEffect(() => {
-  //   console.log('called effect height')
-  //   const getHeight = () => {
-  //     if (!outerRef.current) return
-  //     const pageHeight = outerRef.current.getBoundingClientRect()
-  //     setHeight(pageHeight.height)
-  //   }
-
-  //   // Use requestAnimationFrame to ensure DOM has painted
-  //   const rafId = requestAnimationFrame(() => {
-  //     getHeight()
-  //   })
-
-  //   window.addEventListener('resize', getHeight)
-
-  //   return () => {
-  //     cancelAnimationFrame(rafId)
-  //     window.removeEventListener('resize', getHeight)
-  //   }
-  // }, [visibleItems])
 
   // Custom Boomark logic
   useEffect(() => {
@@ -337,9 +221,6 @@ const Notebook = () => {
       </button>
       <Bookmark
         visibleItems={visibleItems}
-        pageIds={sections.map((s) => s.id)}
-        goToIndex={goToIndex}
-        setIsOpen={setIsOpen}
         setBookmarkedPage={setBookmarkedPage}
       />
       <h1 className="text-center">{isOpen ? 'Open' : 'Closed'}</h1>
@@ -392,10 +273,8 @@ const Notebook = () => {
         <Bookmarks
           sectionIds={sections.map((s) => s.id)}
           goToIndex={goToIndex}
-          setIsOpen={setIsOpen}
           active={active}
           setActive={setActive}
-          visibleItems={visibleItems}
         />
       </div>
     </div>
