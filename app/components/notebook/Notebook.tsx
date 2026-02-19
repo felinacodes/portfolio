@@ -1,6 +1,12 @@
 'use client'
 
-import React, { useEffect, useLayoutEffect, useRef, useState } from 'react'
+import React, {
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+  useMemo,
+} from 'react'
 import Page from './Page'
 import Cover from './Cover'
 import useNotebookPagination from '../useNotebookPagination'
@@ -23,8 +29,8 @@ export type Sheet =
       face: 'inside' | 'outside'
       id: string
     }
-  | { type: 'page'; id: string; render: () => React.ReactNode; index: number }
-  | { type: 'blank'; id: string; render: () => React.ReactNode; index: number }
+  | { type: 'page'; id: string; render: () => React.ReactNode }
+  | { type: 'blank'; id: string; render: () => React.ReactNode }
 
 type Section = {
   id: string
@@ -65,16 +71,14 @@ export const transform = (s: string) => {
 const TwoPagesheets: Sheet[] = [
   { type: 'cover', side: 'front', face: 'outside', id: 'cover-front-outside' },
   { type: 'cover', side: 'front', face: 'inside', id: 'cover-front-inside' },
-  ...sections.map((s, i) => ({
+  ...sections.map((s) => ({
     type: 'page' as const,
     id: s.id,
     render: s.render,
-    index: i + 1,
   })),
   ...Array.from({ length: numberOfBlanks }, (_, i) => ({
     type: 'blank' as const,
     id: `blank-${i}`,
-    index: sections.length + i + 1,
     render: () => null, // blank page has nothing to render
   })),
   // { type: 'blank' },
@@ -84,23 +88,19 @@ const TwoPagesheets: Sheet[] = [
 
 const OnePagesheets: Sheet[] = [
   { type: 'cover', side: 'front', face: 'outside', id: 'cover-front-outside' },
-  ...sections.map((s, i) => ({
+  ...sections.map((s) => ({
     type: 'page' as const,
     id: s.id,
     render: s.render,
-    index: i + 1,
   })),
   ...Array.from({ length: numberOfBlanks - 1 }, (_, i) => ({
     type: 'blank' as const,
     id: `blank-${i}`,
-    index: sections.length + i + 1,
     render: () => null, // blank page has nothing to render
   })),
   // { type: 'blank' }
   { type: 'cover', side: 'back', face: 'outside', id: 'cover-back-outside' },
 ]
-
-console.log(sections.length)
 
 const Notebook = () => {
   const outerRef = useRef<HTMLDivElement | null>(null)
@@ -185,6 +185,8 @@ const Notebook = () => {
     setIsOpen(true)
   }, [visibleItems])
 
+
+  // Active bookmark logic
   useEffect(() => {
     const visibleIds = visibleItems.map((item) => transform(item.id))
     const compare = visibleIds.some((id) => id === transform(active))
@@ -221,6 +223,21 @@ const Notebook = () => {
     if (!bookmarkedPage) return
     localStorage.setItem('notebook-bookmark', bookmarkedPage)
   }, [bookmarkedPage])
+
+  // HANDLE NUMBERING OF PAGES
+  const numberedMap = useMemo(() => {
+    let count = 0
+    const map = new Map<string, number>()
+
+    correctSheet.forEach((sheet) => {
+      if (sheet.type === 'page' || sheet.type === 'blank') {
+        count++
+        map.set(sheet.id, count)
+      }
+    })
+
+    return map
+  }, [correctSheet])
 
   return (
     <div>
@@ -259,7 +276,7 @@ const Notebook = () => {
                     id={sheet.id}
                     className="w-full  h-full flex-1  flex border-10 border-yellow-500"
                   >
-                    <Page ref={outerRef} index={sheet.index}>
+                    <Page ref={outerRef} index={numberedMap.get(sheet.id)}>
                       {sheet.render()}
                     </Page>
                   </div>
@@ -267,7 +284,7 @@ const Notebook = () => {
                 {sheet.type === 'blank' && (
                   // <div className="w-full flex border-3 border-yellow-500">
                   <div className="w-full  h-full flex-1  flex border-10 border-yellow-500">
-                    <Page index={sheet.index} />
+                    <Page index={numberedMap.get(sheet.id)} />
                   </div>
                 )}
               </div>
