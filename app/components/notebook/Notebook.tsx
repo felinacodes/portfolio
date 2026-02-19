@@ -68,7 +68,7 @@ export const transform = (s: string) => {
   return s.slice(0, s.indexOf('-'))
 }
 
-const TwoPagesheets: Sheet[] = [
+const sheet: Sheet[] = [
   { type: 'cover', side: 'front', face: 'outside', id: 'cover-front-outside' },
   { type: 'cover', side: 'front', face: 'inside', id: 'cover-front-inside' },
   ...sections.map((s) => ({
@@ -86,22 +86,6 @@ const TwoPagesheets: Sheet[] = [
   { type: 'cover', side: 'back', face: 'outside', id: 'cover-back-outside' },
 ]
 
-const OnePagesheets: Sheet[] = [
-  { type: 'cover', side: 'front', face: 'outside', id: 'cover-front-outside' },
-  ...sections.map((s) => ({
-    type: 'page' as const,
-    id: s.id,
-    render: s.render,
-  })),
-  ...Array.from({ length: numberOfBlanks - 1 }, (_, i) => ({
-    type: 'blank' as const,
-    id: `blank-${i}`,
-    render: () => null, // blank page has nothing to render
-  })),
-  // { type: 'blank' }
-  { type: 'cover', side: 'back', face: 'outside', id: 'cover-back-outside' },
-]
-
 const Notebook = () => {
   const outerRef = useRef<HTMLDivElement | null>(null)
   const [height, setHeight] = useState<number>(0)
@@ -114,7 +98,10 @@ const Notebook = () => {
   const [bookmarkedPage, setBookmarkedPage] = useState('')
   const [active, setActive] = React.useState<string>('')
 
-  const correctSheet = isTwoPages ? TwoPagesheets : OnePagesheets
+  // const correctSheet = isTwoPages ? TwoPagesheets : OnePagesheets
+  const correctSheet = isTwoPages
+    ? sheet
+    : sheet.filter((s) => !(s.type === 'cover' && s.face === 'inside'))
 
   // HANDLE IF THE NOTEBOOK IS TWO OR ONE PAGE
   useEffect(() => {
@@ -185,7 +172,6 @@ const Notebook = () => {
     setIsOpen(true)
   }, [visibleItems])
 
-
   // Active bookmark logic
   useEffect(() => {
     const visibleIds = visibleItems.map((item) => transform(item.id))
@@ -200,12 +186,10 @@ const Notebook = () => {
     else {
       if (active === 'cover-front-inside') {
         console.log('in set active')
-        setActive(visibleItems[1]?.id)
       } else if (
         active === 'cover-back-outside' ||
         active.startsWith('blank')
       ) {
-        console.log('in else set active')
         setActive(visibleItems[0]?.id)
       }
     }
