@@ -23,12 +23,13 @@ export type Sheet =
       face: 'inside' | 'outside'
       id: string
     }
-  | { type: 'page'; id: string; render: () => React.ReactNode }
-  | { type: 'blank'; id: string; render: () => React.ReactNode }
+  | { type: 'page'; id: string; render: () => React.ReactNode; index: number }
+  | { type: 'blank'; id: string; render: () => React.ReactNode; index: number }
 
 type Section = {
   id: string
   render: () => React.ReactNode
+  // index: number
 }
 
 type SectionConfig = {
@@ -49,6 +50,7 @@ const SECTION_CONFIG: SectionConfig[] = [
 const sections: Section[] = SECTION_CONFIG.flatMap(({ key, blocks }) =>
   blocks.map((block, index) => ({
     id: `${key}-${index}`,
+    // index: i,
     render: () => block,
   })),
 )
@@ -63,14 +65,16 @@ export const transform = (s: string) => {
 const TwoPagesheets: Sheet[] = [
   { type: 'cover', side: 'front', face: 'outside', id: 'cover-front-outside' },
   { type: 'cover', side: 'front', face: 'inside', id: 'cover-front-inside' },
-  ...sections.map((s) => ({
+  ...sections.map((s, i) => ({
     type: 'page' as const,
     id: s.id,
     render: s.render,
+    index: i + 1,
   })),
   ...Array.from({ length: numberOfBlanks }, (_, i) => ({
     type: 'blank' as const,
     id: `blank-${i}`,
+    index: sections.length + i + 1,
     render: () => null, // blank page has nothing to render
   })),
   // { type: 'blank' },
@@ -80,19 +84,23 @@ const TwoPagesheets: Sheet[] = [
 
 const OnePagesheets: Sheet[] = [
   { type: 'cover', side: 'front', face: 'outside', id: 'cover-front-outside' },
-  ...sections.map((s) => ({
+  ...sections.map((s, i) => ({
     type: 'page' as const,
     id: s.id,
     render: s.render,
+    index: i + 1,
   })),
   ...Array.from({ length: numberOfBlanks - 1 }, (_, i) => ({
     type: 'blank' as const,
     id: `blank-${i}`,
+    index: sections.length + i + 1,
     render: () => null, // blank page has nothing to render
   })),
   // { type: 'blank' }
   { type: 'cover', side: 'back', face: 'outside', id: 'cover-back-outside' },
 ]
+
+console.log(sections.length)
 
 const Notebook = () => {
   const outerRef = useRef<HTMLDivElement | null>(null)
@@ -251,12 +259,15 @@ const Notebook = () => {
                     id={sheet.id}
                     className="w-full  h-full flex-1  flex border-10 border-yellow-500"
                   >
-                    <Page ref={outerRef}>{sheet.render()}</Page>
+                    <Page ref={outerRef} index={sheet.index}>
+                      {sheet.render()}
+                    </Page>
                   </div>
                 )}
                 {sheet.type === 'blank' && (
-                  <div className="w-full flex border-3 border-yellow-500">
-                    <Page />
+                  // <div className="w-full flex border-3 border-yellow-500">
+                  <div className="w-full  h-full flex-1  flex border-10 border-yellow-500">
+                    <Page index={sheet.index} />
                   </div>
                 )}
               </div>
