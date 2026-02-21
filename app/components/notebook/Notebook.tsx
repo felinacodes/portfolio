@@ -17,6 +17,7 @@ import { SkillsBlocks } from './pages/Skills'
 import { ProjectsBlocks } from './pages/Projects'
 import { ContactBlocks } from './pages/Contact'
 import { LeaveSomethingBlocks } from './pages/LeaveSomething'
+import { TableOfContentsBlocks } from './pages/TableOfContents'
 import Bookmarks from './Bookmarks'
 import MeasureBlocks from './MeasureBlocks'
 import Bookmark from './Bookmark'
@@ -30,20 +31,37 @@ export type Sheet =
       id: string
     }
   | { type: 'page'; id: string; render: () => React.ReactNode }
+  | {
+      type: 'context'
+      id: string
+      render: (
+        ctx?: Map<string, number>,
+        goToIndex?: (id: string) => void,
+      ) => React.ReactNode
+    }
   | { type: 'blank'; id: string; render: () => React.ReactNode }
 
-type Section = {
+export type Section = {
   id: string
-  render: () => React.ReactNode
-  // index: number
+  render: (
+    ctx?: Map<string, number>,
+    goToIndex?: (id: string) => void,
+  ) => React.ReactNode
 }
+type SectionBlock =
+  | React.ReactNode[]
+  | ((
+      ctx?: Map<string, number>,
+      goToIndex?: (id: string) => void,
+    ) => React.ReactNode[])
 
 type SectionConfig = {
   key: string
-  blocks: React.ReactNode[]
+  blocks: SectionBlock
 }
 
 const SECTION_CONFIG: SectionConfig[] = [
+  { key: 'tableOfContents', blocks: TableOfContentsBlocks },
   { key: 'intro', blocks: IntroBlocks },
   { key: 'about', blocks: aboutBlocks },
   { key: 'education', blocks: EducationBlocks },
@@ -53,13 +71,15 @@ const SECTION_CONFIG: SectionConfig[] = [
   { key: 'leaveSomething', blocks: LeaveSomethingBlocks },
 ]
 
-const sections: Section[] = SECTION_CONFIG.flatMap(({ key, blocks }) =>
-  blocks.map((block, index) => ({
+const sections: Section[] = SECTION_CONFIG.flatMap(({ key, blocks }) => {
+  const resolved = typeof blocks === 'function' ? blocks() : blocks
+
+  return resolved.map((block, index) => ({
     id: `${key}-${index}`,
-    // index: i,
-    render: () => block,
-  })),
-)
+    render: (ctx?: Map<string, number>, goToIndex?: (id: string) => void) =>
+      typeof blocks === 'function' ? blocks(ctx, goToIndex)[index] : block,
+  }))
+})
 
 const numberOfBlanks = sections.length % 2 === 0 ? 2 : 3
 
@@ -71,17 +91,27 @@ export const transform = (s: string) => {
 const sheet: Sheet[] = [
   { type: 'cover', side: 'front', face: 'outside', id: 'cover-front-outside' },
   { type: 'cover', side: 'front', face: 'inside', id: 'cover-front-inside' },
-  ...sections.map((s) => ({
-    type: 'page' as const,
-    id: s.id,
-    render: s.render,
-  })),
+
+  ...sections.flatMap((s) => {
+    if (s.id.startsWith('tableOfContents')) {
+      return {
+        type: 'context' as const,
+        id: s.id,
+        render: s.render,
+      }
+    } else {
+      return {
+        type: 'page' as const,
+        id: s.id,
+        render: s.render as () => React.ReactNode,
+      }
+    }
+  }),
   ...Array.from({ length: numberOfBlanks }, (_, i) => ({
     type: 'blank' as const,
     id: `blank-${i}`,
-    render: () => null, // blank page has nothing to render
+    render: () => null,
   })),
-  // { type: 'blank' },
   { type: 'cover', side: 'back', face: 'inside', id: 'cover-back-inside' },
   { type: 'cover', side: 'back', face: 'outside', id: 'cover-back-outside' },
 ]
@@ -214,7 +244,11 @@ const Notebook = () => {
     const map = new Map<string, number>()
 
     correctSheet.forEach((sheet) => {
-      if (sheet.type === 'page' || sheet.type === 'blank') {
+      if (
+        sheet.type === 'page' ||
+        sheet.type === 'blank' ||
+        sheet.type === 'context'
+      ) {
         count++
         map.set(sheet.id, count)
       }
@@ -222,6 +256,20 @@ const Notebook = () => {
 
     return map
   }, [correctSheet])
+
+  const contextMap = useMemo(() => {
+    const zeroIndexMap = new Map<string, number>()
+
+    numberedMap.forEach((value, key) => {
+      if (key.endsWith('-0') && !key.startsWith('blank')) {
+        // const transformedKey = transform(key)
+        zeroIndexMap.set(key, value)
+      }
+    })
+
+    // console.log(zeroIndexMap)
+    return zeroIndexMap
+  }, [numberedMap])
 
   return (
     <div>
@@ -255,16 +303,23 @@ const Notebook = () => {
                     pagesPerView={pagesPerView}
                   />
                 )}
-                {sheet.type === 'page' && (
-                  <div
-                    id={sheet.id}
-                    className="w-full  h-full flex-1  flex border-10 border-yellow-500"
-                  >
-                    <Page ref={outerRef} index={numberedMap.get(sheet.id)}>
-                      {sheet.render()}
-                    </Page>
-                  </div>
+                {sheet.type === 'context' && (
+                  <Page ref={outerRef} index={numberedMap.get(sheet.id) ?? 0}>
+                    {/* {sheet.render(contextMap)} */}
+                    {sheet.render(
+                      contextMap,
+                      sheet.id.startsWith('tableOfContents')
+                        ? goToIndex
+                        : undefined,
+                    )}
+                  </Page>
                 )}
+                {sheet.type === 'page' && (
+                  <Page ref={outerRef} index={numberedMap.get(sheet.id) ?? 0}>
+                    {sheet.render()}
+                  </Page>
+                )}
+
                 {sheet.type === 'blank' && (
                   // <div className="w-full flex border-3 border-yellow-500">
                   <div className="w-full  h-full flex-1  flex border-10 border-yellow-500">
