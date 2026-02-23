@@ -53,7 +53,8 @@ export function useNotebookPagination(
       console.log('called goToindex with id: ', id)
       setIsOpen(true)
 
-      const index = items.findIndex((i) => i.type === 'page' && i.id === id)
+      const index = items.findIndex((i) => i.type !== 'blank' && i.id === id)
+      // const index = items.findIndex((i) => i.type === 'page' && i.id === id)
       // const index = items.findIndex((i) => i.id === id) // This enables bookmarking blanks as well (page might not exist on 1page view)
       if (index === -1) return
 

@@ -204,9 +204,11 @@ const Notebook = () => {
 
   // Active bookmark logic
   useEffect(() => {
+    console.log('active: ', active)
     const visibleIds = visibleItems.map((item) => transform(item.id))
     const compare = visibleIds.some((id) => id === transform(active))
     if (!compare) {
+      console.log('in not compare')
       if (visibleIds[0] !== 'cover') {
         setActive(visibleItems[0]?.id) // This changes active bookmark to follow nav
       } else {
@@ -214,8 +216,8 @@ const Notebook = () => {
       }
     } // FIXES FOR FIRST AND LAST PAGES NAV IN TWO PAGES MODE.
     else {
+      console.log('in else')
       if (active === 'cover-front-inside') {
-        console.log('in set active')
       } else if (
         active === 'cover-back-outside' ||
         active.startsWith('blank')
