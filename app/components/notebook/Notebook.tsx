@@ -178,11 +178,11 @@ const Notebook = () => {
       const pageSheet = correctSheet.find(
         // WAS sheets
         (sheet): sheet is Extract<Sheet, { type: 'page' }> =>
-          sheet.type === 'page' && sheet.id.startsWith(hashId),
+          (sheet.type === 'page' || sheet.type === 'context') &&
+          sheet.id.startsWith(hashId),
       )
 
       if (pageSheet) {
-        console.log('going to page', pageSheet.id)
         goToIndex(pageSheet.id)
       }
     }
