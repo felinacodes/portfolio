@@ -21,6 +21,7 @@ import { TableOfContentsBlocks } from './pages/TableOfContents'
 import Bookmarks from './Bookmarks'
 import MeasureBlocks from './MeasureBlocks'
 import Bookmark from './Bookmark'
+
 // import useMeasure from '../useMeasure'
 
 export type Sheet =
@@ -125,13 +126,26 @@ const Notebook = () => {
   const [isOpen, setIsOpen] = useState(false)
   const [pagesPerView, setPagesPerView] = useState(1)
   const [isTwoPages, setIsTwoPages] = useState(false)
+  // Fixes initial flickering on 2 pages view but cause hydration error
+  // const [isTwoPages, setIsTwoPages] = useState(() =>
+  //   window.innerWidth >= 768 ? true : false,
+  // )
   const [bookmarkedPage, setBookmarkedPage] = useState('')
   const [active, setActive] = React.useState<string>('')
+  const [mounted, setMounted] = useState(false)
 
   // const correctSheet = isTwoPages ? TwoPagesheets : OnePagesheets
   const correctSheet = isTwoPages
     ? sheet
     : sheet.filter((s) => !(s.type === 'cover' && s.face === 'inside'))
+
+  // useLayoutEffect(() => {
+  //   console.log('layout runs')
+
+  //   setIsTwoPages(window.innerWidth >= 768)
+  //   setMounted(true)
+  //   // setIsOpen(false)
+  // }, [])
 
   // HANDLE IF THE NOTEBOOK IS TWO OR ONE PAGE
   useEffect(() => {
@@ -166,6 +180,7 @@ const Notebook = () => {
   useEffect(() => {
     const pages = isTwoPages && isOpen ? 2 : 1
     setPagesPerView(pages)
+    // }, [pagesPerView, isTwoPages, isOpen, visibleItems])
   }, [pagesPerView, isTwoPages, isOpen, visibleItems])
 
   // HANDLE HASH
@@ -191,7 +206,7 @@ const Notebook = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isTwoPages]) // WAS URL ONLY
 
-  //OPEN - CLOSE LOGIC
+  // OPEN - CLOSE LOGIC
   useEffect(() => {
     if (visibleItems.some((i) => i.type === 'cover' && i.face === 'outside')) {
       {
@@ -204,11 +219,9 @@ const Notebook = () => {
 
   // Active bookmark logic
   useEffect(() => {
-    console.log('active: ', active)
     const visibleIds = visibleItems.map((item) => transform(item.id))
     const compare = visibleIds.some((id) => id === transform(active))
     if (!compare) {
-      console.log('in not compare')
       if (visibleIds[0] !== 'cover') {
         setActive(visibleItems[0]?.id) // This changes active bookmark to follow nav
       } else {
@@ -216,7 +229,6 @@ const Notebook = () => {
       }
     } // FIXES FOR FIRST AND LAST PAGES NAV IN TWO PAGES MODE.
     else {
-      console.log('in else')
       if (active === 'cover-front-inside') {
       } else if (
         active === 'cover-back-outside' ||
@@ -268,13 +280,20 @@ const Notebook = () => {
         zeroIndexMap.set(key, value)
       }
     })
-
-    // console.log(zeroIndexMap)
     return zeroIndexMap
   }, [numberedMap])
 
+  // const pageMultiplier = isTwoPages && !isOpen ? 0.5 : 1
+  // const pageWidth = isTwoPages && !isOpen ? 40 : 80
+  const pageWidth = 80
+
+  //Fixes Flickering bad bad SEO
+  // if (!mounted) {
+  //   return <div>...Loading...</div>
+  // }
+
   return (
-    <div>
+    <div className="flex flex-col items-center justify-center w-full h-full">
       <button onClick={() => goToIndex(bookmarkedPage)}>
         Open On Bookmark
       </button>
@@ -283,7 +302,21 @@ const Notebook = () => {
         setBookmarkedPage={setBookmarkedPage}
       />
       <h1 className="text-center">{isOpen ? 'Open' : 'Closed'}</h1>
-      <div className="w-[80vw] h-[80vh] min-h-[300px] max-h-[800px] flex border-4 border-gray-500">
+      {/* <div className="w-[80vw] h-[80vh] min-h-[300px] max-h-[800px] flex"> */}
+      <div
+        style={
+          {
+            // width: `${pageWidth}vw`,
+            //fixes flicker but bad UX
+            // opacity: mounted ? 1 : 0,
+          }
+        }
+        //Fix width flickering but not bookmark reload flickering
+        className={`
+      h-[80vh] min-h-[300px] max-h-[800px] flex
+      ${isOpen ? `md:w-[${pageWidth}vw] w-[${pageWidth}vw]` : `md:w-[${pageWidth / 2}vw] w-[${pageWidth}vw]`}
+    `}
+      >
         {visibleItems.map((sheet, i) => {
           const key =
             sheet.type === 'page'
@@ -293,7 +326,12 @@ const Notebook = () => {
                 : `blank-${i}`
 
           return (
-            <div key={key} className="flex-1 p-2 border-5 border-pink-500">
+            <div
+              // style={{ width: `${pageWidth}vw` }}
+              key={key}
+              // className="flex-1 p-2 border-5 border-yellow-500"
+              className="flex-1 p-2 border-5 border-yellow-500"
+            >
               <h2>{sheet.id}</h2>
               <div className="w-full h-full">
                 {sheet.type === 'cover' && (
