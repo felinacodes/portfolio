@@ -7,9 +7,45 @@ export function useNotebookPagination(
   isOpen: boolean,
   setIsOpen: (isOpen: boolean) => void,
   isSetTwoPages: boolean,
+  initialPage?: string,
 ) {
-  const [leftIndex, setLeftIndex] = useState(0)
+  // const [leftIndex, setLeftIndex] = useState(0)
+  const [leftIndex, setLeftIndex] = useState(() => {
+    console.log('initial page: ', initialPage)
+    console.log('two page is:', isSetTwoPages)
+
+    if (!initialPage) return 0
+
+    const index = items.findIndex((i) => i.id === initialPage)
+    // if (index === -1) return 0
+
+    // let newIndex = index
+
+    // if (isSetTwoPages) {
+    //   newIndex = index % 2 === 0 ? index - 1 : index
+    //   console.log('in if newindex: ', newIndex)
+    // }
+
+    // return Math.max(0, newIndex)
+    return index === -1 ? 0 : index
+  })
   const maxLeftIndex = Math.max(0, items.length - pagesPerView)
+
+  useEffect(() => {
+    if (!initialPage) return
+
+    const index = items.findIndex((i) => i.id === initialPage)
+
+    if (index === -1) return
+
+    let newIndex = index
+
+    if (isSetTwoPages) {
+      newIndex = index % 2 === 0 ? index - 1 : index
+    }
+
+    setLeftIndex(Math.max(0, newIndex))
+  }, [isSetTwoPages, initialPage])
 
   useEffect(() => {
     console.log('use pagenation effect')
@@ -61,7 +97,7 @@ export function useNotebookPagination(
 
       let newIndex = index
 
-      if (isSetTwoPages === true) {
+      if (isSetTwoPages) {
         // force alignment to even index (left page of spread)
         newIndex = index % 2 === 0 ? index - 1 : index
       }

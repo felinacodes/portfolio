@@ -23,6 +23,9 @@ import MeasureBlocks from './MeasureBlocks'
 import Bookmark from './Bookmark'
 
 // import useMeasure from '../useMeasure'
+type NotebookProps = {
+  initialPage?: string
+}
 
 export type Sheet =
   | {
@@ -117,7 +120,7 @@ const sheet: Sheet[] = [
   { type: 'cover', side: 'back', face: 'outside', id: 'cover-back-outside' },
 ]
 
-const Notebook = () => {
+const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
   const outerRef = useRef<HTMLDivElement | null>(null)
   const [height, setHeight] = useState<number>(0)
   const [measuredHeights, setMeasuredHeights] = useState<
@@ -132,20 +135,13 @@ const Notebook = () => {
   // )
   const [bookmarkedPage, setBookmarkedPage] = useState('')
   const [active, setActive] = React.useState<string>('')
-  const [mounted, setMounted] = useState(false)
+
+  console.log('paras are: ', initialPage)
 
   // const correctSheet = isTwoPages ? TwoPagesheets : OnePagesheets
   const correctSheet = isTwoPages
     ? sheet
     : sheet.filter((s) => !(s.type === 'cover' && s.face === 'inside'))
-
-  // useLayoutEffect(() => {
-  //   console.log('layout runs')
-
-  //   setIsTwoPages(window.innerWidth >= 768)
-  //   setMounted(true)
-  //   // setIsOpen(false)
-  // }, [])
 
   // HANDLE IF THE NOTEBOOK IS TWO OR ONE PAGE
   useEffect(() => {
@@ -174,6 +170,7 @@ const Notebook = () => {
     isOpen,
     setIsOpen,
     isTwoPages,
+    initialPage,
   )
 
   // HANDLE HOW MANY PAGES TO SHOW
@@ -312,11 +309,12 @@ const Notebook = () => {
           }
         }
         //Fix width flickering but not bookmark reload flickering
-        className={`
-      h-[80vh] min-h-[300px] max-h-[800px] flex
-      ${isOpen ? `md:w-[${pageWidth}vw] w-[${pageWidth}vw]` : `md:w-[${pageWidth / 2}vw] w-[${pageWidth}vw]`}
-    `}
-      >
+            className={`
+          h-[80vh] min-h-[300px] max-h-[800px] flex
+          ${isOpen ? `md:w-[${pageWidth}vw] w-[${pageWidth}vw]` : `md:w-[${pageWidth / 2}vw] w-[${pageWidth}vw]`}
+        `}
+          >
+      
         {visibleItems.map((sheet, i) => {
           const key =
             sheet.type === 'page'
