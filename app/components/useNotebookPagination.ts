@@ -1,4 +1,10 @@
-import React, { useEffect, useState, useMemo, useCallback } from 'react'
+import React, {
+  useEffect,
+  useState,
+  useMemo,
+  useCallback,
+  useLayoutEffect,
+} from 'react'
 import type { Sheet } from './notebook/Notebook'
 export function useNotebookPagination(
   // allItems: Sheet[],
@@ -8,31 +14,22 @@ export function useNotebookPagination(
   setIsOpen: (isOpen: boolean) => void,
   isSetTwoPages: boolean,
   initialPage?: string,
+  mounted: boolean,
 ) {
   // const [leftIndex, setLeftIndex] = useState(0)
   const [leftIndex, setLeftIndex] = useState(() => {
-    console.log('initial page: ', initialPage)
-    console.log('two page is:', isSetTwoPages)
-
     if (!initialPage) return 0
 
     const index = items.findIndex((i) => i.id === initialPage)
-    // if (index === -1) return 0
+    if (index === -1) return 0
 
-    // let newIndex = index
-
-    // if (isSetTwoPages) {
-    //   newIndex = index % 2 === 0 ? index - 1 : index
-    //   console.log('in if newindex: ', newIndex)
-    // }
-
-    // return Math.max(0, newIndex)
-    return index === -1 ? 0 : index
+    return index
   })
   const maxLeftIndex = Math.max(0, items.length - pagesPerView)
 
-  useEffect(() => {
-    if (!initialPage) return
+  useLayoutEffect(() => {
+    // if (!isSetTwoPages) return
+    if (!initialPage || !isSetTwoPages) return
 
     const index = items.findIndex((i) => i.id === initialPage)
 
@@ -43,9 +40,9 @@ export function useNotebookPagination(
     if (isSetTwoPages) {
       newIndex = index % 2 === 0 ? index - 1 : index
     }
-
+    // eslint-disable-next-line
     setLeftIndex(Math.max(0, newIndex))
-  }, [isSetTwoPages, initialPage])
+  }, [initialPage, items, isSetTwoPages])
 
   useEffect(() => {
     console.log('use pagenation effect')
@@ -55,6 +52,7 @@ export function useNotebookPagination(
   }, [maxLeftIndex])
 
   const visibleItems = useMemo(() => {
+    // if (!mounted) return []
     return items.slice(leftIndex, leftIndex + pagesPerView)
   }, [items, leftIndex, pagesPerView])
 

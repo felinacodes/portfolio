@@ -128,6 +128,10 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
   >({})
   const [isOpen, setIsOpen] = useState(false)
   const [pagesPerView, setPagesPerView] = useState(1)
+
+  const getIsTwoPages = () =>
+    typeof window !== 'undefined' && window.innerWidth >= 768
+
   const [isTwoPages, setIsTwoPages] = useState(false)
   // Fixes initial flickering on 2 pages view but cause hydration error
   // const [isTwoPages, setIsTwoPages] = useState(() =>
@@ -135,13 +139,16 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
   // )
   const [bookmarkedPage, setBookmarkedPage] = useState('')
   const [active, setActive] = React.useState<string>('')
-
-  console.log('paras are: ', initialPage)
+  const [mounted, setIsmounted] = useState(false)
 
   // const correctSheet = isTwoPages ? TwoPagesheets : OnePagesheets
   const correctSheet = isTwoPages
     ? sheet
     : sheet.filter((s) => !(s.type === 'cover' && s.face === 'inside'))
+
+  useEffect(() => {
+    setIsmounted(true)
+  }, [])
 
   // HANDLE IF THE NOTEBOOK IS TWO OR ONE PAGE
   useEffect(() => {
@@ -171,6 +178,7 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
     setIsOpen,
     isTwoPages,
     initialPage,
+    mounted,
   )
 
   // HANDLE HOW MANY PAGES TO SHOW
@@ -290,7 +298,7 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
   // }
 
   return (
-    <div className="flex flex-col items-center justify-center w-full h-full">
+    <div className={`flex flex-col items-center justify-center w-full h-full `}>
       <button onClick={() => goToIndex(bookmarkedPage)}>
         Open On Bookmark
       </button>
@@ -300,75 +308,69 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
       />
       <h1 className="text-center">{isOpen ? 'Open' : 'Closed'}</h1>
       {/* <div className="w-[80vw] h-[80vh] min-h-[300px] max-h-[800px] flex"> */}
-      <div
-        style={
-          {
-            // width: `${pageWidth}vw`,
-            //fixes flicker but bad UX
-            // opacity: mounted ? 1 : 0,
-          }
-        }
-        //Fix width flickering but not bookmark reload flickering
-            className={`
-          h-[80vh] min-h-[300px] max-h-[800px] flex
-          ${isOpen ? `md:w-[${pageWidth}vw] w-[${pageWidth}vw]` : `md:w-[${pageWidth / 2}vw] w-[${pageWidth}vw]`}
-        `}
-          >
-      
-        {visibleItems.map((sheet, i) => {
-          const key =
-            sheet.type === 'page'
-              ? sheet.id
-              : sheet.type === 'cover'
-                ? `cover-${sheet.side}-${sheet.face}`
-                : `blank-${i}`
+      {/* Initial Load fix for flickering and LCP*/}
 
-          return (
-            <div
-              // style={{ width: `${pageWidth}vw` }}
-              key={key}
-              // className="flex-1 p-2 border-5 border-yellow-500"
-              className="flex-1 p-2 border-5 border-yellow-500"
-            >
-              <h2>{sheet.id}</h2>
-              <div className="w-full h-full">
-                {sheet.type === 'cover' && (
-                  <Cover
-                    side={sheet.side}
-                    face={sheet.face}
-                    isOpen={isOpen}
-                    setIsOpen={setIsOpen}
-                    pagesPerView={pagesPerView}
-                  />
-                )}
-                {sheet.type === 'context' && (
-                  <Page ref={outerRef} index={numberedMap.get(sheet.id) ?? 0}>
-                    {/* {sheet.render(contextMap)} */}
-                    {sheet.render(
-                      contextMap,
-                      sheet.id.startsWith('tableOfContents')
-                        ? goToIndex
-                        : undefined,
-                    )}
-                  </Page>
-                )}
-                {sheet.type === 'page' && (
-                  <Page ref={outerRef} index={numberedMap.get(sheet.id) ?? 0}>
-                    {sheet.render()}
-                  </Page>
-                )}
+      {
+        <div
+          className={`h-[80vh] min-h-[300px] max-h-[800px] grid md:grid-cols-2 grid-cols-1 border-2 border-blue-500
+    ${isOpen ? `md:w-[${pageWidth}vw] w-[${pageWidth}vw]` : `md:w-[${pageWidth / 2}vw] w-[${pageWidth}vw]`}`}
+        >
+          {/* {!mounted && <p>Loading...</p>} */}
+          {visibleItems.map((sheet, i) => {
+            const key =
+              sheet.type === 'page'
+                ? sheet.id
+                : sheet.type === 'cover'
+                  ? `cover-${sheet.side}-${sheet.face}`
+                  : `blank-${i}`
 
-                {sheet.type === 'blank' && (
-                  // <div className="w-full flex border-3 border-yellow-500">
-                  <div className="w-full  h-full flex-1  flex border-10 border-yellow-500">
-                    <Page index={numberedMap.get(sheet.id)} />
-                  </div>
-                )}
+            return (
+              <div
+                // style={{ width: `${pageWidth}vw` }}
+                key={key}
+                // className="flex-1 p-2 border-5 border-yellow-500"
+                // className={` ${mounted ? 'opacity-100' : 'opacity-0'}`}
+              >
+                <h2>{sheet.id}</h2>
+                <div className="w-full h-full">
+                  {sheet.type === 'cover' && (
+                    <Cover
+                      side={sheet.side}
+                      face={sheet.face}
+                      isOpen={isOpen}
+                      setIsOpen={setIsOpen}
+                      pagesPerView={pagesPerView}
+                    />
+                  )}
+                  {sheet.type === 'context' && (
+                    <Page ref={outerRef} index={numberedMap.get(sheet.id) ?? 0}>
+                      {/* {sheet.render(contextMap)} */}
+                      {sheet.render(
+                        contextMap,
+                        sheet.id.startsWith('tableOfContents')
+                          ? goToIndex
+                          : undefined,
+                      )}
+                    </Page>
+                  )}
+                  {sheet.type === 'page' && (
+                    <Page ref={outerRef} index={numberedMap.get(sheet.id) ?? 0}>
+                      {sheet.render()}
+                    </Page>
+                  )}
+
+                  {sheet.type === 'blank' && (
+                    // <div className="w-full flex border-3 border-yellow-500">
+                    <div className="w-full  h-full flex-1  flex border-10 border-yellow-500">
+                      <Page index={numberedMap.get(sheet.id)} />
+                    </div>
+                  )}
+                </div>
               </div>
-            </div>
-          )
-        })}
-      </div>
+            )
+          })}
+        </div>
+      }
 
       <div className="mt-4 flex gap-4 border-2 border-blue-200">
         <button onClick={prev}>Prev</button>
