@@ -1,7 +1,13 @@
 import React from 'react'
 import Image from 'next/image'
+import ChapterIntro from './ChapterIntro'
 
 export const ProjectsBlocks: React.ReactNode[] = [
+  <ChapterIntro
+    key="chapter-intro"
+    name={'Projects'}
+    icon={'/images/icons/bio.svg'}
+  />,
   <section
     key="project-1"
     className="flex flex-col items-center justify-center p-4 gap-4 h-full w-full"

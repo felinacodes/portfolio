@@ -102,7 +102,7 @@ const sheet: Sheet[] = [
       return {
         type: 'context' as const,
         id: s.id,
-        render: s.render,
+        render: s.render as () => React.ReactNode,
       }
     } else {
       return {
@@ -146,6 +146,30 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
   const correctSheet = isTwoPages
     ? sheet
     : sheet.filter((s) => !(s.type === 'cover' && s.face === 'inside'))
+
+  const getNextActive = (visibleItems: Sheet[], currentActive: string) => {
+    const sectionVisible = visibleItems.filter(
+      (item) =>
+        (item.type === 'page' || item.type === 'context') &&
+        !item.id.startsWith('blank') &&
+        !item.id.includes('cover'),
+    )
+
+    // if current active is visible among sections, keep it
+    if (
+      sectionVisible.some(
+        (item) => transform(item.id) === transform(currentActive),
+      )
+    ) {
+      return currentActive
+    }
+
+    // prefer left-most section page, or first one that ends with -0
+    const preferred =
+      sectionVisible.find((item) => item.id.endsWith('-0')) || sectionVisible[0]
+
+    return preferred?.id ?? currentActive
+  }
 
   useEffect(() => {
     setIsmounted(true)
@@ -224,6 +248,10 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
   useEffect(() => {
     const visibleIds = visibleItems.map((item) => transform(item.id))
     const compare = visibleIds.some((id) => id === transform(active))
+    console.log('active', active)
+    console.log('visibleIds', visibleIds)
+    console.log('compare', compare)
+
     if (!compare) {
       if (visibleIds[0] !== 'cover') {
         setActive(visibleItems[0]?.id) // This changes active bookmark to follow nav
@@ -241,6 +269,14 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
       }
     }
   }, [visibleItems, setActive, active])
+
+  // useEffect(() => {
+  //   const visibleIds = visibleItems.map((item) => transform(item.id))
+  //   const compare = visibleIds.some((id) => id === transform(active))
+  //   if (!compare) {
+  //     if ()
+  //   }
+  // }, [visibleItems, active])
 
   // Custom Boomark logic
   useEffect(() => {

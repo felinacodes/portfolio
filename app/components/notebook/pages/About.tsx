@@ -1,7 +1,13 @@
 import React from 'react'
 import Image from 'next/image'
+import ChapterIntro from './ChapterIntro'
 
 export const aboutBlocks: React.ReactNode[] = [
+  <ChapterIntro
+      key="chapter-intro"
+      name={'About Me'}
+      icon={'/images/icons/bio.svg'}
+    />,
   <section
     id="about"
     key="about-me"

@@ -46,7 +46,6 @@ export function useNotebookPagination(
   }, [initialPage, items, isSetTwoPages])
 
   useEffect(() => {
-    console.log('use pagenation effect')
     // bug fix for when resizing from 2 pages to 1 page while on last pages that don't exist in 1 page notebook
     // eslint-disable-next-line
     setLeftIndex((prev) => Math.min(prev, maxLeftIndex))

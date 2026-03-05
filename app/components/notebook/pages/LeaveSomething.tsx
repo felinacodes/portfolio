@@ -1,7 +1,13 @@
 import React from 'react'
 import Image from 'next/image'
+import ChapterIntro from './ChapterIntro'
 
 export const LeaveSomethingBlocks: React.ReactNode[] = [
+  <ChapterIntro
+    key="chapter-intro"
+    name={'Leave Something'}
+    icon={'/images/icons/bio.svg'}
+  />,
   <section
     key="header"
     className="flex flex-col items-center justify-center p-4 border-2 border-pink-500 w-full h-full "

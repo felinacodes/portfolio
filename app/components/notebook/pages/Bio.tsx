@@ -1,7 +1,13 @@
 import React from 'react'
 import Image from 'next/image'
+import ChapterIntro from './ChapterIntro'
 
 export const bioBlocks: React.ReactNode[] = [
+  <ChapterIntro
+    key="chapter-intro"
+    name={'Bio'}
+    icon={'/images/icons/bio.svg'}
+  />,
   // HEADER
   <section key="header" className="flex items-center gap-4 mb-6">
     <div className="w-24 h-24 rounded-full overflow-hidden border">
