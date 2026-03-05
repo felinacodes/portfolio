@@ -23,6 +23,7 @@ import MeasureBlocks from './MeasureBlocks'
 import Bookmark from './Bookmark'
 
 // import useMeasure from '../useMeasure'
+
 type NotebookProps = {
   initialPage?: string
 }
@@ -220,6 +221,26 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
       }
     }
     setIsOpen(true)
+  }, [visibleItems])
+
+  // Handle URL's
+  useEffect(() => {
+    let newUrl
+    if (!visibleItems.length) return
+
+    const firstPage = visibleItems.find(
+      (item) => item.type === 'page' || item.type === 'context',
+    )
+
+    if (!firstPage) {
+      newUrl = `/`
+    } else {
+      newUrl = `/notebook/${firstPage.id}`
+    }
+
+    if (window.location.pathname !== newUrl) {
+      window.history.replaceState(null, '', newUrl)
+    }
   }, [visibleItems])
 
   // Active bookmark logic
