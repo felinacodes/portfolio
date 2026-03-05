@@ -189,29 +189,6 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
     // }, [pagesPerView, isTwoPages, isOpen, visibleItems])
   }, [pagesPerView, isTwoPages, isOpen, visibleItems])
 
-  // HANDLE HASH
-  useEffect(() => {
-    const handleHash = () => {
-      const hashId = window.location.hash.slice(1) // remove the #
-
-      if (!hashId) return
-
-      const pageSheet = correctSheet.find(
-        // WAS sheets
-        (sheet): sheet is Extract<Sheet, { type: 'page' }> =>
-          (sheet.type === 'page' || sheet.type === 'context') &&
-          sheet.id.startsWith(hashId),
-      )
-
-      if (pageSheet) {
-        goToIndex(pageSheet.id)
-      }
-    }
-    handleHash()
-    return () => window.removeEventListener('hashchange', handleHash)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isTwoPages]) // WAS URL ONLY
-
   // OPEN - CLOSE LOGIC
   useEffect(() => {
     if (visibleItems.some((i) => i.type === 'cover' && i.face === 'outside')) {

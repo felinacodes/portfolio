@@ -27,19 +27,18 @@ const Bookmarks = ({
         .filter((id) => id.endsWith('-0'))
         .map((id) => (
           <div key={id} className={''}>
-            <a
-              href={`#${transform(id)}`}
+            <button
               onClick={() => handleClick(id)}
-              // className={active === id ? 'text-blue-500' : ''}
               className={
                 transform(active) === transform(id) ? 'text-blue-500' : ''
               }
+              aria-label={`Go to ${id.slice(0, id.indexOf('-'))} section`}
             >
               {/* {id.slice(0, id.indexOf('-')).toUpperCase()} */}
               {((s) => s[0].toUpperCase() + s.slice(1))(
                 id.slice(0, id.indexOf('-')),
               )}
-            </a>
+            </button>
           </div>
         ))}
     </div>
