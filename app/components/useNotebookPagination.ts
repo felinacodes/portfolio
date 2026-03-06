@@ -39,22 +39,24 @@ export function useNotebookPagination(
   })
   const maxLeftIndex = Math.max(0, items.length - pagesPerView)
 
-  useLayoutEffect(() => {
-    // if (!isSetTwoPages) return
-    if (!initialPage || !isSetTwoPages) return
+  //BUG FIX : when switching from 1 page view to 2 goes back to initialPage instead of following current index.
+  const initialRef = React.useRef(initialPage)
 
-    const index = items.findIndex((i) => i.id === initialPage)
+  useLayoutEffect(() => {
+    if (!initialRef.current || !isSetTwoPages) return
+
+    const index = items.findIndex((i) => i.id === initialRef.current)
 
     if (index === -1) return
 
     let newIndex = index
-
-    if (isSetTwoPages) {
-      newIndex = index % 2 === 0 ? index - 1 : index
-    }
+    newIndex = index % 2 === 0 ? index - 1 : index
     // eslint-disable-next-line
     setLeftIndex(Math.max(0, newIndex))
-  }, [initialPage, items, isSetTwoPages])
+
+    // disable after first run
+    initialRef.current = undefined
+  }, [items, isSetTwoPages])
 
   useEffect(() => {
     // eslint-disable-next-line
