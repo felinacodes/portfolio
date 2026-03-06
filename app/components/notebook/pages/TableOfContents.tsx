@@ -7,11 +7,11 @@ export const TableOfContentsBlocks = (
   goToIndex?: (id: string) => void,
 ) => {
   return [
-    <ChapterIntro
-      key="chapter-intro"
-      name={'Table Of Contents'}
-      icon={'/images/icons/bio.svg'}
-    />,
+    // <ChapterIntro
+    //   key="chapter-intro"
+    //   name={'Table Of Contents'}
+    //   icon={'/images/icons/bio.svg'}
+    // />,
     <section
       key="header"
       className="flex flex-col items-center justify-center p-4 border-2 border-pink-500 w-full h-full"

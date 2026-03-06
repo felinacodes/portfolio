@@ -88,9 +88,13 @@ const sections: Section[] = SECTION_CONFIG.flatMap(({ key, blocks }) => {
 
 const numberOfBlanks = sections.length % 2 === 0 ? 2 : 3
 
-export const transform = (s: string) => {
-  if (!s) return
-  return s.slice(0, s.indexOf('-'))
+// export const transform = (s: string) => {
+//   if (!s) return
+//   return s.slice(0, s.indexOf('-'))
+// }
+
+export const transform = (s: string): string => {
+  return s.split('-')[0]
 }
 
 const sheet: Sheet[] = [
@@ -246,37 +250,28 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
 
   // Active bookmark logic
   useEffect(() => {
-    const visibleIds = visibleItems.map((item) => transform(item.id))
-    const compare = visibleIds.some((id) => id === transform(active))
-    console.log('active', active)
-    console.log('visibleIds', visibleIds)
-    console.log('compare', compare)
+    // ignore pages that don't have a bookmark
+    const sectionPages = visibleItems.filter(
+      (item) => item.type === 'page' || item.type === 'context',
+    )
 
-    if (!compare) {
-      if (visibleIds[0] !== 'cover') {
-        setActive(visibleItems[0]?.id) // This changes active bookmark to follow nav
-      } else {
-        setActive(visibleItems[1]?.id) // This changes active bookmark to follow nav
-      }
-    } // FIXES FOR FIRST AND LAST PAGES NAV IN TWO PAGES MODE.
-    else {
-      if (active === 'cover-front-inside') {
-      } else if (
-        active === 'cover-back-outside' ||
-        active.startsWith('blank')
-      ) {
-        setActive(visibleItems[0]?.id)
-      }
+    if (!sectionPages.length) {
+      setActive('')
+      return
     }
-  }, [visibleItems, setActive, active])
 
-  // useEffect(() => {
-  //   const visibleIds = visibleItems.map((item) => transform(item.id))
-  //   const compare = visibleIds.some((id) => id === transform(active))
-  //   if (!compare) {
-  //     if ()
-  //   }
-  // }, [visibleItems, active])
+    // Prefer chapter start page (-0)
+    const chapterStart = sectionPages.find((item) => item.id.endsWith('-0'))
+
+    if (chapterStart) {
+      setActive(transform(chapterStart.id))
+      return
+    }
+
+    // Otherwise use left page
+    const leftPage = sectionPages[0]
+    setActive(transform(leftPage.id))
+  }, [visibleItems])
 
   // Custom Boomark logic
   useEffect(() => {
