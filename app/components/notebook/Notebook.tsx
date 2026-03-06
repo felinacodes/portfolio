@@ -134,9 +134,6 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
   const [isOpen, setIsOpen] = useState(false)
   const [pagesPerView, setPagesPerView] = useState(1)
 
-  const getIsTwoPages = () =>
-    typeof window !== 'undefined' && window.innerWidth >= 768
-
   const [isTwoPages, setIsTwoPages] = useState(false)
   // Fixes initial flickering on 2 pages view but cause hydration error
   // const [isTwoPages, setIsTwoPages] = useState(() =>
@@ -197,7 +194,7 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
       clearTimeout(timeout)
       window.removeEventListener('resize', update)
     }
-  }, [isTwoPages]) // removing this makes index go to bookmark page everytime pages view changes
+  }, []) // removing this makes index go to bookmark page everytime pages view changes
 
   const { visibleItems, prev, next, goToIndex } = useNotebookPagination(
     // isTwoPages ? TwoPagesheets : OnePagesheets,

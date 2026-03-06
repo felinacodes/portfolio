@@ -4,9 +4,19 @@ import React, {
   useMemo,
   useCallback,
   useLayoutEffect,
+  use,
 } from 'react'
 
 import type { Sheet } from './notebook/Notebook'
+
+function getLastBlankId(items: Sheet[]): string | undefined {
+  for (let i = items.length - 1; i >= 0; i--) {
+    if (items[i].type === 'blank') {
+      return items[i].id
+    }
+  }
+}
+
 export function useNotebookPagination(
   // allItems: Sheet[],
   items: Sheet[],
@@ -19,6 +29,7 @@ export function useNotebookPagination(
 ) {
   // const [leftIndex, setLeftIndex] = useState(0)
   const [leftIndex, setLeftIndex] = useState(() => {
+    console.log('initial page: ', initialPage)
     if (!initialPage) return 0
 
     const index = items.findIndex((i) => i.id === initialPage)
@@ -46,10 +57,24 @@ export function useNotebookPagination(
   }, [initialPage, items, isSetTwoPages])
 
   useEffect(() => {
-    // bug fix for when resizing from 2 pages to 1 page while on last pages that don't exist in 1 page notebook
     // eslint-disable-next-line
     setLeftIndex((prev) => Math.min(prev, maxLeftIndex))
   }, [maxLeftIndex])
+
+  const prevTwoPages = React.useRef(isSetTwoPages)
+
+  // BUG FIX : when switching from 1 page view to 2 page view, and lands  on last blank page.
+  useEffect(() => {
+    const switchedToTwoPages = !prevTwoPages.current && isSetTwoPages
+    prevTwoPages.current = isSetTwoPages
+
+    if (!switchedToTwoPages) return
+    // eslint-disable-next-line
+    setLeftIndex((prev) => {
+      const aligned = prev % 2 === 0 ? prev - 1 : prev
+      return Math.max(0, aligned)
+    })
+  }, [isSetTwoPages])
 
   const visibleItems = useMemo(() => {
     // if (!mounted) return []
@@ -69,6 +94,18 @@ export function useNotebookPagination(
     }
     setLeftIndex(newIndex)
   }
+
+  // useEffect(() => {
+  //   const lastBlankId = getLastBlankId(items)
+
+  //   if (!isSetTwoPages) return
+
+  //   if (visibleItems.some((i) => i.id === lastBlankId)) {
+  //     // eslint-disable-next-line
+  //     setLeftIndex((prev) => Math.min(prev, maxLeftIndex) - 1)
+  //     return
+  //   }
+  // }, [isSetTwoPages])
 
   const next = () => {
     let newIndex = Math.min(leftIndex + pagesPerView, maxLeftIndex)
