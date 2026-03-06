@@ -8,8 +8,8 @@ interface BookmarkProps {
 
 const Bookmark = ({ visibleItems, setBookmarkedPage }: BookmarkProps) => {
   function handleClick(sheet: Sheet) {
-    if (sheet.type !== 'page') return
-    // if (sheet.type === 'cover') return
+    // if (sheet.type !== 'page') return
+    if (sheet.type === 'cover') return
     const id = sheet.id
     setBookmarkedPage(id)
   }
