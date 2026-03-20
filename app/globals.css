@@ -1,4 +1,4 @@
-@import 'tailwindcss';
+@import "tailwindcss";
 
 html,
 body,
@@ -27,9 +27,138 @@ body,
   }
 }
 
-
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+root {
+  /* background-color: red; */
+}
+
+.page {
+  position: relative;
+  z-index: 1;
+  background: white;
+}
+
+.odd-page {
+  background-image: linear-gradient(
+    to right,
+    rgba(0, 0, 0, 0.2) 0%,
+    rgba(0, 0, 0, 0) 5%
+  );
+  /* border-width: 4px;
+  border-left-width: 0; */
+}
+
+.even-page {
+  background-image: linear-gradient(
+    to left,
+    rgba(0, 0, 0, 0.12) 0%,
+    rgba(0, 0, 0, 0) 5%
+  );
+  /* border-width: 4px;
+  border-right-width: 0; */
+}
+
+/* .odd-page {
+  clip-path: polygon(
+    0 0.7%,
+    20% 0.5%,
+    34% 0.4%,
+    40% 0.3%,
+    69% 0.3%,
+    86% 0.4%,
+    100% 0.5%,
+    100% 15%,
+    100% 44%,
+    100% 54%,
+    100% 72%,
+    100% 91%,
+    100% 100%,
+    88% 100%,
+    68% 100%,
+    56% 100%,
+    26% 99%,
+    13% 99%,
+    0 99%
+  );
+}
+
+.even-page {
+  clip-path: polygon(
+    100% 0.7%,
+    80% 0.5%,
+    66% 0.4%,
+    60% 0.3%,
+    31% 0.3%,
+    14% 0.4%,
+    0% 0.5%,
+    0% 15%,
+    0% 44%,
+    0% 54%,
+    0% 72%,
+    0% 91%,
+    0% 100%,
+    12% 100%,
+    32% 100%,
+    44% 100%,
+    74% 99%,
+    87% 99%,
+    100% 99%
+  );
+} */
+
+.page-wrapper {
+  /* position: relative; */
+}
+
+.odd-page {
+  box-shadow:
+    inset -2px -2px 0 #dbdbdbf6,
+    inset -3px -3px 0 white,
+    inset -4px -4px 0 #dbdbdbf6,
+    inset -5px -5px 0 white,
+    inset -6px -6px 0 #dbdbdbf6,
+    inset -7px 0 0 white,
+    inset -8px 0 0 #dbdbdbf6,
+    inset -9px 0 0 white,
+    inset -10px 0 0 #dbdbdbf6;
+}
+
+.even-page {
+  box-shadow:
+    inset 2px -2px 0 #dbdbdbf6,
+    inset 3px -3px 0 white,
+    inset 4px -4px 0 #dbdbdbf6,
+    inset 5px -5px 0 white,
+    inset 6px -6px 0 #dbdbdbf6,
+    inset 7px 0 0 white,
+    inset 8px 0 0 #dbdbdbf6,
+    inset 9px 0 0 white,
+    inset 10px 0 0 #dbdbdbf6;
+}
+
+@media (max-width: 768px) {
+  .odd-page,
+  .even-page {
+    background-image: linear-gradient(
+      to right,
+      rgba(0, 0, 0, 0.2) 0%,
+      rgba(0, 0, 0, 0) 5%
+    );
+
+    box-shadow:
+      inset -2px -2px 0 #dbdbdbf6,
+      inset -3px -3px 0 white,
+      inset -4px -4px 0 #dbdbdbf6,
+      inset -5px -5px 0 white,
+      inset -6px -6px 0 #dbdbdbf6,
+      inset -7px 0 0 white,
+      inset -8px 0 0 #dbdbdbf6,
+      inset -9px 0 0 white,
+      inset -10px 0 0 #dbdbdbf6;
+  }
 }

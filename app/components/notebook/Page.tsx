@@ -1,39 +1,38 @@
-import React, { forwardRef } from 'react'
+import React, { forwardRef } from "react";
 
 interface PageProps {
-  children?: React.ReactNode
-  index?: number
+  children?: React.ReactNode;
+  index?: number;
 }
 
 const Page = forwardRef<HTMLDivElement, PageProps>(
   ({ children, index }, ref) => {
+    console.log("PAGE PROPS", index);
+    const isOdd = index && index % 2 === 1;
+
     return (
-      // <div className="page h-full w-full flex flex-col p-4 min-h-0 border-2 border-red-500">
-      <div className="w-full h-full border-5 border-red-500 relative">
-        {/* CONTENT AREA */}
-        {/* <div ref={ref} className="flex-1 h-full border-2 border-blue-500"> */}
+      <div
+        className={`page-wrapper w-full h-full 
+          ${isOdd ? "md:pr-2 md:pl-0" : "md:pl-2 md:pr-0"}`}
+      >
         <div
-          ref={ref}
-          className="w-full h-full border-2 border-blue-500 overflow-auto"
+          className={`page w-full h-full bg-white flex flex-col
+            justify-center items-center p-2 
+            ${index && index % 2 === 1 ? "odd-page" : "even-page"}`}
         >
-          {children}
-        </div>
+          <div ref={ref} className="main w-full h-full overflow-auto p-4">
+            {children}
+          </div>
 
-        <div className="absolute bottom-0 right-0 m-2 p-4 border-2 border-blue-500">
-          <p>{index}</p>
+          <div className="footer border-2 border-red-200 m-1">
+            <p className="text-center">{index}</p>
+          </div>
         </div>
-
-        {/* FOOTER
-      <div className="shrink-0">
-        <h1 className="text-lg border-2 border-green-500 m-2 p-2 text-center">
-          FOOTER TEST
-        </h1>
-      </div> */}
       </div>
-    )
+    );
   },
-)
+);
 
-Page.displayName = 'Page'
+Page.displayName = "Page";
 
-export default Page
+export default Page;

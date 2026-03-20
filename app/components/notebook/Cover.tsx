@@ -1,11 +1,11 @@
-import React, { useState } from 'react'
+import React, { useState } from "react";
 
 interface CoverProps {
-  side: string
-  face: string
-  isOpen?: boolean
-  setIsOpen: (isOpen: boolean) => void
-  pagesPerView: number
+  side: string;
+  face: string;
+  isOpen?: boolean;
+  setIsOpen: (isOpen: boolean) => void;
+  pagesPerView: number;
 }
 
 const Cover = ({ side, face, isOpen, setIsOpen, pagesPerView }: CoverProps) => {
@@ -45,12 +45,15 @@ const Cover = ({ side, face, isOpen, setIsOpen, pagesPerView }: CoverProps) => {
     //     <div className="bg-blue-500 w-full h-full"> COVER INSIDE</div>
     //   )}
     // </div>
-    <div className="border-2 border-blue-500 md:max-w-[40vw] text-center w-full h-full flex flex-col justify-center items-center p-4">
+    // <div className="border-2 border-blue-500 md:max-w-[40vw] text-center w-full h-full flex flex-col justify-center items-center p-4">
+    <div
+      className={`border-2 border-blue-500 text-center h-full w-full ${face === "outside" ? "md:w-[50%]" : ""}`}
+    >
       <p>
         cover {side} {face}
       </p>
     </div>
-  )
-}
+  );
+};
 
-export default Cover
+export default Cover;
