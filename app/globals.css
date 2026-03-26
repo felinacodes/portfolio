@@ -63,54 +63,6 @@ root {
   border-right-width: 0; */
 }
 
-/* .odd-page {
-  clip-path: polygon(
-    0 0.7%,
-    20% 0.5%,
-    34% 0.4%,
-    40% 0.3%,
-    69% 0.3%,
-    86% 0.4%,
-    100% 0.5%,
-    100% 15%,
-    100% 44%,
-    100% 54%,
-    100% 72%,
-    100% 91%,
-    100% 100%,
-    88% 100%,
-    68% 100%,
-    56% 100%,
-    26% 99%,
-    13% 99%,
-    0 99%
-  );
-}
-
-.even-page {
-  clip-path: polygon(
-    100% 0.7%,
-    80% 0.5%,
-    66% 0.4%,
-    60% 0.3%,
-    31% 0.3%,
-    14% 0.4%,
-    0% 0.5%,
-    0% 15%,
-    0% 44%,
-    0% 54%,
-    0% 72%,
-    0% 91%,
-    0% 100%,
-    12% 100%,
-    32% 100%,
-    44% 100%,
-    74% 99%,
-    87% 99%,
-    100% 99%
-  );
-} */
-
 .page-wrapper {
   /* position: relative; */
 }
@@ -139,6 +91,144 @@ root {
     inset 8px 0 0 #dbdbdbf6,
     inset 9px 0 0 white,
     inset 10px 0 0 #dbdbdbf6;
+}
+
+.cover {
+  background: #ffc0cb;
+  border-radius: 3px;
+  box-shadow:
+    inset 4px 1px 3px #ffffff54,
+    inset 0 -1px 2px #00000080;
+  background-image: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.2) 0%,
+    rgba(255, 255, 255, 0) 100%
+  );
+}
+
+.cover-inside {
+  margin: 5px;
+  padding: 5px;
+  border: 2px solid red;
+  color: #fabac5;
+}
+
+.cover-inside-front {
+  background-color: #f8c7cf;
+  box-shadow: inset -5px 0 8px -8px rgba(0, 0, 0, 0.5);
+  border-radius: 3px;
+  border: #facbd3 solid 3px;
+  border-right: none;
+}
+
+.cover-inside-back {
+  background-color: #f8c7cf;
+  box-shadow: inset 5px 0 8px -8px rgba(0, 0, 0, 0.5);
+  border-radius: 3px;
+  border: #facbd3 solid 3px;
+  border-left: none;
+}
+
+.barcode {
+  background-image: linear-gradient(
+    to right,
+    white 0% 2%,
+    black 2% 3%,
+
+    white 3% 5%,
+    black 5% 7%,
+
+    white 7% 8%,
+    black 8% 10%,
+
+    white 10% 13%,
+    black 13% 14%,
+
+    white 14% 17%,
+    black 17% 19%,
+
+    white 19% 21%,
+    black 21% 22%,
+
+    white 22% 25%,
+    black 25% 28%,
+
+    white 28% 30%,
+    black 30% 31%,
+
+    white 31% 34%,
+    black 34% 36%,
+
+    white 36% 39%,
+    black 39% 40%,
+
+    white 40% 43%,
+    black 43% 45%,
+
+    white 45% 48%,
+    black 48% 50%,
+
+    white 50% 52%,
+    black 52% 53%,
+
+    white 53% 56%,
+    black 56% 58%,
+
+    white 58% 61%,
+    black 61% 63%,
+
+    white 63% 66%,
+    black 66% 67%,
+
+    white 67% 70%,
+    black 70% 72%,
+
+    white 72% 75%,
+    black 75% 76%,
+
+    white 76% 79%,
+    black 79% 81%,
+
+    white 81% 84%,
+    black 84% 86%,
+
+    white 86% 89%,
+    black 89% 90%,
+
+    white 90% 93%,
+    black 93% 95%,
+
+    white 95% 97%,
+    black 97% 98%,
+
+    white 98% 100%
+  );
+}
+
+.barcode::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 3px;
+  height: 120%;
+  background-color: black;
+  margin: 1;
+  margin-left: -2px;
+  padding: 0;
+}
+
+.barcode::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 100%;
+  width: 3px;
+  height: 120%;
+  background-color: black;
+  margin: 1;
+  margin-right: -2px;
+  padding: 0;
 }
 
 @media (max-width: 768px) {
