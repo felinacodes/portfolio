@@ -325,7 +325,9 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
   // }
 
   return (
-    <div className={`flex flex-col items-center justify-center w-full h-full `}>
+    <div
+      className={`font-baskervville  flex flex-col items-center justify-center w-full h-full `}
+    >
       <button onClick={() => goToIndex(bookmarkedPage)}>
         Open On Bookmark
       </button>
