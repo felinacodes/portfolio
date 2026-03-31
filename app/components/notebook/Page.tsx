@@ -12,23 +12,20 @@ const Page = forwardRef<HTMLDivElement, PageProps>(
 
     return (
       <div
-        className={`w-full h-full 
+        className={`w-full h-full  
           ${isOdd ? "md:pr-2 md:pl-0" : "md:pl-2 md:pr-0"}`}
       >
         <div
-          className={`page w-full h-full bg-white flex flex-col 
-            justify-center items-center p-2 
-            ${index && index % 2 === 1 ? "odd-page pr-4" : "even-page pl-4"}`}
+          className={` w-full h-full bg-white flex flex-col 
+            justify-between p-2 
+            ${index && index % 2 === 1 ? "odd-page md:pr-4" : "even-page md:pl-4"}`}
         >
-          <div
-            ref={ref}
-            className=" flex flex-col items-center justify-start w-full h-full overflow-auto p-4 "
-          >
+          <div ref={ref} className="flex-1 overflow-auto h-full w-full p-4 ">
             {children}
           </div>
 
-          <div className="footer m-1">
-            <p className="text-center">{index}</p>
+          <div className="shrink-0 footer m-1 flex items-center justify-center">
+            <p className="text-sm font-merriweather  p-1">{index}</p>
           </div>
         </div>
       </div>

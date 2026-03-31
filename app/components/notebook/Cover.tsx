@@ -44,7 +44,7 @@ const Cover = ({ side, face, isOpen, setIsOpen, pagesPerView }: CoverProps) => {
           <div className="drop-shadow-sm max-w-[50%]  w-[clamp(150px,250px,300px)] h-[clamp(10rem,15vh,12rem)] mb-10 bg-white  p-3 rounded-sm">
             <div className=" flex flex-col border-2 w-full h-full justify-between">
               <h1 className="text-2xl p-1">Felina</h1>
-              <h2 className="">Made with 💜</h2>
+              <h2 className="text-center">Made with 💜</h2>
               {/* <div className="w-full h-full"> */}
               <div className="relative barcode w-full h-full border-r-2 "></div>
               <p className="font-mono w-full max-w-full text-center flex items-center justify-between pl-2 pr-2">

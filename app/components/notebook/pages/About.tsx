@@ -1,13 +1,13 @@
-import React from 'react'
-import Image from 'next/image'
-import ChapterIntro from './ChapterIntro'
+import React from "react";
+import Image from "next/image";
+import ChapterIntro from "./ChapterIntro";
 
 export const aboutBlocks: React.ReactNode[] = [
   <ChapterIntro
-      key="chapter-intro"
-      name={'About Me'}
-      icon={'/images/icons/bio.svg'}
-    />,
+    key="chapter-intro"
+    name={"About Me"}
+    icon={"/images/icons/bio.svg"}
+  />,
   <section
     id="about"
     key="about-me"
@@ -35,9 +35,9 @@ export const aboutBlocks: React.ReactNode[] = [
     about clean code, maintainability, and creating user experiences that are
     intuitive and enjoyable.
   </p>,
-]
+];
 
 export default function About() {
   // return <div className="w-full h-full text-left text-sm">{aboutBlocks}</div>
-  return { aboutBlocks }
+  return { aboutBlocks };
 }

@@ -341,7 +341,7 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
 
       {
         <div
-          className={`h-[85vh] min-h-[300px] max-h-[800px] grid grid-cols-1 w-[${pageWidth}vw]
+          className={` min-h-[350px] h-[85vh]  max-h-[800px] grid grid-cols-1 w-[${pageWidth}vw]
          
           ${
             isOpen
@@ -360,14 +360,14 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
 
             return (
               <div
-                className="perspective-2000 items-center justify-center flex testing"
+                className="w-full h-full min-h-0 items-center justify-center flex"
                 // style={{ width: `${pageWidth}vw` }}
                 key={key}
                 // className="flex-1 p-2 border-5 border-yellow-500"
                 // className={` ${mounted ? 'opacity-100' : 'opacity-0'}`}
               >
                 <div
-                  className="w-full h-full relative overflow-hidden flex justify-center "
+                  className="w-full h-full relative  flex justify-center "
                   style={{
                     transformStyle: "preserve-3d",
                     backfaceVisibility: "hidden",
