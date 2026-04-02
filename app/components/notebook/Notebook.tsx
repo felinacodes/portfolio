@@ -45,16 +45,22 @@ export type Sheet =
       type: "page";
       id: string;
       render: (args?: RenderContext) => React.ReactNode;
+      chapterName: string;
     }
   | {
       type: "context";
       id: string;
       render: (args?: RenderContext) => React.ReactNode;
     }
-  | { type: "blank"; id: string; render: () => React.ReactNode };
+  | {
+      type: "blank";
+      id: string;
+      render: () => React.ReactNode;
+    };
 
 export type Section = {
   id: string;
+  chapterName: string;
   render: (args?: RenderContext) => React.ReactNode;
 };
 
@@ -65,13 +71,13 @@ type SectionConfig = {
 
 const SECTION_CONFIG: SectionConfig[] = [
   { key: "tableOfContents", blocks: TableOfContentsBlocks },
-  { key: "intro", blocks: IntroBlocks },
-  { key: "about", blocks: aboutBlocks },
-  { key: "education", blocks: EducationBlocks },
-  { key: "skills", blocks: SkillsBlocks },
-  { key: "projects", blocks: ProjectsBlocks },
-  { key: "contact", blocks: ContactBlocks },
-  { key: "leaveSomething", blocks: LeaveSomethingBlocks },
+  { key: "Intro", blocks: IntroBlocks },
+  { key: "About", blocks: aboutBlocks },
+  { key: "Education", blocks: EducationBlocks },
+  { key: "Skills", blocks: SkillsBlocks },
+  { key: "Projects", blocks: ProjectsBlocks },
+  { key: "Contact", blocks: ContactBlocks },
+  { key: "Leave Something", blocks: LeaveSomethingBlocks },
 ];
 
 const sections: Section[] = SECTION_CONFIG.flatMap(
@@ -80,6 +86,7 @@ const sections: Section[] = SECTION_CONFIG.flatMap(
 
     return resolved.map((_, index) => ({
       id: `${key}-${index}`,
+      chapterName: key,
       render: (args?: RenderContext) =>
         blocks({
           ...args,
@@ -109,13 +116,15 @@ const sheet: Sheet[] = [
       return {
         type: "context" as const,
         id: s.id,
-        render: s.render as () => React.ReactNode,
+
+        render: s.render,
       };
     } else {
       return {
         type: "page" as const,
         id: s.id,
-        render: s.render as () => React.ReactNode,
+        chapterName: s.chapterName,
+        render: s.render,
       };
     }
   }),
@@ -302,7 +311,6 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
         map.set(sheet.id, count);
       }
     });
-
     return map;
   }, [correctSheet]);
 
@@ -396,7 +404,11 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
                     </Page>
                   )}
                   {sheet.type === "page" && (
-                    <Page ref={outerRef} index={numberedMap.get(sheet.id) ?? 0}>
+                    <Page
+                      ref={outerRef}
+                      index={numberedMap.get(sheet.id) ?? 0}
+                      chapterName={sheet.chapterName}
+                    >
                       {sheet.render({})}
                     </Page>
                   )}
