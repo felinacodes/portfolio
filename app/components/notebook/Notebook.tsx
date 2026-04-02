@@ -28,6 +28,12 @@ type NotebookProps = {
   initialPage?: string;
 };
 
+export type RenderContext = {
+  chapter?: number;
+  ctx?: Map<string, number>;
+  goToIndex?: (id: string) => void;
+};
+
 export type Sheet =
   | {
       type: "cover";
@@ -35,34 +41,26 @@ export type Sheet =
       face: "inside" | "outside";
       id: string;
     }
-  | { type: "page"; id: string; render: () => React.ReactNode }
+  | {
+      type: "page";
+      id: string;
+      render: (args?: RenderContext) => React.ReactNode;
+    }
   | {
       type: "context";
       id: string;
-      render: (
-        ctx?: Map<string, number>,
-        goToIndex?: (id: string) => void,
-      ) => React.ReactNode;
+      render: (args?: RenderContext) => React.ReactNode;
     }
   | { type: "blank"; id: string; render: () => React.ReactNode };
 
 export type Section = {
   id: string;
-  render: (
-    ctx?: Map<string, number>,
-    goToIndex?: (id: string) => void,
-  ) => React.ReactNode;
+  render: (args?: RenderContext) => React.ReactNode;
 };
-type SectionBlock =
-  | React.ReactNode[]
-  | ((
-      ctx?: Map<string, number>,
-      goToIndex?: (id: string) => void,
-    ) => React.ReactNode[]);
 
 type SectionConfig = {
   key: string;
-  blocks: SectionBlock;
+  blocks: (args?: RenderContext) => React.ReactNode[];
 };
 
 const SECTION_CONFIG: SectionConfig[] = [
@@ -77,12 +75,11 @@ const SECTION_CONFIG: SectionConfig[] = [
 ];
 
 const sections: Section[] = SECTION_CONFIG.flatMap(({ key, blocks }) => {
-  const resolved = typeof blocks === "function" ? blocks() : blocks;
+  const resolved = blocks();
 
-  return resolved.map((block, index) => ({
+  return resolved.map((_, index) => ({
     id: `${key}-${index}`,
-    render: (ctx?: Map<string, number>, goToIndex?: (id: string) => void) =>
-      typeof blocks === "function" ? blocks(ctx, goToIndex)[index] : block,
+    render: (args?: RenderContext) => blocks(args)[index],
   }));
 });
 
@@ -101,7 +98,7 @@ const sheet: Sheet[] = [
   { type: "cover", side: "front", face: "outside", id: "cover-front-outside" },
   { type: "cover", side: "front", face: "inside", id: "cover-front-inside" },
 
-  ...sections.flatMap((s) => {
+  ...sections.map((s) => {
     if (s.id.startsWith("tableOfContents")) {
       return {
         type: "context" as const,
@@ -384,18 +381,17 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
                   )}
                   {sheet.type === "context" && (
                     <Page ref={outerRef} index={numberedMap.get(sheet.id) ?? 0}>
-                      {/* {sheet.render(contextMap)} */}
-                      {sheet.render(
-                        contextMap,
-                        sheet.id.startsWith("tableOfContents")
+                      {sheet.render({
+                        ctx: contextMap,
+                        goToIndex: sheet.id.startsWith("tableOfContents")
                           ? goToIndex
                           : undefined,
-                      )}
+                      })}
                     </Page>
                   )}
                   {sheet.type === "page" && (
                     <Page ref={outerRef} index={numberedMap.get(sheet.id) ?? 0}>
-                      {sheet.render()}
+                      {sheet.render({})}
                     </Page>
                   )}
 

@@ -1,26 +1,23 @@
-import React from 'react'
-import Image from 'next/image'
-import ChapterIntro from './ChapterIntro'
+import React from "react";
+import Image from "next/image";
+import ChapterIntro from "./ChapterIntro";
+import { RenderContext } from "../Notebook";
 
-export const LeaveSomethingBlocks: React.ReactNode[] = [
-  <ChapterIntro
-    key="chapter-intro"
-    name={'Leave Something'}
-    icon={'/images/icons/bio.svg'}
-  />,
-  <section
-    key="header"
-    className="flex flex-col items-center justify-center p-4 border-2 border-pink-500 w-full h-full "
-  >
-    <h1>Leave Me Something: </h1>
-  </section>,
-]
+export const LeaveSomethingBlocks = (args?: RenderContext) => {
+  const chapter = args?.chapter;
 
-export default function Intro() {
-  return (
-    // <div className="w-full h-full text-left text-sm border-2 border-green-700">
-    //   {IntroBlocks}
-    // </div>
-    { LeaveSomethingBlocks }
-  )
-}
+  return [
+    <section
+      key="header"
+      className="flex flex-col items-center justify-center p-4  w-full h-full "
+    >
+      <ChapterIntro
+        key="chapter-intro"
+        name={"Leave Something"}
+        icon={"/images/icons/bio.svg"}
+      />
+
+      <h1>Leave Me Something: </h1>
+    </section>,
+  ];
+};

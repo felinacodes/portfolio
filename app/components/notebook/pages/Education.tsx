@@ -1,39 +1,40 @@
-import React from 'react'
-import Image from 'next/image'
-import ChapterIntro from './ChapterIntro'
+import React from "react";
+import Image from "next/image";
+import ChapterIntro from "./ChapterIntro";
+import { RenderContext } from "../Notebook";
 
-export const EducationBlocks: React.ReactNode[] = [
-  <ChapterIntro
-    key="chapter-intro"
-    name={'Education'}
-    icon={'/images/icons/bio.svg'}
-  />,
-  <section
-    key="education"
-    className="flex flex-col items-center justify-center p-4 border-2 border-pink-500 w-full h-full"
-  >
-    <div className="w-full max-w-md text-left">
-      <h3 className="font-semibold mb-2">Degrees</h3>
-      <ol className="list-decimal list-inside">
-        <li>
-          <b>Hellenic Mediterranean University:</b> BSc in Computer and
-          Informatics Engineering
-        </li>
-      </ol>
+export const EducationBlocks = (args?: RenderContext) => {
+  const chapter = args?.chapter;
 
-      <h3 className="font-semibold mt-6 mb-2">Courses</h3>
-      <ol className="list-decimal list-inside ml-4">
-        <li>The Odin Project</li>
-      </ol>
-    </div>
-  </section>,
-]
+  return [
+    <section
+      key="education"
+      className="flex flex-col items-center justify-center p-4  w-full h-full"
+    >
+      <ChapterIntro
+        key="chapter-intro"
+        name={"Education"}
+        icon={"/images/icons/bio.svg"}
+      />
+      <div>{chapter}</div>
+      <div className="w-full max-w-md text-left">
+        <h3 className="font-semibold mb-2">Degrees</h3>
+        <ol className="list-decimal list-inside">
+          <li>
+            <b>Hellenic Mediterranean University:</b> BSc in Computer and
+            Informatics Engineering
+          </li>
+        </ol>
 
-export default function Education() {
-  return (
-    // <div className="w-full h-full text-left text-sm border-2 border-green-700">
-    //   {IntroBlocks}
-    // </div>
-    { EducationBlocks }
-  )
-}
+        <h3 className="font-semibold mt-6 mb-2">Courses</h3>
+        <ol className="list-decimal list-inside ml-4">
+          <li>The Odin Project</li>
+        </ol>
+      </div>
+    </section>,
+  ];
+};
+
+// export default function Education({ chapter }: { chapter?: number }) {
+//   return <>{EducationBlocks({ chapter })}</>;
+// }
