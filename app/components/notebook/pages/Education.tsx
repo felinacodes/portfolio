@@ -15,6 +15,7 @@ export const EducationBlocks = (args?: RenderContext) => {
         key="chapter-intro"
         name={"Education"}
         icon={"/images/icons/bio.svg"}
+        chapterNumber={chapter}
       />
       <div>{chapter}</div>
       <div className="w-full max-w-md text-left">

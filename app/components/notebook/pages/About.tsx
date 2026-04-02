@@ -12,11 +12,11 @@ export const aboutBlocks = (args?: RenderContext) => {
       key="about-me"
       className="gap-4 flex flex-col p-4 m-2  items-center justify-center"
     >
-      <div>{chapter}</div>
       <ChapterIntro
         key="chapter-intro"
         name={"About Me"}
         icon={"/images/icons/bio.svg"}
+        chapterNumber={chapter}
       />
 
       <p key="intro">

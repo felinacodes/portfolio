@@ -74,14 +74,20 @@ const SECTION_CONFIG: SectionConfig[] = [
   { key: "leaveSomething", blocks: LeaveSomethingBlocks },
 ];
 
-const sections: Section[] = SECTION_CONFIG.flatMap(({ key, blocks }) => {
-  const resolved = blocks();
+const sections: Section[] = SECTION_CONFIG.flatMap(
+  ({ key, blocks }, chapterIndex) => {
+    const resolved = blocks();
 
-  return resolved.map((_, index) => ({
-    id: `${key}-${index}`,
-    render: (args?: RenderContext) => blocks(args)[index],
-  }));
-});
+    return resolved.map((_, index) => ({
+      id: `${key}-${index}`,
+      render: (args?: RenderContext) =>
+        blocks({
+          ...args,
+          chapter: chapterIndex,
+        })[index],
+    }));
+  },
+);
 
 const numberOfBlanks = sections.length % 2 === 0 ? 2 : 3;
 

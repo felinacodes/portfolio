@@ -12,6 +12,7 @@ export const IntroBlocks = (args?: RenderContext) => {
     >
       <ChapterIntro
         key="chapter-intro"
+        chapterNumber={chapter}
         name={"Intro"}
         icon={"/images/icons/bio.svg"}
       />

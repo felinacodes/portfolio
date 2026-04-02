@@ -15,6 +15,7 @@ export const SkillsBlocks = (args?: RenderContext) => {
         key="chapter-intro"
         name={"Skills"}
         icon={"/images/icons/bio.svg"}
+        chapterNumber={chapter}
       />
 
       <h1>Skills:</h1>

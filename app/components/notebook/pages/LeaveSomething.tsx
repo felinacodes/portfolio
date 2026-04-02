@@ -15,6 +15,7 @@ export const LeaveSomethingBlocks = (args?: RenderContext) => {
         key="chapter-intro"
         name={"Leave Something"}
         icon={"/images/icons/bio.svg"}
+        chapterNumber={chapter}
       />
 
       <h1>Leave Me Something: </h1>

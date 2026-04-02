@@ -15,6 +15,7 @@ export const ProjectsBlocks = (args?: RenderContext) => {
         key="chapter-intro"
         name={"Projects"}
         icon={"/images/icons/bio.svg"}
+        chapterNumber={chapter}
       />
 
       <div className="flex">

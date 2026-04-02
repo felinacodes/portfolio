@@ -15,6 +15,7 @@ export const ContactBlocks = (args?: RenderContext) => {
         key="chapter-intro"
         name={"Contact"}
         icon={"/images/icons/bio.svg"}
+        chapterNumber={chapter}
       />
       <div className="flex flex-col gap-4 items-center justify-center">
         <h1>Lets Connect 👋</h1>

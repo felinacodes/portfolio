@@ -12,6 +12,7 @@ export const bioBlocks = (args?: RenderContext) => {
         key="chapter-intro"
         name={"Bio"}
         icon={"/images/icons/bio.svg"}
+        chapterNumber={chapter}
       />
       <div className="w-24 h-24 rounded-full overflow-hidden border">
         <Image
