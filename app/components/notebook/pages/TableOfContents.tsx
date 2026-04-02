@@ -8,20 +8,27 @@ export const TableOfContentsBlocks = (args?: RenderContext) => {
   return [
     <section
       key="header"
-      className="flex flex-col items-center justify-center p-4 border-2 border-pink-500 w-full h-full"
+      className="flex flex-col items-center p-4 w-full h-full gap-4 justify-center"
     >
-      <h1>Table of Contents</h1>
-      {ctx &&
-        Array.from(ctx.entries()).map(([key, value]) => (
-          <div
-            key={String(key).toUpperCase()}
-            className="cursor-pointer hover:bg-gray-200 p-1 rounded"
-            onClick={() => goToIndex?.(key)}
-          >
-            <h2>{transform(key)?.toUpperCase()}</h2>
-            <p>{value}</p>
-          </div>
-        ))}
+      <h1 className="font-bold text-3xl md:text-4xl lg:text-5xl font-baskervville ">
+        Contents
+      </h1>
+      <div className="font-jost text-semibold w-full h-full flex flex-col">
+        {ctx &&
+          Array.from(ctx.entries()).map(([key, value], index) => (
+            <div
+              className="w-full h-full "
+              key={String(key).toUpperCase()}
+              onClick={() => goToIndex?.(key)}
+            >
+              <div className="text-xs mb-1">Chapter: {index + 1}</div>
+              <div className="cursor-pointer hover:bg-gray-200  border-b-r-2 flex w-full border-b border-dotted border-gray-400 justify-between items-center">
+                <h2>{transform(key)}</h2>
+                <p>{value}</p>
+              </div>
+            </div>
+          ))}
+      </div>
     </section>,
   ];
 };

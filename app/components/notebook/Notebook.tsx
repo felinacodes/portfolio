@@ -70,7 +70,7 @@ type SectionConfig = {
 };
 
 const SECTION_CONFIG: SectionConfig[] = [
-  { key: "tableOfContents", blocks: TableOfContentsBlocks },
+  { key: "Contents", blocks: TableOfContentsBlocks },
   { key: "Intro", blocks: IntroBlocks },
   { key: "About", blocks: aboutBlocks },
   { key: "Education", blocks: EducationBlocks },
@@ -112,7 +112,7 @@ const sheet: Sheet[] = [
   { type: "cover", side: "front", face: "inside", id: "cover-front-inside" },
 
   ...sections.map((s) => {
-    if (s.id.startsWith("tableOfContents")) {
+    if (s.id.startsWith("Contents")) {
       return {
         type: "context" as const,
         id: s.id,
@@ -397,7 +397,7 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
                     <Page ref={outerRef} index={numberedMap.get(sheet.id) ?? 0}>
                       {sheet.render({
                         ctx: contextMap,
-                        goToIndex: sheet.id.startsWith("tableOfContents")
+                        goToIndex: sheet.id.startsWith("Contents")
                           ? goToIndex
                           : undefined,
                       })}

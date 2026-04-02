@@ -98,7 +98,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} ${homemadeApple.variable} 
         ${indieFlower.variable} ${gloriaHallelujah.variable} ${rockSalt.variable} 
         ${handlee.variable} ${badScript.variable} ${playfairDisplay.variable} 
-        {baskervville.variable} ${jost.variable} ${merriweather.variable} 
+        {baskervville.variable} ${jost.variable} ${merriweather.variable}
         bg-background text-foreground
         antialiased`}
       >
