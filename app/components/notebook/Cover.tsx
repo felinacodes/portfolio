@@ -20,7 +20,7 @@ const Cover = ({ side, face, isOpen, setIsOpen, pagesPerView }: CoverProps) => {
           <div className="max-w-[80%] mt-[40%] lg:mt-[25%] w-[clamp(200px,300px,400px)] h-[clamp(10rem,15vw,12rem)] p-2 bg-[#f4f5f0] border-[9px] border-double border-[#438bce] rounded-[40px]">
             <div className="flex flex-col items-start gap-2  justify-center w-full h-full bg-[repeating-linear-gradient(to_bottom,transparent,transparent_30px,#00000030_30px)] p-4">
               <h1 className=" text-start w-full border-b-2 border-dotted border-gray-300 leading-none pt-2">
-                <strong className="font-baskervville mr-2 font-bold text-[clamp(1rem,1vw,1.2rem)]">
+                <strong className="font-handlee mr-2 font-bold text-[clamp(1rem,1vw,1.2rem)]">
                   Name:
                 </strong>
                 <span className="font-handlee font-semibold text-blue-800 text-[clamp(1rem,1vw,1.2rem)]">
@@ -28,8 +28,8 @@ const Cover = ({ side, face, isOpen, setIsOpen, pagesPerView }: CoverProps) => {
                 </span>
               </h1>
               <h1 className="text-start w-full border-b-2 border-dotted border-gray-300 leading-none pt-2">
-                <strong className="font-baskervville mr-2 font-bold text-[clamp(1rem,1vw,1.2rem)]">
-                  Profession:
+                <strong className="font-handlee mr-2 font-bold text-[clamp(1rem,1vw,1.2rem)]">
+                  Role:
                 </strong>
                 <span className="font-handlee font-semibold text-blue-800 text-[clamp(1rem,0.8vw,1.2rem)]">
                   Web Developer
