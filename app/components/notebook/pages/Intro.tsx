@@ -8,22 +8,20 @@ export const IntroBlocks = (args?: RenderContext) => {
   return [
     <section
       key="header"
-      className="flex flex-col items-center justify-center p-4 w-full h-full "
+      className="flex flex-col items-center justify-start h-full w-full p-2 gap-2 "
     >
       <ChapterIntro
         key="chapter-intro"
         chapterNumber={chapter}
         name={"Intro"}
-        icon={"/images/icons/bio.svg"}
       />
 
-      <div className="w-48 h-48 rounded-full overflow-hidden border">
+      <div className="relative w-48 h-48 rounded-full overflow-hidden border ">
         <Image
-          src="/me.jpg"
+          src="/images/my_image.png"
           alt="Portrait"
-          width={96}
-          height={96}
-          className="object-cover"
+          fill
+          className="object-cover grayscale"
         />
       </div>
 

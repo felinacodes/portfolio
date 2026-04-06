@@ -10,12 +10,11 @@ export const aboutBlocks = (args?: RenderContext) => {
     <section
       id="about"
       key="about-me"
-      className="gap-4 flex flex-col p-4 m-2  items-center justify-center"
+      className="flex flex-col items-center justify-start h-full w-full p-2 gap-2 "
     >
       <ChapterIntro
         key="chapter-intro"
         name={"About Me"}
-        icon={"/images/icons/bio.svg"}
         chapterNumber={chapter}
       />
 

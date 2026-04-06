@@ -378,7 +378,7 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
                 // className={` ${mounted ? 'opacity-100' : 'opacity-0'}`}
               >
                 <div
-                  className="w-full h-full relative  flex justify-center "
+                  className="w-full h-full relative flex justify-center "
                   style={{
                     transformStyle: "preserve-3d",
                     backfaceVisibility: "hidden",

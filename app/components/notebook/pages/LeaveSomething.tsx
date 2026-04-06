@@ -9,7 +9,7 @@ export const LeaveSomethingBlocks = (args?: RenderContext) => {
   return [
     <section
       key="header"
-      className="flex flex-col items-center justify-center p-4  w-full h-full "
+      className="flex flex-col items-center justify-start h-full w-full p-2 gap-2 "
     >
       <ChapterIntro
         key="chapter-intro"

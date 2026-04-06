@@ -9,12 +9,11 @@ export const ProjectsBlocks = (args?: RenderContext) => {
   return [
     <section
       key="project-1"
-      className="flex flex-col items-center justify-center p-4 gap-4 h-full w-full"
+      className="flex flex-col items-center justify-start h-full w-full p-2 gap-2 "
     >
       <ChapterIntro
         key="chapter-intro"
         name={"Projects"}
-        icon={"/images/icons/bio.svg"}
         chapterNumber={chapter}
       />
 

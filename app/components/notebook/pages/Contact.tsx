@@ -9,12 +9,11 @@ export const ContactBlocks = (args?: RenderContext) => {
   return [
     <section
       key="contact"
-      className="gap-4 flex flex-col items-center justify-center p-4  w-full h-full"
+      className="flex flex-col items-center justify-start h-full w-full p-2 gap-2 "
     >
       <ChapterIntro
         key="chapter-intro"
         name={"Contact"}
-        icon={"/images/icons/bio.svg"}
         chapterNumber={chapter}
       />
       <div className="flex flex-col gap-4 items-center justify-center">
