@@ -7,29 +7,39 @@ export const EducationBlocks = (args?: RenderContext) => {
   const chapter = args?.chapter;
 
   return [
-    <section
-      key="education"
-      className="flex flex-col items-center justify-start h-full w-full p-2 gap-2 "
-    >
+    <section key="education" className="section-wrapper ">
       <ChapterIntro
         key="chapter-intro"
         name={"Education"}
         chapterNumber={chapter}
       />
-      <div>{chapter}</div>
-      <div className="w-full max-w-md text-left">
-        <h3 className="font-semibold mb-2">Degrees</h3>
-        <ol className="list-decimal list-inside">
-          <li>
-            <b>Hellenic Mediterranean University:</b> BSc in Computer and
-            Informatics Engineering
-          </li>
-        </ol>
+      <div className="text-start text-[0.9rem] sm:text-[1rem] xl:text-[1.2rem] leading-snug max-w-[65ch] space-y-2 lg:space-y-4">
+        <div>
+          <h3 className="font-bold text-lg mb-2  border-b-2 border-b-gray-500 w-max ">
+            Degrees:
+          </h3>
+          <ol className="list-disc list-inside space-y-1">
+            <li>
+              <span className="font-semibold">
+                Hellenic Mediterranean University:
+              </span>
+              <span className="italic ml-1">
+                BSc in Computer and Informatics Engineering
+              </span>
+            </li>
+          </ol>
+        </div>
 
-        <h3 className="font-semibold mt-6 mb-2">Courses</h3>
-        <ol className="list-decimal list-inside ml-4">
-          <li>The Odin Project</li>
-        </ol>
+        <div>
+          <h3 className="font-bold text-lg mb-2  border-b-2 border-b-gray-500 w-max ">
+            Courses:
+          </h3>
+          <ol className="list-disc list-inside space-y-1">
+            <li>
+              <span className="italic ">The Odin Project</span>
+            </li>
+          </ol>
+        </div>
       </div>
     </section>,
   ];
