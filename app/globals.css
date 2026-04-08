@@ -237,6 +237,31 @@ root {
   padding: 0;
 }
 
+.section-wrapper {
+  color: #111827; /* text-gray-900 */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  height: 100%;
+  width: 100%;
+  padding: 0.5rem; /* p-2 = 8px */
+  gap: 0.5rem; /* gap-2 = 8px */
+}
+
+.page-text-wrapper::first-letter {
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.page-text-wrapper p:not(:first-child) {
+  text-indent: 1em;
+}
+
+.page-text-wrapper-not-first {
+  text-indent: 1em;
+}
+
 @media (max-width: 768px) {
   .odd-page,
   .even-page {

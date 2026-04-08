@@ -352,7 +352,7 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
 
       {
         <div
-          className={` min-h-[350px] h-[85vh]  max-h-[800px] grid grid-cols-1 w-[${pageWidth}vw]
+          className={` min-h-[350px] h-[90vh] md:h-[85vh]  max-h-[800px] grid grid-cols-1 w-[${pageWidth}vw]
          
           ${
             isOpen
