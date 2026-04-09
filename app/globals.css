@@ -262,6 +262,9 @@ root {
   text-indent: 1em;
 }
 
+.skill-icons {
+}
+
 @media (max-width: 768px) {
   .odd-page,
   .even-page {

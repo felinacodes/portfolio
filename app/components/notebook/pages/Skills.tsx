@@ -1,48 +1,173 @@
 import React from "react";
-import Image from "next/image";
 import ChapterIntro from "./ChapterIntro";
 import { RenderContext } from "../Notebook";
+
+const skillSections = [
+  {
+    title: "Front-End",
+    skills: [
+      {
+        name: "HTML",
+        icon: "devicon-html5-plain",
+        hover: "hover:text-orange-600",
+      },
+      { name: "CSS", icon: "devicon-css3-plain", hover: "hover:text-blue-600" },
+      {
+        name: "JavaScript",
+        icon: "devicon-javascript-plain",
+        hover: "hover:text-yellow-400",
+      },
+      {
+        name: "Tailwind",
+        icon: "devicon-tailwindcss-plain",
+        hover: "hover:text-cyan-400",
+      },
+      {
+        name: "React",
+        icon: "devicon-react-original",
+        hover: "hover:text-blue-400",
+      },
+      {
+        name: "TypeScript",
+        icon: "devicon-typescript-plain",
+        hover: "hover:text-blue-700",
+      },
+      {
+        name: "Next.js",
+        icon: "devicon-nextjs-plain",
+        hover: "hover:text-gray-300",
+      },
+    ],
+  },
+  {
+    title: "Back-End",
+    skills: [
+      {
+        name: "Node.js",
+        icon: "devicon-nodejs-plain",
+        hover: "hover:text-green-600",
+      },
+      {
+        name: "Express",
+        icon: "devicon-express-original",
+        hover: "hover:text-gray-200",
+      },
+      {
+        name: "PostgreSQL",
+        icon: "devicon-postgresql-plain",
+        hover: "hover:text-blue-700",
+      },
+      {
+        name: "MongoDB",
+        icon: "devicon-mongodb-plain",
+        hover: "hover:text-green-500",
+      },
+    ],
+  },
+  {
+    title: "Dev Tools",
+    skills: [
+      { name: "Git", icon: "devicon-git-plain", hover: "hover:text-red-500" },
+
+      {
+        name: "GitHub",
+        icon: "devicon-github-plain",
+        hover: "hover:text-gray-500",
+      },
+      { name: "npm", icon: "devicon-npm-plain", hover: "hover:text-red-600" },
+      {
+        name: "VS Code",
+        icon: "devicon-vscode-plain",
+        hover: "hover:text-blue-600",
+      },
+      {
+        name: "Linux",
+        icon: "devicon-linux-plain",
+        hover: "hover:text-yellow-500",
+      },
+      {
+        name: "Jest",
+        icon: "devicon-jest-plain",
+        hover: "hover:text-pink-500",
+      },
+    ],
+  },
+  {
+    title: "Other / Misc",
+    skills: [
+      {
+        name: "Notion",
+        icon: "devicon-notion-plain",
+        hover: "hover:text-gray-500",
+      },
+      {
+        name: "Blender",
+        icon: "devicon-blender-original",
+        hover: "hover:text-orange-500",
+      },
+    ],
+  },
+];
 
 export const SkillsBlocks = (args?: RenderContext) => {
   const chapter = args?.chapter;
 
   return [
     <section
-      key="header"
-      className="flex flex-col items-center justify-start h-full w-full p-2 gap-2 "
+      key="page-1"
+      className="section-wrapper flex flex-col items-center justify-start h-full w-full p-2 gap-6"
     >
       <ChapterIntro
-        key="chapter-intro"
-        name={"Skills"}
+        key="chapter-intro-1"
+        name="Skills"
         chapterNumber={chapter}
       />
+      <div className="w-full text-start text-[0.9rem] sm:text-[1rem] xl:text-[1.2rem] leading-snug  space-y-2 lg:space-y-4">
+        {skillSections.slice(0, 2).map((section) => (
+          <div key={section.title} className="w-full">
+            <h2 className="font-bold text-lg mb-2 border-b-2 border-b-gray-500 w-max">
+              {section.title}:
+            </h2>
+            <ul className="w-full grid grid-cols-[repeat(auto-fill,minmax(100px,1fr))] gap-4">
+              {section.skills.map((skill) => (
+                <li
+                  key={skill.name}
+                  className={`flex flex-col items-center justify-center gap-2 p-3 rounded-lg border bg-gray-800 text-white transition ${skill.hover}`}
+                >
+                  <i className={`${skill.icon} text-3xl`}></i>
+                  <span className="text-sm font-medium">{skill.name}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+    </section>,
 
-      <h1>Skills:</h1>
-      <ul>
-        <h1>Front-End:</h1>
-        <ul>
-          <li>HTML</li>
-          <li>CSS</li>
-          <li>JavaScript</li>
-          <li>Tailwind</li>
-          <li>React</li>
-          <li>TypeScript</li>
-          <li>Next.js</li>
-        </ul>
-        <h1>Back-End:</h1>
-        <ul>
-          <li>Node.js</li>
-          <li>Express</li>
-          <li>PostreSQL</li>
-          <li>MongoDB</li>
-        </ul>
-        <h1>Misc:</h1>
-        <ul>
-          <li>Git</li>
-          <li>Jest</li>
-          <li>VS Code</li>
-        </ul>
-      </ul>
+    <section
+      key="page-2"
+      className="section-wrapper flex flex-col items-center justify-start h-full w-full p-2 gap-6"
+    >
+      <div className="mt-4 text-start text-[0.9rem] sm:text-[1rem] xl:text-[1.2rem] leading-snug w-full space-y-2 lg:space-y-4">
+        {skillSections.slice(2).map((section) => (
+          <div key={section.title} className="w-full">
+            <h2 className="font-bold text-lg mb-2 border-b-2 border-b-gray-500 w-max">
+              {section.title}:
+            </h2>
+            <ul className="w-full grid grid-cols-[repeat(auto-fill,minmax(100px,1fr))] gap-4">
+              {section.skills.map((skill) => (
+                <li
+                  key={skill.name}
+                  className={`flex flex-col items-center justify-center gap-2 p-3 rounded-lg border bg-gray-800 text-white transition ${skill.hover}`}
+                >
+                  <i className={`${skill.icon} text-3xl`}></i>
+                  <span className="text-sm font-medium">{skill.name}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
     </section>,
   ];
 };
