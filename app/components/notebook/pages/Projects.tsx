@@ -19,10 +19,10 @@ const projects = [
       "Aligned UI with brand guidelines",
     ],
     tech: [
-      "devicon-react-original hover:text-blue-400",
-      "devicon-materialui-plain hover:text-blue-500",
-      "devicon-typescript-plain hover:text-blue-700",
-      "devicon-vite-original transition hover:scale-110 hover:bg-gradient-to-r hover:from-purple-500 hover:via-pink-500 hover:to-yellow-400 hover:text-transparent hover:bg-clip-text",
+      "devicon-react-original hover:text-blue-400 active:text-blue-400",
+      "devicon-materialui-plain hover:text-blue-500 active:text-blue-500",
+      "devicon-typescript-plain hover:text-blue-700 active:text-blue-700",
+      "devicon-vite-original transition hover:scale-110 active:scale-110 hover:bg-gradient-to-r active:bg-gradient-to-r hover:from-purple-500 active:from-purple-500 hover:via-pink-500 active:via-pink-500 hover:to-yellow-400 active:to-yellow-400 hover:text-transparent active:text-transparent hover:bg-clip-text active:bg-clip-text",
     ],
   },
   {
@@ -39,10 +39,10 @@ const projects = [
       "Clean UI structure",
     ],
     tech: [
-      "devicon-react-original hover:text-blue-400",
-      "devicon-tailwindcss-plain hover:text-cyan-400",
-      "devicon-typescript-plain hover:text-blue-700",
-      "devicon-vite-original transition hover:scale-110 hover:bg-gradient-to-r hover:from-purple-500 hover:via-pink-500 hover:to-yellow-400 hover:text-transparent hover:bg-clip-text",
+      "devicon-react-original hover:text-blue-400 active:text-blue-400",
+      "devicon-tailwindcss-plain hover:text-cyan-400 active:text-cyan-400",
+      "devicon-typescript-plain hover:text-blue-700 active:text-blue-700",
+      "devicon-vite-original transition hover:scale-110 active:scale-110 hover:bg-gradient-to-r active:bg-gradient-to-r hover:from-purple-500 active:from-purple-500 hover:via-pink-500 active:via-pink-500 hover:to-yellow-400 active:to-yellow-400 hover:text-transparent active:text-transparent hover:bg-clip-text active:bg-clip-text",
     ],
   },
   {
@@ -60,10 +60,10 @@ const projects = [
       "Searching functionality",
     ],
     tech: [
-      "devicon-express-original hover:text-gray-400",
-      "devicon-tailwindcss-plain hover:text-cyan-400",
-      "devicon-typescript-plain hover:text-blue-700",
-      "devicon-postgresql-plain hover:text-blue-700",
+      "devicon-express-original hover:text-gray-400 active:text-gray-400",
+      "devicon-tailwindcss-plain hover:text-cyan-400 active:text-cyan-400",
+      "devicon-typescript-plain hover:text-blue-700 active:text-blue-700",
+      "devicon-postgresql-plain hover:text-blue-700 active:text-blue-700",
     ],
   },
   {
@@ -76,10 +76,10 @@ const projects = [
       "The classic game of Battleship, where players try to sink the opponent's ships by shooting them with their own ships. The game features a unique board design, where each square on the board represents a ship. The game was developed using the TDD approach.",
     features: ["TDD approach", "Scorring system", "Game reset and restart"],
     tech: [
-      "devicon-javascript-plain hover:text-yellow-400",
-      "devicon-css3-plain hover:text-blue-600",
-      "devicon-jest-plain hover:text-pink-500",
-      "devicon-webpack-plain hover:text-blue-700",
+      "devicon-javascript-plain hover:text-yellow-400 active:text-yellow-400",
+      "devicon-css3-plain hover:text-blue-600 active:text-blue-600",
+      "devicon-jest-plain hover:text-pink-500 active:text-pink-500",
+      "devicon-webpack-plain hover:text-blue-700 active:text-blue-700",
     ],
   },
 ];
@@ -109,7 +109,7 @@ export const ProjectsBlocks = (args?: RenderContext) => {
               src={project.image}
               alt={project.alt}
               fill
-              className="object-cover grayscale hover:grayscale-0 transition duration-1000 ease-in "
+              className="object-cover grayscale hover:grayscale-0 active:grayscale-0 transition duration-1000 ease-in"
             />
           </div>
 
@@ -120,7 +120,7 @@ export const ProjectsBlocks = (args?: RenderContext) => {
 
             <div className="flex flex-row gap-4 justify-center items-center">
               <a
-                className="hover:text-gray-500"
+                className="hover:text-gray-500 active:text-gray-500"
                 href={project.live}
                 target="_blank"
                 rel="noopener noreferrer"
@@ -134,7 +134,7 @@ export const ProjectsBlocks = (args?: RenderContext) => {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  <i className="devicon-github-plain text-3xl hover:text-gray-500"></i>
+                  <i className="devicon-github-plain text-3xl hover:text-gray-500 active:text-gray-500"></i>
                 </a>
               )}
             </div>
@@ -149,7 +149,7 @@ export const ProjectsBlocks = (args?: RenderContext) => {
               <li key={feature} className="flex items-center gap-2">
                 <Star
                   size={14}
-                  className="text-gray-500 hover:text-yellow-500"
+                  className="text-gray-500 hover:text-yellow-500 active:text-yellow-500"
                 />
                 {feature}
               </li>

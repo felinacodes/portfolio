@@ -22,7 +22,7 @@ export const TableOfContentsBlocks = (args?: RenderContext) => {
               onClick={() => goToIndex?.(key)}
             >
               <div className="text-xs mb-1">Chapter: {index + 1}</div>
-              <div className="font-normal cursor-pointer hover:bg-gray-200  border-b-r-2 flex w-full border-b border-dotted border-gray-400 justify-between items-center">
+              <div className="font-normal cursor-pointer hover:bg-gray-200 active:bg-gray-200 border-b-r-2 flex w-full border-b border-dotted border-gray-400 justify-between items-center">
                 <h2>{transform(key)}</h2>
                 <p className="font-normal">{value}</p>
               </div>
