@@ -66,7 +66,7 @@ export type Section = {
 
 type SectionConfig = {
   key: string;
-  blocks: (args?: RenderContext) => React.ReactNode[];
+  blocks: (args?: RenderContext) => React.ComponentType<RenderContext>[];
 };
 
 const SECTION_CONFIG: SectionConfig[] = [
@@ -82,16 +82,16 @@ const SECTION_CONFIG: SectionConfig[] = [
 
 const sections: Section[] = SECTION_CONFIG.flatMap(
   ({ key, blocks }, chapterIndex) => {
-    const resolved = blocks();
+    const resolved = blocks({ chapter: chapterIndex });
 
-    return resolved.map((_, index) => ({
+    return resolved.map((Component, index) => ({
       id: `${key}-${index}`,
       chapterName: key,
-      render: (args?: RenderContext) =>
-        blocks({
-          ...args,
-          chapter: chapterIndex,
-        })[index],
+
+      render: (args?: RenderContext) => {
+        const Comp = Component;
+        return <Comp {...args} />;
+      },
     }));
   },
 );

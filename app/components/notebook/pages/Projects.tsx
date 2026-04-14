@@ -22,7 +22,7 @@ const projects = [
       "devicon-react-original hover:text-blue-400 active:text-blue-400",
       "devicon-materialui-plain hover:text-blue-500 active:text-blue-500",
       "devicon-typescript-plain hover:text-blue-700 active:text-blue-700",
-      "devicon-vite-original transition hover:scale-110 active:scale-110 hover:bg-gradient-to-r active:bg-gradient-to-r hover:from-purple-500 active:from-purple-500 hover:via-pink-500 active:via-pink-500 hover:to-yellow-400 active:to-yellow-400 hover:text-transparent active:text-transparent hover:bg-clip-text active:bg-clip-text",
+      "devicon-vite-original transition hover:scale-110 active:scale-110 hover:bg-gradient-to-r active:bg-gradient-to-r hover:from-purple-500 active:from-purple-500 hover:via-pink-500 active:via-pink-500 hover:to-yellow-400 active:to-yellow-400 hover:text-transparent active:text-transparent hover:bg-clip-text",
     ],
   },
   {
@@ -42,7 +42,7 @@ const projects = [
       "devicon-react-original hover:text-blue-400 active:text-blue-400",
       "devicon-tailwindcss-plain hover:text-cyan-400 active:text-cyan-400",
       "devicon-typescript-plain hover:text-blue-700 active:text-blue-700",
-      "devicon-vite-original transition hover:scale-110 active:scale-110 hover:bg-gradient-to-r active:bg-gradient-to-r hover:from-purple-500 active:from-purple-500 hover:via-pink-500 active:via-pink-500 hover:to-yellow-400 active:to-yellow-400 hover:text-transparent active:text-transparent hover:bg-clip-text active:bg-clip-text",
+      "devicon-vite-original transition hover:scale-110 active:scale-110 hover:bg-gradient-to-r active:bg-gradient-to-r hover:from-purple-500 active:from-purple-500 hover:via-pink-500 active:via-pink-500 hover:to-yellow-400 active:to-yellow-400 hover:text-transparent active:text-transparent hover:bg-clip-text",
     ],
   },
   {
@@ -87,86 +87,82 @@ const projects = [
 export const ProjectsBlocks = (args?: RenderContext) => {
   const chapter = args?.chapter;
 
-  return projects.map((project, index) => (
-    <section
-      key={`project-${index}`}
-      className={`${
-        index === 0 ? "section-wrapper" : "mt-4"
-      } flex flex-col items-center justify-start w-full p-2 gap-2`}
-    >
-      {index === 0 && (
-        <ChapterIntro
-          key="chapter-intro"
-          name={"Projects"}
-          chapterNumber={chapter}
-        />
-      )}
+  return projects.map((project, index) => {
+    const ProjectPage = () => (
+      <section
+        className={`${
+          index === 0 ? "section-wrapper" : "mt-4"
+        } flex flex-col items-center justify-start w-full p-2 gap-2`}
+      >
+        {index === 0 && (
+          <ChapterIntro name={"Projects"} chapterNumber={chapter} />
+        )}
 
-      <div className="text-[0.9rem] sm:text-[1rem] xl:text-[1.2rem] leading-snug ">
-        <div className="flex flex-wrap w-full gap-4 items-center justify-center align-center ">
-          <div className="relative w-48 shrink-0 aspect-square rounded-lg overflow-hidden border">
-            <Image
-              src={project.image}
-              alt={project.alt}
-              fill
-              className="object-cover grayscale hover:grayscale-0 active:grayscale-0 transition duration-1000 ease-in"
-            />
-          </div>
+        <div className="text-[0.9rem] sm:text-[1rem] xl:text-[1.2rem] leading-snug">
+          <div className="flex flex-wrap w-full gap-4 items-center justify-center">
+            <div className="relative w-48 shrink-0 aspect-square rounded-lg overflow-hidden border">
+              <Image
+                src={project.image}
+                alt={project.alt}
+                fill
+                className="object-cover grayscale hover:grayscale-0 active:grayscale-0 transition duration-1000 ease-in"
+              />
+            </div>
 
-          <div className="flex flex-col items-center justify-center gap-4 m-4">
-            <h1 className="text-center font-bold text-md xl:text-xl mb-2 border-b-2 border-b-gray-500 w-max ">
-              {project.title}
-            </h1>
+            <div className="flex flex-col items-center justify-center gap-4 m-4">
+              <h1 className="text-center font-bold text-md xl:text-xl mb-2 border-b-2 border-b-gray-500 w-max">
+                {project.title}
+              </h1>
 
-            <div className="flex flex-row gap-4 justify-center items-center">
-              <a
-                className="hover:text-gray-500 active:text-gray-500"
-                href={project.live}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <ExternalLink size={32} />
-              </a>
-
-              {project.github && (
+              <div className="flex flex-row gap-4 justify-center items-center">
                 <a
-                  href={project.github}
+                  className="hover:text-gray-500 active:text-gray-500"
+                  href={project.live}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  <i className="devicon-github-plain text-3xl hover:text-gray-500 active:text-gray-500"></i>
+                  <ExternalLink size={32} />
                 </a>
-              )}
+
+                {project.github && (
+                  <a
+                    href={project.github}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <i className="devicon-github-plain text-3xl hover:text-gray-500 active:text-gray-500" />
+                  </a>
+                )}
+              </div>
+            </div>
+          </div>
+
+          <div className="text-start max-w-[65ch] xl:mt-5 mt-2 space-y-2 lg:space-y-4 p-2">
+            <p>{project.description}</p>
+
+            <ul className="space-y-1">
+              {project.features.map((feature) => (
+                <li key={feature} className="flex items-center gap-2">
+                  <Star size={14} className="text-gray-500" />
+                  {feature}
+                </li>
+              ))}
+            </ul>
+
+            <div className="flex-wrap gap-2 md:gap-4 items-center justify-start mt-4 flex">
+              <span className="font-bold"> Tech Stack: </span>
+
+              {project.tech.map((tech, i) => (
+                <span key={i}>
+                  <i className={`${tech} text-gray-500 text-xl lg:text-3xl`} />
+                </span>
+              ))}
             </div>
           </div>
         </div>
+      </section>
+    );
 
-        <div className="text-start max-w-[65ch] xl:mt-5 mt-2 space-y-2 lg:space-y-4 p-2">
-          <p>{project.description}</p>
-
-          <ul className="space-y-1">
-            {project.features.map((feature) => (
-              <li key={feature} className="flex items-center gap-2">
-                <Star
-                  size={14}
-                  className="text-gray-500 hover:text-yellow-500 active:text-yellow-500"
-                />
-                {feature}
-              </li>
-            ))}
-          </ul>
-
-          <div className="flex-wrap gap-2 md:gap-4 items-center justify-start mt-4 flex">
-            <span className="font-bold"> Tech Stack: </span>
-
-            {project.tech.map((tech, i) => (
-              <span key={i}>
-                <i className={`${tech} text-gray-500 text-xl lg:text-3xl`}></i>
-              </span>
-            ))}
-          </div>
-        </div>
-      </div>
-    </section>
-  ));
+    return ProjectPage;
+  });
 };

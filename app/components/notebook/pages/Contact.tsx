@@ -40,100 +40,107 @@ const contactSections = [
     ],
   },
 ];
+
 export const ContactBlocks = (args?: RenderContext) => {
   const chapter = args?.chapter;
 
-  return [
-    <section
-      key="contact"
-      className="section-wrapper flex flex-col items-center justify-start h-full w-full p-2 gap-2 "
-    >
-      <ChapterIntro
-        key="chapter-intro"
-        name={"Contact"}
-        chapterNumber={chapter}
-      />
+  const ContactPage = () => {
+    const [textActive, setTextActive] = useState(false);
 
-      <div className="flex flex-col gap-4 place-items-stretch justify-center  w-full">
-        <div>
-          {contactSections.map((section, index) => (
-            <div
-              key={index}
-              className="flex flex-col gap-2 items-center justify-center  w-full"
-            >
-              <ul className="flex flex-row gap-4 flex-wrap items-center justify-around  w-full">
-                {section.contact.map((contact) => (
-                  <li key={contact.name}>
-                    <a
-                      className={`${contact.hover} transition duration-300`}
-                      href={contact.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      {contact.name === "Fiverr" ? (
-                        <SiFiverr className="text-3xl" />
-                      ) : contact.name === "Upwork" ? (
-                        <SiUpwork className="text-3xl" />
-                      ) : (
-                        <i className={`${contact.icon} text-3xl`} />
-                      )}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
+    return (
+      <section className="section-wrapper flex flex-col items-center justify-start h-full w-full p-2 gap-2">
+        <ChapterIntro name={"Contact"} chapterNumber={chapter} />
+
+        <div className="flex flex-col gap-4 place-items-stretch justify-center w-full">
+          <div>
+            {contactSections.map((section, index) => (
+              <div
+                key={index}
+                className="flex flex-col gap-2 items-center justify-center w-full"
+              >
+                <ul className="flex flex-row gap-4 flex-wrap items-center justify-around w-full">
+                  {section.contact.map((contact) => (
+                    <li key={contact.name}>
+                      <a
+                        className={`${contact.hover} transition duration-300`}
+                        href={contact.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        {contact.name === "Fiverr" ? (
+                          <SiFiverr className="text-3xl" />
+                        ) : contact.name === "Upwork" ? (
+                          <SiUpwork className="text-3xl" />
+                        ) : (
+                          <i className={`${contact.icon} text-3xl`} />
+                        )}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
         </div>
-      </div>
 
-      <div className="mt-6 w-full h-full ">
-        <form action="" className="flex flex-col  gap-4 h-full">
-          <div className="flex flex-row gap-2 flex-wrap justify-center items-center">
-            <div>
-              <label htmlFor="name">Name:</label>
-              <input
-                type="text"
-                id="name"
-                name="name"
-                placeholder="Your Name"
-                className="m-2 border rounded-md p-1"
+        <div className="mt-6 w-full h-full">
+          <form className="flex flex-col gap-4 h-full">
+            <div className="flex flex-row gap-2 flex-wrap justify-center items-center">
+              <div>
+                <label htmlFor="name">Name:</label>
+                <input
+                  type="text"
+                  id="name"
+                  name="name"
+                  placeholder="Your Name"
+                  className="m-2 border rounded-md p-1"
+                />
+              </div>
+              <div>
+                <label htmlFor="email">Email:</label>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  placeholder="Your Email"
+                  className="m-2 border rounded-md p-1"
+                />
+              </div>
+            </div>
+
+            <div className="flex flex-col gap-2 h-full">
+              {textActive && <button>Set Full Screen</button>}
+
+              <textarea
+                id="message"
+                name="message"
+                placeholder="Your Message"
+                className="m-2 border rounded-md p-1 h-auto resize-none flex-1"
+                onFocus={() => setTextActive(true)}
+                onBlur={() => setTextActive(false)}
               />
             </div>
-            <div>
-              <label htmlFor="email">Email:</label>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                placeholder="Your Email"
-                className="m-2 border rounded-md p-1"
-              />
-            </div>
-          </div>
 
-          <div className="flex flex-col gap-2  h-full">
-            <label htmlFor="message" className="text-start">
-              {/* Message: */}
-            </label>
+            <button type="submit">Send</button>
+          </form>
+        </div>
+      </section>
+    );
+  };
 
-            <textarea
-              id="message"
-              name="message"
-              placeholder="Your Message"
-              className="m-2 border rounded-md p-1 h-auto resize-none flex-1"
-            ></textarea>
-          </div>
+  // -------- PAGE 2 --------
+  const ContactSecondPage = () => {
+    return (
+      <section className="section-wrapper flex flex-col items-center justify-center h-full w-full p-2">
+        <h1 className="text-xl font-bold">Let’s talk</h1>
+        <p className="text-center max-w-[50ch] mt-2">
+          If you’ve made it this far, you’re either interested or just very
+          committed to scrolling. Either way, feel free to reach out.
+        </p>
+      </section>
+    );
+  };
 
-          <button
-            className="cursor-pointer font-bold
-           text-white bg-black text-center py-2 px-4 rounded-md 
-           w-32 self-center mt-4 hover:bg-gray-800 active:bg-gray-700 
-           transition duration-300"
-          >
-            Send
-          </button>
-        </form>
-      </div>
-    </section>,
-  ];
+  // -------- RETURN MULTIPLE PAGES --------
+  return [ContactPage, ContactSecondPage];
 };

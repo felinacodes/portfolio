@@ -124,61 +124,58 @@ export const SkillsBlocks = (args?: RenderContext) => {
   const chapter = args?.chapter;
 
   return [
-    <section
-      key="page-1"
-      className="section-wrapper flex flex-col items-center justify-start h-full w-full p-2 gap-6"
-    >
-      <ChapterIntro
-        key="chapter-intro-1"
-        name="Skills"
-        chapterNumber={chapter}
-      />
-      <div className="w-full text-start text-[0.9rem] sm:text-[1rem] xl:text-[1.2rem] leading-snug  space-y-2 lg:space-y-4">
-        {skillSections.slice(0, 2).map((section) => (
-          <div key={section.title} className="w-full">
-            <h2 className="font-bold text-lg mb-2 border-b-2 border-b-gray-500 w-max">
-              {section.title}:
-            </h2>
-            <ul className="w-full grid grid-cols-[repeat(auto-fill,minmax(100px,1fr))] gap-4">
-              {section.skills.map((skill) => (
-                <li
-                  key={skill.name}
-                  className={`flex flex-col items-center justify-center gap-2 p-3 rounded-lg border bg-gray-800 text-white transition ${skill.hover}`}
-                >
-                  <i className={`${skill.icon} text-3xl`}></i>
-                  <span className="text-sm font-medium">{skill.name}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-        ))}
-      </div>
-    </section>,
+    () => (
+      <section className="section-wrapper flex flex-col items-center justify-start h-full w-full p-2 gap-6">
+        <ChapterIntro name="Skills" chapterNumber={chapter} />
 
-    <section
-      key="page-2"
-      className="section-wrapper flex flex-col items-center justify-start h-full w-full p-2 gap-6"
-    >
-      <div className="mt-4 text-start text-[0.9rem] sm:text-[1rem] xl:text-[1.2rem] leading-snug w-full space-y-2 lg:space-y-4">
-        {skillSections.slice(2).map((section) => (
-          <div key={section.title} className="w-full">
-            <h2 className="font-bold text-lg mb-2 border-b-2 border-b-gray-500 w-max">
-              {section.title}:
-            </h2>
-            <ul className="w-full grid grid-cols-[repeat(auto-fill,minmax(100px,1fr))] gap-4">
-              {section.skills.map((skill) => (
-                <li
-                  key={skill.name}
-                  className={`flex flex-col items-center justify-center gap-2 p-3 rounded-lg border bg-gray-800 text-white transition ${skill.hover}`}
-                >
-                  <i className={`${skill.icon} text-3xl`}></i>
-                  <span className="text-sm font-medium">{skill.name}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-        ))}
-      </div>
-    </section>,
+        <div className="w-full text-start text-[0.9rem] sm:text-[1rem] xl:text-[1.2rem] leading-snug space-y-2 lg:space-y-4">
+          {skillSections.slice(0, 2).map((section) => (
+            <div key={section.title}>
+              <h2 className="font-bold text-lg mb-2 border-b-2 border-b-gray-500 w-max">
+                {section.title}:
+              </h2>
+
+              <ul className="w-full grid grid-cols-[repeat(auto-fill,minmax(100px,1fr))] gap-4">
+                {section.skills.map((skill) => (
+                  <li
+                    key={skill.name}
+                    className={`flex flex-col items-center justify-center gap-2 p-3 rounded-lg border bg-gray-800 text-white transition ${skill.hover}`}
+                  >
+                    <i className={`${skill.icon} text-3xl`} />
+                    <span className="text-sm font-medium">{skill.name}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+      </section>
+    ),
+
+    () => (
+      <section className="section-wrapper flex flex-col items-center justify-start w-full p-2 gap-6">
+        <div className="mt-4 w-full text-start text-[0.9rem] sm:text-[1rem] xl:text-[1.2rem] leading-snug space-y-2 lg:space-y-4">
+          {skillSections.slice(2).map((section) => (
+            <div key={section.title}>
+              <h2 className="font-bold text-lg mb-2 border-b-2 border-b-gray-500 w-max">
+                {section.title}:
+              </h2>
+
+              <ul className="w-full grid grid-cols-[repeat(auto-fill,minmax(100px,1fr))] gap-4">
+                {section.skills.map((skill) => (
+                  <li
+                    key={skill.name}
+                    className={`flex flex-col items-center justify-center gap-2 p-3 rounded-lg border bg-gray-800 text-white transition ${skill.hover}`}
+                  >
+                    <i className={`${skill.icon} text-3xl`} />
+                    <span className="text-sm font-medium">{skill.name}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+      </section>
+    ),
   ];
 };
