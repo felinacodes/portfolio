@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import ChapterIntro from "./ChapterIntro";
 import { RenderContext } from "../Notebook";
@@ -45,7 +45,11 @@ export const ContactBlocks = (args?: RenderContext) => {
   const chapter = args?.chapter;
 
   const ContactPage = () => {
-    const [textActive, setTextActive] = useState(false);
+    const handleAutoResize = (e: React.FormEvent<HTMLTextAreaElement>) => {
+      const el = e.currentTarget;
+      el.style.height = "auto";
+      el.style.height = el.scrollHeight + "px";
+    };
 
     return (
       <section className="section-wrapper flex flex-col items-center justify-start h-full w-full p-2 gap-2">
@@ -108,39 +112,27 @@ export const ContactBlocks = (args?: RenderContext) => {
               </div>
             </div>
 
-            <div className="flex flex-col gap-2 h-full">
-              {textActive && <button>Set Full Screen</button>}
-
+            <div className="flex flex-col gap-2 h-full ">
               <textarea
                 id="message"
                 name="message"
                 placeholder="Your Message"
-                className="m-2 border rounded-md p-1 h-auto resize-none flex-1"
-                onFocus={() => setTextActive(true)}
-                onBlur={() => setTextActive(false)}
+                className="m-2 border rounded-md p-1 h-auto resize-none overflow-auto min-h-[80%]"
+                onInput={handleAutoResize}
               />
             </div>
 
-            <button type="submit">Send</button>
+            <button
+              className="cursor-pointer self-center text-center text-white bg-gray-900 hover:bg-gray-700 active:bg-gray-700 py-2 px-4 rounded-md"
+              type="submit"
+            >
+              Send
+            </button>
           </form>
         </div>
       </section>
     );
   };
 
-  // -------- PAGE 2 --------
-  const ContactSecondPage = () => {
-    return (
-      <section className="section-wrapper flex flex-col items-center justify-center h-full w-full p-2">
-        <h1 className="text-xl font-bold">Let’s talk</h1>
-        <p className="text-center max-w-[50ch] mt-2">
-          If you’ve made it this far, you’re either interested or just very
-          committed to scrolling. Either way, feel free to reach out.
-        </p>
-      </section>
-    );
-  };
-
-  // -------- RETURN MULTIPLE PAGES --------
-  return [ContactPage, ContactSecondPage];
+  return [ContactPage];
 };
