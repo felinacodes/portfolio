@@ -25,6 +25,9 @@ body,
   --font-playfair-display: var(--font-playfair-display);
   --font-baskervville: var(--font-baskervville);
   --font-jost: var(--font-jost);
+
+  --color-myPink: #ffc0cb;
+  --color-myPinkDark: #df7e8e;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -101,6 +104,11 @@ root {
 
 .cover {
   background: #ffc0cb;
+
+  /* background: #df7e8e; */
+
+  /* background: #09a709; */
+
   border-radius: 3px;
   box-shadow:
     inset 4px 1px 3px #ffffff54,
