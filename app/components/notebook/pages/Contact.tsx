@@ -44,48 +44,6 @@ export const ContactBlocks = (args?: RenderContext) => {
   const chapter = args?.chapter;
 
   const ContactPage = () => {
-    // const turnstileRef = useRef<HTMLDivElement>(null);
-    // const widgetRendered = useRef(false);
-
-    // useEffect(() => {
-    //   let interval: number | undefined;
-
-    //   const renderTurnstile = () => {
-    //     if (
-    //       !window.turnstile ||
-    //       !turnstileRef.current ||
-    //       widgetRendered.current
-    //     ) {
-    //       return;
-    //     }
-
-    //     window.turnstile.render(turnstileRef.current, {
-    //       sitekey: "0x4AAAAAAC-mfSy8WITssxkQ",
-    //       callback: (token: string) => {
-    //         window.turnstileToken = token;
-    //       },
-    //     });
-
-    //     widgetRendered.current = true;
-    //   };
-
-    //   renderTurnstile();
-
-    //   if (!widgetRendered.current) {
-    //     interval = window.setInterval(renderTurnstile, 100);
-    //   }
-
-    //   return () => {
-    //     if (interval) {
-    //       window.clearInterval(interval);
-    //     }
-    //     if (turnstileRef.current) {
-    //       turnstileRef.current.innerHTML = "";
-    //     }
-    //     widgetRendered.current = false;
-    //   };
-    // }, []);
-
     const [errors, setErrors] = useState({
       name: "",
       email: "",
@@ -107,10 +65,6 @@ export const ContactBlocks = (args?: RenderContext) => {
       const email = formData.get("email")?.toString() || "";
       const message = formData.get("message")?.toString() || "";
       const companyNumber = formData.get("CompanyNumber")?.toString() || "";
-      // const token =
-      //   formData.get("cf-turnstile-response")?.toString() ||
-      //   window.turnstileToken ||
-      //   "";
 
       const newErrors = {
         name: "",
@@ -145,7 +99,7 @@ export const ContactBlocks = (args?: RenderContext) => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ name, email, message, companyNumber, token }),
+        body: JSON.stringify({ name, email, message, companyNumber }),
       });
 
       const data = await res.json();
@@ -245,8 +199,6 @@ export const ContactBlocks = (args?: RenderContext) => {
               tabIndex={-1}
               autoComplete="off"
             />
-
-            {/* <div ref={turnstileRef} /> */}
 
             {/* BUTTON */}
             <button

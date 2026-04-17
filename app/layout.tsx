@@ -99,11 +99,6 @@ export default function RootLayout({
           rel="stylesheet"
           href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css"
         />
-        <script
-          src="https://challenges.cloudflare.com/turnstile/v0/api.js"
-          async
-          defer
-        ></script>
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${homemadeApple.variable} 
