@@ -49,6 +49,7 @@ export const ContactBlocks = (args?: RenderContext) => {
       email: "",
       message: "",
     });
+    const [feedbackMessage, setFeedbackMessage] = useState("");
 
     const handleAutoResize = (e: React.FormEvent<HTMLTextAreaElement>) => {
       const el = e.currentTarget;
@@ -105,11 +106,15 @@ export const ContactBlocks = (args?: RenderContext) => {
       const data = await res.json();
 
       if (data.success) {
-        alert("Sent!");
+        // alert("Sent!");
+        setFeedbackMessage("Message Send! I will get back to you soon.");
         e.currentTarget.reset();
         setErrors({ name: "", email: "", message: "" });
       } else {
-        alert("Failed to send.");
+        setFeedbackMessage(
+          `Failed to send message: ${data.error || " Unknown error"}`,
+        );
+        // alert(JSON.stringify(data, null, 2));
       }
     };
 
@@ -199,6 +204,10 @@ export const ContactBlocks = (args?: RenderContext) => {
               tabIndex={-1}
               autoComplete="off"
             />
+
+            {feedbackMessage && (
+              <p className="text-myPinkDark text-sm ml-2">{feedbackMessage}</p>
+            )}
 
             {/* BUTTON */}
             <button

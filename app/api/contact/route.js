@@ -91,7 +91,13 @@ export async function POST(req) {
   const errors = validateContact({ name, email, message });
 
   if (errors.length) {
-    return Response.json({ success: false, errors }, { status: 400 });
+    return Response.json(
+      {
+        success: false,
+        error: errors.join(", "),
+      },
+      { status: 400 },
+    );
   }
 
   const nodemailer = (await import("nodemailer")).default;
@@ -115,6 +121,12 @@ export async function POST(req) {
 
     return Response.json({ success: true });
   } catch (err) {
-    return Response.json({ success: false }, { status: 500 });
+    return Response.json(
+      {
+        success: false,
+        error: "Something went wrong",
+      },
+      { status: 500 },
+    );
   }
 }
