@@ -66,8 +66,49 @@ function getIp(req) {
   return "unknown";
 }
 
+async function verifyTurnstile(token, ip) {
+  const res = await fetch(
+    "https://challenges.cloudflare.com/turnstile/v0/siteverify",
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      body: new URLSearchParams({
+        secret: process.env.TURNSTILE_SECRET,
+        response: token,
+        remoteip: ip,
+      }),
+    },
+  );
+
+  return res.json();
+}
+
 export async function POST(req) {
+  const body = await req.json();
+
+  const token = body.token;
+
+  console.log("token:", token);
+
+  if (!token) {
+    return Response.json(
+      { success: false, error: "Missing token" },
+      { status: 400 },
+    );
+  }
+
   const ip = getIp(req);
+
+  const captchaResult = await verifyTurnstile(token, ip);
+
+  if (!captchaResult.success) {
+    return Response.json(
+      { success: false, error: "Invalid captcha" },
+      { status: 403 },
+    );
+  }
 
   if (rateLimit(ip)) {
     return Response.json(
@@ -76,7 +117,9 @@ export async function POST(req) {
     );
   }
 
-  const body = await req.json();
+  if (body.companyNumber) {
+    return Response.json({ success: true });
+  }
 
   const name = String(body.name || "").trim();
   const email = String(body.email || "")
