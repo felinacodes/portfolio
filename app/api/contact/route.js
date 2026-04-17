@@ -124,6 +124,7 @@ export async function POST(req) {
     return Response.json(
       {
         success: false,
+        // error: err instanceof Error ? err.message : "Something went wrong",
         error: "Something went wrong",
       },
       { status: 500 },
