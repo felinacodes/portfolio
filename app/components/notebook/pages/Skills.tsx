@@ -138,6 +138,7 @@ export const SkillsBlocks = (args?: RenderContext) => {
               <ul className="w-full grid grid-cols-[repeat(auto-fill,minmax(100px,1fr))] gap-4">
                 {section.skills.map((skill) => (
                   <li
+                    data-no-flip
                     key={skill.name}
                     className={`flex flex-col items-center justify-center gap-2 p-3 rounded-lg border bg-gray-800 text-white transition ${skill.hover}`}
                   >
@@ -164,6 +165,7 @@ export const SkillsBlocks = (args?: RenderContext) => {
               <ul className="w-full grid grid-cols-[repeat(auto-fill,minmax(100px,1fr))] gap-4">
                 {section.skills.map((skill) => (
                   <li
+                    data-no-flip
                     key={skill.name}
                     className={`flex flex-col items-center justify-center gap-2 p-3 rounded-lg border bg-gray-800 text-white transition ${skill.hover}`}
                   >

@@ -15,7 +15,7 @@ export const TableOfContentsBlocks = (args?: RenderContext) => {
             Contents
           </h1>
 
-          <div className="font-jost w-full h-full flex flex-col">
+          <div data-no-flip className="font-jost w-full h-full flex flex-col">
             {ctx &&
               Array.from(ctx.entries()).map(([key, value], index) => (
                 <div

@@ -4,7 +4,6 @@ import React, {
   useMemo,
   useCallback,
   useLayoutEffect,
-  use,
 } from "react";
 
 import type { Sheet } from "./notebook/Notebook";
@@ -25,7 +24,6 @@ export function useNotebookPagination(
   setIsOpen: (isOpen: boolean) => void,
   isSetTwoPages: boolean,
   initialPage?: string,
-  mounted: boolean,
 ) {
   // const [leftIndex, setLeftIndex] = useState(0)
   const [leftIndex, setLeftIndex] = useState(() => {

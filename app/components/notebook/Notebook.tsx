@@ -155,6 +155,13 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
   const [active, setActive] = React.useState<string>("");
   const [mounted, setIsmounted] = useState(false);
 
+  const isDraggingRef = useRef(false);
+  const startPosRef = useRef({ x: 0, y: 0 });
+  const touchStart = useRef({ x: 0, y: 0 });
+  const touchEnd = useRef({ x: 0, y: 0 });
+
+  const SWIPE_THRESHOLD = 50;
+
   // const correctSheet = isTwoPages ? TwoPagesheets : OnePagesheets
   const correctSheet = isTwoPages
     ? sheet
@@ -217,7 +224,6 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
     setIsOpen,
     isTwoPages,
     initialPage,
-    mounted,
   );
 
   // HANDLE HOW MANY PAGES TO SHOW
@@ -335,6 +341,114 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
   //   return <div>...Loading...</div>
   // }
 
+  // PAGE NAVIGATION LOGIC
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      const target = e.target as HTMLElement;
+
+      if (target.closest("input, textarea, select, [contenteditable='true']")) {
+        return;
+      }
+
+      if (e.key === "ArrowRight") {
+        next();
+      }
+
+      if (e.key === "ArrowLeft") {
+        prev();
+      }
+
+      if (e.code === "Space") {
+        e.preventDefault();
+        next();
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [next, prev]);
+
+  const handlePageClick = (
+    e: React.MouseEvent<HTMLDivElement>,
+    sheet: Sheet,
+  ) => {
+    if (isDraggingRef.current || "ontouchstart" in window) return;
+
+    // if (
+    //   sheet.type !== "page" &&
+    //   sheet.type !== "context" &&
+    //   sheet.type !== "blank"
+    // )
+    //   return;
+    if (sheet.type === "cover") {
+      if (sheet.face === "outside" && sheet.side === "front") {
+        next();
+        return;
+      }
+      if (sheet.face === "outside" && sheet.side === "back") {
+        prev();
+        return;
+      }
+      if (sheet.face === "inside" && sheet.side === "front") {
+        prev();
+        return;
+      }
+      if (sheet.face === "inside" && sheet.side === "back") {
+        next();
+        return;
+      }
+    }
+
+    const target = e.target as HTMLElement;
+
+    if (
+      target.closest(
+        "button, a, input, textarea, select, label, img, [role='button'], [data-no-flip]",
+      )
+    ) {
+      return;
+    }
+
+    // ignore if text is selected
+    const selection = window.getSelection();
+    if (selection && selection.toString().length > 0) {
+      return;
+    }
+
+    const isOdd = (numberedMap.get(sheet.id) ?? 0) % 2 === 1;
+    if (isOdd) {
+      next();
+    } else {
+      prev();
+    }
+  };
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    const touch = e.touches[0];
+    touchStart.current = { x: touch.clientX, y: touch.clientY };
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    const touch = e.changedTouches[0];
+    touchEnd.current = { x: touch.clientX, y: touch.clientY };
+
+    const dx = touchEnd.current.x - touchStart.current.x;
+    const dy = touchEnd.current.y - touchStart.current.y;
+
+    if (Math.abs(dx) < SWIPE_THRESHOLD) return;
+
+    if (Math.abs(dy) > Math.abs(dx)) return;
+
+    if (dx < 0) {
+      next();
+    } else {
+      prev();
+    }
+  };
+
   return (
     <div
       className={`font-baskervville  flex flex-col items-center justify-center w-full h-full `}
@@ -372,13 +486,25 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
             return (
               <div
                 className="w-full h-full min-h-0 items-center justify-center flex"
-                // style={{ width: `${pageWidth}vw` }}
                 key={key}
-                // className="flex-1 p-2 border-5 border-yellow-500"
-                // className={` ${mounted ? 'opacity-100' : 'opacity-0'}`}
               >
                 <div
-                  className="w-full h-full relative flex justify-center "
+                  onClick={(e) => handlePageClick(e, sheet)}
+                  onTouchStart={handleTouchStart}
+                  onTouchEnd={handleTouchEnd}
+                  onMouseMove={(e) => {
+                    const dx = Math.abs(e.clientX - startPosRef.current.x);
+                    const dy = Math.abs(e.clientY - startPosRef.current.y);
+
+                    if (dx > 5 || dy > 5) {
+                      isDraggingRef.current = true;
+                    }
+                  }}
+                  onMouseDown={(e) => {
+                    isDraggingRef.current = false;
+                    startPosRef.current = { x: e.clientX, y: e.clientY };
+                  }}
+                  className=" w-full h-full relative flex justify-center "
                   style={{
                     transformStyle: "preserve-3d",
                     backfaceVisibility: "hidden",
@@ -426,10 +552,10 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
         </div>
       }
 
-      <div className="mt-4 flex gap-4 border-2 border-blue-200">
+      {/* <div className="mt-4 flex gap-4 border-2 border-blue-200">
         <button onClick={prev}>Prev</button>
         <button onClick={next}>Next</button>
-      </div>
+      </div> */}
       <div>
         <Bookmarks
           sectionIds={sections.map((s) => s.id)}

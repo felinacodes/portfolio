@@ -143,7 +143,10 @@ export const ProjectsBlocks = (args?: RenderContext) => {
             <ul className="space-y-1">
               {project.features.map((feature) => (
                 <li key={feature} className="flex items-center gap-2">
-                  <Star size={14} className="text-gray-500" />
+                  <Star
+                    size={14}
+                    className="text-gray-500 hover:text-yellow-500 active:text-yellow-500"
+                  />
                   {feature}
                 </li>
               ))}
@@ -154,7 +157,10 @@ export const ProjectsBlocks = (args?: RenderContext) => {
 
               {project.tech.map((tech, i) => (
                 <span key={i}>
-                  <i className={`${tech} text-gray-500 text-xl lg:text-3xl`} />
+                  <i
+                    data-no-flip
+                    className={`${tech} text-gray-500 text-xl lg:text-3xl`}
+                  />
                 </span>
               ))}
             </div>
