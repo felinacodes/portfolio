@@ -270,7 +270,39 @@ root {
   text-indent: 1em;
 }
 
-.skill-icons {
+.flipNext {
+  border: 10px solid blue;
+  transform-style: preserve-3d;
+  transform-origin: left;
+  backface-visibility: hidden;
+  animation: animateNext 2s ease-in-out;
+  animation-fill-mode: forwards;
+}
+
+.flipPrev {
+  border: 10px solid green;
+  transform-style: preserve-3d;
+  transform-origin: top;
+  backface-visibility: hidden;
+  animation: animatePrev 0.8s ease-in-out;
+}
+
+@keyframes animateNext {
+  0% {
+    transform: perspective(400px) rotateY(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: perspective(400px) rotateY(-180deg);
+    opacity: 0;
+  }
+}
+
+@keyframes animatePrev {
+  100% {
+    transform: perspective(400px) rotateX(-180deg);
+    opacity: 0;
+  }
 }
 
 @media (max-width: 768px) {

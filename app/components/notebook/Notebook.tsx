@@ -6,6 +6,7 @@ import React, {
   useRef,
   useState,
   useMemo,
+  useCallback,
 } from "react";
 import Page from "./Page";
 import Cover from "./Cover";
@@ -154,6 +155,18 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
   const [bookmarkedPage, setBookmarkedPage] = useState("");
   const [active, setActive] = React.useState<string>("");
   const [mounted, setIsmounted] = useState(false);
+  const [flipping, setFlipping] = useState<null | {
+    direction: "next" | "prev";
+    id: string;
+  }>(null);
+  const flippingRef = useRef<null | { direction: "next" | "prev"; id: string }>(
+    null,
+  );
+  const pendingNavRef = useRef<string | null>(null);
+  const lastPressRef = useRef(0);
+
+  const [toggleAnimation, setToggleAnimation] = useState(true);
+  const [animationTest, setAnimationTest] = useState("");
 
   const isDraggingRef = useRef(false);
   const startPosRef = useRef({ x: 0, y: 0 });
@@ -341,35 +354,126 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
   //   return <div>...Loading...</div>
   // }
 
-  // PAGE NAVIGATION LOGIC
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      const target = e.target as HTMLElement;
+  const finishFlip = useCallback(() => {
+    if (!flippingRef.current && !pendingNavRef.current) return;
 
-      if (target.closest("input, textarea, select, [contenteditable='true']")) {
-        return;
-      }
+    // if we have a pending navigation
+    if (pendingNavRef.current) {
+      const target = pendingNavRef.current;
+      pendingNavRef.current = null;
 
-      if (e.key === "ArrowRight") {
+      setFlipping(null);
+      flippingRef.current = null;
+
+      goToIndex(target);
+      return;
+    }
+
+    // fallback: normal next/prev
+    const direction = flippingRef.current?.direction;
+
+    flippingRef.current = null;
+    setFlipping(null);
+
+    if (direction === "next") {
+      next();
+    } else {
+      prev();
+    }
+  }, [next, prev, goToIndex]);
+
+  const handleNext = useCallback(
+    (id: string) => {
+      if (!toggleAnimation) {
         next();
       }
+      if (flippingRef.current) {
+        flippingRef.current = null;
+        setFlipping(null);
+      }
+      setFlipping({ direction: "next", id });
+      flippingRef.current = { direction: "next", id };
+    },
+    [toggleAnimation, next],
+  );
 
-      if (e.key === "ArrowLeft") {
+  const handlePrev = useCallback(
+    (id: string) => {
+      if (!toggleAnimation) {
         prev();
       }
 
-      if (e.code === "Space") {
+      if (flippingRef.current) {
+        flippingRef.current = null;
+      }
+      setFlipping({ direction: "prev", id });
+      flippingRef.current = { direction: "prev", id };
+    },
+    [toggleAnimation, prev],
+  );
+
+  const handleCoverNavigation = (sheet: Extract<Sheet, { type: "cover" }>) => {
+    if (sheet.face === "outside" && sheet.side === "front") {
+      handleNext(sheet.id);
+      return;
+    }
+    if (sheet.face === "outside" && sheet.side === "back") {
+      handlePrev(sheet.id);
+      return;
+    }
+    if (sheet.face === "inside" && sheet.side === "front") {
+      handlePrev(sheet.id);
+      return;
+    }
+    if (sheet.face === "inside" && sheet.side === "back") {
+      handleNext(sheet.id);
+      return;
+    }
+  };
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      const now = Date.now();
+
+      if (now - lastPressRef.current < 200) return;
+      lastPressRef.current = now;
+
+      if (e.key === "ArrowRight" || e.code === "Space") {
         e.preventDefault();
-        next();
+
+        const rightPage = visibleItems[visibleItems.length - 1];
+        if (rightPage) {
+          if (
+            rightPage.type === "cover" &&
+            rightPage.face === "outside" &&
+            rightPage.side === "back"
+          )
+            return;
+          handleNext(rightPage.id);
+        }
+      }
+
+      if (e.key === "ArrowLeft") {
+        const leftPage = visibleItems[0];
+
+        if (leftPage) {
+          if (
+            leftPage.type === "cover" &&
+            leftPage.face === "outside" &&
+            leftPage.side === "front"
+          )
+            return;
+          setFlipping({ direction: "prev", id: leftPage.id });
+          flippingRef.current = { direction: "prev", id: leftPage.id };
+
+          handlePrev(leftPage.id);
+        }
       }
     };
 
     window.addEventListener("keydown", handleKeyDown);
-
-    return () => {
-      window.removeEventListener("keydown", handleKeyDown);
-    };
-  }, [next, prev]);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [visibleItems, next, prev, handleNext, handlePrev]);
 
   const handlePageClick = (
     e: React.MouseEvent<HTMLDivElement>,
@@ -377,29 +481,9 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
   ) => {
     if (isDraggingRef.current || "ontouchstart" in window) return;
 
-    // if (
-    //   sheet.type !== "page" &&
-    //   sheet.type !== "context" &&
-    //   sheet.type !== "blank"
-    // )
-    //   return;
     if (sheet.type === "cover") {
-      if (sheet.face === "outside" && sheet.side === "front") {
-        next();
-        return;
-      }
-      if (sheet.face === "outside" && sheet.side === "back") {
-        prev();
-        return;
-      }
-      if (sheet.face === "inside" && sheet.side === "front") {
-        prev();
-        return;
-      }
-      if (sheet.face === "inside" && sheet.side === "back") {
-        next();
-        return;
-      }
+      handleCoverNavigation(sheet);
+      return;
     }
 
     const target = e.target as HTMLElement;
@@ -418,43 +502,140 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
       return;
     }
 
+    // one page mode within a no-phone device
+    if (!isTwoPages) {
+      const rect = e.currentTarget.getBoundingClientRect();
+      const clickX = e.clientX - rect.left;
+
+      if (clickX > rect.width / 2) {
+        handleNext(sheet.id);
+      } else {
+        handlePrev(sheet.id);
+      }
+      return;
+    }
+
+    // only for 2 pages view mode
     const isOdd = (numberedMap.get(sheet.id) ?? 0) % 2 === 1;
     if (isOdd) {
-      next();
+      handleNext(sheet.id);
     } else {
-      prev();
+      handlePrev(sheet.id);
     }
   };
 
   const handleTouchStart = (e: React.TouchEvent) => {
     const touch = e.touches[0];
+
     touchStart.current = { x: touch.clientX, y: touch.clientY };
   };
 
-  const handleTouchEnd = (e: React.TouchEvent) => {
-    const touch = e.changedTouches[0];
-    touchEnd.current = { x: touch.clientX, y: touch.clientY };
+  const handleTouchEnd =
+    (sheet: Sheet) => (e: React.TouchEvent<HTMLDivElement>) => {
+      const touch = e.changedTouches[0];
+      touchEnd.current = { x: touch.clientX, y: touch.clientY };
 
-    const dx = touchEnd.current.x - touchStart.current.x;
-    const dy = touchEnd.current.y - touchStart.current.y;
+      const dx = touchEnd.current.x - touchStart.current.x;
+      const dy = touchEnd.current.y - touchStart.current.y;
 
-    if (Math.abs(dx) < SWIPE_THRESHOLD) return;
+      if (Math.abs(dx) < SWIPE_THRESHOLD) return;
 
-    if (Math.abs(dy) > Math.abs(dx)) return;
+      if (Math.abs(dy) > Math.abs(dx)) return;
 
-    if (dx < 0) {
-      next();
+      if (dx < 0) {
+        if (
+          sheet.type === "cover" &&
+          sheet.face === "outside" &&
+          sheet.side === "back"
+        )
+          return;
+        if (sheet.type === "cover") {
+          handleCoverNavigation(sheet);
+          return;
+        }
+
+        handleNext(sheet.id);
+      } else {
+        if (
+          sheet.type === "cover" &&
+          sheet.face === "outside" &&
+          sheet.side === "front"
+        )
+          return;
+        handlePrev(sheet.id);
+      }
+    };
+
+  // const getFlipClass = (sheet: Sheet) => {
+  //   console.log("getFlipClass called with sheet", sheet);
+  //   if (!flipping || flipping.id !== sheet.id || !toggleAnimation) return "";
+
+  //   return flipping.direction === "next" ? "flipNext" : "flipPrev";
+  // };
+  useEffect(() => {
+    if (!flipping || !toggleAnimation) {
+      setAnimationTest("");
     } else {
-      prev();
+      setAnimationTest(flipping.direction === "next" ? "flipNext" : "flipPrev");
     }
+  }, [flipping, toggleAnimation]);
+
+  const handleGoTo = (id: string) => {
+    if (!toggleAnimation) {
+      goToIndex(id);
+      return;
+    }
+
+    if (!visibleItems.length) {
+      goToIndex(id);
+      return;
+    }
+
+    const leftPage = visibleItems[0];
+    const rightPage = visibleItems[visibleItems.length - 1];
+
+    if (leftPage.id === id || rightPage.id === id) {
+      return;
+    }
+
+    const currentIndex = numberedMap.get(leftPage.id) ?? 0;
+    const targetIndex = numberedMap.get(id) ?? 0;
+
+    const isNext = targetIndex > currentIndex;
+
+    let animatingId = leftPage.id;
+    let direction: "next" | "prev" = "prev";
+
+    if (isTwoPages) {
+      if (isNext) {
+        animatingId = rightPage.id;
+        direction = "next";
+      } else {
+        animatingId = leftPage.id;
+        direction = "prev";
+      }
+    } else {
+      animatingId = leftPage.id;
+      direction = isNext ? "next" : "prev";
+    }
+
+    // store where we actually want to go
+    pendingNavRef.current = id;
+
+    setFlipping({ direction, id: animatingId });
+    setAnimationTest(direction === "next" ? "flipNext" : "flipPrev");
   };
 
   return (
     <div
       className={`font-baskervville  flex flex-col items-center justify-center w-full h-full `}
     >
-      <button onClick={() => goToIndex(bookmarkedPage)}>
+      {/* <button onClick={() => goToIndex(bookmarkedPage)}> */}
+      <button onClick={() => handleGoTo(bookmarkedPage)}>
         Open On Bookmark
+      </button>
+      <button onClick={() => setToggleAnimation(!toggleAnimation)}>
+        {toggleAnimation ? "Disable Animation" : "Enable Animation"}
       </button>
       <Bookmark
         visibleItems={visibleItems}
@@ -491,7 +672,7 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
                 <div
                   onClick={(e) => handlePageClick(e, sheet)}
                   onTouchStart={handleTouchStart}
-                  onTouchEnd={handleTouchEnd}
+                  onTouchEnd={handleTouchEnd(sheet)}
                   onMouseMove={(e) => {
                     const dx = Math.abs(e.clientX - startPosRef.current.x);
                     const dy = Math.abs(e.clientY - startPosRef.current.y);
@@ -504,44 +685,64 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
                     isDraggingRef.current = false;
                     startPosRef.current = { x: e.clientX, y: e.clientY };
                   }}
-                  className=" w-full h-full relative flex justify-center "
-                  style={{
-                    transformStyle: "preserve-3d",
-                    backfaceVisibility: "hidden",
-                  }}
+                  onAnimationEnd={finishFlip}
+                  className={`w-full h-full relative flex justify-center ${
+                    sheet.id === flipping?.id ? animationTest : ""
+                  }`}
                 >
                   {sheet.type === "cover" && (
-                    <Cover
-                      side={sheet.side}
-                      face={sheet.face}
-                      isOpen={isOpen}
-                      setIsOpen={setIsOpen}
-                      pagesPerView={pagesPerView}
-                    />
+                    <div
+                      className={`w-full h-full relative flex justify-center self-center 
+                      )}   `}
+                    >
+                      <Cover
+                        side={sheet.side}
+                        face={sheet.face}
+                        isOpen={isOpen}
+                        setIsOpen={setIsOpen}
+                        pagesPerView={pagesPerView}
+                      />
+                    </div>
                   )}
                   {sheet.type === "context" && (
-                    <Page ref={outerRef} index={numberedMap.get(sheet.id) ?? 0}>
-                      {sheet.render({
-                        ctx: contextMap,
-                        goToIndex: sheet.id.startsWith("Contents")
-                          ? goToIndex
-                          : undefined,
-                      })}
-                    </Page>
+                    <div
+                      className={`w-full h-full flex-1 flex 
+                      )} `}
+                    >
+                      <Page
+                        ref={outerRef}
+                        index={numberedMap.get(sheet.id) ?? 0}
+                      >
+                        {sheet.render({
+                          ctx: contextMap,
+                          goToIndex: sheet.id.startsWith("Contents")
+                            ? // ? goToIndex
+                              handleGoTo
+                            : undefined,
+                        })}
+                      </Page>
+                    </div>
                   )}
                   {sheet.type === "page" && (
-                    <Page
-                      ref={outerRef}
-                      index={numberedMap.get(sheet.id) ?? 0}
-                      chapterName={sheet.chapterName}
+                    <div
+                      className={`w-full h-full flex-1 flex 
+                      )}`}
                     >
-                      {sheet.render({})}
-                    </Page>
+                      <Page
+                        ref={outerRef}
+                        index={numberedMap.get(sheet.id) ?? 0}
+                        chapterName={sheet.chapterName}
+                      >
+                        {sheet.render({})}
+                      </Page>
+                    </div>
                   )}
 
                   {sheet.type === "blank" && (
-                    // <div className="w-full flex border-3 border-yellow-500">
-                    <div className="w-full  h-full flex-1  flex ">
+                    <div
+                      className={`w-full h-full flex-1 flex animationTest 
+                      )}  `}
+                    >
                       <Page index={numberedMap.get(sheet.id)} />
                     </div>
                   )}
@@ -559,9 +760,9 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
       <div>
         <Bookmarks
           sectionIds={sections.map((s) => s.id)}
-          goToIndex={goToIndex}
           active={active}
           setActive={setActive}
+          handleGoTo={handleGoTo}
         />
       </div>
     </div>
