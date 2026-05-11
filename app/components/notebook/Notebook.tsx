@@ -159,6 +159,7 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
     direction: "next" | "prev";
     id: string;
   }>(null);
+
   const flippingRef = useRef<null | { direction: "next" | "prev"; id: string }>(
     null,
   );
@@ -647,7 +648,8 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
 
       {
         <div
-          className={` min-h-[350px] h-[90vh] md:h-[85vh]  max-h-[800px] grid grid-cols-1 w-[${pageWidth}vw]
+          className={`book-scene min-h-[350px] h-[90vh] md:h-[85vh]  max-h-[800px] grid grid-cols-1 w-[${pageWidth}vw] 
+          
          
           ${
             isOpen
@@ -666,7 +668,8 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
 
             return (
               <div
-                className="w-full h-full min-h-0 items-center justify-center flex"
+                className=" w-full h-full min-h-0 items-center justify-center flex 
+                "
                 key={key}
               >
                 <div
@@ -686,9 +689,8 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
                     startPosRef.current = { x: e.clientX, y: e.clientY };
                   }}
                   onAnimationEnd={finishFlip}
-                  className={`w-full h-full relative flex justify-center ${
-                    sheet.id === flipping?.id ? animationTest : ""
-                  }`}
+                  className={`page-flip w-full h-full relative flex justify-center 
+                    ${sheet.id === flipping?.id ? animationTest : ""}`}
                 >
                   {sheet.type === "cover" && (
                     <div
@@ -740,7 +742,7 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
 
                   {sheet.type === "blank" && (
                     <div
-                      className={`w-full h-full flex-1 flex animationTest 
+                      className={`w-full h-full flex-1 flex  
                       )}  `}
                     >
                       <Page index={numberedMap.get(sheet.id)} />
