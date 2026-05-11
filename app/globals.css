@@ -103,7 +103,7 @@ root {
   position: absolute;
   inset: 0;
   z-index: 0;
-  /* pointer-events: none; */
+  pointer-events: none;
   box-shadow:
     inset 2px -2px 0 #dbdbdbf6,
     inset 3px -3px 0 white,
