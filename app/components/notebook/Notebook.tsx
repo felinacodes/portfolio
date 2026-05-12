@@ -168,6 +168,7 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
 
   const [toggleAnimation, setToggleAnimation] = useState(true);
   const [animationTest, setAnimationTest] = useState("");
+  const [underPage, setUnderPage] = useState<Sheet | null>(null);
 
   const isDraggingRef = useRef(false);
   const startPosRef = useRef({ x: 0, y: 0 });
@@ -388,9 +389,9 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
       if (!toggleAnimation) {
         next();
       }
+
       if (flippingRef.current) {
         flippingRef.current = null;
-        setFlipping(null);
       }
       setFlipping({ direction: "next", id });
       flippingRef.current = { direction: "next", id };
@@ -567,12 +568,6 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
       }
     };
 
-  // const getFlipClass = (sheet: Sheet) => {
-  //   console.log("getFlipClass called with sheet", sheet);
-  //   if (!flipping || flipping.id !== sheet.id || !toggleAnimation) return "";
-
-  //   return flipping.direction === "next" ? "flipNext" : "flipPrev";
-  // };
   useEffect(() => {
     if (!flipping || !toggleAnimation) {
       setAnimationTest("");
@@ -627,6 +622,67 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
     setAnimationTest(direction === "next" ? "flipNext" : "flipPrev");
   };
 
+  const prevSheet = useMemo(() => {
+    if (!visibleItems.length) return null;
+
+    const firstId = visibleItems[0].id;
+    const index = correctSheet.findIndex((s) => s.id === firstId);
+
+    return index > 0 ? correctSheet[index - 2] : null;
+  }, [visibleItems, correctSheet]);
+
+  const nextSheet = useMemo(() => {
+    if (!visibleItems.length) return null;
+
+    const lastId = visibleItems[visibleItems.length - 1].id;
+    const index = correctSheet.findIndex((s) => s.id === lastId);
+
+    return index < correctSheet.length - 1 ? correctSheet[index + 2] : null;
+  }, [visibleItems, correctSheet]);
+
+  const renderSheet = (sheet: Sheet) => {
+    if (sheet.type === "cover") {
+      return (
+        <Cover
+          side={sheet.side}
+          face={sheet.face}
+          isOpen={isOpen}
+          setIsOpen={setIsOpen}
+          pagesPerView={pagesPerView}
+        />
+      );
+    }
+
+    if (sheet.type === "context") {
+      return (
+        <Page ref={outerRef} index={numberedMap.get(sheet.id) ?? 0}>
+          {sheet.render({
+            ctx: contextMap,
+            goToIndex: sheet.id.startsWith("Contents") ? handleGoTo : undefined,
+          })}
+        </Page>
+      );
+    }
+
+    if (sheet.type === "page") {
+      return (
+        <Page
+          ref={outerRef}
+          index={numberedMap.get(sheet.id) ?? 0}
+          chapterName={sheet.chapterName}
+        >
+          {sheet.render({})}
+        </Page>
+      );
+    }
+
+    if (sheet.type === "blank") {
+      return <Page index={numberedMap.get(sheet.id)} />;
+    }
+
+    return null;
+  };
+
   return (
     <div
       className={`font-baskervville  flex flex-col items-center justify-center w-full h-full `}
@@ -657,8 +713,9 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
               : "md:grid-cols-1"
           }`}
         >
-          {/* {!mounted && <p>Loading...</p>} */}
           {visibleItems.map((sheet, i) => {
+            const isLeftPage = i === 0;
+            const isRightPage = i === visibleItems.length - 1;
             const key =
               sheet.type === "page"
                 ? sheet.id
@@ -668,10 +725,21 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
 
             return (
               <div
-                className=" w-full h-full min-h-0 items-center justify-center flex 
-                "
+                className="relative w-full h-full min-h-0 items-center justify-center flex"
                 key={key}
               >
+                {isOpen && isLeftPage && prevSheet && (
+                  <div className="absolute inset-0 -z-10">
+                    {renderSheet(prevSheet)}
+                  </div>
+                )}
+
+                {isOpen && isRightPage && nextSheet && (
+                  <div className="absolute inset-0 -z-10">
+                    {renderSheet(nextSheet)}
+                  </div>
+                )}
+
                 <div
                   onClick={(e) => handlePageClick(e, sheet)}
                   onTouchStart={handleTouchStart}
@@ -679,75 +747,18 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
                   onMouseMove={(e) => {
                     const dx = Math.abs(e.clientX - startPosRef.current.x);
                     const dy = Math.abs(e.clientY - startPosRef.current.y);
-
-                    if (dx > 5 || dy > 5) {
-                      isDraggingRef.current = true;
-                    }
+                    if (dx > 5 || dy > 5) isDraggingRef.current = true;
                   }}
                   onMouseDown={(e) => {
                     isDraggingRef.current = false;
                     startPosRef.current = { x: e.clientX, y: e.clientY };
                   }}
                   onAnimationEnd={finishFlip}
-                  className={`page-flip w-full h-full relative flex justify-center 
-                    ${sheet.id === flipping?.id ? animationTest : ""}`}
+                  className={`page-flip w-full h-full relative flex justify-center ${
+                    sheet.id === flipping?.id ? animationTest : ""
+                  }`}
                 >
-                  {sheet.type === "cover" && (
-                    <div
-                      className={`w-full h-full relative flex justify-center self-center 
-                      )}   `}
-                    >
-                      <Cover
-                        side={sheet.side}
-                        face={sheet.face}
-                        isOpen={isOpen}
-                        setIsOpen={setIsOpen}
-                        pagesPerView={pagesPerView}
-                      />
-                    </div>
-                  )}
-                  {sheet.type === "context" && (
-                    <div
-                      className={`w-full h-full flex-1 flex 
-                      )} `}
-                    >
-                      <Page
-                        ref={outerRef}
-                        index={numberedMap.get(sheet.id) ?? 0}
-                      >
-                        {sheet.render({
-                          ctx: contextMap,
-                          goToIndex: sheet.id.startsWith("Contents")
-                            ? // ? goToIndex
-                              handleGoTo
-                            : undefined,
-                        })}
-                      </Page>
-                    </div>
-                  )}
-                  {sheet.type === "page" && (
-                    <div
-                      className={`w-full h-full flex-1 flex 
-                      )}`}
-                    >
-                      <Page
-                        ref={outerRef}
-                        index={numberedMap.get(sheet.id) ?? 0}
-                        chapterName={sheet.chapterName}
-                      >
-                        {sheet.render({})}
-                      </Page>
-                    </div>
-                  )}
-
-                  {sheet.type === "blank" && (
-                    <div
-                      className={`w-full h-full flex-1 flex  
-                      )}  `}
-                    >
-                      <Page index={numberedMap.get(sheet.id)} />
-                    </div>
-                  )}
+                  {renderSheet(sheet)}
                 </div>
               </div>
             );

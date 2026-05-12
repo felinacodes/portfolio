@@ -27,7 +27,6 @@ export function useNotebookPagination(
 ) {
   // const [leftIndex, setLeftIndex] = useState(0)
   const [leftIndex, setLeftIndex] = useState(() => {
-    console.log("initial page: ", initialPage);
     if (!initialPage) return 0;
 
     const index = items.findIndex((i) => i.id === initialPage);

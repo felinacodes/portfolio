@@ -431,11 +431,11 @@ root {
   }
 
   50% {
-    transform: rotateY(-2deg) translateZ(20px);
+    transform: rotateY(-3deg) translateZ(20px);
   }
 
   100% {
-    transform: rotateY(-5deg) translateZ(30px);
+    transform: rotateY(-6deg) translateZ(30px);
   }
 }
 
@@ -445,11 +445,11 @@ root {
   }
 
   50% {
-    transform: rotateY(2deg) translateZ(20px);
+    transform: rotateY(3deg) translateZ(20px);
   }
 
   100% {
-    transform: rotateY(5deg) translateZ(30px);
+    transform: rotateY(6deg) translateZ(30px);
   }
 }
 
