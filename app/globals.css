@@ -425,6 +425,34 @@ root {
   }
 }
 
+@keyframes animatePrevSinglePage {
+  0% {
+    transform: rotateY(0deg) translateZ(0px);
+  }
+
+  50% {
+    transform: rotateY(60deg) translateZ(10px);
+  }
+
+  100% {
+    transform: rotateY(180deg) translateZ(0px);
+  }
+}
+
+@keyframes animateNextSinglePage {
+  0% {
+    transform: rotateY(0deg) translateZ(0px);
+  }
+
+  50% {
+    transform: rotateY(-60deg) translateZ(10px);
+  }
+
+  100% {
+    transform: rotateY(-180deg) translateZ(0px);
+  }
+}
+
 @keyframes animateNextHover {
   0% {
     transform: rotateY(0deg) translateZ(0);
@@ -466,5 +494,32 @@ root {
       inset -8px 0 0 #dbdbdbf6,
       inset -9px 0 0 white,
       inset -10px 0 0 #dbdbdbf6;
+  }
+
+  /* Keep in case you view 1 page from smaller window */
+  .page-flip:hover .odd-page,
+  .page-flip:hover .even-page {
+    animation: none;
+    box-shadow:
+      6px 6px 12px rgba(0, 0, 0, 0.1),
+      12px 20px 30px rgba(0, 0, 0, 0.16);
+  }
+
+  .flipPrev {
+    animation: animatePrevSinglePage 0.8s ease-in forwards;
+  }
+
+  .flipNext {
+    animation: animateNextSinglePage 0.8s ease-in forwards;
+  }
+}
+
+@media (hover: none) {
+  .page-flip:active .odd-page,
+  .page-flip:active .even-page {
+    animation: none;
+    box-shadow:
+      6px 6px 12px rgba(0, 0, 0, 0.1),
+      12px 20px 30px rgba(0, 0, 0, 0.16);
   }
 }
