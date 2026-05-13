@@ -709,7 +709,7 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
          
           ${
             isOpen
-              ? "md:grid-cols-2  p-2 pl-0.5 md:pl-2 shadow-[3px_6px_20px_0_rgba(0,0,0,0.35)] cover "
+              ? "md:grid-cols-2  p-2 pl-0 md:pl-2 shadow-[3px_6px_20px_0_rgba(0,0,0,0.35)] cover "
               : "md:grid-cols-1"
           }`}
         >
