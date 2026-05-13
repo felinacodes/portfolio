@@ -728,7 +728,7 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
                 className="relative w-full h-full min-h-0 items-center justify-center flex"
                 key={key}
               >
-                {isOpen && isLeftPage && prevSheet && (
+                {/* {isOpen && isLeftPage && prevSheet && (
                   <div className="absolute inset-0 -z-10">
                     {renderSheet(prevSheet)}
                   </div>
@@ -738,7 +738,7 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
                   <div className="absolute inset-0 -z-10">
                     {renderSheet(nextSheet)}
                   </div>
-                )}
+                )} */}
 
                 <div
                   onClick={(e) => handlePageClick(e, sheet)}

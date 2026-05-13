@@ -454,14 +454,8 @@ root {
 }
 
 @media (max-width: 768px) {
-  .odd-page,
-  .even-page {
-    background-image: linear-gradient(
-      to right,
-      rgba(0, 0, 0, 0.2) 0%,
-      rgba(0, 0, 0, 0) 5%
-    );
-
+  .odd-page::before,
+  .even-page::before {
     box-shadow:
       inset -2px -2px 0 #dbdbdbf6,
       inset -3px -3px 0 white,
