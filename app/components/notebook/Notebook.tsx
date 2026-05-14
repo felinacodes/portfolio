@@ -167,8 +167,7 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
   const lastPressRef = useRef(0);
 
   const [toggleAnimation, setToggleAnimation] = useState(true);
-  const [animationTest, setAnimationTest] = useState("");
-  const [underPage, setUnderPage] = useState<Sheet | null>(null);
+  const [correctAnimation, setCorrectAnimation] = useState("");
 
   const isDraggingRef = useRef(false);
   const startPosRef = useRef({ x: 0, y: 0 });
@@ -570,9 +569,11 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
 
   useEffect(() => {
     if (!flipping || !toggleAnimation) {
-      setAnimationTest("");
+      setCorrectAnimation("");
     } else {
-      setAnimationTest(flipping.direction === "next" ? "flipNext" : "flipPrev");
+      setCorrectAnimation(
+        flipping.direction === "next" ? "flipNext" : "flipPrev",
+      );
     }
   }, [flipping, toggleAnimation]);
 
@@ -619,7 +620,7 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
     pendingNavRef.current = id;
 
     setFlipping({ direction, id: animatingId });
-    setAnimationTest(direction === "next" ? "flipNext" : "flipPrev");
+    setCorrectAnimation(direction === "next" ? "flipNext" : "flipPrev");
   };
 
   const prevSheet = useMemo(() => {
@@ -628,8 +629,8 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
     const firstId = visibleItems[0].id;
     const index = correctSheet.findIndex((s) => s.id === firstId);
 
-    return index > 0 ? correctSheet[index - 2] : null;
-  }, [visibleItems, correctSheet]);
+    return index > 0 ? correctSheet[index - pagesPerView] : null;
+  }, [visibleItems, correctSheet, pagesPerView]);
 
   const nextSheet = useMemo(() => {
     if (!visibleItems.length) return null;
@@ -637,8 +638,10 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
     const lastId = visibleItems[visibleItems.length - 1].id;
     const index = correctSheet.findIndex((s) => s.id === lastId);
 
-    return index < correctSheet.length - 1 ? correctSheet[index + 2] : null;
-  }, [visibleItems, correctSheet]);
+    return index < correctSheet.length - 1
+      ? correctSheet[index + pagesPerView]
+      : null;
+  }, [visibleItems, correctSheet, pagesPerView]);
 
   const renderSheet = (sheet: Sheet) => {
     if (sheet.type === "cover") {
@@ -714,8 +717,9 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
           }`}
         >
           {visibleItems.map((sheet, i) => {
-            const isLeftPage = i === 0;
-            const isRightPage = i === visibleItems.length - 1;
+            // const isLeftPage = i === 0;
+            // const isRightPage = i === visibleItems.length - 1;
+
             const key =
               sheet.type === "page"
                 ? sheet.id
@@ -728,17 +732,21 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
                 className="relative w-full h-full min-h-0 items-center justify-center flex"
                 key={key}
               >
-                {/* {isOpen && isLeftPage && prevSheet && (
-                  <div className="absolute inset-0 -z-10">
-                    {renderSheet(prevSheet)}
-                  </div>
-                )}
+                {isOpen &&
+                  flippingRef.current?.direction === "prev" &&
+                  prevSheet && (
+                    <div className="absolute inset-0 -z-10">
+                      {renderSheet(prevSheet)}
+                    </div>
+                  )}
 
-                {isOpen && isRightPage && nextSheet && (
-                  <div className="absolute inset-0 -z-10">
-                    {renderSheet(nextSheet)}
-                  </div>
-                )} */}
+                {isOpen &&
+                  flippingRef.current?.direction === "next" &&
+                  nextSheet && (
+                    <div className="absolute inset-0 -z-10">
+                      {renderSheet(nextSheet)}
+                    </div>
+                  )}
 
                 <div
                   onClick={(e) => handlePageClick(e, sheet)}
@@ -755,7 +763,7 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
                   }}
                   onAnimationEnd={finishFlip}
                   className={`page-flip w-full h-full relative flex justify-center ${
-                    sheet.id === flipping?.id ? animationTest : ""
+                    sheet.id === flipping?.id ? correctAnimation : ""
                   }`}
                 >
                   {renderSheet(sheet)}
