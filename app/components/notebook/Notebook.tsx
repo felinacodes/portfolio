@@ -638,7 +638,7 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
     const lastId = visibleItems[visibleItems.length - 1].id;
     const index = correctSheet.findIndex((s) => s.id === lastId);
 
-    return index < correctSheet.length - 1
+    return index < correctSheet.length - pagesPerView
       ? correctSheet[index + pagesPerView]
       : null;
   }, [visibleItems, correctSheet, pagesPerView]);
@@ -717,8 +717,8 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
           }`}
         >
           {visibleItems.map((sheet, i) => {
-            // const isLeftPage = i === 0;
-            // const isRightPage = i === visibleItems.length - 1;
+            const isLeftPage = i === 0;
+            const isRightPage = i === visibleItems.length - 1;
 
             const key =
               sheet.type === "page"
@@ -732,9 +732,25 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
                 className="relative w-full h-full min-h-0 items-center justify-center flex"
                 key={key}
               >
+                {/* Leave the isLeftPage and isRightPage logic for 2 pages
+                so the hover animation works as intented.*/}
+                {isOpen && isLeftPage && prevSheet && isTwoPages && (
+                  <div className="absolute inset-0 -z-10">
+                    {renderSheet(prevSheet)}
+                  </div>
+                )}
+
+                {isOpen && isRightPage && nextSheet && isTwoPages && (
+                  <div className="absolute inset-0 -z-10">
+                    {renderSheet(nextSheet)}
+                  </div>
+                )}
+
+                {/* Fix for 1 pages view.*/}
                 {isOpen &&
                   flippingRef.current?.direction === "prev" &&
-                  prevSheet && (
+                  prevSheet &&
+                  !isTwoPages && (
                     <div className="absolute inset-0 -z-10">
                       {renderSheet(prevSheet)}
                     </div>
@@ -742,7 +758,8 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
 
                 {isOpen &&
                   flippingRef.current?.direction === "next" &&
-                  nextSheet && (
+                  nextSheet &&
+                  !isTwoPages && (
                     <div className="absolute inset-0 -z-10">
                       {renderSheet(nextSheet)}
                     </div>
