@@ -325,7 +325,8 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
       if (
         sheet.type === "page" ||
         sheet.type === "blank" ||
-        sheet.type === "context"
+        sheet.type === "context" ||
+        sheet.type === "cover"
       ) {
         count++;
         map.set(sheet.id, count);
@@ -413,21 +414,46 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
     [toggleAnimation, prev],
   );
 
+  // const handleCoverNavigation = (sheet: Extract<Sheet, { type: "cover" }>) => {
+  //   if (sheet.face === "outside" && sheet.side === "front") {
+  //     handleNext(sheet.id);
+  //     return;
+  //   }
+  //   if (sheet.face === "outside" && sheet.side === "back") {
+  //     handlePrev(sheet.id);
+  //     return;
+  //   }
+  //   if (sheet.face === "inside" && sheet.side === "front") {
+  //     handlePrev(sheet.id);
+  //     return;
+  //   }
+  //   if (sheet.face === "inside" && sheet.side === "back") {
+  //     handleNext(sheet.id);
+  //     return;
+  //   }
+  // };
   const handleCoverNavigation = (sheet: Extract<Sheet, { type: "cover" }>) => {
+    // no animation for covers
+    setFlipping(null);
+    flippingRef.current = null;
+
     if (sheet.face === "outside" && sheet.side === "front") {
-      handleNext(sheet.id);
+      next();
       return;
     }
+
     if (sheet.face === "outside" && sheet.side === "back") {
-      handlePrev(sheet.id);
+      prev();
       return;
     }
+
     if (sheet.face === "inside" && sheet.side === "front") {
-      handlePrev(sheet.id);
+      prev();
       return;
     }
+
     if (sheet.face === "inside" && sheet.side === "back") {
-      handleNext(sheet.id);
+      next();
       return;
     }
   };
@@ -572,10 +598,16 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
       setCorrectAnimation("");
     } else {
       setCorrectAnimation(
-        flipping.direction === "next" ? "flipNext" : "flipPrev",
+        !isOpen
+          ? flipping.direction === "next"
+            ? "coverPrev"
+            : "coverNext"
+          : flipping.direction === "next"
+            ? "flipNext"
+            : "flipPrev",
       );
     }
-  }, [flipping, toggleAnimation]);
+  }, [flipping, toggleAnimation, isOpen]);
 
   const handleGoTo = (id: string) => {
     if (!toggleAnimation) {
@@ -620,7 +652,16 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
     pendingNavRef.current = id;
 
     setFlipping({ direction, id: animatingId });
-    setCorrectAnimation(direction === "next" ? "flipNext" : "flipPrev");
+    // setCorrectAnimation(direction === "next" ? "flipNext" : "flipPrev");
+    setCorrectAnimation(
+      !isOpen
+        ? direction === "next"
+          ? "coverPrev"
+          : "coverNext"
+        : direction === "next"
+          ? "flipNext"
+          : "flipPrev",
+    );
   };
 
   const prevSheet = useMemo(() => {
@@ -635,24 +676,41 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
   const nextSheet = useMemo(() => {
     if (!visibleItems.length) return null;
 
+    // During bookmark navigation animation,
+    // show the actual target page instead
+    if (pendingNavRef.current) {
+      const targetIndex = correctSheet.findIndex(
+        (s) => s.id === pendingNavRef.current,
+      );
+
+      if (targetIndex !== -1) {
+        return correctSheet[targetIndex];
+      }
+    }
+
+    // normal next-page behavior
     const lastId = visibleItems[visibleItems.length - 1].id;
     const index = correctSheet.findIndex((s) => s.id === lastId);
 
     return index < correctSheet.length - pagesPerView
       ? correctSheet[index + pagesPerView]
       : null;
-  }, [visibleItems, correctSheet, pagesPerView]);
+  }, [visibleItems, correctSheet, pagesPerView, flipping]); // Needs flipping
 
   const renderSheet = (sheet: Sheet) => {
+    console.log("called with sheet", sheet);
     if (sheet.type === "cover") {
       return (
-        <Cover
-          side={sheet.side}
-          face={sheet.face}
-          isOpen={isOpen}
-          setIsOpen={setIsOpen}
-          pagesPerView={pagesPerView}
-        />
+        <div className="cover-out h-full w-full  flex justify-center items-center">
+          <Cover
+            side={sheet.side}
+            face={sheet.face}
+            isOpen={isOpen}
+            setIsOpen={setIsOpen}
+            pagesPerView={pagesPerView}
+            animationClass={sheet.id === flipping?.id ? correctAnimation : ""}
+          />
+        </div>
       );
     }
 
@@ -701,7 +759,12 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
         visibleItems={visibleItems}
         setBookmarkedPage={setBookmarkedPage}
       />
-      <h1 className="text-center">{isOpen ? "Open" : "Closed"}</h1>
+      <div className="testwrapper">
+        <h1 className="text-center testanime">{isOpen ? "Open" : "Closed"}</h1>
+        <h1 className="text-center testanime">{flipping?.direction}</h1>
+        <h1 className="text-center testanime">{nextSheet?.id}</h1>
+      </div>
+
       {/* <div className="w-[80vw] h-[80vh] min-h-[300px] max-h-[800px] flex"> */}
       {/* Initial Load fix for flickering and LCP*/}
 
@@ -712,8 +775,8 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
          
           ${
             isOpen
-              ? "md:grid-cols-2  p-2 pl-0 md:pl-2 shadow-[3px_6px_20px_0_rgba(0,0,0,0.35)] cover "
-              : "md:grid-cols-1"
+              ? "md:grid-cols-2  p-2 pl-0 md:pl-2 shadow-[3px_6px_20px_0_rgba(0,0,0,0.35)] cover-opened "
+              : `md:grid-cols-1`
           }`}
         >
           {visibleItems.map((sheet, i) => {
@@ -764,6 +827,15 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
                       {renderSheet(nextSheet)}
                     </div>
                   )}
+
+                {/* Show first inside page while opening cover */}
+                {!isOpen && flipping?.direction === "next" && nextSheet && (
+                  <div className="absolute inset-0 z-0 flex justify-center">
+                    <div className="w-full md:w-1/2 h-full">
+                      {renderSheet(nextSheet)}
+                    </div>
+                  </div>
+                )}
 
                 <div
                   onClick={(e) => handlePageClick(e, sheet)}
