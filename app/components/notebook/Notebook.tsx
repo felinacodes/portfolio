@@ -159,6 +159,7 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
     direction: "next" | "prev";
     id: string;
   }>(null);
+  const [bookmarkNav, setBookmarkNav] = useState(false);
 
   const flippingRef = useRef<null | { direction: "next" | "prev"; id: string }>(
     null,
@@ -362,6 +363,7 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
     // if we have a pending navigation
     if (pendingNavRef.current) {
       const target = pendingNavRef.current;
+      setBookmarkNav(false);
       pendingNavRef.current = null;
 
       setFlipping(null);
@@ -414,24 +416,6 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
     [toggleAnimation, prev],
   );
 
-  // const handleCoverNavigation = (sheet: Extract<Sheet, { type: "cover" }>) => {
-  //   if (sheet.face === "outside" && sheet.side === "front") {
-  //     handleNext(sheet.id);
-  //     return;
-  //   }
-  //   if (sheet.face === "outside" && sheet.side === "back") {
-  //     handlePrev(sheet.id);
-  //     return;
-  //   }
-  //   if (sheet.face === "inside" && sheet.side === "front") {
-  //     handlePrev(sheet.id);
-  //     return;
-  //   }
-  //   if (sheet.face === "inside" && sheet.side === "back") {
-  //     handleNext(sheet.id);
-  //     return;
-  //   }
-  // };
   const handleCoverNavigation = (sheet: Extract<Sheet, { type: "cover" }>) => {
     // no animation for covers
     setFlipping(null);
@@ -649,7 +633,9 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
     }
 
     // store where we actually want to go
+
     pendingNavRef.current = id;
+    setBookmarkNav(true);
 
     setFlipping({ direction, id: animatingId });
     // setCorrectAnimation(direction === "next" ? "flipNext" : "flipPrev");
@@ -664,41 +650,81 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
     );
   };
 
+  const getSpreadTarget = useCallback(
+    (id: string) => {
+      const targetIndex = correctSheet.findIndex((s) => s.id === id);
+
+      if (targetIndex === -1) return null;
+
+      const targetSheet = correctSheet[targetIndex];
+      const pageNumber = numberedMap.get(targetSheet.id) ?? 0;
+
+      const isEven = pageNumber % 2 === 0;
+
+      return {
+        targetIndex,
+        targetSheet,
+        pageNumber,
+        isEven,
+        leftPageIndex: isEven ? targetIndex : targetIndex - 1,
+        rightPageIndex: isEven ? targetIndex + 1 : targetIndex,
+      };
+    },
+    [correctSheet, numberedMap],
+  );
+
   const prevSheet = useMemo(() => {
     if (!visibleItems.length) return null;
+
+    // override ONLY during bookmark navigation
+    if (bookmarkNav && pendingNavRef.current) {
+      const spread = getSpreadTarget(pendingNavRef.current);
+
+      if (!spread) return null;
+
+      // fix for 1 page view
+      if (!isTwoPages) return correctSheet[spread.targetIndex] ?? null;
+
+      return correctSheet[spread.leftPageIndex] ?? null;
+    }
 
     const firstId = visibleItems[0].id;
     const index = correctSheet.findIndex((s) => s.id === firstId);
 
     return index > 0 ? correctSheet[index - pagesPerView] : null;
-  }, [visibleItems, correctSheet, pagesPerView]);
+  }, [
+    visibleItems,
+    correctSheet,
+    pagesPerView,
+    bookmarkNav,
+    getSpreadTarget,
+    isTwoPages,
+  ]);
 
   const nextSheet = useMemo(() => {
     if (!visibleItems.length) return null;
 
-    // During bookmark navigation animation,
-    // show the actual target page instead
-    if (pendingNavRef.current) {
-      const targetIndex = correctSheet.findIndex(
-        (s) => s.id === pendingNavRef.current,
-      );
+    // override ONLY during bookmark navigation
+    if (bookmarkNav && pendingNavRef.current) {
+      const spread = getSpreadTarget(pendingNavRef.current);
 
-      if (targetIndex !== -1) {
-        return correctSheet[targetIndex];
-      }
+      if (!spread) return null;
+
+      // fix for 1 page view
+      if (!isTwoPages) return correctSheet[spread.targetIndex] ?? null;
+
+      return correctSheet[spread.rightPageIndex] ?? null;
     }
 
-    // normal next-page behavior
     const lastId = visibleItems[visibleItems.length - 1].id;
     const index = correctSheet.findIndex((s) => s.id === lastId);
 
     return index < correctSheet.length - pagesPerView
       ? correctSheet[index + pagesPerView]
       : null;
-  }, [visibleItems, correctSheet, pagesPerView, flipping]); // Needs flipping
+  }, [visibleItems, correctSheet, pagesPerView, bookmarkNav, getSpreadTarget]);
 
   const renderSheet = (sheet: Sheet) => {
-    console.log("called with sheet", sheet);
     if (sheet.type === "cover") {
       return (
         <div className="cover-out h-full w-full  flex justify-center items-center">
@@ -811,7 +837,7 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
 
                 {/* Fix for 1 pages view.*/}
                 {isOpen &&
-                  flippingRef.current?.direction === "prev" &&
+                  flipping?.direction === "prev" &&
                   prevSheet &&
                   !isTwoPages && (
                     <div className="absolute inset-0 -z-10">
@@ -819,8 +845,9 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
                     </div>
                   )}
 
+                {/* flippingRef.current.direction === next  seem to be the problem.*/}
                 {isOpen &&
-                  flippingRef.current?.direction === "next" &&
+                  flipping?.direction === "next" &&
                   nextSheet &&
                   !isTwoPages && (
                     <div className="absolute inset-0 -z-10">
@@ -828,7 +855,9 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
                     </div>
                   )}
 
-                {/* Show first inside page while opening cover */}
+                {/* Show first inside page while opening cover 
+                1 and 2 pages view
+                */}
                 {!isOpen && flipping?.direction === "next" && nextSheet && (
                   <div className="absolute inset-0 z-0 flex justify-center">
                     <div className="w-full md:w-1/2 h-full">
