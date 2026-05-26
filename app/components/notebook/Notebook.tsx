@@ -868,6 +868,15 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
                   </div>
                 )}
 
+                {/* Show last inside page while closing back cover */}
+                {!isOpen && flipping?.direction === "prev" && prevSheet && (
+                  <div className="absolute inset-0 z-0 flex justify-center">
+                    <div className="w-full md:w-1/2 h-full">
+                      {renderSheet(prevSheet)}
+                    </div>
+                  </div>
+                )}
+
                 <div
                   onClick={(e) => handlePageClick(e, sheet)}
                   onTouchStart={handleTouchStart}

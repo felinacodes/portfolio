@@ -157,7 +157,7 @@ root {
   background: #ffc0cb;
   border-radius: 3px;
   transition: all 0.3s ease-in-out;
-  transform: perspective(1200px) rotateY(-5deg) translateX(-5px) scale(0.92);
+  /* transform: perspective(1200px) rotateY(-5deg) translateX(-5px) scale(0.92); */
   cursor: pointer;
   position: relative;
 }
@@ -168,6 +168,34 @@ root {
   inset: 0;
   pointer-events: none;
   border-radius: inherit;
+  /* box-shadow:
+    10px 40px 40px -10px #00000030,
+    inset -3px 0 0 #d1919c,
+    inset -3px 0 0 #dbdbdbf6,
+    inset -4px 0 0 white,
+    inset -5px 0 0 #dbdbdbf6,
+    inset -6px 0 0 white,
+    inset -7px 0 0 #dbdbdbf6,
+    inset -8px 0 0 white,
+    inset -9px 0 0 #dbdbdbf6,
+    inset -10px 0 0 white,
+    inset -11px 0 0 #dbdbdbf6,
+    inset -12px 0 0 white,
+    inset -13px 0 0 #dbdbdbf6,
+    inset -14px 0 0 white,
+    inset -15px 0 0 #dbdbdbf6; */
+  z-index: 2;
+}
+
+.cover-outside-front {
+  transform: perspective(1200px) rotateY(-5deg) translateX(-5px) scale(0.92);
+}
+
+.cover-outside-back {
+  transform: perspective(1200px) rotateY(5deg) translateX(5px) scale(0.92);
+}
+
+.cover-outside-front::after {
   box-shadow:
     10px 40px 40px -10px #00000030,
     inset -3px 0 0 #d1919c,
@@ -184,7 +212,25 @@ root {
     inset -13px 0 0 #dbdbdbf6,
     inset -14px 0 0 white,
     inset -15px 0 0 #dbdbdbf6;
-  z-index: 2;
+}
+
+.cover-outside-back::after {
+  box-shadow:
+    -10px 40px 40px -10px #00000030,
+    inset 3px 0 0 #d1919c,
+    inset 3px 0 0 #dbdbdbf6,
+    inset 4px 0 0 white,
+    inset 5px 0 0 #dbdbdbf6,
+    inset 6px 0 0 white,
+    inset 7px 0 0 #dbdbdbf6,
+    inset 8px 0 0 white,
+    inset 9px 0 0 #dbdbdbf6,
+    inset 10px 0 0 white,
+    inset 11px 0 0 #dbdbdbf6,
+    inset 12px 0 0 white,
+    inset 13px 0 0 #dbdbdbf6,
+    inset 14px 0 0 white,
+    inset 15px 0 0 #dbdbdbf6;
 }
 
 .no-shadow::after {
@@ -213,7 +259,7 @@ root {
   border-radius: 3px;
   background-image: linear-gradient(
     -90deg,
-    rgba(255, 255, 255, 0) 0%,
+    rgba(31, 97, 42, 0) 0%,
     rgba(255, 255, 255, 0.2) 100%
   );
   top: 0;
@@ -240,7 +286,7 @@ root {
 }
 
 .cover-back-out {
-  border: 2px solid blue;
+  /* border: 2px solid blue; */
 }
 
 .cover-inside {
@@ -414,21 +460,16 @@ root {
 .coverNext {
   transform-style: preserve-3d;
   transform-origin: right center;
-  animation: animateCoverNext 2s ease-in forwards;
+  animation: animateCoverPrev 2s ease-in forwards;
   /* border: 2px solid red; */
 }
 
 .coverPrev {
   transform-style: preserve-3d;
   transform-origin: left;
-  animation: animateCoverPrev 1.2s ease-in forwards;
+  animation: animateCoverNext 1.2s ease-in forwards;
   backface-visibility: display;
 }
-
-/* .cover:hover {
-  /* animation: animateCoverPrev 2s ease-in; 
-  transform: rotateY(90deg) translateZ(-20px);
-} */
 
 .book-scene {
   /* perspective: 2000px; */
@@ -604,44 +645,17 @@ root {
   }
 }
 
-@keyframes animateCoverNext {
+@keyframes animateCoverPrev {
   0% {
     transform: rotateY(0deg);
-    border: 2px solid red;
-  }
-
-  25% {
-    transform: rotateY(25deg);
-    border: 2px solid red;
-  }
-
-  50% {
-    transform: rotateY(70deg);
-    border: 2px solid red;
-  }
-
-  70% {
-    transform: rotateY(125deg);
-    border: 2px solid red;
-  }
-
-  80% {
-    transform: rotateY(150deg);
-    border: 2px solid red;
-  }
-
-  90% {
-    transform: rotateY(170deg);
-    border: 2px solid red;
   }
 
   100% {
-    transform: rotateY(180deg);
-    border: 2px solid red;
+    transform: rotateY(35deg);
   }
 }
 
-@keyframes animateCoverPrev {
+@keyframes animateCoverNext {
   0% {
     transform: rotateY(0deg);
   }
