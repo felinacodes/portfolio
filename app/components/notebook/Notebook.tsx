@@ -454,12 +454,12 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
 
         const rightPage = visibleItems[visibleItems.length - 1];
         if (rightPage) {
-          if (
-            rightPage.type === "cover" &&
-            rightPage.face === "outside" &&
-            rightPage.side === "back"
-          )
+          if (rightPage.type === "cover") {
+            if (rightPage.face === "outside" && rightPage.side === "back")
+              return;
+            handleCoverNavigation(rightPage);
             return;
+          }
           handleNext(rightPage.id);
         }
       }
@@ -468,12 +468,13 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
         const leftPage = visibleItems[0];
 
         if (leftPage) {
-          if (
-            leftPage.type === "cover" &&
-            leftPage.face === "outside" &&
-            leftPage.side === "front"
-          )
+          if (leftPage.type === "cover") {
+            if (leftPage.face === "outside" && leftPage.side === "front")
+              return;
+            handleCoverNavigation(leftPage);
             return;
+          }
+
           setFlipping({ direction: "prev", id: leftPage.id });
           flippingRef.current = { direction: "prev", id: leftPage.id };
 
@@ -788,7 +789,8 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
       <div className="testwrapper">
         <h1 className="text-center testanime">{isOpen ? "Open" : "Closed"}</h1>
         <h1 className="text-center testanime">{flipping?.direction}</h1>
-        <h1 className="text-center testanime">{nextSheet?.id}</h1>
+        <h1 className="text-center testanime">Prev: {prevSheet?.id}</h1>
+        <h1 className="text-center testanime">Next: {nextSheet?.id}</h1>
       </div>
 
       {/* <div className="w-[80vw] h-[80vh] min-h-[300px] max-h-[800px] flex"> */}
