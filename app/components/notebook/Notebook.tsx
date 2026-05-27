@@ -422,12 +422,13 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
     flippingRef.current = null;
 
     if (sheet.face === "outside" && sheet.side === "front") {
-      next();
+      handleNext(sheet.id);
       return;
     }
 
     if (sheet.face === "outside" && sheet.side === "back") {
-      prev();
+      handlePrev(sheet.id);
+
       return;
     }
 
@@ -692,7 +693,11 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
     const firstId = visibleItems[0].id;
     const index = correctSheet.findIndex((s) => s.id === firstId);
 
-    return index > 0 ? correctSheet[index - pagesPerView] : null;
+    return index > 0
+      ? isTwoPages && !isOpen // fix for 2 pages view and opening cover without bookmarks
+        ? correctSheet[index - 2]
+        : correctSheet[index - pagesPerView]
+      : null;
   }, [
     visibleItems,
     correctSheet,
@@ -700,6 +705,7 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
     bookmarkNav,
     getSpreadTarget,
     isTwoPages,
+    isOpen,
   ]);
 
   const nextSheet = useMemo(() => {
@@ -721,9 +727,19 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
     const index = correctSheet.findIndex((s) => s.id === lastId);
 
     return index < correctSheet.length - pagesPerView
-      ? correctSheet[index + pagesPerView]
+      ? isTwoPages && !isOpen // fix for 2 pages view and opening cover without bookmarks
+        ? correctSheet[index + 2]
+        : correctSheet[index + pagesPerView]
       : null;
-  }, [visibleItems, correctSheet, pagesPerView, bookmarkNav, getSpreadTarget]);
+  }, [
+    visibleItems,
+    correctSheet,
+    pagesPerView,
+    bookmarkNav,
+    getSpreadTarget,
+    isTwoPages,
+    isOpen,
+  ]);
 
   const renderSheet = (sheet: Sheet) => {
     if (sheet.type === "cover") {
@@ -788,9 +804,13 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
       />
       <div className="testwrapper">
         <h1 className="text-center testanime">{isOpen ? "Open" : "Closed"}</h1>
+        <h1 className="text-center testanime">
+          istwopages: {isTwoPages ? "true" : "false"}
+        </h1>
         <h1 className="text-center testanime">{flipping?.direction}</h1>
         <h1 className="text-center testanime">Prev: {prevSheet?.id}</h1>
         <h1 className="text-center testanime">Next: {nextSheet?.id}</h1>
+        <h1 className="text-center testanime">PagesPerView: {pagesPerView}</h1>
       </div>
 
       {/* <div className="w-[80vw] h-[80vh] min-h-[300px] max-h-[800px] flex"> */}
