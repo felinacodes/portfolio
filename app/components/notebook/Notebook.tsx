@@ -423,6 +423,7 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
 
     if (sheet.face === "outside" && sheet.side === "front") {
       handleNext(sheet.id);
+
       return;
     }
 
