@@ -22,11 +22,30 @@ const Bookmarks = ({
   }
 
   return (
-    <div className="flex items-center justify-center gap-4">
+    <div className="pt-2  flex flex-col gap-2 ">
       {sectionIds
         .filter((id) => id.endsWith("-0"))
         .map((id) => (
-          <div key={id} className={""}>
+          <div
+            key={id}
+            className="
+    bookmark
+    w-24
+    rounded-r-lg
+    px-3 py-2
+    bg-yellow-200
+    shadow-md
+    border
+    border-black/10
+    hover:translate-x-1
+    transition
+
+   
+    in-[.bookmarks-back]:shadow-inner
+    in-[.bookmarks-back]:rounded-r-none
+    in-[.bookmarks-back]:rounded-l-lg
+  "
+          >
             <button
               onClick={() => handleClick(id)}
               className={

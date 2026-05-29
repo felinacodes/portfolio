@@ -753,6 +753,10 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
             setIsOpen={setIsOpen}
             pagesPerView={pagesPerView}
             animationClass={sheet.id === flipping?.id ? correctAnimation : ""}
+            active={active}
+            setActive={setActive}
+            handleGoTo={handleGoTo}
+            sections={sections}
           />
         </div>
       );
@@ -803,7 +807,7 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
         visibleItems={visibleItems}
         setBookmarkedPage={setBookmarkedPage}
       />
-      <div className="testwrapper">
+      <div className="testwrapper ">
         <h1 className="text-center testanime">{isOpen ? "Open" : "Closed"}</h1>
         <h1 className="text-center testanime">
           istwopages: {isTwoPages ? "true" : "false"}
@@ -819,13 +823,13 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
 
       {
         <div
-          className={`book-scene min-h-[350px] h-[90vh] md:h-[85vh]  max-h-[800px] grid grid-cols-1 w-[${pageWidth}vw] 
+          className={`relative  book-scene min-h-[350px] h-[90vh] md:h-[85vh]  max-h-[800px] grid grid-cols-1 w-[${pageWidth}vw] 
           
          
           ${
             isOpen
               ? "md:grid-cols-2  p-2 pl-0 md:pl-2 shadow-[3px_6px_20px_0_rgba(0,0,0,0.35)] cover-opened "
-              : `md:grid-cols-1`
+              : `md:grid-cols-1 `
           }`}
         >
           {visibleItems.map((sheet, i) => {
@@ -841,7 +845,7 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
 
             return (
               <div
-                className="relative w-full h-full min-h-0 items-center justify-center flex"
+                className=" relative w-full h-full min-h-0 items-center justify-center flex"
                 key={key}
               >
                 {/* Leave the isLeftPage and isRightPage logic for 2 pages
@@ -912,7 +916,7 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
                     startPosRef.current = { x: e.clientX, y: e.clientY };
                   }}
                   onAnimationEnd={finishFlip}
-                  className={`page-flip w-full h-full relative flex justify-center ${
+                  className={` page-flip w-full h-full relative flex justify-center ${
                     sheet.id === flipping?.id ? correctAnimation : ""
                   }`}
                 >
@@ -921,6 +925,16 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
               </div>
             );
           })}
+          {isOpen && (
+            <div className="absolute top-10 left-full ml-2 flex flex-col gap-2 z-50">
+              <Bookmarks
+                sectionIds={sections.map((s) => s.id)}
+                active={active}
+                setActive={setActive}
+                handleGoTo={handleGoTo}
+              />
+            </div>
+          )}
         </div>
       }
 
@@ -928,14 +942,6 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
         <button onClick={prev}>Prev</button>
         <button onClick={next}>Next</button>
       </div> */}
-      <div>
-        <Bookmarks
-          sectionIds={sections.map((s) => s.id)}
-          active={active}
-          setActive={setActive}
-          handleGoTo={handleGoTo}
-        />
-      </div>
     </div>
   );
 };

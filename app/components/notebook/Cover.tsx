@@ -1,4 +1,9 @@
 import React, { useState } from "react";
+import Bookmarks from "./Bookmarks";
+
+import { Section } from "./Notebook";
+
+// had to pass additional props to make bookmarks work with cover to stay aligned when closed.
 interface CoverProps {
   side: string;
   face: string;
@@ -6,25 +11,31 @@ interface CoverProps {
   setIsOpen: (isOpen: boolean) => void;
   pagesPerView: number;
   animationClass?: string;
+  active: string;
+  setActive: (id: string) => void;
+  handleGoTo: (id: string) => void;
+  sections: Section[];
 }
 
 const Cover = ({
   side,
   face,
   isOpen,
-  setIsOpen,
-  pagesPerView,
   animationClass,
+  active,
+  setActive,
+  handleGoTo,
+  sections,
 }: CoverProps) => {
   return (
     <div
       className={`
     ${animationClass ?? ""}
-    text-center h-full w-full
+    text-center h-full w-full relative group 
 
     ${face === "outside" ? "cover-closed md:w-[50%]" : "cover-opened"}
 
-    ${face === "outside" && side === "front" ? "cover-outside-front" : ""}
+    ${face === "outside" && side === "front" ? "cover-outside-front " : ""}
 
     ${face === "outside" && side === "back" ? "cover-outside-back" : ""}
 
@@ -37,8 +48,10 @@ const Cover = ({
           //   className={`${animationClass ?? ""} cover-front-out text-[clamp(0.9rem,1vw,1rem)] relative flex justify-center items-start h-full ml-8 border-l-2 border-l-black/10
           //    from-white/20 bg-gradient-to-r shadow-[inset_4px_1px_3px_#ffffff60,inset_0_-1px_2px_#00000080]`}
           // >
-          className={` cover-front-out text-[clamp(0.9rem,1vw,1rem)] relative flex justify-center items-start h-full ml-8 border-l-2 border-l-black/10
-           from-white/20 bg-gradient-to-r shadow-[inset_4px_1px_3px_#ffffff60,inset_0_-1px_2px_#00000080]`}
+          className={`z-0 cover-front-out text-[clamp(0.9rem,1vw,1rem)] relative flex justify-center items-start h-full ml-8 border-l-2 border-l-black/10
+           from-white/20 bg-gradient-to-r shadow-[inset_4px_1px_3px_#ffffff60,inset_0_-1px_2px_#00000080]
+           
+           `}
         >
           <div className="cover-light"></div>
           <div className="max-w-[80%] mt-[40%] lg:mt-[25%] w-[clamp(200px,300px,400px)] h-[clamp(10rem,15vw,12rem)] p-2 bg-[#f4f5f0] border-[9px] border-double border-[#438bce] rounded-[40px]">
@@ -93,6 +106,23 @@ const Cover = ({
         <div
           className={`w-full h-full ${side === "front" ? "cover-inside-front" : "cover-inside-back"}`}
         ></div>
+      )}
+
+      {!isOpen && !animationClass && (
+        <div
+          className={
+            !isOpen && face === "outside" && side === "front"
+              ? "absolute top-10 right-[-90px] ml-2 flex flex-col gap-2 z-2 bookmarks-front group-hover:right-[-95px]"
+              : "absolute top-10 left-[-90px] ml-2 flex flex-col gap-2  bookmarks-back group-hover:left-[-103px]"
+          }
+        >
+          <Bookmarks
+            sectionIds={sections.map((s) => s.id)}
+            active={active}
+            setActive={setActive}
+            handleGoTo={handleGoTo}
+          />
+        </div>
       )}
     </div>
   );
