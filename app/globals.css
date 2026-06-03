@@ -116,7 +116,7 @@ root {
 .flipNext .page-paper::before,
 .flipPrev .page-paper::before {
   /* box-shadow: none; */
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.18);
+  box-shadow: 100px 100px 25px rgba(0, 0, 0, 0.18);
   pointer-events: none;
 }
 
@@ -484,25 +484,23 @@ root {
 
 .page-flip:hover .odd-page {
   animation: animateNextHover 0.8s ease-in forwards;
-  filter: brightness(1.02);
   box-shadow:
-    6px 6px 12px rgba(0, 0, 0, 0.1),
-    12px 20px 30px rgba(0, 0, 0, 0.16);
+    18px 0 25px rgba(0, 0, 0, 0.18),
+    40px 0 60px rgba(0, 0, 0, 0.1);
 }
 
 .page-flip:hover .even-page {
   animation: animatePrevHover 0.8s ease-in forwards;
-  filter: brightness(1.02);
   box-shadow:
-    -6px 6px 12px rgba(0, 0, 0, 0.1),
-    -12px 20px 30px rgba(0, 0, 0, 0.16);
+    -18px 0 25px rgba(0, 0, 0, 0.18),
+    -40px 0 60px rgba(0, 0, 0, 0.1);
 }
 
 .flipNext::after {
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(to right, rgba(0, 0, 0, 0.25), transparent);
+  /* background: linear-gradient(to right, rgba(0, 0, 0, 0.25), transparent); */
   pointer-events: none;
 }
 
@@ -510,7 +508,7 @@ root {
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(to left, rgba(0, 0, 0, 0.25), transparent);
+  /* background: linear-gradient(to left, rgba(0, 0, 0, 0.25), transparent); */
   pointer-events: none;
 }
 
