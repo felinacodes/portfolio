@@ -390,6 +390,7 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
     (id: string) => {
       if (!toggleAnimation) {
         next();
+        return;
       }
 
       if (flippingRef.current) {
@@ -405,6 +406,7 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
     (id: string) => {
       if (!toggleAnimation) {
         prev();
+        return;
       }
 
       if (flippingRef.current) {
