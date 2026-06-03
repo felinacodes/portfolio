@@ -31,7 +31,7 @@ const Cover = ({
     <div
       className={`
     ${animationClass ?? ""}
-    text-center h-full w-full relative group 
+    text-center h-full w-full relative group z-[20]
 
     ${face === "outside" ? "cover-closed md:w-[50%]" : "cover-opened"}
 
@@ -112,8 +112,8 @@ const Cover = ({
         <div
           className={
             !isOpen && face === "outside" && side === "front"
-              ? "absolute top-10 right-[-90px] ml-2 flex flex-col gap-2 z-2 bookmarks-front group-hover:right-[-95px]"
-              : "absolute top-10 left-[-90px] ml-2 flex flex-col gap-2  bookmarks-back group-hover:left-[-103px]"
+              ? "absolute md:top-10 top-[-83px] md:right-[-90px] md:ml-2 flex flex-col md:gap-2 w-full md:w-auto  bookmarks-front md:group-hover:right-[-100px]"
+              : "absolute md:top-10 top-[-83px] md:left-[-98px] md:ml-2 flex flex-col md:gap-2  w-full z-[-2] md:z-2 bookmarks-back md:group-hover:left-[-108px]"
           }
         >
           <Bookmarks

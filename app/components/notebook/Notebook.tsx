@@ -807,7 +807,7 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
         visibleItems={visibleItems}
         setBookmarkedPage={setBookmarkedPage}
       />
-      <div className="testwrapper ">
+      {/* <div className="testwrapper ">
         <h1 className="text-center testanime">{isOpen ? "Open" : "Closed"}</h1>
         <h1 className="text-center testanime">
           istwopages: {isTwoPages ? "true" : "false"}
@@ -816,7 +816,7 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
         <h1 className="text-center testanime">Prev: {prevSheet?.id}</h1>
         <h1 className="text-center testanime">Next: {nextSheet?.id}</h1>
         <h1 className="text-center testanime">PagesPerView: {pagesPerView}</h1>
-      </div>
+      </div> */}
 
       {/* <div className="w-[80vw] h-[80vh] min-h-[300px] max-h-[800px] flex"> */}
       {/* Initial Load fix for flickering and LCP*/}
@@ -926,7 +926,13 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
             );
           })}
           {isOpen && (
-            <div className="absolute top-10 left-full ml-2 flex flex-col gap-2 z-50">
+            <div
+              className={`w-full  absolute top-[-70] md:top-10 md:left-full md:ml-[-20] 
+                flex flex-col items-start justify-start gap-2 z-[-10] 
+                !{$nextsheet}? md:z-[10] : z-[-100]
+               
+                `}
+            >
               <Bookmarks
                 sectionIds={sections.map((s) => s.id)}
                 active={active}
