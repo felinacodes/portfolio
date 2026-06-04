@@ -599,7 +599,7 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
   }, [flipping, toggleAnimation, isOpen]);
 
   const handleGoTo = (id: string) => {
-    console.log("handle to go called with id", id);
+    // console.log("handle to go called with id", id);
 
     if (!id) return;
 
@@ -608,8 +608,8 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
       return;
     }
 
-    console.log("after toggle animation check");
-    console.log("visibleitemslength is", visibleItems.length);
+    // console.log("after toggle animation check");
+    // console.log("visibleitemslength is", visibleItems.length);
     if (!visibleItems.length) {
       goToIndex(id);
       return;
@@ -618,8 +618,8 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
     const leftPage = visibleItems[0];
     const rightPage = visibleItems[visibleItems.length - 1];
 
-    console.log("leftpage is", leftPage);
-    console.log("rightpage is", rightPage);
+    // console.log("leftpage is", leftPage);
+    // console.log("rightpage is", rightPage);
 
     if (leftPage.id === id || rightPage.id === id) {
       return;
@@ -630,9 +630,9 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
 
     const isNext = targetIndex > currentIndex;
 
-    console.log("currentindex is", currentIndex);
-    console.log("targetindex is", targetIndex);
-    console.log("isinext is", isNext);
+    // console.log("currentindex is", currentIndex);
+    // console.log("targetindex is", targetIndex);
+    // console.log("isinext is", isNext);
 
     let animatingId = leftPage.id;
     let direction: "next" | "prev" = "prev";

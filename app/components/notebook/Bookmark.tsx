@@ -1,21 +1,22 @@
-import React from 'react'
-import { Sheet } from './Notebook'
+import React from "react";
+import { Sheet } from "./Notebook";
 
 interface BookmarkProps {
-  visibleItems: Sheet[]
-  setBookmarkedPage: (id: string) => void
+  visibleItems: Sheet[];
+  setBookmarkedPage: (id: string) => void;
 }
 
 const Bookmark = ({ visibleItems, setBookmarkedPage }: BookmarkProps) => {
   function handleClick(sheet: Sheet) {
     // if (sheet.type !== 'page') return
-    if (sheet.type === 'cover') return
-    const id = sheet.id
-    setBookmarkedPage(id)
+    if (sheet.type === "cover") return;
+    const id = sheet.id;
+    setBookmarkedPage(id);
   }
 
   function RemoveBookmark() {
-    setBookmarkedPage('')
+    setBookmarkedPage("");
+    localStorage.removeItem("notebook-bookmark");
   }
   return (
     <div>
@@ -26,7 +27,7 @@ const Bookmark = ({ visibleItems, setBookmarkedPage }: BookmarkProps) => {
         Remove Bookmark
       </button>
     </div>
-  )
-}
+  );
+};
 
-export default Bookmark
+export default Bookmark;
