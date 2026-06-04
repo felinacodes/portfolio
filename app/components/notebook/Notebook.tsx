@@ -599,11 +599,17 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
   }, [flipping, toggleAnimation, isOpen]);
 
   const handleGoTo = (id: string) => {
+    console.log("handle to go called with id", id);
+
+    if (!id) return;
+
     if (!toggleAnimation) {
       goToIndex(id);
       return;
     }
 
+    console.log("after toggle animation check");
+    console.log("visibleitemslength is", visibleItems.length);
     if (!visibleItems.length) {
       goToIndex(id);
       return;
@@ -611,6 +617,9 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
 
     const leftPage = visibleItems[0];
     const rightPage = visibleItems[visibleItems.length - 1];
+
+    console.log("leftpage is", leftPage);
+    console.log("rightpage is", rightPage);
 
     if (leftPage.id === id || rightPage.id === id) {
       return;
@@ -620,6 +629,10 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
     const targetIndex = numberedMap.get(id) ?? 0;
 
     const isNext = targetIndex > currentIndex;
+
+    console.log("currentindex is", currentIndex);
+    console.log("targetindex is", targetIndex);
+    console.log("isinext is", isNext);
 
     let animatingId = leftPage.id;
     let direction: "next" | "prev" = "prev";
@@ -796,7 +809,7 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
 
   return (
     <div
-      className={`font-baskervville  flex flex-col items-center justify-center w-full h-full `}
+      className={`font-baskervville  flex flex-col items-center justify-center w-full h-full ${!toggleAnimation ? "no-anim" : ""}`}
     >
       {/* <button onClick={() => goToIndex(bookmarkedPage)}> */}
       <button onClick={() => handleGoTo(bookmarkedPage)}>
@@ -809,16 +822,19 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
         visibleItems={visibleItems}
         setBookmarkedPage={setBookmarkedPage}
       />
-      {/* <div className="testwrapper ">
-        <h1 className="text-center testanime">{isOpen ? "Open" : "Closed"}</h1>
+      <div className="testwrapper ">
+        {/* <h1 className="text-center testanime">{isOpen ? "Open" : "Closed"}</h1>
         <h1 className="text-center testanime">
           istwopages: {isTwoPages ? "true" : "false"}
         </h1>
         <h1 className="text-center testanime">{flipping?.direction}</h1>
         <h1 className="text-center testanime">Prev: {prevSheet?.id}</h1>
         <h1 className="text-center testanime">Next: {nextSheet?.id}</h1>
-        <h1 className="text-center testanime">PagesPerView: {pagesPerView}</h1>
-      </div> */}
+        <h1 className="text-center testanime">PagesPerView: {pagesPerView}</h1> */}
+        <h1 className="text-center testanime">
+          Current Bookmark is: {bookmarkedPage}
+        </h1>
+      </div>
 
       {/* <div className="w-[80vw] h-[80vh] min-h-[300px] max-h-[800px] flex"> */}
       {/* Initial Load fix for flickering and LCP*/}
