@@ -2,12 +2,13 @@ import React, { forwardRef } from "react";
 
 interface PageProps {
   children?: React.ReactNode;
-  index?: number;
+  index: number;
   chapterName?: string;
 }
 
 const Page = forwardRef<HTMLDivElement, PageProps>(
   ({ children, index, chapterName }, ref) => {
+    console.log("index is", index);
     const isOdd = index ? index % 2 === 1 : false;
 
     return (

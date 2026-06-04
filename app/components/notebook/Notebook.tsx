@@ -336,6 +336,25 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
     return map;
   }, [correctSheet]);
 
+  // Do not include covers -> Removing it from the numberedMap breaks functionality
+  // Having Page handle it, flickers wrong.
+  const pageIndexMap = useMemo(() => {
+    let count = 0;
+    const map = new Map<string, number>();
+
+    correctSheet.forEach((sheet) => {
+      if (
+        sheet.type === "page" ||
+        sheet.type === "blank" ||
+        sheet.type === "context"
+      ) {
+        count++;
+        map.set(sheet.id, count);
+      }
+    });
+    return map;
+  }, [correctSheet]);
+
   const contextMap = useMemo(() => {
     const zeroIndexMap = new Map<string, number>();
 
@@ -769,7 +788,7 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
 
     if (sheet.type === "context") {
       return (
-        <Page ref={outerRef} index={numberedMap.get(sheet.id) ?? 0}>
+        <Page ref={outerRef} index={pageIndexMap.get(sheet.id) ?? 0}>
           {sheet.render({
             ctx: contextMap,
             goToIndex: sheet.id.startsWith("Contents") ? handleGoTo : undefined,
@@ -782,7 +801,7 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
       return (
         <Page
           ref={outerRef}
-          index={numberedMap.get(sheet.id) ?? 0}
+          index={pageIndexMap.get(sheet.id) ?? 0}
           chapterName={sheet.chapterName}
         >
           {sheet.render({})}
@@ -791,7 +810,7 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
     }
 
     if (sheet.type === "blank") {
-      return <Page index={numberedMap.get(sheet.id)} />;
+      return <Page index={pageIndexMap.get(sheet.id) ?? 0} />;
     }
 
     return null;
