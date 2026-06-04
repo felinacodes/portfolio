@@ -81,7 +81,11 @@ const Bookmarks = ({
   "
           >
             <button
-              onClick={() => handleClick(id)}
+              // onClick={() => handleClick(id)}
+              onClick={(e) => {
+                e.stopPropagation();
+                handleClick(id);
+              }}
               className={` flex items-center justify-center w-full h-full 
                 font-semibold font-indie-flower md:py-1 md:px-2 
                 whitespace-nowrap md:whitespace-normal  hover:cursor-pointer

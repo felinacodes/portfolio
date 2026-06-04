@@ -420,8 +420,8 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
 
   const handleCoverNavigation = (sheet: Extract<Sheet, { type: "cover" }>) => {
     // no animation for covers
-    setFlipping(null);
-    flippingRef.current = null;
+    // setFlipping(null);
+    // flippingRef.current = null;
 
     if (sheet.face === "outside" && sheet.side === "front") {
       handleNext(sheet.id);
@@ -498,6 +498,7 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
     if (isDraggingRef.current || "ontouchstart" in window) return;
 
     if (sheet.type === "cover") {
+      // if (!toggleAnimation && active) return;
       handleCoverNavigation(sheet);
       return;
     }
@@ -599,8 +600,6 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
   }, [flipping, toggleAnimation, isOpen]);
 
   const handleGoTo = (id: string) => {
-    // console.log("handle to go called with id", id);
-
     if (!id) return;
 
     if (!toggleAnimation) {
@@ -608,8 +607,6 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
       return;
     }
 
-    // console.log("after toggle animation check");
-    // console.log("visibleitemslength is", visibleItems.length);
     if (!visibleItems.length) {
       goToIndex(id);
       return;
@@ -617,9 +614,6 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
 
     const leftPage = visibleItems[0];
     const rightPage = visibleItems[visibleItems.length - 1];
-
-    // console.log("leftpage is", leftPage);
-    // console.log("rightpage is", rightPage);
 
     if (leftPage.id === id || rightPage.id === id) {
       return;
@@ -629,10 +623,6 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
     const targetIndex = numberedMap.get(id) ?? 0;
 
     const isNext = targetIndex > currentIndex;
-
-    // console.log("currentindex is", currentIndex);
-    // console.log("targetindex is", targetIndex);
-    // console.log("isinext is", isNext);
 
     let animatingId = leftPage.id;
     let direction: "next" | "prev" = "prev";
@@ -834,6 +824,7 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
         <h1 className="text-center testanime">
           Current Bookmark is: {bookmarkedPage}
         </h1>
+        <h1 className="text-center testanime">Active bookmark is: {active}</h1>
       </div>
 
       {/* <div className="w-[80vw] h-[80vh] min-h-[300px] max-h-[800px] flex"> */}
