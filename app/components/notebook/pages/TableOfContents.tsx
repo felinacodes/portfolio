@@ -8,7 +8,6 @@ export const TableOfContentsBlocks = (args?: RenderContext) => {
     function TableOfContentsPage(props?: RenderContext) {
       const ctx = props?.ctx;
       const goToIndex = props?.goToIndex;
-
       return (
         <section className="flex flex-col items-center p-4 w-full h-full gap-4 justify-center font-normal">
           <h1 className="font-bold text-3xl md:text-4xl lg:text-5xl font-baskervville">

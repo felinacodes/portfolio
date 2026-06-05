@@ -358,14 +358,14 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
   const contextMap = useMemo(() => {
     const zeroIndexMap = new Map<string, number>();
 
-    numberedMap.forEach((value, key) => {
+    pageIndexMap.forEach((value, key) => {
       if (key.endsWith("-0") && !key.startsWith("blank")) {
         // const transformedKey = transform(key)
         zeroIndexMap.set(key, value);
       }
     });
     return zeroIndexMap;
-  }, [numberedMap]);
+  }, [pageIndexMap]);
 
   // const pageMultiplier = isTwoPages && !isOpen ? 0.5 : 1
   // const pageWidth = isTwoPages && !isOpen ? 40 : 80
