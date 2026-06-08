@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import Bookmarks from "./Bookmarks";
+import Bookmark from "./Bookmark";
 
-import { Section } from "./Notebook";
+import { Section, Sheet } from "./Notebook";
 
 // had to pass additional props to make bookmarks work with cover to stay aligned when closed.
 interface CoverProps {
@@ -15,6 +16,8 @@ interface CoverProps {
   setActive: (id: string) => void;
   handleGoTo: (id: string) => void;
   sections: Section[];
+  visibleItems: Sheet[];
+  setBookmarkedPage: (id: string) => void;
 }
 
 const Cover = ({
@@ -26,12 +29,14 @@ const Cover = ({
   setActive,
   handleGoTo,
   sections,
+  visibleItems,
+  setBookmarkedPage,
 }: CoverProps) => {
   return (
     <div
       className={`
     ${animationClass ?? ""}
-    text-center h-full w-full relative group z-[20]
+    text-center h-full w-full relative group z-[20] 
 
     ${face === "outside" ? "cover-closed md:w-[50%]" : "cover-opened"}
 
@@ -107,7 +112,7 @@ const Cover = ({
           className={`w-full h-full ${side === "front" ? "cover-inside-front" : "cover-inside-back"}`}
         ></div>
       )}
-
+      <div className="z-[-1000000] absolute w-full h-full "></div>
       {!isOpen && !animationClass && (
         <div
           className={
@@ -121,6 +126,20 @@ const Cover = ({
             active={active}
             setActive={setActive}
             handleGoTo={handleGoTo}
+          />
+        </div>
+      )}
+      {!isOpen && !animationClass && (
+        <div
+          className={
+            !isOpen && face === "outside" && side === "front"
+              ? "absolute bookmark-translateZ top-[-40px] left-[30px] "
+              : "absolute bookmark-translateZ top-[-40px] right-[30px] "
+          }
+        >
+          <Bookmark
+            visibleItems={visibleItems}
+            setBookmarkedPage={setBookmarkedPage}
           />
         </div>
       )}

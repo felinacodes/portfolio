@@ -20,12 +20,17 @@ const Bookmark = ({ visibleItems, setBookmarkedPage }: BookmarkProps) => {
   }
   return (
     <div>
-      <button onClick={() => handleClick(visibleItems[0])}>
+      {/* <button onClick={() => handleClick(visibleItems[0])}>
         Bookmark this page
       </button>
       <button className="m-2 p-4" onClick={() => RemoveBookmark()}>
         Remove Bookmark
-      </button>
+      </button> */}
+      {/* <button
+        className="absolute top-[10]
+        left-1/2 -translate-x-1/2 -translate-y-1/2 w-20 h-20 bg-red-500 "
+      /> */}
+      <button className="  w-50 h-50 bg-red-500" />
     </div>
   );
 };

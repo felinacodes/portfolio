@@ -437,33 +437,34 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
     [toggleAnimation, prev],
   );
 
-  const handleCoverNavigation = (sheet: Extract<Sheet, { type: "cover" }>) => {
-    // no animation for covers
-    // setFlipping(null);
-    // flippingRef.current = null;
+  const handleCoverNavigation = useCallback(
+    (sheet: Extract<Sheet, { type: "cover" }>) => {
+      // no animation for covers
+      // setFlipping(null);
+      // flippingRef.current = null;
 
-    if (sheet.face === "outside" && sheet.side === "front") {
-      handleNext(sheet.id);
+      if (sheet.face === "outside" && sheet.side === "front") {
+        handleNext(sheet.id);
+        return;
+      }
 
-      return;
-    }
+      if (sheet.face === "outside" && sheet.side === "back") {
+        handlePrev(sheet.id);
+        return;
+      }
 
-    if (sheet.face === "outside" && sheet.side === "back") {
-      handlePrev(sheet.id);
+      if (sheet.face === "inside" && sheet.side === "front") {
+        prev();
+        return;
+      }
 
-      return;
-    }
-
-    if (sheet.face === "inside" && sheet.side === "front") {
-      prev();
-      return;
-    }
-
-    if (sheet.face === "inside" && sheet.side === "back") {
-      next();
-      return;
-    }
-  };
+      if (sheet.face === "inside" && sheet.side === "back") {
+        next();
+        return;
+      }
+    },
+    [handleNext, handlePrev, prev, next],
+  );
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -508,7 +509,7 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
 
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [visibleItems, next, prev, handleNext, handlePrev]);
+  }, [visibleItems, next, prev, handleNext, handlePrev, handleCoverNavigation]);
 
   const handlePageClick = (
     e: React.MouseEvent<HTMLDivElement>,
@@ -766,6 +767,10 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
     isOpen,
   ]);
 
+  const isBookmarkVisible = visibleItems.some(
+    (item) => item.id === bookmarkedPage,
+  );
+
   const renderSheet = (sheet: Sheet) => {
     if (sheet.type === "cover") {
       return (
@@ -781,6 +786,8 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
             setActive={setActive}
             handleGoTo={handleGoTo}
             sections={sections}
+            visibleItems={visibleItems}
+            setBookmarkedPage={setBookmarkedPage}
           />
         </div>
       );
@@ -827,10 +834,11 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
       <button onClick={() => setToggleAnimation(!toggleAnimation)}>
         {toggleAnimation ? "Disable Animation" : "Enable Animation"}
       </button>
-      <Bookmark
+      {/* <Bookmark
         visibleItems={visibleItems}
         setBookmarkedPage={setBookmarkedPage}
-      />
+      /> */}
+
       <div className="testwrapper ">
         {/* <h1 className="text-center testanime">{isOpen ? "Open" : "Closed"}</h1>
         <h1 className="text-center testanime">
@@ -860,6 +868,13 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
               : `md:grid-cols-1 `
           }`}
         >
+          {/* <div className="w-full h-full absolute ">
+            <Bookmark
+              visibleItems={visibleItems}
+              setBookmarkedPage={setBookmarkedPage}
+            />
+          </div> */}
+
           {visibleItems.map((sheet, i) => {
             const isLeftPage = i === 0;
             const isRightPage = i === visibleItems.length - 1;
@@ -953,6 +968,7 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
               </div>
             );
           })}
+
           {isOpen && (
             <div
               className={`w-full  absolute top-[-70] md:top-10 md:left-full md:ml-[-20] 
@@ -961,11 +977,33 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
                
                 `}
             >
+              {/* <Bookmark
+                visibleItems={visibleItems}
+                setBookmarkedPage={setBookmarkedPage}
+              /> */}
+
               <Bookmarks
                 sectionIds={sections.map((s) => s.id)}
                 active={active}
                 setActive={setActive}
                 handleGoTo={handleGoTo}
+              />
+            </div>
+          )}
+
+          {isOpen && (
+            <div
+              className={`absolute
+              top-[-40px]
+              left-[40%]
+              md:left-[50%]
+              -translate-x-1/2
+              ${!isBookmarkVisible ? "bookmark-translateZ" : ""}
+    `}
+            >
+              <Bookmark
+                visibleItems={visibleItems}
+                setBookmarkedPage={setBookmarkedPage}
               />
             </div>
           )}

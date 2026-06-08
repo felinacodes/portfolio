@@ -159,10 +159,8 @@ root {
   background: #ffc0cb;
   border-radius: 3px;
   transition: all 0.3s ease-in-out;
-  /* transform: perspective(1200px) rotateY(-5deg) translateX(-5px) scale(0.92); */
   cursor: pointer;
-  /* position: relative;
-  isolation: isolate; */
+  transform-style: preserve-3d; /* Needed for z-index*/
 }
 
 .cover-closed::after {
@@ -467,7 +465,11 @@ root {
   /* perspective: 2000px; */
   perspective: 1000px;
   transform-style: preserve-3d;
-  position: relative;
+}
+
+/* z-index doesn't work need this to fix the 3d*/
+.bookmark-translateZ {
+  transform: translateZ(-10px);
 }
 
 .page-flip {
