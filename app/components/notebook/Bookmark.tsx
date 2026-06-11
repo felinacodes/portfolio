@@ -2,11 +2,16 @@ import React from "react";
 import { Sheet } from "./Notebook";
 
 interface BookmarkProps {
-  visibleItems: Sheet[];
+  handleGoTo: (id: string) => void;
   setBookmarkedPage: (id: string) => void;
+  bookmarkedPage: string;
 }
 
-const Bookmark = ({ visibleItems, setBookmarkedPage }: BookmarkProps) => {
+const Bookmark = ({
+  handleGoTo,
+  setBookmarkedPage,
+  bookmarkedPage,
+}: BookmarkProps) => {
   function handleClick(sheet: Sheet) {
     // if (sheet.type !== 'page') return
     if (sheet.type === "cover") return;
@@ -14,23 +19,18 @@ const Bookmark = ({ visibleItems, setBookmarkedPage }: BookmarkProps) => {
     setBookmarkedPage(id);
   }
 
-  function RemoveBookmark() {
-    setBookmarkedPage("");
-    localStorage.removeItem("notebook-bookmark");
-  }
   return (
-    <div>
-      {/* <button onClick={() => handleClick(visibleItems[0])}>
-        Bookmark this page
-      </button>
-      <button className="m-2 p-4" onClick={() => RemoveBookmark()}>
-        Remove Bookmark
-      </button> */}
-      {/* <button
-        className="absolute top-[10]
-        left-1/2 -translate-x-1/2 -translate-y-1/2 w-20 h-20 bg-red-500 "
-      /> */}
-      <button className="  w-50 h-50 bg-red-500" />
+    <div className="">
+      <button
+        draggable={true}
+        onDragStart={(e) => {
+          e.dataTransfer.setData("bookmark", "true");
+          setBookmarkedPage("");
+        }}
+        // onClick={() => handleClick(visibleItems[0])}
+        onClick={() => handleGoTo(bookmarkedPage)}
+        className=" cursor-grab active:cursor-grab w-10 h-300 bg-red-500 hover:bg-yellow-500 opacity-20"
+      />
     </div>
   );
 };

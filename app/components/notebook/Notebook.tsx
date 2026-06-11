@@ -182,31 +182,6 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
     ? sheet
     : sheet.filter((s) => !(s.type === "cover" && s.face === "inside"));
 
-  const getNextActive = (visibleItems: Sheet[], currentActive: string) => {
-    const sectionVisible = visibleItems.filter(
-      (item) =>
-        (item.type === "page" || item.type === "context") &&
-        !item.id.startsWith("blank") &&
-        !item.id.includes("cover"),
-    );
-
-    // if current active is visible among sections, keep it
-    if (
-      sectionVisible.some(
-        (item) => transform(item.id) === transform(currentActive),
-      )
-    ) {
-      return currentActive;
-    }
-
-    // prefer left-most section page, or first one that ends with -0
-    const preferred =
-      sectionVisible.find((item) => item.id.endsWith("-0")) ||
-      sectionVisible[0];
-
-    return preferred?.id ?? currentActive;
-  };
-
   useEffect(() => {
     setIsmounted(true);
   }, []);
@@ -771,10 +746,29 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
     (item) => item.id === bookmarkedPage,
   );
 
+  const bookmarkPosition = useMemo(() => {
+    if (!bookmarkedPage || !visibleItems.length || isBookmarkVisible) {
+      return;
+    }
+
+    const leftPage = visibleItems[0];
+
+    const currentIndex = numberedMap.get(leftPage.id) ?? 0;
+    const bookmarkIndex = numberedMap.get(bookmarkedPage) ?? 0;
+
+    // bookmark is behind
+    if (bookmarkIndex < currentIndex) {
+      return "previous";
+    }
+
+    // bookmark is ahead
+    return "next";
+  }, [bookmarkedPage, visibleItems, numberedMap, isBookmarkVisible]);
+
   const renderSheet = (sheet: Sheet) => {
     if (sheet.type === "cover") {
       return (
-        <div className="cover-out h-full w-full  flex justify-center items-center">
+        <div className="cover-out h-full w-full  flex justify-center items-center ">
           <Cover
             side={sheet.side}
             face={sheet.face}
@@ -786,8 +780,8 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
             setActive={setActive}
             handleGoTo={handleGoTo}
             sections={sections}
-            visibleItems={visibleItems}
             setBookmarkedPage={setBookmarkedPage}
+            bookmarkedPage={bookmarkedPage}
           />
         </div>
       );
@@ -828,17 +822,12 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
       className={`font-baskervville  flex flex-col items-center justify-center w-full h-full ${!toggleAnimation ? "no-anim" : ""}`}
     >
       {/* <button onClick={() => goToIndex(bookmarkedPage)}> */}
-      <button onClick={() => handleGoTo(bookmarkedPage)}>
+      {/* <button onClick={() => handleGoTo(bookmarkedPage)}>
         Open On Bookmark
-      </button>
+      </button> */}
       <button onClick={() => setToggleAnimation(!toggleAnimation)}>
         {toggleAnimation ? "Disable Animation" : "Enable Animation"}
       </button>
-      {/* <Bookmark
-        visibleItems={visibleItems}
-        setBookmarkedPage={setBookmarkedPage}
-      /> */}
-
       <div className="testwrapper ">
         {/* <h1 className="text-center testanime">{isOpen ? "Open" : "Closed"}</h1>
         <h1 className="text-center testanime">
@@ -849,8 +838,12 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
         <h1 className="text-center testanime">Next: {nextSheet?.id}</h1>
         <h1 className="text-center testanime">PagesPerView: {pagesPerView}</h1> */}
         <h1 className="text-center testanime">
+          Current bookmark position is:{bookmarkPosition}
+        </h1>
+        <h1 className="text-center testanime ">
           Current Bookmark is: {bookmarkedPage}
         </h1>
+
         <h1 className="text-center testanime">Active bookmark is: {active}</h1>
       </div>
 
@@ -868,13 +861,6 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
               : `md:grid-cols-1 `
           }`}
         >
-          {/* <div className="w-full h-full absolute ">
-            <Bookmark
-              visibleItems={visibleItems}
-              setBookmarkedPage={setBookmarkedPage}
-            />
-          </div> */}
-
           {visibleItems.map((sheet, i) => {
             const isLeftPage = i === 0;
             const isRightPage = i === visibleItems.length - 1;
@@ -946,6 +932,17 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
                 )}
 
                 <div
+                  {...(sheet.type !== "cover"
+                    ? {
+                        onDragOver: (e: React.DragEvent) => {
+                          e.preventDefault();
+                        },
+                        onDrop: (e: React.DragEvent) => {
+                          e.preventDefault();
+                          setBookmarkedPage(sheet.id);
+                        },
+                      }
+                    : {})}
                   onClick={(e) => handlePageClick(e, sheet)}
                   onTouchStart={handleTouchStart}
                   onTouchEnd={handleTouchEnd(sheet)}
@@ -973,15 +970,10 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
             <div
               className={`w-full  absolute top-[-70] md:top-10 md:left-full md:ml-[-20] 
                 flex flex-col items-start justify-start gap-2 z-[-10] 
-                !{$nextsheet}? md:z-[10] : z-[-100]
+                !{$nextsheet}? md:z-[10] : z-[-100] 
                
                 `}
             >
-              {/* <Bookmark
-                visibleItems={visibleItems}
-                setBookmarkedPage={setBookmarkedPage}
-              /> */}
-
               <Bookmarks
                 sectionIds={sections.map((s) => s.id)}
                 active={active}
@@ -993,17 +985,32 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
 
           {isOpen && (
             <div
-              className={`absolute
+              className={`
+              absolute
               top-[-40px]
-              left-[40%]
-              md:left-[50%]
-              -translate-x-1/2
-              ${!isBookmarkVisible ? "bookmark-translateZ" : ""}
-    `}
+               left-1/2
+             -translate-x-1/2
+              z-[-100]
+              ${
+                bookmarkPosition === "previous"
+                  ? "left-[47%] "
+                  : bookmarkPosition === "next"
+                    ? "left-[53%]"
+                    : ""
+              }
+              ${
+                !bookmarkedPage
+                  ? "bookmark-translateZ"
+                  : isBookmarkVisible
+                    ? "bookmark-visible "
+                    : "null"
+              }
+              `}
             >
               <Bookmark
-                visibleItems={visibleItems}
+                handleGoTo={handleGoTo}
                 setBookmarkedPage={setBookmarkedPage}
+                bookmarkedPage={bookmarkedPage}
               />
             </div>
           )}

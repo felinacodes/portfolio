@@ -1,4 +1,5 @@
 import React, { forwardRef } from "react";
+import Bookmark from "./Bookmark";
 
 interface PageProps {
   children?: React.ReactNode;
@@ -8,9 +9,7 @@ interface PageProps {
 
 const Page = forwardRef<HTMLDivElement, PageProps>(
   ({ children, index, chapterName }, ref) => {
-    console.log("index is", index);
     const isOdd = index ? index % 2 === 1 : false;
-
     return (
       <div
         className={`w-full h-full ${
@@ -19,9 +18,9 @@ const Page = forwardRef<HTMLDivElement, PageProps>(
       >
         {/* PAGE SHELL (this is what rotates) */}
         <div
-          className={`w-full h-full bg-white flex flex-col justify-between p-2 relative ${
+          className={`  w-full h-full bg-white flex flex-col justify-between p-2 relative ${
             isOdd ? "odd-page md:pr-4" : "even-page md:pl-4"
-          }`}
+          } `}
         >
           {/* HEADER (now inside transform → it moves with page) */}
           {chapterName && (
@@ -59,7 +58,6 @@ const Page = forwardRef<HTMLDivElement, PageProps>(
           >
             {children}
           </div>
-
           {/* FOOTER */}
           <div className="shrink-0 footer m-1 flex items-center justify-center">
             <p className="text-sm font-merriweather p-1">{index}</p>

@@ -16,8 +16,8 @@ interface CoverProps {
   setActive: (id: string) => void;
   handleGoTo: (id: string) => void;
   sections: Section[];
-  visibleItems: Sheet[];
   setBookmarkedPage: (id: string) => void;
+  bookmarkedPage: string;
 }
 
 const Cover = ({
@@ -29,8 +29,8 @@ const Cover = ({
   setActive,
   handleGoTo,
   sections,
-  visibleItems,
   setBookmarkedPage,
+  bookmarkedPage,
 }: CoverProps) => {
   return (
     <div
@@ -112,12 +112,12 @@ const Cover = ({
           className={`w-full h-full ${side === "front" ? "cover-inside-front" : "cover-inside-back"}`}
         ></div>
       )}
-      <div className="z-[-1000000] absolute w-full h-full "></div>
+      {/* <div className=" absolute w-full h-full "></div> */}
       {!isOpen && !animationClass && (
         <div
           className={
             !isOpen && face === "outside" && side === "front"
-              ? "absolute md:top-10 top-[-83px] md:right-[-90px] md:ml-2 flex flex-col md:gap-2 w-full md:w-auto  bookmarks-front md:group-hover:right-[-100px]"
+              ? " absolute md:top-10 top-[-83px] md:right-[-90px] md:ml-2 flex flex-col md:gap-2 w-full md:w-auto  bookmarks-front md:group-hover:right-[-100px]"
               : "absolute md:top-10 top-[-83px] md:left-[-98px] md:ml-2 flex flex-col md:gap-2  w-full z-[-2] md:z-2 bookmarks-back md:group-hover:left-[-108px]"
           }
         >
@@ -129,17 +129,18 @@ const Cover = ({
           />
         </div>
       )}
-      {!isOpen && !animationClass && (
+      {!isOpen && (
         <div
           className={
             !isOpen && face === "outside" && side === "front"
-              ? "absolute bookmark-translateZ top-[-40px] left-[30px] "
+              ? " absolute bookmark-translateZ top-[-40px] left-[30px] "
               : "absolute bookmark-translateZ top-[-40px] right-[30px] "
           }
         >
           <Bookmark
-            visibleItems={visibleItems}
+            handleGoTo={handleGoTo}
             setBookmarkedPage={setBookmarkedPage}
+            bookmarkedPage={bookmarkedPage}
           />
         </div>
       )}

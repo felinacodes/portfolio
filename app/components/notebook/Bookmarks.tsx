@@ -29,7 +29,7 @@ const Bookmarks = ({
           <div
             key={id}
             className="
-  bookmark
+  
  md:w-24
  
  flex-1

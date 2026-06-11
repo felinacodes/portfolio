@@ -475,13 +475,11 @@ root {
 .page-flip {
   transform-style: preserve-3d;
   backface-visibility: hidden;
-}
-
-.page-flip {
   transition:
     transform 220ms ease,
     filter 220ms ease,
     box-shadow 220ms ease;
+  z-index: 10;
 }
 
 .page-flip:hover .odd-page {
@@ -496,6 +494,32 @@ root {
   box-shadow:
     -18px 0 25px rgba(0, 0, 0, 0.18),
     -40px 0 60px rgba(0, 0, 0, 0.1);
+}
+
+.page-flip:hover {
+  z-index: 100;
+}
+
+.bookmark-visible {
+  transform: translateZ(1px);
+
+  transition:
+    transform 220ms ease,
+    filter 220ms ease,
+    box-shadow 220ms ease;
+  transform-origin: center;
+}
+
+/* transform: translateZ(0px); - behind pages
+  transform: translateZ(-2px); - behind cover
+*/
+
+.book-scene:has(.page-flip:hover .odd-page) .bookmark-visible {
+  animation: animateNextHoverBookmark 0.8s ease-in forwards;
+}
+
+.book-scene:has(.page-flip:hover .even-page) .bookmark-visible {
+  animation: animatePrevHoverBookmark 0.8s ease-in forwards;
 }
 
 .flipNext::after {
@@ -517,7 +541,7 @@ root {
 .cover-out {
   backface-visibility: hidden;
   perspective: 1500px;
-  transform-style: preserve-3d;
+  /* transform-style: preserve-3d; */
   position: relative;
 }
 /* 
@@ -646,6 +670,34 @@ root {
 
   100% {
     transform: rotateY(6deg) translateZ(200px);
+  }
+}
+
+@keyframes animateNextHoverBookmark {
+  0% {
+    transform: rotateY(0deg) translateZ(0);
+  }
+
+  50% {
+    transform: translateX(-10px) translateZ(2px);
+  }
+
+  100% {
+    transform: translateX(-20px) translateZ(2px);
+  }
+}
+
+@keyframes animatePrevHoverBookmark {
+  0% {
+    transform: rotateY(0deg) translateZ(0px);
+  }
+
+  50% {
+    transform: translateX(10px) translateZ(2px);
+  }
+
+  100% {
+    transform: translateX(20px) translateZ(2px);
   }
 }
 
