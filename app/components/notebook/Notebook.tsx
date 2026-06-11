@@ -847,13 +847,15 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
         <h1 className="text-center testanime">Active bookmark is: {active}</h1>
       </div>
       {/* Drag space for bookmark */}
-      <div
-        className="w-full h-[100] absolute  top-0"
-        onDragOver={(e) => {
-          e.preventDefault();
-          setBookmarkedPage("");
-        }}
-      ></div>
+      {isOpen && (
+        <div
+          className="w-full h-[100] absolute  top-0"
+          onDragOver={(e) => {
+            e.preventDefault();
+            setBookmarkedPage("");
+          }}
+        ></div>
+      )}
 
       {/* <div className="w-[80vw] h-[80vh] min-h-[300px] max-h-[800px] flex"> */}
       {/* Initial Load fix for flickering and LCP*/}
