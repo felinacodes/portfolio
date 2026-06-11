@@ -819,7 +819,7 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
 
   return (
     <div
-      className={`font-baskervville  flex flex-col items-center justify-center w-full h-full ${!toggleAnimation ? "no-anim" : ""}`}
+      className={`relative font-baskervville  flex flex-col items-center justify-center w-full h-full ${!toggleAnimation ? "no-anim" : ""}`}
     >
       {/* <button onClick={() => goToIndex(bookmarkedPage)}> */}
       {/* <button onClick={() => handleGoTo(bookmarkedPage)}>
@@ -846,6 +846,14 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
 
         <h1 className="text-center testanime">Active bookmark is: {active}</h1>
       </div>
+      {/* Drag space for bookmark */}
+      <div
+        className="w-full h-[100] absolute  top-0"
+        onDragOver={(e) => {
+          e.preventDefault();
+          setBookmarkedPage("");
+        }}
+      ></div>
 
       {/* <div className="w-[80vw] h-[80vh] min-h-[300px] max-h-[800px] flex"> */}
       {/* Initial Load fix for flickering and LCP*/}
@@ -935,11 +943,17 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
                   {...(sheet.type !== "cover"
                     ? {
                         onDragOver: (e: React.DragEvent) => {
+                          console.log("drag over");
                           e.preventDefault();
                         },
                         onDrop: (e: React.DragEvent) => {
                           e.preventDefault();
                           setBookmarkedPage(sheet.id);
+                        },
+                        onDragLeave: (e: React.DragEvent) => {
+                          e.preventDefault();
+                          console.log("drag leave");
+                          setBookmarkedPage("");
                         },
                       }
                     : {})}

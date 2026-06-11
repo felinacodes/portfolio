@@ -20,12 +20,16 @@ const Bookmark = ({
   }
 
   return (
-    <div className="">
+    <div
+      className=""
+      onDrop={(e) => {
+        e.preventDefault();
+      }}
+    >
       <button
         draggable={true}
         onDragStart={(e) => {
           e.dataTransfer.setData("bookmark", "true");
-          setBookmarkedPage("");
         }}
         // onClick={() => handleClick(visibleItems[0])}
         onClick={() => handleGoTo(bookmarkedPage)}
