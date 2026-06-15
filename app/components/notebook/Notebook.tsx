@@ -290,7 +290,10 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
   }, []);
 
   useEffect(() => {
-    if (!bookmarkedPage) return;
+    if (!bookmarkedPage) {
+      localStorage.removeItem("notebook-bookmark");
+      return;
+    }
     localStorage.setItem("notebook-bookmark", bookmarkedPage);
   }, [bookmarkedPage]);
 
