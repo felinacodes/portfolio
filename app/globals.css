@@ -222,26 +222,6 @@ root {
   box-shadow: none !important;
 }
 
-.cover-front-out {
-  /* perspective: 1500px;
-  transform-style: preserve-3d;
-  position: relative;
-  backface-visibility: hidden; */
-  /* box-shadow:
-    6px 6px 18px -2px rgba(0, 0, 0, 0.2),
-    24px 28px 40px -6px rgba(0, 0, 0, 0.1); */
-}
-
-.cover-front-out {
-  /* position: relative;
-  overflow: hidden; */
-}
-
-/* .cover-front-out:hover {
-  z-index: 200;
-  overflow: hidden;
-} */
-
 .cover-light {
   width: 100%;
   height: 100%;
@@ -273,10 +253,6 @@ root {
   box-shadow:
     6px 6px 12px -1px rgba(0, 0, 0, 0.1),
     20px 14px 16px -6px rgba(0, 0, 0, 0.1);
-}
-
-.cover-back-out {
-  /* border: 2px solid blue; */
 }
 
 .cover-inside {
@@ -544,11 +520,6 @@ root {
   /* transform-style: preserve-3d; */
   position: relative;
 }
-/* 
-.bookmark {
-  width: 200px;
-  roun
-} */
 
 .no-anim *,
 .no-anim *::before,
@@ -795,5 +766,25 @@ root {
     box-shadow:
       6px 6px 12px rgba(0, 0, 0, 0.1),
       12px 20px 30px rgba(0, 0, 0, 0.16);
+  }
+}
+
+@media (hover: none) {
+  .book-scene:has(.page-flip:hover .odd-page) .bookmark-visible {
+    animation: none;
+  }
+
+  .book-scene:has(.page-flip:hover .even-page) .bookmark-visible {
+    animation: none;
+  }
+}
+
+@media (hover: none) {
+  .book-scene:has(.page-flip:active .odd-page) .bookmark-visible {
+    animation: none;
+  }
+
+  .book-scene:has(.page-flip:active .even-page) .bookmark-visible {
+    animation: none;
   }
 }

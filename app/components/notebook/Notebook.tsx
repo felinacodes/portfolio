@@ -170,6 +170,8 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
   const [toggleAnimation, setToggleAnimation] = useState(true);
   const [correctAnimation, setCorrectAnimation] = useState("");
 
+  const [draggingBookmark, setDraggingBookmark] = useState(false);
+
   const isDraggingRef = useRef(false);
   const startPosRef = useRef({ x: 0, y: 0 });
   const touchStart = useRef({ x: 0, y: 0 });
@@ -847,15 +849,6 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
         <h1 className="text-center testanime">Active bookmark is: {active}</h1>
       </div>
       {/* Drag space for bookmark */}
-      {isOpen && (
-        <div
-          className="w-full h-[100] absolute  top-0"
-          onDragOver={(e) => {
-            e.preventDefault();
-            setBookmarkedPage("");
-          }}
-        ></div>
-      )}
 
       {/* <div className="w-[80vw] h-[80vh] min-h-[300px] max-h-[800px] flex"> */}
       {/* Initial Load fix for flickering and LCP*/}
@@ -942,21 +935,16 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
                 )}
 
                 <div
+                  data-page-id={
+                    isOpen && sheet.type != "cover" ? sheet.id : undefined
+                  }
                   {...(sheet.type !== "cover"
                     ? {
-                        onDragOver: (e: React.DragEvent) => {
-                          console.log("drag over");
-                          e.preventDefault();
-                        },
-                        onDrop: (e: React.DragEvent) => {
-                          e.preventDefault();
-                          setBookmarkedPage(sheet.id);
-                        },
-                        onDragLeave: (e: React.DragEvent) => {
-                          e.preventDefault();
-                          console.log("drag leave");
-                          setBookmarkedPage("");
-                        },
+                        // onPointerEnter: () => {
+                        //   console.log("enter");
+                        //   if (!draggingBookmark) return;
+                        //   setBookmarkedPage(sheet.id);
+                        // },
                       }
                     : {})}
                   onClick={(e) => handlePageClick(e, sheet)}
@@ -998,35 +986,44 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
               />
             </div>
           )}
-
           {isOpen && (
             <div
               className={`
               absolute
               top-[-40px]
-               left-1/2
-             -translate-x-1/2
+
+              left-0
+              m-1
+
+              translate-x-0
+
+              md:left-1/2
+              md:-translate-x-1/2
+              md:m-0
               z-[-100]
+
               ${
                 bookmarkPosition === "previous"
-                  ? "left-[47%] "
+                  ? "md:left-[47%]"
                   : bookmarkPosition === "next"
-                    ? "left-[53%]"
+                    ? "md:left-[53%]"
                     : ""
               }
               ${
                 !bookmarkedPage
                   ? "bookmark-translateZ"
                   : isBookmarkVisible
-                    ? "bookmark-visible "
-                    : "null"
+                    ? "bookmark-visible left-0 m-1 translate-x-0 md:left-0 md:translate-x-0 md:m-0"
+                    : ""
               }
-              `}
+          `}
             >
               <Bookmark
                 handleGoTo={handleGoTo}
                 setBookmarkedPage={setBookmarkedPage}
                 bookmarkedPage={bookmarkedPage}
+                setDraggingBookmark={setDraggingBookmark}
+                draggingBookmark={draggingBookmark}
               />
             </div>
           )}
