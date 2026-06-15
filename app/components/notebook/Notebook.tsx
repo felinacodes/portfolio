@@ -938,15 +938,6 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
                   data-page-id={
                     isOpen && sheet.type != "cover" ? sheet.id : undefined
                   }
-                  {...(sheet.type !== "cover"
-                    ? {
-                        // onPointerEnter: () => {
-                        //   console.log("enter");
-                        //   if (!draggingBookmark) return;
-                        //   setBookmarkedPage(sheet.id);
-                        // },
-                      }
-                    : {})}
                   onClick={(e) => handlePageClick(e, sheet)}
                   onTouchStart={handleTouchStart}
                   onTouchEnd={handleTouchEnd(sheet)}
@@ -962,7 +953,9 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
                   onAnimationEnd={finishFlip}
                   className={` page-flip w-full h-full relative flex justify-center ${
                     sheet.id === flipping?.id ? correctAnimation : ""
-                  }`}
+                  }
+                 
+                  `}
                 >
                   {renderSheet(sheet)}
                 </div>
