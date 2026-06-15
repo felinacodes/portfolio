@@ -32,6 +32,7 @@ const Cover = ({
   setBookmarkedPage,
   bookmarkedPage,
 }: CoverProps) => {
+  console.log(animationClass);
   return (
     <div
       className={`
@@ -118,7 +119,9 @@ const Cover = ({
           className={
             !isOpen && face === "outside" && side === "front"
               ? " absolute md:top-10 top-[-83px] md:right-[-90px] md:ml-2 flex flex-col md:gap-2 w-full md:w-auto  bookmarks-front md:group-hover:right-[-100px]"
-              : "absolute md:top-10 top-[-83px] md:left-[-98px] md:ml-2 flex flex-col md:gap-2  w-full z-[-2] md:z-2 bookmarks-back md:group-hover:left-[-108px]"
+              : !isOpen && face === "outside" && side === "back"
+                ? "absolute md:top-10 top-[-83px] md:left-[-98px] md:ml-2 flex flex-col md:gap-2  w-full z-[-2] md:z-2 bookmarks-back md:group-hover:left-[-108px]"
+                : ""
           }
         >
           <Bookmarks
@@ -136,13 +139,13 @@ const Cover = ({
               ? " absolute bookmark-translateZ top-[-40px] left-[30px] "
               : !isOpen && face === "outside" && side === "back"
                 ? "absolute bookmark-translateZ top-[-40px] right-[30px] "
-                : ""
+                : "opacity-0"
           }
         >
           <Bookmark
             handleGoTo={handleGoTo}
-            setBookmarkedPage={setBookmarkedPage}
             bookmarkedPage={bookmarkedPage}
+            setBookmarkedPage={setBookmarkedPage}
           />
         </div>
       )}

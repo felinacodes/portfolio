@@ -843,6 +843,9 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
         <h1 className="text-center testanime">Next: {nextSheet?.id}</h1>
         <h1 className="text-center testanime">PagesPerView: {pagesPerView}</h1> */}
         <h1 className="text-center testanime">
+          Open is:{isOpen ? "true" : "false"}
+        </h1>
+        <h1 className="text-center testanime">
           Current bookmark position is:{bookmarkPosition}
         </h1>
         <h1 className="text-center testanime ">

@@ -5,7 +5,7 @@ interface BookmarkProps {
   setBookmarkedPage?: (id: string) => void;
   bookmarkedPage: string;
   setDraggingBookmark?: (value: boolean) => void;
-  draggingBookmark: boolean;
+  draggingBookmark?: boolean;
 }
 
 const Bookmark = ({
