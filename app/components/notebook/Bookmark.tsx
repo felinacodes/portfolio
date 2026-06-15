@@ -1,11 +1,10 @@
 import React, { useState } from "react";
-import { Sheet } from "./Notebook";
 
 interface BookmarkProps {
   handleGoTo: (id: string) => void;
-  setBookmarkedPage: (id: string) => void;
+  setBookmarkedPage?: (id: string) => void;
   bookmarkedPage: string;
-  setDraggingBookmark: (value: boolean) => void;
+  setDraggingBookmark?: (value: boolean) => void;
   draggingBookmark: boolean;
 }
 
@@ -16,22 +15,16 @@ const Bookmark = ({
   setDraggingBookmark,
   draggingBookmark,
 }: BookmarkProps) => {
-  function handleClick(sheet: Sheet) {
-    if (sheet.type === "cover") return;
-
-    setBookmarkedPage(sheet.id);
-  }
-
   return (
     <button
       onPointerDown={(e) => {
         e.currentTarget.setPointerCapture(e.pointerId);
-        setDraggingBookmark(true);
+        if (setDraggingBookmark) setDraggingBookmark(true);
       }}
       onPointerUp={(e) => {
         e.currentTarget.releasePointerCapture(e.pointerId);
 
-        setDraggingBookmark(false);
+        if (setDraggingBookmark) setDraggingBookmark(false);
       }}
       onPointerMove={(e) => {
         const el = document.elementFromPoint(e.clientX, e.clientY);
@@ -45,11 +38,11 @@ const Bookmark = ({
           ?.getAttribute("data-page-id");
 
         if (pageId) {
-          setBookmarkedPage(pageId);
+          if (setBookmarkedPage) setBookmarkedPage(pageId);
           return;
         }
         if (draggingBookmark && !pageId) {
-          setBookmarkedPage("");
+          if (setBookmarkedPage) setBookmarkedPage("");
         }
       }}
       onClick={() => handleGoTo(bookmarkedPage)}
