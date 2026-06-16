@@ -18,10 +18,12 @@ const Bookmark = ({
   return (
     <button
       onPointerDown={(e) => {
+        e.stopPropagation();
         e.currentTarget.setPointerCapture(e.pointerId);
         if (setDraggingBookmark) setDraggingBookmark(true);
       }}
       onPointerUp={(e) => {
+        e.stopPropagation();
         e.currentTarget.releasePointerCapture(e.pointerId);
 
         if (setDraggingBookmark) setDraggingBookmark(false);
@@ -45,7 +47,10 @@ const Bookmark = ({
           if (setBookmarkedPage) setBookmarkedPage("");
         }
       }}
-      onClick={() => handleGoTo(bookmarkedPage)}
+      onClick={(e) => {
+        e.stopPropagation();
+        handleGoTo(bookmarkedPage);
+      }}
       className={` touch-none  cursor-grab active:cursor-grab w-10 h-300 bg-red-500
        opacity-20
        ${bookmarkedPage ? "hover:bg-green-500 active:bg-green-500" : "hover:bg-red-500 active:bg-red-500"} `}
