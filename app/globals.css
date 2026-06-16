@@ -433,7 +433,7 @@ root {
 .coverPrev {
   transform-style: preserve-3d;
   transform-origin: left;
-  animation: animateCoverNext 1.2s ease-in forwards;
+  animation: animateCoverNext 2s ease-in forwards;
   backface-visibility: display;
 }
 

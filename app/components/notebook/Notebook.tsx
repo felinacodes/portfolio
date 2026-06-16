@@ -495,15 +495,18 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
     e: React.MouseEvent<HTMLDivElement>,
     sheet: Sheet,
   ) => {
-    if (isDraggingRef.current || "ontouchstart" in window) return;
+    const target = e.target as HTMLElement;
+    const isValidClick =
+      target.closest("[data-page-id]") || target.closest("[data-cover-id]");
+
+    if (isDraggingRef.current || "ontouchstart" in window || !isValidClick)
+      return;
 
     if (sheet.type === "cover") {
       // if (!toggleAnimation && active) return;
       handleCoverNavigation(sheet);
       return;
     }
-
-    const target = e.target as HTMLElement;
 
     if (
       target.closest(
@@ -861,9 +864,9 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
 
       {
         <div
-          className={`relative  book-scene min-h-[350px] h-[90vh] md:h-[85vh]  max-h-[800px] grid grid-cols-1 w-[${pageWidth}vw] 
-          
-         
+          className={` relative  book-scene min-h-[350px] h-[90vh] md:h-[85vh]  
+            max-h-[800px] grid grid-cols-1 w-[${pageWidth}vw] 
+                 
           ${
             isOpen
               ? "md:grid-cols-2  p-2 pl-0 md:pl-2 shadow-[3px_6px_20px_0_rgba(0,0,0,0.35)] cover-opened "

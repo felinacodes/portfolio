@@ -32,9 +32,11 @@ const Cover = ({
   setBookmarkedPage,
   bookmarkedPage,
 }: CoverProps) => {
-  console.log(animationClass);
   return (
     <div
+      data-cover-id={
+        face === "outside" && side === "front" ? "front-cover" : "back-cover"
+      }
       className={`
     ${animationClass ?? ""}
     text-center h-full w-full relative group z-[20] 
@@ -83,8 +85,8 @@ const Cover = ({
         </div>
       ) : // BACK COVER
       face === "outside" && side === "back" ? (
-        <div className="cover-back-out font-handwriting text-[clamp(0.9rem,1vw,1rem)] relative flex justify-center items-end h-full ml-0 mr-8 border-r-2 border-r-black/10  from-white/20 bg-gradient-to-l  shadow-[inset_-4px_1px_3px_#ffffff60,inset_0_-1px_2px_#00000080]">
-          <div className="cover-light"></div>
+        <div className="z-3  cover-back-out font-handwriting text-[clamp(0.9rem,1vw,1rem)] relative flex justify-center items-end h-full ml-0 mr-8 border-r-2 border-r-black/10  from-white/20 bg-gradient-to-l  shadow-[inset_-4px_1px_3px_#ffffff60,inset_0_-1px_2px_#00000080]">
+          <div className="cover-light "></div>
           <div className="drop-shadow-sm max-w-[50%]  w-[clamp(150px,250px,300px)] h-[clamp(10rem,15vh,12rem)] mb-10 bg-white  p-3 rounded-sm">
             <div className=" flex flex-col border-2 w-full h-full justify-between">
               <h1 className="text-2xl p-1">Felina</h1>

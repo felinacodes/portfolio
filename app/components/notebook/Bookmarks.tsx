@@ -22,16 +22,19 @@ const Bookmarks = ({
   }
 
   return (
-    <div className="md:pt-2  flex md:flex-col gap:1 md:gap-2  w-full h-full ">
+    <div
+      className="md:pt-2  flex md:flex-col gap:1 md:gap-2  w-full h-full cursor-default"
+      onClick={(e) => e.stopPropagation()}
+    >
       {sectionIds
         .filter((id) => id.endsWith("-0"))
         .map((id) => (
           <div
             key={id}
             className="
-  
+
  md:w-24
- 
+
  flex-1
 
 
