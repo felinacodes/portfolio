@@ -38,14 +38,15 @@ const Cover = ({
         face === "outside" && side === "front" ? "front-cover" : "back-cover"
       }
       className={`
+      
     ${animationClass ?? ""}
     text-center h-full w-full relative group z-[20] 
 
-    ${face === "outside" ? "cover-closed md:w-[50%]" : "cover-opened"}
+    ${face === "outside" ? "cover-closed w-[50%]" : "cover-opened"}
 
     ${face === "outside" && side === "front" ? "cover-outside-front " : ""}
 
-    ${face === "outside" && side === "back" ? "cover-outside-back" : ""}
+    ${face === "outside" && side === "back" ? "cover-outside-back " : ""}
 
     ${animationClass === "coverPrev" || animationClass === "coverNext" ? "no-shadow" : ""}
   `}
@@ -56,7 +57,7 @@ const Cover = ({
           //   className={`${animationClass ?? ""} cover-front-out text-[clamp(0.9rem,1vw,1rem)] relative flex justify-center items-start h-full ml-8 border-l-2 border-l-black/10
           //    from-white/20 bg-gradient-to-r shadow-[inset_4px_1px_3px_#ffffff60,inset_0_-1px_2px_#00000080]`}
           // >
-          className={`z-0 cover-front-out text-[clamp(0.9rem,1vw,1rem)] relative flex justify-center items-start h-full ml-8 border-l-2 border-l-black/10
+          className={` z-0 cover-front-out text-[clamp(0.9rem,1vw,1rem)] relative flex justify-center items-start h-full ml-8 border-l-2 border-l-black/10
            from-white/20 bg-gradient-to-r shadow-[inset_4px_1px_3px_#ffffff60,inset_0_-1px_2px_#00000080]
            
            `}
@@ -85,7 +86,13 @@ const Cover = ({
         </div>
       ) : // BACK COVER
       face === "outside" && side === "back" ? (
-        <div className="z-3  cover-back-out font-handwriting text-[clamp(0.9rem,1vw,1rem)] relative flex justify-center items-end h-full ml-0 mr-8 border-r-2 border-r-black/10  from-white/20 bg-gradient-to-l  shadow-[inset_-4px_1px_3px_#ffffff60,inset_0_-1px_2px_#00000080]">
+        <div
+          className="z-3  test cover-back-out font-handwriting text-[clamp(0.9rem,1vw,1rem)] 
+        relative flex justify-center items-end h-full ml-0 mr-8 border-r-2 border-r-black/10 
+         from-white/20 bg-gradient-to-l  shadow-[inset_-4px_1px_3px_#ffffff60,inset_0_-1px_2px_#00000080]
+        
+         "
+        >
           <div className="cover-light "></div>
           <div className="drop-shadow-sm max-w-[50%]  w-[clamp(150px,250px,300px)] h-[clamp(10rem,15vh,12rem)] mb-10 bg-white  p-3 rounded-sm">
             <div className=" flex flex-col border-2 w-full h-full justify-between">
@@ -116,14 +123,15 @@ const Cover = ({
         ></div>
       )}
       {/* <div className=" absolute w-full h-full "></div> */}
+
       {!isOpen && !animationClass && (
         <div
           className={
-            !isOpen && face === "outside" && side === "front"
-              ? " absolute md:top-10 top-[-83px] md:right-[-90px] md:ml-2 flex flex-col md:gap-2 w-full md:w-auto  bookmarks-front md:group-hover:right-[-100px]"
-              : !isOpen && face === "outside" && side === "back"
-                ? "absolute md:top-10 top-[-83px] md:left-[-98px] md:ml-2 flex flex-col md:gap-2  w-full z-[-2] md:z-2 bookmarks-back md:group-hover:left-[-108px]"
-                : ""
+            face === "outside" && side === "front"
+              ? "absolute top-10 right-[-90px] ml-2 flex flex-col gap-2 bookmarks-front group-hover:right-[-100px]"
+              : face === "outside" && side === "back"
+                ? " border-2 border-green-500 absolute top-10 left-[-98px] ml-2 flex flex-col gap-2 z-2 bookmarks-back group-hover:left-[-108px] "
+                : "border-5 border-purple-500"
           }
         >
           <Bookmarks

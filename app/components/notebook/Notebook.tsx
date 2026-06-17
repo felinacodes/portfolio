@@ -773,10 +773,17 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
     return "next";
   }, [bookmarkedPage, visibleItems, numberedMap, isBookmarkVisible]);
 
+  const currentSheet = visibleItems[0];
+
+  const isBackCover =
+    currentSheet?.type === "cover" &&
+    currentSheet.side === "back" &&
+    currentSheet.face === "outside";
+
   const renderSheet = (sheet: Sheet) => {
     if (sheet.type === "cover") {
       return (
-        <div className="cover-out h-full w-full  flex justify-center items-center ">
+        <div className=" cover-out h-full w-full  flex justify-center items-center ">
           <Cover
             side={sheet.side}
             face={sheet.face}
@@ -827,7 +834,7 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
 
   return (
     <div
-      className={`relative font-baskervville  flex flex-col items-center justify-center w-full h-full ${!toggleAnimation ? "no-anim" : ""}`}
+      className={` relative font-baskervville  flex flex-col md:items-center md:justify-center w-full h-full ${!toggleAnimation ? "no-anim" : ""}`}
     >
       {/* <button onClick={() => goToIndex(bookmarkedPage)}> */}
       {/* <button onClick={() => handleGoTo(bookmarkedPage)}>
@@ -864,14 +871,16 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
 
       {
         <div
-          className={` relative  book-scene min-h-[350px] h-[90vh] md:h-[85vh]  
-            max-h-[800px] grid grid-cols-1 w-[${pageWidth}vw] 
+          className={`  relative  book-scene min-h-[350px] h-[90vh] md:h-[85vh]  
+            max-h-[800px] grid grid-cols-1 w-[80vw] md:self-center 
                  
           ${
             isOpen
-              ? "md:grid-cols-2  p-2 pl-0 md:pl-2 shadow-[3px_6px_20px_0_rgba(0,0,0,0.35)] cover-opened "
-              : `md:grid-cols-1 `
-          }`}
+              ? "md:grid-cols-2  p-2 pl-0 md:pl-2 shadow-[3px_6px_20px_0_rgba(0,0,0,0.35)] cover-opened  "
+              : `md:grid-cols-1  `
+          }
+          ${isBackCover ? "self-end mr-1 ml-0 md:mr-0 md:ml-0" : "self-start ml-1 mr-0 md:mr-0 md:ml-0"}
+          `}
         >
           {visibleItems.map((sheet, i) => {
             const isLeftPage = i === 0;
@@ -974,11 +983,18 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
 
           {isOpen && (
             <div
-              className={`w-full  absolute top-[-70] md:top-10 md:left-full md:ml-[-20] 
-                flex flex-col items-start justify-start gap-2 z-[-10] 
-                !{$nextsheet}? md:z-[10] : z-[-100] 
-               
-                `}
+              className="
+      absolute
+      top-10
+      left-full
+      ml-[-20px]
+
+      flex
+      flex-col
+      gap-2
+
+      z-10
+    "
             >
               <Bookmarks
                 sectionIds={sections.map((s) => s.id)}

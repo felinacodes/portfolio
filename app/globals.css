@@ -180,6 +180,9 @@ root {
   transform: perspective(1200px) rotateY(5deg) translateX(5px) scale(0.92);
 }
 
+.test {
+}
+
 .cover-outside-front::after {
   box-shadow:
     10px 40px 40px -10px #00000030,
