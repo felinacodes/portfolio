@@ -180,9 +180,6 @@ root {
   transform: perspective(1200px) rotateY(5deg) translateX(5px) scale(0.92);
 }
 
-.test {
-}
-
 .cover-outside-front::after {
   box-shadow:
     10px 40px 40px -10px #00000030,
@@ -253,6 +250,21 @@ root {
 }
 
 .cover-closed:hover::after {
+  box-shadow:
+    6px 6px 12px -1px rgba(0, 0, 0, 0.1),
+    20px 14px 16px -6px rgba(0, 0, 0, 0.1);
+}
+
+.cover-light:active {
+  opacity: 0.2;
+}
+
+.cover-closed:active {
+  transform: perspective(1200px) rotateY(0deg) translateX(0px) scaleX(1);
+  transform-style: preserve-3d;
+}
+
+.cover-closed:active::after {
   box-shadow:
     6px 6px 12px -1px rgba(0, 0, 0, 0.1),
     20px 14px 16px -6px rgba(0, 0, 0, 0.1);

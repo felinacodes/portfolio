@@ -42,7 +42,7 @@ const Cover = ({
     ${animationClass ?? ""}
     text-center h-full w-full relative group z-[20] 
 
-    ${face === "outside" ? "cover-closed w-[50%]" : "cover-opened"}
+    ${face === "outside" ? "cover-closed md:w-[50%]" : "cover-opened"}
 
     ${face === "outside" && side === "front" ? "cover-outside-front " : ""}
 
@@ -128,9 +128,9 @@ const Cover = ({
         <div
           className={
             face === "outside" && side === "front"
-              ? "absolute top-10 right-[-90px] ml-2 flex flex-col gap-2 bookmarks-front group-hover:right-[-100px]"
+              ? "absolute top-10 right-[-90px] ml-2 flex flex-col gap-2 bookmarks-front group-hover:right-[-100px] group-active:right-[-100px]"
               : face === "outside" && side === "back"
-                ? " border-2 border-green-500 absolute top-10 left-[-98px] ml-2 flex flex-col gap-2 z-2 bookmarks-back group-hover:left-[-108px] "
+                ? " border-2 border-green-500 absolute top-10 left-[-98px] ml-2 flex flex-col gap-2 z-2 bookmarks-back group-hover:left-[-108px] group-active:left-[-108px]"
                 : "border-5 border-purple-500"
           }
         >

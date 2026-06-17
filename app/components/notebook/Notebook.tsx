@@ -872,7 +872,7 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
       {
         <div
           className={`  relative  book-scene min-h-[350px] h-[90vh] md:h-[85vh]  
-            max-h-[800px] grid grid-cols-1 w-[80vw] md:self-center 
+            max-h-[800px] grid grid-cols-1 md:self-center w-[${pageWidth}vw]
                  
           ${
             isOpen
