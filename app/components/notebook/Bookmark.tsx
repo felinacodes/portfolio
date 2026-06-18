@@ -51,7 +51,7 @@ const Bookmark = ({
         e.stopPropagation();
         handleGoTo(bookmarkedPage);
       }}
-      className={` touch-none  cursor-grab active:cursor-grab w-10 h-300 bg-red-500
+      className={` touch-none  cursor-grab active:cursor-grab w-10 h-200 bg-red-500
        opacity-20
        ${bookmarkedPage ? "hover:bg-green-500 active:bg-green-500" : "hover:bg-red-500 active:bg-red-500"} `}
     />

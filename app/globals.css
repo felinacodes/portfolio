@@ -793,13 +793,3 @@ root {
     animation: none;
   }
 }
-
-@media (hover: none) {
-  .book-scene:has(.page-flip:active .odd-page) .bookmark-visible {
-    animation: none;
-  }
-
-  .book-scene:has(.page-flip:active .even-page) .bookmark-visible {
-    animation: none;
-  }
-}
