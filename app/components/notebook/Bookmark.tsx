@@ -15,6 +15,7 @@ const Bookmark = ({
   setDraggingBookmark,
   draggingBookmark,
 }: BookmarkProps) => {
+  const crystals = Array.from({ length: 15 });
   return (
     <button
       onPointerDown={(e) => {
@@ -51,10 +52,24 @@ const Bookmark = ({
         e.stopPropagation();
         handleGoTo(bookmarkedPage);
       }}
-      className={` touch-none  cursor-grab active:cursor-grab w-10 h-200 bg-red-500
-       opacity-20
-       ${bookmarkedPage ? "hover:bg-green-500 active:bg-green-500" : "hover:bg-red-500 active:bg-red-500"} `}
-    />
+      className={`bookmark touch-none cursor-grab active:cursor-grab w-10 md:w-15 h-210 
+        
+       ${bookmarkedPage ? "bookmarked-bookmark" : "no-bookmarked-bookmark"} `}
+    >
+      <div className=" w-full h-full flex ">
+        <div className="w-full h-full flex justify-around items-center flex-col m-[3px]">
+          {crystals.map((_, i) => (
+            <div key={i} className="crystal" />
+          ))}
+        </div>
+
+        <div className=" w-full h-full flex justify-around items-center flex-col m-[3px]">
+          {crystals.map((_, i) => (
+            <div key={i} className="crystal" />
+          ))}
+        </div>
+      </div>
+    </button>
   );
 };
 

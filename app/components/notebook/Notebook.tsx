@@ -1008,7 +1008,7 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
             <div
               className={`
               absolute
-              top-[-40px]
+              top-[-30px]
 
               left-0
               m-1

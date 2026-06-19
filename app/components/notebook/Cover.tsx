@@ -146,9 +146,9 @@ const Cover = ({
         <div
           className={
             !isOpen && face === "outside" && side === "front"
-              ? " absolute bookmark-translateZ top-[-40px] left-[30px] "
+              ? " absolute bookmark-translateZ top-[-30px] left-[30px] "
               : !isOpen && face === "outside" && side === "back"
-                ? "absolute bookmark-translateZ top-[-40px] right-[30px] "
+                ? "absolute bookmark-translateZ top-[-30px] right-[30px] "
                 : "opacity-0"
           }
         >
