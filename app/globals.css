@@ -30,6 +30,7 @@ body,
 
   --color-myPink: #ffc0cb;
   --color-myPinkDark: #df7e8e;
+  --color-myPinkLight: #f8dae0f3;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -41,7 +42,6 @@ body,
 
 body {
   background: var(--background);
-  /* background: black; */
   color: var(--foreground);
 }
 

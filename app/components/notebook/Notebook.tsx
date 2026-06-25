@@ -22,6 +22,9 @@ import { TableOfContentsBlocks } from "./pages/TableOfContents";
 import Bookmarks from "./Bookmarks";
 import MeasureBlocks from "./MeasureBlocks";
 import Bookmark from "./Bookmark";
+import Options from "../Options";
+import { Settings } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 
 // import useMeasure from '../useMeasure'
 
@@ -167,10 +170,15 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
   const pendingNavRef = useRef<string | null>(null);
   const lastPressRef = useRef(0);
 
-  const [toggleAnimation, setToggleAnimation] = useState(true);
   const [correctAnimation, setCorrectAnimation] = useState("");
 
   const [draggingBookmark, setDraggingBookmark] = useState(false);
+
+  const [optionsOpen, setOptionsOpen] = useState(false);
+
+  const [darkMode, setDarkMode] = useState(false);
+  const [soundEnabled, setSoundEnabled] = useState(true);
+  const [toggleAnimation, setToggleAnimation] = useState(true);
 
   const isDraggingRef = useRef(false);
   const startPosRef = useRef({ x: 0, y: 0 });
@@ -833,45 +841,16 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
   };
 
   return (
-    <div
-      className={` relative font-baskervville  flex flex-col md:items-center md:justify-center w-full h-full ${!toggleAnimation ? "no-anim" : ""}`}
-    >
-      {/* <button onClick={() => goToIndex(bookmarkedPage)}> */}
-      {/* <button onClick={() => handleGoTo(bookmarkedPage)}>
-        Open On Bookmark
-      </button> */}
-      <button onClick={() => setToggleAnimation(!toggleAnimation)}>
-        {toggleAnimation ? "Disable Animation" : "Enable Animation"}
-      </button>
-      <div className="testwrapper ">
-        {/* <h1 className="text-center testanime">{isOpen ? "Open" : "Closed"}</h1>
-        <h1 className="text-center testanime">
-          istwopages: {isTwoPages ? "true" : "false"}
-        </h1>
-        <h1 className="text-center testanime">{flipping?.direction}</h1>
-        <h1 className="text-center testanime">Prev: {prevSheet?.id}</h1>
-        <h1 className="text-center testanime">Next: {nextSheet?.id}</h1>
-        <h1 className="text-center testanime">PagesPerView: {pagesPerView}</h1> */}
-        <h1 className="text-center testanime">
-          Open is:{isOpen ? "true" : "false"}
-        </h1>
-        <h1 className="text-center testanime">
-          Current bookmark position is:{bookmarkPosition}
-        </h1>
-        <h1 className="text-center testanime ">
-          Current Bookmark is: {bookmarkedPage}
-        </h1>
+    <div className="flex w-full h-full m-2 flex-col md:flex-row">
+      <div
+        className={` order-2 md:order-1 relative font-baskervville  flex flex-col md:items-center md:justify-center w-full h-full ${!toggleAnimation ? "no-anim" : ""}`}
+      >
+        {/* <div className="w-[80vw] h-[80vh] min-h-[300px] max-h-[800px] flex"> */}
+        {/* Initial Load fix for flickering and LCP*/}
 
-        <h1 className="text-center testanime">Active bookmark is: {active}</h1>
-      </div>
-      {/* Drag space for bookmark */}
-
-      {/* <div className="w-[80vw] h-[80vh] min-h-[300px] max-h-[800px] flex"> */}
-      {/* Initial Load fix for flickering and LCP*/}
-
-      {
-        <div
-          className={`  relative  book-scene min-h-[350px] h-[90vh] md:h-[85vh]  
+        {
+          <div
+            className={`  relative  book-scene min-h-[350px] h-[90vh] md:h-[85vh]  
             max-h-[800px] grid grid-cols-1 md:self-center w-[${pageWidth}vw]
                  
           ${
@@ -881,109 +860,109 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
           }
           ${isBackCover ? "self-end mr-1 ml-0 md:mr-0 md:ml-0" : "self-start ml-1 mr-0 md:mr-0 md:ml-0"}
           `}
-        >
-          {visibleItems.map((sheet, i) => {
-            const isLeftPage = i === 0;
-            const isRightPage = i === visibleItems.length - 1;
+          >
+            {visibleItems.map((sheet, i) => {
+              const isLeftPage = i === 0;
+              const isRightPage = i === visibleItems.length - 1;
 
-            const key =
-              sheet.type === "page"
-                ? sheet.id
-                : sheet.type === "cover"
-                  ? `cover-${sheet.side}-${sheet.face}`
-                  : `blank-${i}`;
+              const key =
+                sheet.type === "page"
+                  ? sheet.id
+                  : sheet.type === "cover"
+                    ? `cover-${sheet.side}-${sheet.face}`
+                    : `blank-${i}`;
 
-            return (
-              <div
-                className=" relative w-full h-full min-h-0 items-center justify-center flex"
-                key={key}
-              >
-                {/* Leave the isLeftPage and isRightPage logic for 2 pages
+              return (
+                <div
+                  className=" relative w-full h-full min-h-0 items-center justify-center flex"
+                  key={key}
+                >
+                  {/* Leave the isLeftPage and isRightPage logic for 2 pages
                 so the hover animation works as intented.*/}
-                {isOpen && isLeftPage && prevSheet && isTwoPages && (
-                  <div className="absolute inset-0 -z-10">
-                    {renderSheet(prevSheet)}
-                  </div>
-                )}
-
-                {isOpen && isRightPage && nextSheet && isTwoPages && (
-                  <div className="absolute inset-0 -z-10">
-                    {renderSheet(nextSheet)}
-                  </div>
-                )}
-
-                {/* Fix for 1 pages view.*/}
-                {isOpen &&
-                  flipping?.direction === "prev" &&
-                  prevSheet &&
-                  !isTwoPages && (
+                  {isOpen && isLeftPage && prevSheet && isTwoPages && (
                     <div className="absolute inset-0 -z-10">
                       {renderSheet(prevSheet)}
                     </div>
                   )}
 
-                {/* flippingRef.current.direction === next  seem to be the problem.*/}
-                {isOpen &&
-                  flipping?.direction === "next" &&
-                  nextSheet &&
-                  !isTwoPages && (
+                  {isOpen && isRightPage && nextSheet && isTwoPages && (
                     <div className="absolute inset-0 -z-10">
                       {renderSheet(nextSheet)}
                     </div>
                   )}
 
-                {/* Show first inside page while opening cover 
+                  {/* Fix for 1 pages view.*/}
+                  {isOpen &&
+                    flipping?.direction === "prev" &&
+                    prevSheet &&
+                    !isTwoPages && (
+                      <div className="absolute inset-0 -z-10">
+                        {renderSheet(prevSheet)}
+                      </div>
+                    )}
+
+                  {/* flippingRef.current.direction === next  seem to be the problem.*/}
+                  {isOpen &&
+                    flipping?.direction === "next" &&
+                    nextSheet &&
+                    !isTwoPages && (
+                      <div className="absolute inset-0 -z-10">
+                        {renderSheet(nextSheet)}
+                      </div>
+                    )}
+
+                  {/* Show first inside page while opening cover 
                 1 and 2 pages view
                 */}
-                {!isOpen && flipping?.direction === "next" && nextSheet && (
-                  <div className="absolute inset-0 z-0 flex justify-center">
-                    <div className="w-full md:w-1/2 h-full">
-                      {renderSheet(nextSheet)}
+                  {!isOpen && flipping?.direction === "next" && nextSheet && (
+                    <div className="absolute inset-0 z-0 flex justify-center">
+                      <div className="w-full md:w-1/2 h-full">
+                        {renderSheet(nextSheet)}
+                      </div>
                     </div>
-                  </div>
-                )}
+                  )}
 
-                {/* Show last inside page while closing back cover */}
-                {!isOpen && flipping?.direction === "prev" && prevSheet && (
-                  <div className="absolute inset-0 z-0 flex justify-center">
-                    <div className="w-full md:w-1/2 h-full">
-                      {renderSheet(prevSheet)}
+                  {/* Show last inside page while closing back cover */}
+                  {!isOpen && flipping?.direction === "prev" && prevSheet && (
+                    <div className="absolute inset-0 z-0 flex justify-center">
+                      <div className="w-full md:w-1/2 h-full">
+                        {renderSheet(prevSheet)}
+                      </div>
                     </div>
-                  </div>
-                )}
+                  )}
 
-                <div
-                  data-page-id={
-                    isOpen && sheet.type != "cover" ? sheet.id : undefined
-                  }
-                  onClick={(e) => handlePageClick(e, sheet)}
-                  onTouchStart={handleTouchStart}
-                  onTouchEnd={handleTouchEnd(sheet)}
-                  onMouseMove={(e) => {
-                    const dx = Math.abs(e.clientX - startPosRef.current.x);
-                    const dy = Math.abs(e.clientY - startPosRef.current.y);
-                    if (dx > 5 || dy > 5) isDraggingRef.current = true;
-                  }}
-                  onMouseDown={(e) => {
-                    isDraggingRef.current = false;
-                    startPosRef.current = { x: e.clientX, y: e.clientY };
-                  }}
-                  onAnimationEnd={finishFlip}
-                  className={` page-flip w-full h-full relative flex justify-center ${
-                    sheet.id === flipping?.id ? correctAnimation : ""
-                  }
+                  <div
+                    data-page-id={
+                      isOpen && sheet.type != "cover" ? sheet.id : undefined
+                    }
+                    onClick={(e) => handlePageClick(e, sheet)}
+                    onTouchStart={handleTouchStart}
+                    onTouchEnd={handleTouchEnd(sheet)}
+                    onMouseMove={(e) => {
+                      const dx = Math.abs(e.clientX - startPosRef.current.x);
+                      const dy = Math.abs(e.clientY - startPosRef.current.y);
+                      if (dx > 5 || dy > 5) isDraggingRef.current = true;
+                    }}
+                    onMouseDown={(e) => {
+                      isDraggingRef.current = false;
+                      startPosRef.current = { x: e.clientX, y: e.clientY };
+                    }}
+                    onAnimationEnd={finishFlip}
+                    className={` page-flip w-full h-full relative flex justify-center ${
+                      sheet.id === flipping?.id ? correctAnimation : ""
+                    }
                  
                   `}
-                >
-                  {renderSheet(sheet)}
+                  >
+                    {renderSheet(sheet)}
+                  </div>
                 </div>
-              </div>
-            );
-          })}
+              );
+            })}
 
-          {isOpen && (
-            <div
-              className="
+            {isOpen && (
+              <div
+                className="
       absolute
       top-10
       left-full
@@ -995,18 +974,18 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
 
       z-10
     "
-            >
-              <Bookmarks
-                sectionIds={sections.map((s) => s.id)}
-                active={active}
-                setActive={setActive}
-                handleGoTo={handleGoTo}
-              />
-            </div>
-          )}
-          {isOpen && (
-            <div
-              className={`
+              >
+                <Bookmarks
+                  sectionIds={sections.map((s) => s.id)}
+                  active={active}
+                  setActive={setActive}
+                  handleGoTo={handleGoTo}
+                />
+              </div>
+            )}
+            {isOpen && (
+              <div
+                className={`
               absolute
               top-[-30px]
 
@@ -1035,23 +1014,48 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
                     : ""
               }
           `}
-            >
-              <Bookmark
-                handleGoTo={handleGoTo}
-                setBookmarkedPage={setBookmarkedPage}
-                bookmarkedPage={bookmarkedPage}
-                setDraggingBookmark={setDraggingBookmark}
-                draggingBookmark={draggingBookmark}
-              />
-            </div>
-          )}
-        </div>
-      }
+              >
+                <Bookmark
+                  handleGoTo={handleGoTo}
+                  setBookmarkedPage={setBookmarkedPage}
+                  bookmarkedPage={bookmarkedPage}
+                  setDraggingBookmark={setDraggingBookmark}
+                  draggingBookmark={draggingBookmark}
+                />
+              </div>
+            )}
+          </div>
+        }
+      </div>
+      <div className="z-100 text-myPinkDark absolute top-2 right-2 hover:text-myPink ">
+        <button
+          onClick={() => setOptionsOpen(!optionsOpen)}
+          className="text-center cursor-pointer  "
+        >
+          <Settings size={20} />
+        </button>
+      </div>
 
-      {/* <div className="mt-4 flex gap-4 border-2 border-blue-200">
-        <button onClick={prev}>Prev</button>
-        <button onClick={next}>Next</button>
-      </div> */}
+      <AnimatePresence>
+        {optionsOpen && (
+          <motion.div
+            className="order-1"
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.2 }}
+          >
+            <Options
+              darkMode={darkMode}
+              soundEnabled={soundEnabled}
+              animationsEnabled={toggleAnimation}
+              toggleTheme={() => setDarkMode(!darkMode)}
+              toggleSound={() => setSoundEnabled(!soundEnabled)}
+              toggleAnimations={() => setToggleAnimation(!toggleAnimation)}
+            />
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };
