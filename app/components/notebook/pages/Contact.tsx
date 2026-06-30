@@ -212,7 +212,10 @@ export const ContactBlocks = (args?: RenderContext) => {
             {/* BUTTON */}
             <button
               type="submit"
-              className="cursor-pointer self-center text-white bg-gray-900 hover:bg-gray-700 py-2 px-4 rounded-md"
+              className="cursor-pointer self-center text-white dark:text-myDark 
+              bg-gray-900 dark:bg-foreground
+               hover:bg-gray-700 active:bg-gray-700 dark:hover:bg-gray-100 
+               dark:active:gray-100 py-2 px-4 rounded-md"
             >
               Send
             </button>

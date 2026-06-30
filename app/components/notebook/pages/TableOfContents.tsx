@@ -24,7 +24,7 @@ export const TableOfContentsBlocks = (args?: RenderContext) => {
                 >
                   <div className="text-xs mb-1">Chapter: {index + 1}</div>
 
-                  <div className="cursor-pointer hover:bg-gray-200 active:bg-gray-200 border-b flex justify-between border-dotted border-gray-400">
+                  <div className="cursor-pointer hover:bg-gray-200 active:bg-gray-200 hover:text-myDark active:text-myDark border-b flex justify-between border-dotted border-gray-400">
                     <h2>{transform(key)}</h2>
                     <p>{value}</p>
                   </div>

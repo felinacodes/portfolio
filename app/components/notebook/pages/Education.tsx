@@ -13,7 +13,7 @@ export const EducationBlocks = (args?: RenderContext) => {
 
         <div className="text-start text-[0.9rem] sm:text-[1rem] xl:text-[1.2rem] leading-snug max-w-[65ch] space-y-2 lg:space-y-4">
           <div>
-            <h3 className="font-bold text-lg mb-2 border-b-2 border-b-gray-500 w-max">
+            <h3 className="font-bold text-lg mb-2 border-b-2 border-b-gray-500 dark:border-b-gray-200 w-max">
               Degrees:
             </h3>
 
@@ -30,7 +30,7 @@ export const EducationBlocks = (args?: RenderContext) => {
           </div>
 
           <div>
-            <h3 className="font-bold text-lg mb-2 border-b-2 border-b-gray-500 w-max">
+            <h3 className="font-bold text-lg mb-2 border-b-2 border-b-gray-500 dark:border-b-gray-200 w-max">
               Courses:
             </h3>
 

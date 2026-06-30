@@ -110,13 +110,13 @@ export const ProjectsBlocks = (args?: RenderContext) => {
             </div>
 
             <div className="flex flex-col items-center justify-center gap-4 m-4">
-              <h1 className="text-center font-bold text-md xl:text-xl mb-2 border-b-2 border-b-gray-500 w-max">
+              <h1 className="text-center font-bold text-md xl:text-xl mb-2 border-b-2 border-b-gray-500 dark:border-b-gray-200 w-max">
                 {project.title}
               </h1>
 
               <div className="flex flex-row gap-4 justify-center items-center">
                 <a
-                  className="hover:text-gray-500 active:text-gray-500"
+                  className="hover:text-gray-500 active:text-gray-500 dark:hover:text-gray-800 active:dark:text-gray-800"
                   href={project.live}
                   target="_blank"
                   rel="noopener noreferrer"
@@ -130,7 +130,11 @@ export const ProjectsBlocks = (args?: RenderContext) => {
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    <i className="devicon-github-plain text-3xl hover:text-gray-500 active:text-gray-500" />
+                    <i
+                      className="devicon-github-plain text-3xl
+                     hover:text-gray-500 active:text-gray-500 
+                     dark:hover:text-gray-800 active:dark:text-gray-800"
+                    />
                   </a>
                 )}
               </div>
@@ -145,7 +149,7 @@ export const ProjectsBlocks = (args?: RenderContext) => {
                 <li key={feature} className="flex items-center gap-2">
                   <Star
                     size={14}
-                    className="text-gray-500 hover:text-yellow-500 active:text-yellow-500"
+                    className="text-gray-500 dark:text-gray-300 hover:text-yellow-500 active:text-yellow-500"
                   />
                   {feature}
                 </li>
@@ -159,7 +163,7 @@ export const ProjectsBlocks = (args?: RenderContext) => {
                 <span key={i}>
                   <i
                     data-no-flip
-                    className={`${tech} text-gray-500 text-xl lg:text-3xl`}
+                    className={`${tech} text-gray-500 dark:text-gray-200 text-xl lg:text-3xl`}
                   />
                 </span>
               ))}

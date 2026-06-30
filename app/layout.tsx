@@ -11,6 +11,7 @@ import { Playfair_Display } from "next/font/google";
 import { Baskervville } from "next/font/google";
 import { Jost } from "next/font/google";
 import { Merriweather } from "next/font/google";
+import { Providers } from "./providers";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -93,7 +94,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <head>
         <link
           rel="stylesheet"
@@ -108,7 +109,7 @@ export default function RootLayout({
         bg-background text-foreground
         antialiased`}
       >
-        {children}
+        <Providers>{children}</Providers>
       </body>
     </html>
   );

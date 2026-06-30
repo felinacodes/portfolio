@@ -25,6 +25,7 @@ import Bookmark from "./Bookmark";
 import Options from "../Options";
 import { Settings } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useTheme } from "next-themes";
 
 // import useMeasure from '../useMeasure'
 
@@ -176,7 +177,6 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
 
   const [optionsOpen, setOptionsOpen] = useState(false);
 
-  const [darkMode, setDarkMode] = useState(false);
   const [soundEnabled, setSoundEnabled] = useState(true);
   const [toggleAnimation, setToggleAnimation] = useState(true);
 
@@ -184,6 +184,8 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
   const startPosRef = useRef({ x: 0, y: 0 });
   const touchStart = useRef({ x: 0, y: 0 });
   const touchEnd = useRef({ x: 0, y: 0 });
+
+  const { theme, setTheme } = useTheme();
 
   const SWIPE_THRESHOLD = 50;
 
@@ -850,7 +852,7 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
 
         {
           <div
-            className={`  relative  book-scene min-h-[350px] h-[90vh] md:h-[85vh]  
+            className={`   relative  book-scene min-h-[350px] h-[90vh] md:h-[85vh]  
             max-h-[800px] grid grid-cols-1 md:self-center w-[${pageWidth}vw]
                  
           ${
@@ -1046,10 +1048,13 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
             transition={{ duration: 0.2 }}
           >
             <Options
-              darkMode={darkMode}
+              darkMode={theme}
               soundEnabled={soundEnabled}
               animationsEnabled={toggleAnimation}
-              toggleTheme={() => setDarkMode(!darkMode)}
+              toggleDarkMode={() => {
+                console.log(theme);
+                setTheme(theme === "dark" ? "light" : "dark");
+              }}
               toggleSound={() => setSoundEnabled(!soundEnabled)}
               toggleAnimations={() => setToggleAnimation(!toggleAnimation)}
             />

@@ -12,17 +12,15 @@ const Page = forwardRef<HTMLDivElement, PageProps>(
     const isOdd = index ? index % 2 === 1 : false;
     return (
       <div
-        className={`w-full h-full ${
+        className={`w-full h-full  ${
           isOdd ? "md:pr-2 md:pl-0" : "md:pl-2 md:pr-0"
         }`}
       >
-        {/* PAGE SHELL (this is what rotates) */}
         <div
-          className={`  w-full h-full bg-white flex flex-col justify-between p-2 relative ${
+          className={`  w-full h-full bg-white dark:bg-background flex flex-col justify-between p-2 relative ${
             isOdd ? "odd-page md:pr-4" : "even-page md:pl-4"
           } `}
         >
-          {/* HEADER (now inside transform → it moves with page) */}
           {chapterName && (
             <div
               className={`border-gray-400 font-jost text-xs border-b leading-5

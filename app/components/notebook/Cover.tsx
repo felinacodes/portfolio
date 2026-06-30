@@ -64,7 +64,7 @@ const Cover = ({
         >
           <div className="cover-light"></div>
           <div className="max-w-[80%] mt-[40%] lg:mt-[25%] w-[clamp(200px,300px,400px)] h-[clamp(10rem,15vw,12rem)] p-2 bg-[#f4f5f0] border-[9px] border-double border-[#438bce] rounded-[40px]">
-            <div className="flex flex-col items-start gap-2  justify-center w-full h-full bg-[repeating-linear-gradient(to_bottom,transparent,transparent_30px,#00000030_30px)] p-4">
+            <div className="text-myDark flex flex-col items-start gap-2  justify-center w-full h-full bg-[repeating-linear-gradient(to_bottom,transparent,transparent_30px,#00000030_30px)] p-4">
               <h1 className=" text-start w-full border-b-2 border-dotted border-gray-300 leading-none pt-2">
                 <strong className="font-handlee mr-2 font-bold text-[clamp(1rem,1vw,1.2rem)]">
                   Name:
@@ -87,7 +87,7 @@ const Cover = ({
       ) : // BACK COVER
       face === "outside" && side === "back" ? (
         <div
-          className="z-3  test cover-back-out font-handwriting text-[clamp(0.9rem,1vw,1rem)] 
+          className="z-3 text-myDark cover-back-out font-handwriting text-[clamp(0.9rem,1vw,1rem)] 
         relative flex justify-center items-end h-full ml-0 mr-8 border-r-2 border-r-black/10 
          from-white/20 bg-gradient-to-l  shadow-[inset_-4px_1px_3px_#ffffff60,inset_0_-1px_2px_#00000080]
         

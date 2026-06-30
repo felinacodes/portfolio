@@ -23,7 +23,7 @@ const Bookmarks = ({
 
   return (
     <div
-      className="pt-2 flex flex-col gap-2 w-full h-full cursor-default overflow-visible"
+      className="text-myDark pt-2 flex flex-col gap-2 w-full h-full cursor-default overflow-visible"
       onClick={(e) => e.stopPropagation()}
     >
       {sectionIds

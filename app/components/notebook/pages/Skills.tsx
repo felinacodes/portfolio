@@ -131,7 +131,7 @@ export const SkillsBlocks = (args?: RenderContext) => {
         <div className="w-full text-start text-[0.9rem] sm:text-[1rem] xl:text-[1.2rem] leading-snug space-y-2 lg:space-y-4">
           {skillSections.slice(0, 2).map((section) => (
             <div key={section.title}>
-              <h2 className="font-bold text-lg mb-2 border-b-2 border-b-gray-500 w-max">
+              <h2 className="font-bold text-lg mb-2 border-b-2 border-b-gray-500 dark:border-b-gray-200 w-max">
                 {section.title}:
               </h2>
 
@@ -158,7 +158,7 @@ export const SkillsBlocks = (args?: RenderContext) => {
         <div className="mt-4 w-full text-start text-[0.9rem] sm:text-[1rem] xl:text-[1.2rem] leading-snug space-y-2 lg:space-y-4">
           {skillSections.slice(2).map((section) => (
             <div key={section.title}>
-              <h2 className="font-bold text-lg mb-2 border-b-2 border-b-gray-500 w-max">
+              <h2 className="font-bold text-lg mb-2 border-b-2 border-b-gray-500 dark:border-b-gray-200 w-max">
                 {section.title}:
               </h2>
 
