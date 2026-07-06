@@ -17,6 +17,7 @@ const Bookmarks = ({
 }: BookmarkProps) => {
   function handleClick(id: string) {
     if (transform(active) === id) return;
+    // play("flip");
     setActive(id);
     handleGoTo(id);
   }

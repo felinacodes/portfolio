@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useSound } from "@/contexts/SoundContext";
 
 interface BookmarkProps {
   handleGoTo: (id: string) => void;
@@ -15,13 +16,17 @@ const Bookmark = ({
   setDraggingBookmark,
   draggingBookmark,
 }: BookmarkProps) => {
+  const { play } = useSound();
   const crystals = Array.from({ length: 15 });
+  const [canPlay, setCanPlay] = useState(true);
   return (
     <button
       onPointerDown={(e) => {
         e.stopPropagation();
         e.currentTarget.setPointerCapture(e.pointerId);
-        if (setDraggingBookmark) setDraggingBookmark(true);
+        if (setDraggingBookmark) {
+          setDraggingBookmark(true);
+        }
       }}
       onPointerUp={(e) => {
         e.stopPropagation();
@@ -46,11 +51,16 @@ const Bookmark = ({
         }
         if (draggingBookmark && !pageId) {
           if (setBookmarkedPage) setBookmarkedPage("");
+          setCanPlay(false);
         }
       }}
       onClick={(e) => {
+        if (!bookmarkedPage && canPlay) {
+          play("error");
+        }
         e.stopPropagation();
-        handleGoTo(bookmarkedPage);
+        handleGoTo(bookmarkedPage, "bookmark");
+        setCanPlay(true);
       }}
       className={`bookmark touch-none cursor-grab active:cursor-grab w-10 md:w-15 h-210 
         

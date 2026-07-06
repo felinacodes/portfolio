@@ -3,6 +3,7 @@ import Bookmarks from "./Bookmarks";
 import Bookmark from "./Bookmark";
 
 import { Section, Sheet } from "./Notebook";
+import { useSound } from "@/contexts/SoundContext";
 
 // had to pass additional props to make bookmarks work with cover to stay aligned when closed.
 interface CoverProps {
@@ -32,6 +33,8 @@ const Cover = ({
   setBookmarkedPage,
   bookmarkedPage,
 }: CoverProps) => {
+  const { play } = useSound();
+
   return (
     <div
       data-cover-id={
@@ -59,8 +62,8 @@ const Cover = ({
           // >
           className={` z-0 cover-front-out text-[clamp(0.9rem,1vw,1rem)] relative flex justify-center items-start h-full ml-8 border-l-2 border-l-black/10
            from-white/20 bg-gradient-to-r shadow-[inset_4px_1px_3px_#ffffff60,inset_0_-1px_2px_#00000080]
-           
            `}
+          // onClick={() => play("open")}
         >
           <div className="cover-light"></div>
           <div className="max-w-[80%] mt-[40%] lg:mt-[25%] w-[clamp(200px,300px,400px)] h-[clamp(10rem,15vw,12rem)] p-2 bg-[#f4f5f0] border-[9px] border-double border-[#438bce] rounded-[40px]">
@@ -92,6 +95,7 @@ const Cover = ({
          from-white/20 bg-gradient-to-l  shadow-[inset_-4px_1px_3px_#ffffff60,inset_0_-1px_2px_#00000080]
         
          "
+          // onClick={() => play("open")}
         >
           <div className="cover-light "></div>
           <div className="drop-shadow-sm max-w-[50%]  w-[clamp(150px,250px,300px)] h-[clamp(10rem,15vh,12rem)] mb-10 bg-white  p-3 rounded-sm">
@@ -120,6 +124,10 @@ const Cover = ({
         // INSIDE COVER
         <div
           className={`w-full h-full ${side === "front" ? "cover-inside-front" : "cover-inside-back"}`}
+          // onClick={() =>
+          //   play(face === "inside" && side === "front" ? "close" : "open")
+          // }
+          onClick={() => play("close")}
         ></div>
       )}
       {/* <div className=" absolute w-full h-full "></div> */}

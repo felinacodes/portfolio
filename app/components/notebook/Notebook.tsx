@@ -26,6 +26,8 @@ import Options from "../Options";
 import { Settings } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useTheme } from "next-themes";
+import { useSound } from "@/contexts/SoundContext";
+import { SoundName } from "@/lib/sounds";
 
 // import useMeasure from '../useMeasure'
 
@@ -177,7 +179,6 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
 
   const [optionsOpen, setOptionsOpen] = useState(false);
 
-  const [soundEnabled, setSoundEnabled] = useState(true);
   const [toggleAnimation, setToggleAnimation] = useState(true);
 
   const isDraggingRef = useRef(false);
@@ -227,6 +228,8 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
     isTwoPages,
     initialPage,
   );
+
+  const { soundEnabled, toggleSound, play } = useSound();
 
   // HANDLE HOW MANY PAGES TO SHOW
   useEffect(() => {
@@ -395,8 +398,19 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
     }
   }, [next, prev, goToIndex]);
 
+  const handleSound = useCallback(
+    (sound: SoundName) => {
+      play(sound);
+    },
+    [play],
+  );
+
   const handleNext = useCallback(
     (id: string) => {
+      if (!id.startsWith("cover")) {
+        handleSound("flip");
+      }
+
       if (!toggleAnimation) {
         next();
         return;
@@ -408,11 +422,15 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
       setFlipping({ direction: "next", id });
       flippingRef.current = { direction: "next", id };
     },
-    [toggleAnimation, next],
+    [toggleAnimation, next, handleSound],
   );
 
   const handlePrev = useCallback(
     (id: string) => {
+      if (!id.startsWith("cover")) {
+        handleSound("flip");
+      }
+
       if (!toggleAnimation) {
         prev();
         return;
@@ -424,7 +442,7 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
       setFlipping({ direction: "prev", id });
       flippingRef.current = { direction: "prev", id };
     },
-    [toggleAnimation, prev],
+    [toggleAnimation, prev, handleSound],
   );
 
   const handleCoverNavigation = useCallback(
@@ -612,8 +630,21 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
     }
   }, [flipping, toggleAnimation, isOpen]);
 
-  const handleGoTo = (id: string) => {
+  const handleGoTo = (id: string, source?: string) => {
+    // if (source === "bookmark" && !bookmarkedPage) {
+    //   play("error");
+    //   return;
+    // }
     if (!id) return;
+
+    const leftPage = visibleItems[0];
+    const rightPage = visibleItems[visibleItems.length - 1];
+
+    if (leftPage.id === id || rightPage.id === id) {
+      return;
+    }
+
+    handleSound("flip");
 
     if (!toggleAnimation) {
       goToIndex(id);
@@ -622,13 +653,6 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
 
     if (!visibleItems.length) {
       goToIndex(id);
-      return;
-    }
-
-    const leftPage = visibleItems[0];
-    const rightPage = visibleItems[visibleItems.length - 1];
-
-    if (leftPage.id === id || rightPage.id === id) {
       return;
     }
 
@@ -1049,13 +1073,10 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
           >
             <Options
               darkMode={theme}
-              soundEnabled={soundEnabled}
               animationsEnabled={toggleAnimation}
               toggleDarkMode={() => {
-                console.log(theme);
                 setTheme(theme === "dark" ? "light" : "dark");
               }}
-              toggleSound={() => setSoundEnabled(!soundEnabled)}
               toggleAnimations={() => setToggleAnimation(!toggleAnimation)}
             />
           </motion.div>

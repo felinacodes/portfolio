@@ -15,6 +15,7 @@ const Page = forwardRef<HTMLDivElement, PageProps>(
         className={`w-full h-full  ${
           isOdd ? "md:pr-2 md:pl-0" : "md:pl-2 md:pr-0"
         }`}
+        // onClick={() => play("flip")}
       >
         <div
           className={`  w-full h-full bg-white dark:bg-background flex flex-col justify-between p-2 relative ${
