@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useSound } from "@/contexts/SoundContext";
 
 interface BookmarkProps {
-  handleGoTo: (id: string) => void;
+  handleGoTo: (id: string, source?: string) => void;
   setBookmarkedPage?: (id: string) => void;
   bookmarkedPage: string;
   setDraggingBookmark?: (value: boolean) => void;
