@@ -50,6 +50,25 @@ body,
   --color-myPinkLight: #f8dae0f3;
 }
 
+/* @layer utilities {
+  .cursor-highlighter {
+    cursor:
+      url("/cursors/highlighter.png") 4 28,
+      auto;
+  }
+
+  .cursor-pencil {
+    cursor:
+      url("/images/cursors/pencil.webp") 5 30,
+      auto;
+  }
+
+  .cursor-eraser {
+    cursor:
+      url("/cursors/eraser.png") 12 12,
+      auto;
+  }
+} */
 /* @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
