@@ -838,7 +838,11 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
 
     if (sheet.type === "context") {
       return (
-        <Page ref={outerRef} index={pageIndexMap.get(sheet.id) ?? 0}>
+        <Page
+          ref={outerRef}
+          index={pageIndexMap.get(sheet.id) ?? 0}
+          pageId={sheet.id}
+        >
           {sheet.render({
             ctx: contextMap,
             goToIndex: sheet.id.startsWith("Contents") ? handleGoTo : undefined,
@@ -853,6 +857,7 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
           ref={outerRef}
           index={pageIndexMap.get(sheet.id) ?? 0}
           chapterName={sheet.chapterName}
+          pageId={sheet.id}
         >
           {sheet.render({})}
         </Page>
@@ -860,7 +865,7 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
     }
 
     if (sheet.type === "blank") {
-      return <Page index={pageIndexMap.get(sheet.id) ?? 0} />;
+      return <Page index={pageIndexMap.get(sheet.id) ?? 0} pageId={sheet.id} />;
     }
 
     return null;

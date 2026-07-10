@@ -9,17 +9,67 @@ import {
 } from "@/lib/svgUtils";
 import { useSound } from "@/contexts/SoundContext";
 
-export default function DrawingCanvas() {
+type DrawingCanvasProps = {
+  pageId: string;
+};
+
+export default function DrawingCanvas({ pageId }: DrawingCanvasProps) {
   const { activeTool, drawingEnabled, activeColor } = useDrawing();
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const isDrawing = useRef(false);
   const lastPoint = useRef<{ x: number; y: number } | null>(null);
 
   const { startLoop, stopLoop } = useSound();
-
-  const { play } = useSound();
+  const { saveDrawing, getDrawing } = useDrawing();
 
   useEffect(() => {
+    // const canvas = canvasRef.current;
+    // if (!canvas) return;
+
+    // const resize = () => {
+    //   const rect = canvas.getBoundingClientRect();
+
+    //   // Save current drawing
+    //   const image = canvas.toDataURL();
+    //   console.log(image);
+
+    //   const oldWidth = canvas.width;
+    //   const oldHeight = canvas.height;
+
+    //   // Resize canvas (clears it)
+    //   canvas.width = rect.width;
+    //   canvas.height = rect.height;
+
+    //   // Restore drawing
+    //   const ctx = canvas.getContext("2d");
+    //   if (!ctx) return;
+
+    //   const img = new Image();
+
+    //   img.onload = () => {
+    //     ctx.drawImage(
+    //       img,
+    //       0,
+    //       0,
+    //       oldWidth,
+    //       oldHeight,
+    //       0,
+    //       0,
+    //       canvas.width,
+    //       canvas.height,
+    //     );
+    //   };
+
+    //   img.src = image;
+    // };
+
+    // resize();
+
+    // window.addEventListener("resize", resize);
+
+    // return () => {
+    //   window.removeEventListener("resize", resize);
+    // };
     const canvas = canvasRef.current;
     if (!canvas) return;
 
@@ -36,8 +86,34 @@ export default function DrawingCanvas() {
     return () => window.removeEventListener("resize", resize);
   }, []);
 
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    const saved = getDrawing(pageId);
+
+    if (saved) {
+      ctx.putImageData(saved, 0, 0);
+    }
+  }, [pageId, getDrawing]);
+
   const getContext = () => {
     return canvasRef.current?.getContext("2d");
+  };
+
+  const saveCurrentDrawing = () => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    const data = ctx.getImageData(0, 0, canvas.width, canvas.height);
+
+    saveDrawing(pageId, data);
   };
 
   const applyTool = (ctx: CanvasRenderingContext2D) => {
@@ -99,6 +175,8 @@ export default function DrawingCanvas() {
   };
 
   const stopDrawing = () => {
+    saveCurrentDrawing();
+
     isDrawing.current = false;
     lastPoint.current = null;
 

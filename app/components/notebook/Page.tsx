@@ -7,10 +7,11 @@ interface PageProps {
   children?: React.ReactNode;
   index: number;
   chapterName?: string;
+  pageId: string;
 }
 
 const Page = forwardRef<HTMLDivElement, PageProps>(
-  ({ children, index, chapterName }, ref) => {
+  ({ children, index, chapterName, pageId }, ref) => {
     const { activeTool } = useDrawing();
     const isOdd = index ? index % 2 === 1 : false;
     return (
@@ -25,7 +26,7 @@ const Page = forwardRef<HTMLDivElement, PageProps>(
             isOdd ? "odd-page md:pr-4" : "even-page md:pl-4"
           } `}
         >
-          <DrawingCanvas />
+          <DrawingCanvas pageId={pageId} />
           {chapterName && (
             <div
               className={`border-gray-400 font-jost text-xs border-b leading-5
