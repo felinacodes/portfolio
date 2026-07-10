@@ -14,6 +14,7 @@ import {
   PencilOff,
   Minus,
   Pen,
+  Trash,
 } from "lucide-react";
 import { useSound } from "@/contexts/SoundContext";
 import { useDrawing } from "@/contexts/DrawingContext";
@@ -39,6 +40,7 @@ const Options = ({
     disableDrawing,
     activeColor,
     setActiveColor,
+    clearAllDrawings,
   } = useDrawing();
 
   const playSound = () => {
@@ -153,6 +155,18 @@ const Options = ({
           aria-label="Toggle eraser"
         >
           <Eraser size={24} color={activeTool === "eraser" ? "red" : "black"} />
+          <span className="text-sm font-medium"></span>
+        </button>
+
+        <button
+          onClick={() => {
+            playSound();
+            clearAllDrawings();
+          }}
+          className="z-1 hover:scale-110 transition-transform cursor-pointer"
+          aria-label="Toggle eraser"
+        >
+          <Trash size={24} />
           <span className="text-sm font-medium"></span>
         </button>
 

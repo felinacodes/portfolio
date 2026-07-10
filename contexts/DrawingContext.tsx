@@ -9,6 +9,8 @@ type DrawingContextType = {
   setActiveColor: (color: string) => void;
   saveDrawing: (pageId: string, imageData: ImageData) => void;
   getDrawing: (pageId: string) => ImageData | undefined;
+  clearAllDrawings: () => void;
+  clearVersion: number;
 };
 
 type Tool = "pencil" | "highlighter" | "pen" | "eraser";
@@ -18,6 +20,7 @@ const DrawingContext = createContext<DrawingContextType | null>(null);
 export function DrawingProvider({ children }: { children: ReactNode }) {
   const [activeTool, setActiveTool] = useState<Tool | null>(null);
   const [activeColor, setActiveColor] = useState<string>("#ffc9d3");
+  const [clearVersion, setClearVersion] = useState(0);
   const drawings = useRef<Map<string, ImageData>>(new Map());
 
   const drawingEnabled = activeTool !== null;
@@ -38,6 +41,11 @@ export function DrawingProvider({ children }: { children: ReactNode }) {
     return drawings.current.get(pageId);
   };
 
+  const clearAllDrawings = () => {
+    drawings.current.clear();
+    setClearVersion((v) => v + 1);
+  };
+
   return (
     <DrawingContext.Provider
       value={{
@@ -49,6 +57,8 @@ export function DrawingProvider({ children }: { children: ReactNode }) {
         setActiveColor,
         saveDrawing,
         getDrawing,
+        clearAllDrawings,
+        clearVersion,
       }}
     >
       {children}

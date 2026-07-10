@@ -14,13 +14,29 @@ type DrawingCanvasProps = {
 };
 
 export default function DrawingCanvas({ pageId }: DrawingCanvasProps) {
-  const { activeTool, drawingEnabled, activeColor } = useDrawing();
+  const {
+    activeTool,
+    drawingEnabled,
+    activeColor,
+    clearVersion,
+    saveDrawing,
+    getDrawing,
+  } = useDrawing();
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const isDrawing = useRef(false);
   const lastPoint = useRef<{ x: number; y: number } | null>(null);
 
   const { startLoop, stopLoop } = useSound();
-  const { saveDrawing, getDrawing } = useDrawing();
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+  }, [clearVersion]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -61,6 +77,8 @@ export default function DrawingCanvas({ pageId }: DrawingCanvasProps) {
 
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     const saved = getDrawing(pageId);
 
