@@ -5,6 +5,10 @@ export const SOUND_FILES = {
   flipAll: "/sounds/flipping_novel.mp3",
   click: "/sounds/click.mp3",
   error: "/sounds/error.mp3",
+  pen: "/sounds/pen.mp3",
+  pencil: "/sounds/pencil.mp3",
+  highlighter: "/sounds/highlighter.mp3",
+  eraser: "/sounds/eraser.mp3",
 } as const;
 
 export type SoundName = keyof typeof SOUND_FILES;
@@ -15,7 +19,6 @@ export function getSound(name: SoundName) {
   if (!audioCache.has(name)) {
     const audio = new Audio(SOUND_FILES[name]);
     audio.preload = "auto";
-    audio.volume = 0.35;
     audioCache.set(name, audio);
   }
 
