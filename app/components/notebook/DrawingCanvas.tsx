@@ -23,67 +23,36 @@ export default function DrawingCanvas({ pageId }: DrawingCanvasProps) {
   const { saveDrawing, getDrawing } = useDrawing();
 
   useEffect(() => {
-    // const canvas = canvasRef.current;
-    // if (!canvas) return;
-
-    // const resize = () => {
-    //   const rect = canvas.getBoundingClientRect();
-
-    //   // Save current drawing
-    //   const image = canvas.toDataURL();
-    //   console.log(image);
-
-    //   const oldWidth = canvas.width;
-    //   const oldHeight = canvas.height;
-
-    //   // Resize canvas (clears it)
-    //   canvas.width = rect.width;
-    //   canvas.height = rect.height;
-
-    //   // Restore drawing
-    //   const ctx = canvas.getContext("2d");
-    //   if (!ctx) return;
-
-    //   const img = new Image();
-
-    //   img.onload = () => {
-    //     ctx.drawImage(
-    //       img,
-    //       0,
-    //       0,
-    //       oldWidth,
-    //       oldHeight,
-    //       0,
-    //       0,
-    //       canvas.width,
-    //       canvas.height,
-    //     );
-    //   };
-
-    //   img.src = image;
-    // };
-
-    // resize();
-
-    // window.addEventListener("resize", resize);
-
-    // return () => {
-    //   window.removeEventListener("resize", resize);
-    // };
     const canvas = canvasRef.current;
     if (!canvas) return;
 
     const resize = () => {
+      const ctx = canvas.getContext("2d");
+      if (!ctx) return;
+
+      let saved: ImageData | null = null;
+
+      if (canvas.width && canvas.height) {
+        saved = ctx.getImageData(0, 0, canvas.width, canvas.height);
+      }
+
       const rect = canvas.getBoundingClientRect();
 
       canvas.width = rect.width;
       canvas.height = rect.height;
+
+      if (saved) {
+        ctx.putImageData(saved, 0, 0);
+      }
     };
 
     resize();
 
     window.addEventListener("resize", resize);
-    return () => window.removeEventListener("resize", resize);
+
+    return () => {
+      window.removeEventListener("resize", resize);
+    };
   }, []);
 
   useEffect(() => {
