@@ -8,6 +8,7 @@ import {
   eraserCursor,
 } from "@/lib/svgUtils";
 import { useSound } from "@/contexts/SoundContext";
+import { saveDrawingToDB, loadDrawing } from "@/lib/drawingDB";
 
 type DrawingCanvasProps = {
   pageId: string;
@@ -72,20 +73,45 @@ export default function DrawingCanvas({ pageId }: DrawingCanvasProps) {
   }, []);
 
   useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
+    const load = async () => {
+      try {
+        const canvas = canvasRef.current;
+        if (!canvas) return;
 
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
+        const ctx = canvas.getContext("2d");
+        if (!ctx) return;
 
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    const saved = getDrawing(pageId);
+        const saved = getDrawing(pageId);
 
-    if (saved) {
-      ctx.putImageData(saved, 0, 0);
-    }
-  }, [pageId, getDrawing]);
+        if (saved) {
+          ctx.putImageData(saved, 0, 0);
+          return;
+        }
+
+        const blob = await loadDrawing(pageId);
+
+        if (!blob) return;
+
+        const img = new Image();
+
+        img.onload = () => {
+          ctx.drawImage(img, 0, 0);
+          URL.revokeObjectURL(img.src);
+
+          const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+          saveDrawing(pageId, imageData);
+        };
+
+        img.src = URL.createObjectURL(blob);
+      } catch (err) {
+        console.error("Failed to load drawing:", err);
+      }
+    };
+
+    load();
+  }, [pageId, getDrawing, saveDrawing]);
 
   const getContext = () => {
     return canvasRef.current?.getContext("2d");
@@ -99,8 +125,14 @@ export default function DrawingCanvas({ pageId }: DrawingCanvasProps) {
     if (!ctx) return;
 
     const data = ctx.getImageData(0, 0, canvas.width, canvas.height);
-
     saveDrawing(pageId, data);
+
+    // Save to IndexedDB
+    canvas.toBlob(async (blob) => {
+      if (!blob) return;
+
+      await saveDrawingToDB(pageId, blob);
+    }, "image/png");
   };
 
   const applyTool = (ctx: CanvasRenderingContext2D) => {
@@ -218,7 +250,7 @@ export default function DrawingCanvas({ pageId }: DrawingCanvasProps) {
       onPointerMove={draw}
       onPointerUp={stopDrawing}
       onPointerLeave={stopDrawing}
-      className={`border-2 absolute inset-0 z-10 w-full h-full ${
+      className={` absolute inset-0 z-10 w-full h-full ${
         drawingEnabled ? "pointer-events-auto" : "pointer-events-none"
       }`}
       style={{

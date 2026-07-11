@@ -1,3 +1,4 @@
+import { clearDrawings } from "@/lib/drawingDB";
 import { createContext, useContext, ReactNode, useState, useRef } from "react";
 
 type DrawingContextType = {
@@ -44,6 +45,7 @@ export function DrawingProvider({ children }: { children: ReactNode }) {
   const clearAllDrawings = () => {
     drawings.current.clear();
     setClearVersion((v) => v + 1);
+    clearDrawings();
   };
 
   return (
