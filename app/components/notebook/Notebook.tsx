@@ -28,7 +28,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useTheme } from "next-themes";
 import { useSound } from "@/contexts/SoundContext";
 import { SoundName } from "@/lib/sounds";
-
+import { fakeFetchMessages, type LeaveMessage } from "@/lib/fakeFetchMessages";
 // import useMeasure from '../useMeasure'
 
 type NotebookProps = {
@@ -39,6 +39,9 @@ export type RenderContext = {
   chapter?: number;
   ctx?: Map<string, number>;
   goToIndex?: (id: string) => void;
+  messages?: LeaveMessage[];
+  loadingMessages?: boolean;
+  setMessages?: React.Dispatch<React.SetStateAction<LeaveMessage[]>>;
 };
 
 export type Sheet =
@@ -60,6 +63,13 @@ export type Sheet =
       render: (args?: RenderContext) => React.ReactNode;
     }
   | {
+      type: "leave-something";
+      id: string;
+      render: (args?: RenderContext) => React.ReactNode;
+      chapterName: string;
+      messages?: LeaveMessage[];
+    }
+  | {
       type: "blank";
       id: string;
       render: () => React.ReactNode;
@@ -69,6 +79,7 @@ export type Section = {
   id: string;
   chapterName: string;
   render: (args?: RenderContext) => React.ReactNode;
+  messages?: LeaveMessage[];
 };
 
 type SectionConfig = {
@@ -87,62 +98,9 @@ const SECTION_CONFIG: SectionConfig[] = [
   { key: "Leave Something", blocks: LeaveSomethingBlocks },
 ];
 
-const sections: Section[] = SECTION_CONFIG.flatMap(
-  ({ key, blocks }, chapterIndex) => {
-    const resolved = blocks({ chapter: chapterIndex });
-
-    return resolved.map((Component, index) => ({
-      id: `${key}-${index}`,
-      chapterName: key,
-
-      render: (args?: RenderContext) => {
-        const Comp = Component;
-        return <Comp {...args} />;
-      },
-    }));
-  },
-);
-
-const numberOfBlanks = sections.length % 2 === 0 ? 2 : 3;
-
-// export const transform = (s: string) => {
-//   if (!s) return
-//   return s.slice(0, s.indexOf('-'))
-// }
-
 export const transform = (s: string): string => {
   return s.split("-")[0];
 };
-
-const sheet: Sheet[] = [
-  { type: "cover", side: "front", face: "outside", id: "cover-front-outside" },
-  { type: "cover", side: "front", face: "inside", id: "cover-front-inside" },
-
-  ...sections.map((s) => {
-    if (s.id.startsWith("Contents")) {
-      return {
-        type: "context" as const,
-        id: s.id,
-
-        render: s.render,
-      };
-    } else {
-      return {
-        type: "page" as const,
-        id: s.id,
-        chapterName: s.chapterName,
-        render: s.render,
-      };
-    }
-  }),
-  ...Array.from({ length: numberOfBlanks }, (_, i) => ({
-    type: "blank" as const,
-    id: `blank-${i}`,
-    render: () => null,
-  })),
-  { type: "cover", side: "back", face: "inside", id: "cover-back-inside" },
-  { type: "cover", side: "back", face: "outside", id: "cover-back-outside" },
-];
 
 const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
   const outerRef = useRef<HTMLDivElement | null>(null);
@@ -181,6 +139,9 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
 
   const [toggleAnimation, setToggleAnimation] = useState(true);
 
+  const [messages, setMessages] = useState<LeaveMessage[]>([]);
+  const [loadingMessages, setLoadingMessages] = useState(true);
+
   const isDraggingRef = useRef(false);
   const startPosRef = useRef({ x: 0, y: 0 });
   const touchStart = useRef({ x: 0, y: 0 });
@@ -191,12 +152,120 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
   const SWIPE_THRESHOLD = 50;
 
   // const correctSheet = isTwoPages ? TwoPagesheets : OnePagesheets
+
+  const sections = useMemo(() => {
+    return SECTION_CONFIG.flatMap(({ key, blocks }, chapterIndex) => {
+      const context =
+        key === "Leave Something"
+          ? {
+              chapter: chapterIndex,
+              messages,
+              loadingMessages,
+              setMessages,
+            }
+          : {
+              chapter: chapterIndex,
+            };
+
+      const resolved = blocks(context);
+
+      return resolved.map((Component, index) => ({
+        id: `${key}-${index}`,
+        chapterName: key,
+        render: (args?: RenderContext) => {
+          const Comp = Component;
+          return <Comp {...args} />;
+        },
+      }));
+    });
+  }, [messages, loadingMessages]);
+
+  const numberOfBlanks = sections.length % 2 === 0 ? 2 : 3;
+
+  const sheet: Sheet[] = useMemo(
+    () => [
+      {
+        type: "cover",
+        side: "front",
+        face: "outside",
+        id: "cover-front-outside",
+      },
+
+      {
+        type: "cover",
+        side: "front",
+        face: "inside",
+        id: "cover-front-inside",
+      },
+
+      ...sections.map((s) => {
+        if (s.id.startsWith("Contents")) {
+          return {
+            type: "context" as const,
+            id: s.id,
+            render: s.render,
+          };
+        }
+
+        if (s.id.startsWith("Leave")) {
+          return {
+            type: "leave-something" as const,
+            id: s.id,
+            chapterName: s.chapterName,
+            render: s.render,
+            messages: s.messages,
+          };
+        }
+
+        return {
+          type: "page" as const,
+          id: s.id,
+          chapterName: s.chapterName,
+          render: s.render,
+        };
+      }),
+
+      ...Array.from({ length: numberOfBlanks }, (_, i) => ({
+        type: "blank" as const,
+        id: `blank-${i}`,
+        render: () => null,
+      })),
+
+      {
+        type: "cover",
+        side: "back",
+        face: "inside",
+        id: "cover-back-inside",
+      },
+      {
+        type: "cover",
+        side: "back",
+        face: "outside",
+        id: "cover-back-outside",
+      },
+    ],
+    [sections, numberOfBlanks],
+  );
+
   const correctSheet = isTwoPages
     ? sheet
     : sheet.filter((s) => !(s.type === "cover" && s.face === "inside"));
 
   useEffect(() => {
     setIsmounted(true);
+  }, []);
+
+  useEffect(() => {
+    async function loadMessages() {
+      try {
+        const data = await fakeFetchMessages();
+        setMessages(data);
+      } finally {
+        setLoadingMessages(false);
+      }
+    }
+
+    loadMessages();
   }, []);
 
   // HANDLE IF THE NOTEBOOK IS TWO OR ONE PAGE
@@ -320,6 +389,7 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
         sheet.type === "page" ||
         sheet.type === "blank" ||
         sheet.type === "context" ||
+        sheet.type === "leave-something" ||
         sheet.type === "cover"
       ) {
         count++;
@@ -339,7 +409,8 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
       if (
         sheet.type === "page" ||
         sheet.type === "blank" ||
-        sheet.type === "context"
+        sheet.type === "context" ||
+        sheet.type === "leave-something"
       ) {
         count++;
         map.set(sheet.id, count);
@@ -851,6 +922,19 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
       );
     }
 
+    if (sheet.type === "leave-something") {
+      return (
+        <Page
+          ref={outerRef}
+          index={pageIndexMap.get(sheet.id) ?? 0}
+          chapterName={sheet.chapterName}
+          pageId={sheet.id}
+        >
+          {sheet.render({ messages, loadingMessages, setMessages })}
+        </Page>
+      );
+    }
+
     if (sheet.type === "page") {
       return (
         <Page
@@ -860,6 +944,10 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
           pageId={sheet.id}
         >
           {sheet.render({})}
+          {/* {sheet.render({
+            messages,
+            loadingMessages,
+          })} */}
         </Page>
       );
     }
