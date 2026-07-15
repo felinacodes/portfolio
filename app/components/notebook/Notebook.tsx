@@ -213,7 +213,6 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
             id: s.id,
             chapterName: s.chapterName,
             render: s.render,
-            messages: s.messages,
           };
         }
 
