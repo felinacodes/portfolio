@@ -25,6 +25,26 @@ export const messages: LeaveMessage[] = [
     author: "Sophia",
     imageUrl: "https://www.svgrepo.com/show/530364/lemon.svg",
   },
+  {
+    id: "5",
+    author: "Mike",
+    imageUrl: "https://www.svgrepo.com/show/484669/orange.svg",
+  },
+  {
+    id: "6",
+    author: "Patrick",
+    imageUrl: "https://www.svgrepo.com/show/484547/hot-dog.svg",
+  },
+  {
+    id: "7",
+    author: "Jack",
+    imageUrl: "https://www.svgrepo.com/show/484554/sakura-illustration.svg",
+  },
+  {
+    id: "8",
+    author: "Emma",
+    imageUrl: "https://www.svgrepo.com/show/484538/penguin.svg",
+  },
 ];
 
 export async function fakeFetchMessages(): Promise<LeaveMessage[]> {
