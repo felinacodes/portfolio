@@ -8,6 +8,7 @@ export const LeaveSomethingBlocks = (args?: RenderContext) => {
   const chapter = args?.chapter;
   const messages = args?.messages ?? [];
   const setMessages = args?.setMessages;
+  const setIsModalOpen = args?.setIsModalOpen;
 
   const MESSAGES_PER_PAGE = 6;
   const FIRST_PAGE_MESSAGES = MESSAGES_PER_PAGE - 2;
@@ -62,7 +63,9 @@ export const LeaveSomethingBlocks = (args?: RenderContext) => {
                     className="flex items-center justify-center "
                   >
                     <button
-                      onClick={() =>
+                      onClick={() => {
+                        setIsModalOpen?.(true);
+
                         setMessages?.((prev) => [
                           ...prev,
                           {
@@ -71,8 +74,8 @@ export const LeaveSomethingBlocks = (args?: RenderContext) => {
                             imageUrl:
                               "https://www.svgrepo.com/show/530366/coffee.svg",
                           },
-                        ])
-                      }
+                        ]);
+                      }}
                       className="
         flex items-center justify-center
         w-32 h-32 rounded-full

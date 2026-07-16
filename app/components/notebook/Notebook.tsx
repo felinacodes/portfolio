@@ -29,6 +29,7 @@ import { useTheme } from "next-themes";
 import { useSound } from "@/contexts/SoundContext";
 import { SoundName } from "@/lib/sounds";
 import { fakeFetchMessages, type LeaveMessage } from "@/lib/fakeFetchMessages";
+import Modal from "../LeaveModal/Modal";
 // import useMeasure from '../useMeasure'
 
 type NotebookProps = {
@@ -42,6 +43,7 @@ export type RenderContext = {
   messages?: LeaveMessage[];
   loadingMessages?: boolean;
   setMessages?: React.Dispatch<React.SetStateAction<LeaveMessage[]>>;
+  setIsModalOpen?: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 export type Sheet =
@@ -68,6 +70,7 @@ export type Sheet =
       render: (args?: RenderContext) => React.ReactNode;
       chapterName: string;
       messages?: LeaveMessage[];
+      setIsModalOpen?: React.Dispatch<React.SetStateAction<boolean>>;
     }
   | {
       type: "blank";
@@ -80,6 +83,7 @@ export type Section = {
   chapterName: string;
   render: (args?: RenderContext) => React.ReactNode;
   messages?: LeaveMessage[];
+  setIsModalOpen?: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 type SectionConfig = {
@@ -141,6 +145,7 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
 
   const [messages, setMessages] = useState<LeaveMessage[]>([]);
   const [loadingMessages, setLoadingMessages] = useState(true);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const isDraggingRef = useRef(false);
   const startPosRef = useRef({ x: 0, y: 0 });
@@ -162,6 +167,7 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
               messages,
               loadingMessages,
               setMessages,
+              setIsModalOpen,
             }
           : {
               chapter: chapterIndex,
@@ -929,7 +935,11 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
           chapterName={sheet.chapterName}
           pageId={sheet.id}
         >
-          {sheet.render({ messages, loadingMessages, setMessages })}
+          {sheet.render({
+            messages,
+            loadingMessages,
+            setMessages,
+          })}
         </Page>
       );
     }
@@ -1171,6 +1181,20 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
               }}
               toggleAnimations={() => setToggleAnimation(!toggleAnimation)}
             />
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      <AnimatePresence>
+        {isModalOpen && (
+          <motion.div
+            className="order-1"
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.2 }}
+          >
+            <Modal isOpen={isModalOpen} setIsOpen={setIsModalOpen} />
           </motion.div>
         )}
       </AnimatePresence>
