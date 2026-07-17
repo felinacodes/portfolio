@@ -3,6 +3,7 @@ import Image from "next/image";
 import ChapterIntro from "./ChapterIntro";
 import { RenderContext } from "../Notebook";
 import { Plus } from "lucide-react";
+import { createStickerUrl } from "@/lib/createStickerUrl";
 
 export const LeaveSomethingBlocks = (args?: RenderContext) => {
   const chapter = args?.chapter;
@@ -66,15 +67,15 @@ export const LeaveSomethingBlocks = (args?: RenderContext) => {
                       onClick={() => {
                         setIsModalOpen?.(true);
 
-                        setMessages?.((prev) => [
-                          ...prev,
-                          {
-                            id: crypto.randomUUID(),
-                            author: "Felina",
-                            imageUrl:
-                              "https://www.svgrepo.com/show/530366/coffee.svg",
-                          },
-                        ]);
+                        // setMessages?.((prev) => [
+                        //   ...prev,
+                        //   {
+                        //     id: crypto.randomUUID(),
+                        //     author: "Felina",
+                        //     imageUrl:
+                        //       "https://www.svgrepo.com/show/530366/coffee.svg",
+                        //   },
+                        // ]);
                       }}
                       className="
         flex items-center justify-center
@@ -106,7 +107,11 @@ export const LeaveSomethingBlocks = (args?: RenderContext) => {
                 >
                   <div className="relative w-32 aspect-square rounded-lg overflow-hidden ">
                     <Image
-                      src={item.message.imageUrl}
+                      src={createStickerUrl(
+                        item.message.sticker,
+                        item.message.color1,
+                        item.message.color2,
+                      )}
                       alt={item.message.author}
                       fill
                       className="object-cover"
