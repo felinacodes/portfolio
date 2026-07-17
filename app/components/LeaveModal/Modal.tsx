@@ -8,11 +8,16 @@ interface ModalProps {
   setIsOpen: (isOpen: boolean) => void;
 }
 
+export const stickerList = Object.keys(stickers) as StickerName[];
+
 const Modal = ({ isOpen, setIsOpen }: ModalProps) => {
   const [activeSticker, setActiveSticker] = useState<StickerName>("tea");
+  const [search, setSearch] = useState("");
   if (!isOpen) return null;
 
-  const stickerList = Object.keys(stickers) as StickerName[];
+  const filteredStickers = stickerList.filter((sticker) =>
+    sticker.toLowerCase().includes(search.toLowerCase()),
+  );
 
   return (
     <div
@@ -36,22 +41,44 @@ const Modal = ({ isOpen, setIsOpen }: ModalProps) => {
           max-w-2xl
         "
       >
-        <div className="flex items-center justify-between mb-6">
-          <h3 className="text-lg font-semibold">Select a sticker</h3>
+        <div className="mb-6">
+          <div className="flex items-center justify-between mb-4">
+            <h3 className="text-lg font-semibold">Select a sticker</h3>
 
-          <button
-            onClick={() => setIsOpen(false)}
-            className="rounded-md p-1 hover:bg-gray-200 transition-colors"
-          >
-            <X size={20} />
-          </button>
+            <button
+              onClick={() => setIsOpen(false)}
+              className="rounded-md p-1 hover:bg-gray-200 transition-colors"
+            >
+              <X size={20} />
+            </button>
+          </div>
+
+          <input
+            type="text"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            placeholder="Search stickers..."
+            className="
+      w-full
+      rounded-lg
+      border
+      border-gray-300
+      px-3
+      py-2
+      text-sm
+      outline-none
+      focus:border-blue-400
+      focus:ring-2
+      focus:ring-blue-100
+    "
+          />
         </div>
         <div className="flex flex-col md:flex-row gap-4 items-center justify-between border-2 border-blue-200">
           <div
             className="grid grid-cols-4  border-2 border-yellow-200
            w-full  max-h-[400px] overflow-auto m-0 p-0"
           >
-            {stickerList.map((sticker) => (
+            {filteredStickers.map((sticker) => (
               <button
                 key={sticker}
                 onClick={() => {
