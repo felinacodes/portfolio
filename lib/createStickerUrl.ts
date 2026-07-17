@@ -8,7 +8,7 @@ export function createStickerUrl(
   color1?: string,
   color2?: string,
 ) {
-  const key = `${sticker}|${color1}|${color2}`;
+  const key = JSON.stringify([sticker, color1, color2]);
 
   const cached = cache.get(key);
   if (cached) return cached;
