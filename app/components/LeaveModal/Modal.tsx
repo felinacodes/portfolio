@@ -1,18 +1,46 @@
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { X } from "lucide-react";
 import { stickers, StickerName } from "../../../lib/stickerMap";
 import { createStickerUrl } from "../../../lib/createStickerUrl";
+import { LeaveMessage } from "@/lib/fakeFetchMessages";
 
 interface ModalProps {
   isOpen: boolean;
   setIsOpen: (isOpen: boolean) => void;
+  setMessages?: React.Dispatch<React.SetStateAction<LeaveMessage[]>>;
 }
 
 export const stickerList = Object.keys(stickers) as StickerName[];
+const firstSticker = stickerList[0];
 
-const Modal = ({ isOpen, setIsOpen }: ModalProps) => {
-  const [activeSticker, setActiveSticker] = useState<StickerName>("tea");
+const Modal = ({ isOpen, setIsOpen, setMessages }: ModalProps) => {
+  const [activeSticker, setActiveSticker] = useState<StickerName>(firstSticker);
   const [search, setSearch] = useState("");
+  const [color1, setColor1] = useState<string>(
+    stickers[activeSticker].defaults.color1,
+  );
+  const [color2, setColor2] = useState<string>(
+    stickers[activeSticker].defaults.color2,
+  );
+
+  useEffect(() => {
+    setColor1(stickers[activeSticker].defaults.color1);
+    setColor2(stickers[activeSticker].defaults.color2);
+  }, [activeSticker]);
+
+  const handleColor1 = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setColor1(e.target.value);
+  };
+
+  const handleColor2 = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setColor2(e.target.value);
+  };
+
+  const previewUrl = useMemo(
+    () => createStickerUrl(activeSticker, color1, color2),
+    [activeSticker, color1, color2],
+  );
+
   if (!isOpen) return null;
 
   const filteredStickers = stickerList.filter((sticker) =>
@@ -82,7 +110,6 @@ const Modal = ({ isOpen, setIsOpen }: ModalProps) => {
               <button
                 key={sticker}
                 onClick={() => {
-                  // setSticker(sticker);
                   setActiveSticker(sticker);
                 }}
                 className="
@@ -104,30 +131,61 @@ const Modal = ({ isOpen, setIsOpen }: ModalProps) => {
               </button>
             ))}
           </div>
-          <div>
-            {activeSticker && (
-              <div className="flex flex-col gap-4 border-2 border-pink-200">
-                <button
-                  onClick={() => {
-                    // setSticker(activeSticker);
-                  }}
-                  className="
-                w-24 h-24
-                rounded-xl
+          <div className="flex flex-col items-center justify-center gap-4 border-2 border-green-500 w-full h-full">
+            <div>
+              {activeSticker && (
+                <div className="flex flex-col items-center justify-center gap-4 border-2 border-pink-200">
+                  <button
+                    onClick={() => {}}
+                    className="
+                w-32 h-32
+              
                 bg-gray-100
-                hover:bg-gray-200
+                
                 transition
               "
+                  >
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={previewUrl}
+                      alt={activeSticker}
+                      className="w-full h-full object-contain"
+                    />
+                  </button>
+                </div>
+              )}
+
+              <div>
+                <input type="color" value={color1} onChange={handleColor1} />
+
+                <input type="color" value={color2} onChange={handleColor2} />
+              </div>
+
+              <div className="text-center mt-2">
+                <button
+                  className="
+                  text-lg bg-gray-200 hover:bg-gray-300 cursor-pointer 
+                  rounded-lg px-4 py-2
+                  transition
+                  duration-200
+                   "
+                  onClick={() => {
+                    setMessages?.((prev) => [
+                      ...prev,
+                      {
+                        id: crypto.randomUUID(),
+                        author: "Felina",
+                        sticker: activeSticker,
+                        color1: color1,
+                        color2: color2,
+                      },
+                    ]);
+                  }}
                 >
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src={createStickerUrl(activeSticker)}
-                    alt={activeSticker}
-                    className="w-full h-full object-contain"
-                  />
+                  Add to notebook
                 </button>
               </div>
-            )}
+            </div>
           </div>
         </div>
       </div>

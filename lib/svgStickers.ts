@@ -1,11 +1,31 @@
 export const svgToDataUrl = (svg: string) =>
   `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
 
+export const teaDefaults = {
+  color1: "#F76D57",
+  color2: "#B4CCB9",
+};
+
+export const coconutCoctailDefaults = {
+  color1: "#FFC107",
+  color2: "#FF1744",
+};
+
+export const breakingBadDefaults = {
+  color1: "#4bc190",
+  color2: "#356cb6",
+};
+
+export const koalaDefaults = {
+  color1: "#a8b2ba",
+  color2: "#d5ff83",
+};
+
 export const tea = (color1?: string, color2?: string) => `
      <svg version="1.0" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
 	 width="800px" height="800px" viewBox="0 0 64 64" enable-background="new 0 0 64 64" xml:space="preserve">
 <g>
-	<path fill="${color1 || "#F76D57"}" d="M62,29.998c0,13.256-10.745,24-24,24c-10.871,0-20.049-7.23-23-17.143l-0.243-0.857
+	<path fill="${color1}" d="M62,29.998c0,13.256-10.745,24-24,24c-10.871,0-20.049-7.23-23-17.143l-0.243-0.857
 		c-0.494-1.918-0.757-3.93-0.757-6v-10h47.005c0.551,0.004,0.995,0.447,0.995,1V29.998z"/>
 	<polygon fill="#F9EBB2" points="50,30.412 53,33.412 53,39.998 47,39.998 47,33.412 	"/>
 	<g>
@@ -36,9 +56,9 @@ export const tea = (color1?: string, color2?: string) => `
 			C64,58.445,63.553,57.998,63,57.998z M62,60c0,1.104-0.896,2-2,2v-0.002H16V62c-1.104,0-2-0.896-2-2v-0.002h48V60z"/>
 	</g>
 	<g>
-		<path fill="${color2 || "#B4CCB9"}" d="M12,37.998c-4.418,0-7.999-3.582-8-7.998h0.01L4,29.998v-7c0-0.553,0.447-1,1-1h7v-2H4
+		<path fill="${color2}" d="M12,37.998c-4.418,0-7.999-3.582-8-7.998h0.01L4,29.998v-7c0-0.553,0.447-1,1-1h7v-2H4
 			c-1.104,0-2,0.895-2,2V30c0.001,5.521,4.478,9.998,10,9.998h1.996c-0.272-0.654-0.517-1.322-0.736-2H12z"/>
-		<path fill="${color2 || "#B4CCB9"}" d="M14,59.998V60c0,1.104,0.896,2,2,2v-0.002h44V62c1.104,0,2-0.896,2-2v-0.002H14z"/>
+		<path fill="${color2}" d="M14,59.998V60c0,1.104,0.896,2,2,2v-0.002h44V62c1.104,0,2-0.896,2-2v-0.002H14z"/>
 	</g>
 </g>
 </svg>
@@ -55,7 +75,7 @@ stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier">
 0 0 0 73.301333-3.562667l48.874667 36.245333c20.501333 36.842667 34.752 89.216 42.261333 147.541334l0.106667-0.384c1.557333-16.341333 7.658667-111.616-6.037333-180.373334-1.301333-5.632-2.453333-11.2-3.904-16.96l-2.090667 
 0.277334c45.824-11.690667 73.216-26.688 80.896-36.117334z" fill="#FAFAFA"></path><path d="M730.602667 409.173333c18.730667 68.842667 11.626667 179.626667 9.941333 197.333334 4.501333 23.296 6.805333 129.301333 5.76 
 163.498666 10.346667-22.336 20.885333-60.138667 20.885333-60.138666 1.578667-5.589333 34.474667-123.648 12.117334-271.189334l-48.704-29.504z" fill="#3E2723"></path><path d="M646.016 423.402667l136.789333-256.512L896 
-125.781333 882.496 85.333333l-121.258667 43.776a21.269333 21.269333 0 0 0-12.074666 10.197334l-153.088 287.04a713.173333 713.173333 0 0 0 49.941333-2.944z" fill="${color2 || "#FF1744"}"></path><path d="M310.165333 346.090667c18.794667 
+125.781333 882.496 85.333333l-121.258667 43.776a21.269333 21.269333 0 0 0-12.074666 10.197334l-153.088 287.04a713.173333 713.173333 0 0 0 49.941333-2.944z" fill="${color2}"></path><path d="M310.165333 346.090667c18.794667 
 16.128 32.426667 27.242667 32.426667 27.242666 9.173333 11.264 46.4 30.421333 109.653333 42.453334A170.666667 170.666667 0 0 0 298.666667 170.666667a170.666667 170.666667 0 0 0-170.666667 170.666666c0 80 55.104 146.965333 
 129.365333 165.418667 7.146667-75.584 42.645333-154.090667 52.8-160.661333z" fill="#FFEB3B"></path><path d="M576 896c-34.346667 1.664-68.736-9.621333-98.858667-27.306667a234.24 234.24 0 0 
 1-76.074666-72.597333c-19.669333-29.504-32.213333-63.018667-38.656-96.874667-6.357333-33.92-6.741333-68.48 0.256-101.845333 10.730667 32.341333 20.181333 63.274667 31.765333 92.736a452.501333 
@@ -67,13 +87,13 @@ stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier">
 7.530666 100.352-102.805333-30.186666-30.165333-211.157334 211.178666 30.165334 30.165334 83.221333-83.242667c7.274667-18.261333 14.4-27.541333 18.773333-32.661333z" fill="#FFFDE7">
 </path><path d="M160 341.333333c0-76.48 62.186667-138.666667 138.666667-138.666666 76.458667 0 138.666667 62.186667 138.666666 138.666666a137.408 137.408 0 0 1-17.6 67.114667c9.92 
 2.624 20.757333 5.077333 32.490667 7.338667A170.666667 170.666667 0 0 0 298.666667 170.666667a170.666667 170.666667 0 0 0-170.666667 170.666666c0 80 55.104 146.965333 129.365333 
-165.418667 1.045333-10.837333 2.581333-21.504 4.544-31.850667C203.242667 458.730667 160 405.034667 160 341.333333z" fill="${color1 || "#FFC107"}"></path></g></svg>
+165.418667 1.045333-10.837333 2.581333-21.504 4.544-31.850667C203.242667 458.730667 160 405.034667 160 341.333333z" fill="${color1}"></path></g></svg>
 `;
 
 export const breakingBad = (color1?: string, color2?: string) => `
  <svg viewBox="0 0 128 128" data-name="Layer 1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" 
- stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <defs> <style>.cls-1{fill:${color1 || "#4bc190"};}
-.cls-2{fill:${color2 || "#356cb6"};}
+ stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <defs> <style>.cls-1{fill:${color1};}
+.cls-2{fill:${color2};}
 .cls-13,.cls-2{opacity:0.3;}.cls-13,.cls-2{opacity:0.3;}.cls-3{fill:#fbc0aa;}.cls-4{fill:#f8dc25;}.cls-5{fill:#f2bc0f;}.cls-6{fill:#ffffff;}.cls-12,.cls-13,.cls-16,.cls-7{fill:none;stroke-linecap:round;stroke-linejoin:round;}.cls-12,.cls-7{stroke:#fbc0aa;}.cls-7{stroke-width:20px;}.cls-8{fill:#ffd8c9;}.cls-14,.cls-19,.cls-9{fill:#515570;}.cls-9{opacity:0.2;}.cls-10,.cls-17{fill:#f85565;}.cls-10{opacity:0.4;}.cls-11{fill:#7f3838;}.cls-12{stroke-width:4px;}.cls-13{stroke:#f85565;}.cls-13,.cls-16{stroke-width:2px;}.cls-14,.cls-20{opacity:0.1;}.cls-15{fill:#393c54;}.cls-16{stroke:#515570;}.cls-18{fill:#ff8475;}</style> 
  </defs> <title></title> <circle class="cls-1" cx="64" cy="64" 
  r="60"></circle> <circle class="cls-2" cx="64" cy="64" r="48"></circle> <circle class="cls-3" cx="91.32" cy="60.43" r="7.93"></circle> 
@@ -106,19 +126,19 @@ export const breakingBad = (color1?: string, color2?: string) => `
 
 export const koala = (color1?: string, color2?: string) => `
  <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify iconify--emojione" preserveAspectRatio="xMidYMid meet" 
- fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g fill="${color1 || "#a8b2ba"}"> 
+ fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g fill="${color1}"> 
  <path d="M17.9 51.7c-3.4 5.8-6.2 6-8.7 4.6s-3.7-3.9-.3-9.7c3.4-5.8 10.2-12.8 12.7-11.4c2.5 1.4-.3 10.6-3.7 16.5"> </path> <path d="M55.1 46.5c3.4 5.8 2.2 8.3-.3 
  9.7c-2.5 1.4-5.3 1.3-8.7-4.6c-3.4-5.8-6.2-15.1-3.7-16.5c2.5-1.4 9.3 5.6 12.7 11.4"> </path> <ellipse cx="32" cy="52.1" rx="13.9" ry="8.4"> </ellipse> </g> 
  <ellipse cx="32" cy="46.6" rx="13" ry="9.3" fill="#cfdae8"> </ellipse> <path d="M62 13.8c0 6.5-5 11.8-11.1 11.8s-11.1-5.3-11.1-11.8c0-6.5 5-11.8 11.1-11.8S62 
- 7.3 62 13.8z" fill="${color1 || "#a8b2ba"}"> </path> <path d="M57.6 13.8c0 3.9-3 7.1-6.7 7.1s-6.7-3.2-6.7-7.1c0-3.9 3-7.1 6.7-7.1s6.7 3.2 6.7 7.1" fill="#cfdae8"> </path> 
- <ellipse cx="13.1" cy="13.8" rx="11.1" ry="11.8" fill="${color1 || "#a8b2ba"}"> </ellipse> <path d="M19.8 13.8c0 3.9-3 7.1-6.7 7.1s-6.7-3.2-6.7-7.1c0-3.9 3-7.1 6.7-7.1s6.7 
- 3.2 6.7 7.1" fill="#cfdae8"> </path> <g fill="${color1 || "#a8b2ba"}"> <path d="M12 35.7c-2.3-2.1-3-5.3-3-5.3l1.5.3S8.7 29 9.2 25.3l1.5 1.5s-1.5-3.8-.2-7.2l1.7 1.1s-.5-1.4 
+ 7.3 62 13.8z" fill="${color1}"> </path> <path d="M57.6 13.8c0 3.9-3 7.1-6.7 7.1s-6.7-3.2-6.7-7.1c0-3.9 3-7.1 6.7-7.1s6.7 3.2 6.7 7.1" fill="#cfdae8"> </path> 
+ <ellipse cx="13.1" cy="13.8" rx="11.1" ry="11.8" fill="${color1}"> </ellipse> <path d="M19.8 13.8c0 3.9-3 7.1-6.7 7.1s-6.7-3.2-6.7-7.1c0-3.9 3-7.1 6.7-7.1s6.7 
+ 3.2 6.7 7.1" fill="#cfdae8"> </path> <g fill="${color1}"> <path d="M12 35.7c-2.3-2.1-3-5.3-3-5.3l1.5.3S8.7 29 9.2 25.3l1.5 1.5s-1.5-3.8-.2-7.2l1.7 1.1s-.5-1.4 
  0-2.4l.7.5s-1.3-3.2-.1-4.6c.7 2 1.4 1.9 1.4 1.9s-1-1.5-.2-2.1c.8 1.1 1.4.4 1.4.1c0-.4.1-1.1-2.1-1.4c1.8-1 3.9-.3 3.9-.3s-.1-1-1.6-1C17 10.3 19 11 19 11l-2.6 
  6.3l-3.2 9.4l-1.2 9"> </path> <path d="M32 7.5c-17.6 0-21.5 11.9-21.5 26.3c0 1.5 9.6 9.7 21.5 9.7s21.5-8.2 21.5-9.7c0-14.4-3.9-26.3-21.5-26.3"> </path> 
  <path d="M52 35.7c2.3-2.1 3-5.3 3-5.3l-1.5.3s1.8-1.7 1.3-5.4l-1.5 1.5s1.5-3.8.2-7.2l-1.7 1.1s.5-1.4 0-2.4l-.7.5s1.3-3.2.1-4.6c-.7 2-1.4 1.9-1.4 
  1.9s1-1.5.2-2.1c-.8 1.1-1.4.4-1.4.1c0-.4-.1-1.1 2.1-1.4c-1.8-1-3.9-.3-3.9-.3s.1-1 1.6-1C47 10.3 45 11 45 11l2.6 6.3l3.2 9.4l1.2 9"> </path> </g> 
- <ellipse cx="19.8" cy="28" rx="4" ry="3.9" fill="${color2 || "#d5ff83"}"> </ellipse> <ellipse cx="19.8" cy="28" rx="2.6" ry="2.5" fill="#3e4347"> </ellipse> 
- <ellipse cx="44.2" cy="28" rx="4" ry="3.9" fill="${color2 || "#d5ff83"}"> </ellipse> <ellipse cx="44.2" cy="28" rx="2.6" ry="2.5" fill="#3e4347"> </ellipse> 
+ <ellipse cx="19.8" cy="28" rx="4" ry="3.9" fill="${color2}"> </ellipse> <ellipse cx="19.8" cy="28" rx="2.6" ry="2.5" fill="#3e4347"> </ellipse> 
+ <ellipse cx="44.2" cy="28" rx="4" ry="3.9" fill="${color2}"> </ellipse> <ellipse cx="44.2" cy="28" rx="2.6" ry="2.5" fill="#3e4347"> </ellipse> 
  <path d="M24.8 34.2c0-5.9 4.8-8.2 7.2-8.2s7.2 2.3 7.2 8.2c0 7.5-2.6 9.3-7.2 9.3s-7.2-1.7-7.2-9.3" fill="#555e63"> </path> <path d="M27.7 55.8c0 
  5.1-3.2 6.2-7.1 6.2c-3.9 0-7.1-1.2-7.1-6.2c0-5.1 3.2-9.2 7.1-9.2s7.1 4.1 7.1 9.2" fill="#96a2aa"> </path> <path d="M25.6 57.1c0 3.6-2.3 4.4-5 4.4s-5-.8-5-4.4c0-3.6 2.3-6.5 5-6.5s5 3 5 6.5" 
  fill="#cfdae8"> </path> <path d="M50.6 55.8c0 5.1-3.2 6.2-7.1 6.2c-3.9 0-7.1-1.2-7.1-6.2c0-5.1 3.2-9.2 7.1-9.2c3.9 0 7.1 4.1 7.1 9.2" 
@@ -127,19 +147,19 @@ export const koala = (color1?: string, color2?: string) => `
 
 export const koala2 = (color1?: string, color2?: string) => `
  <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify iconify--emojione" preserveAspectRatio="xMidYMid meet" 
- fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g fill="${color1 || "#a8b2ba"}"> 
+ fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g fill="${color1}"> 
  <path d="M17.9 51.7c-3.4 5.8-6.2 6-8.7 4.6s-3.7-3.9-.3-9.7c3.4-5.8 10.2-12.8 12.7-11.4c2.5 1.4-.3 10.6-3.7 16.5"> </path> <path d="M55.1 46.5c3.4 5.8 2.2 8.3-.3 
  9.7c-2.5 1.4-5.3 1.3-8.7-4.6c-3.4-5.8-6.2-15.1-3.7-16.5c2.5-1.4 9.3 5.6 12.7 11.4"> </path> <ellipse cx="32" cy="52.1" rx="13.9" ry="8.4"> </ellipse> </g> 
  <ellipse cx="32" cy="46.6" rx="13" ry="9.3" fill="#cfdae8"> </ellipse> <path d="M62 13.8c0 6.5-5 11.8-11.1 11.8s-11.1-5.3-11.1-11.8c0-6.5 5-11.8 11.1-11.8S62 
- 7.3 62 13.8z" fill="${color1 || "#a8b2ba"}"> </path> <path d="M57.6 13.8c0 3.9-3 7.1-6.7 7.1s-6.7-3.2-6.7-7.1c0-3.9 3-7.1 6.7-7.1s6.7 3.2 6.7 7.1" fill="#cfdae8"> </path> 
- <ellipse cx="13.1" cy="13.8" rx="11.1" ry="11.8" fill="${color1 || "#a8b2ba"}"> </ellipse> <path d="M19.8 13.8c0 3.9-3 7.1-6.7 7.1s-6.7-3.2-6.7-7.1c0-3.9 3-7.1 6.7-7.1s6.7 
- 3.2 6.7 7.1" fill="#cfdae8"> </path> <g fill="${color1 || "#a8b2ba"}"> <path d="M12 35.7c-2.3-2.1-3-5.3-3-5.3l1.5.3S8.7 29 9.2 25.3l1.5 1.5s-1.5-3.8-.2-7.2l1.7 1.1s-.5-1.4 
+ 7.3 62 13.8z" fill="${color1}"> </path> <path d="M57.6 13.8c0 3.9-3 7.1-6.7 7.1s-6.7-3.2-6.7-7.1c0-3.9 3-7.1 6.7-7.1s6.7 3.2 6.7 7.1" fill="#cfdae8"> </path> 
+ <ellipse cx="13.1" cy="13.8" rx="11.1" ry="11.8" fill="${color1}"> </ellipse> <path d="M19.8 13.8c0 3.9-3 7.1-6.7 7.1s-6.7-3.2-6.7-7.1c0-3.9 3-7.1 6.7-7.1s6.7 
+ 3.2 6.7 7.1" fill="#cfdae8"> </path> <g fill="${color1}"> <path d="M12 35.7c-2.3-2.1-3-5.3-3-5.3l1.5.3S8.7 29 9.2 25.3l1.5 1.5s-1.5-3.8-.2-7.2l1.7 1.1s-.5-1.4 
  0-2.4l.7.5s-1.3-3.2-.1-4.6c.7 2 1.4 1.9 1.4 1.9s-1-1.5-.2-2.1c.8 1.1 1.4.4 1.4.1c0-.4.1-1.1-2.1-1.4c1.8-1 3.9-.3 3.9-.3s-.1-1-1.6-1C17 10.3 19 11 19 11l-2.6 
  6.3l-3.2 9.4l-1.2 9"> </path> <path d="M32 7.5c-17.6 0-21.5 11.9-21.5 26.3c0 1.5 9.6 9.7 21.5 9.7s21.5-8.2 21.5-9.7c0-14.4-3.9-26.3-21.5-26.3"> </path> 
  <path d="M52 35.7c2.3-2.1 3-5.3 3-5.3l-1.5.3s1.8-1.7 1.3-5.4l-1.5 1.5s1.5-3.8.2-7.2l-1.7 1.1s.5-1.4 0-2.4l-.7.5s1.3-3.2.1-4.6c-.7 2-1.4 1.9-1.4 
  1.9s1-1.5.2-2.1c-.8 1.1-1.4.4-1.4.1c0-.4-.1-1.1 2.1-1.4c-1.8-1-3.9-.3-3.9-.3s.1-1 1.6-1C47 10.3 45 11 45 11l2.6 6.3l3.2 9.4l1.2 9"> </path> </g> 
- <ellipse cx="19.8" cy="28" rx="4" ry="3.9" fill="${color2 || "#d5ff83"}"> </ellipse> <ellipse cx="19.8" cy="28" rx="2.6" ry="2.5" fill="#3e4347"> </ellipse> 
- <ellipse cx="44.2" cy="28" rx="4" ry="3.9" fill="${color2 || "#d5ff83"}"> </ellipse> <ellipse cx="44.2" cy="28" rx="2.6" ry="2.5" fill="#3e4347"> </ellipse> 
+ <ellipse cx="19.8" cy="28" rx="4" ry="3.9" fill="${color2}"> </ellipse> <ellipse cx="19.8" cy="28" rx="2.6" ry="2.5" fill="#3e4347"> </ellipse> 
+ <ellipse cx="44.2" cy="28" rx="4" ry="3.9" fill="${color2}"> </ellipse> <ellipse cx="44.2" cy="28" rx="2.6" ry="2.5" fill="#3e4347"> </ellipse> 
  <path d="M24.8 34.2c0-5.9 4.8-8.2 7.2-8.2s7.2 2.3 7.2 8.2c0 7.5-2.6 9.3-7.2 9.3s-7.2-1.7-7.2-9.3" fill="#555e63"> </path> <path d="M27.7 55.8c0 
  5.1-3.2 6.2-7.1 6.2c-3.9 0-7.1-1.2-7.1-6.2c0-5.1 3.2-9.2 7.1-9.2s7.1 4.1 7.1 9.2" fill="#96a2aa"> </path> <path d="M25.6 57.1c0 3.6-2.3 4.4-5 4.4s-5-.8-5-4.4c0-3.6 2.3-6.5 5-6.5s5 3 5 6.5" 
  fill="#cfdae8"> </path> <path d="M50.6 55.8c0 5.1-3.2 6.2-7.1 6.2c-3.9 0-7.1-1.2-7.1-6.2c0-5.1 3.2-9.2 7.1-9.2c3.9 0 7.1 4.1 7.1 9.2" 
@@ -148,19 +168,19 @@ export const koala2 = (color1?: string, color2?: string) => `
 
 export const koala3 = (color1?: string, color2?: string) => `
  <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify iconify--emojione" preserveAspectRatio="xMidYMid meet" 
- fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g fill="${color1 || "#a8b2ba"}"> 
+ fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g fill="${color1}"> 
  <path d="M17.9 51.7c-3.4 5.8-6.2 6-8.7 4.6s-3.7-3.9-.3-9.7c3.4-5.8 10.2-12.8 12.7-11.4c2.5 1.4-.3 10.6-3.7 16.5"> </path> <path d="M55.1 46.5c3.4 5.8 2.2 8.3-.3 
  9.7c-2.5 1.4-5.3 1.3-8.7-4.6c-3.4-5.8-6.2-15.1-3.7-16.5c2.5-1.4 9.3 5.6 12.7 11.4"> </path> <ellipse cx="32" cy="52.1" rx="13.9" ry="8.4"> </ellipse> </g> 
  <ellipse cx="32" cy="46.6" rx="13" ry="9.3" fill="#cfdae8"> </ellipse> <path d="M62 13.8c0 6.5-5 11.8-11.1 11.8s-11.1-5.3-11.1-11.8c0-6.5 5-11.8 11.1-11.8S62 
- 7.3 62 13.8z" fill="${color1 || "#a8b2ba"}"> </path> <path d="M57.6 13.8c0 3.9-3 7.1-6.7 7.1s-6.7-3.2-6.7-7.1c0-3.9 3-7.1 6.7-7.1s6.7 3.2 6.7 7.1" fill="#cfdae8"> </path> 
- <ellipse cx="13.1" cy="13.8" rx="11.1" ry="11.8" fill="${color1 || "#a8b2ba"}"> </ellipse> <path d="M19.8 13.8c0 3.9-3 7.1-6.7 7.1s-6.7-3.2-6.7-7.1c0-3.9 3-7.1 6.7-7.1s6.7 
- 3.2 6.7 7.1" fill="#cfdae8"> </path> <g fill="${color1 || "#a8b2ba"}"> <path d="M12 35.7c-2.3-2.1-3-5.3-3-5.3l1.5.3S8.7 29 9.2 25.3l1.5 1.5s-1.5-3.8-.2-7.2l1.7 1.1s-.5-1.4 
+ 7.3 62 13.8z" fill="${color1}"> </path> <path d="M57.6 13.8c0 3.9-3 7.1-6.7 7.1s-6.7-3.2-6.7-7.1c0-3.9 3-7.1 6.7-7.1s6.7 3.2 6.7 7.1" fill="#cfdae8"> </path> 
+ <ellipse cx="13.1" cy="13.8" rx="11.1" ry="11.8" fill="${color1}"> </ellipse> <path d="M19.8 13.8c0 3.9-3 7.1-6.7 7.1s-6.7-3.2-6.7-7.1c0-3.9 3-7.1 6.7-7.1s6.7 
+ 3.2 6.7 7.1" fill="#cfdae8"> </path> <g fill="${color1}"> <path d="M12 35.7c-2.3-2.1-3-5.3-3-5.3l1.5.3S8.7 29 9.2 25.3l1.5 1.5s-1.5-3.8-.2-7.2l1.7 1.1s-.5-1.4 
  0-2.4l.7.5s-1.3-3.2-.1-4.6c.7 2 1.4 1.9 1.4 1.9s-1-1.5-.2-2.1c.8 1.1 1.4.4 1.4.1c0-.4.1-1.1-2.1-1.4c1.8-1 3.9-.3 3.9-.3s-.1-1-1.6-1C17 10.3 19 11 19 11l-2.6 
  6.3l-3.2 9.4l-1.2 9"> </path> <path d="M32 7.5c-17.6 0-21.5 11.9-21.5 26.3c0 1.5 9.6 9.7 21.5 9.7s21.5-8.2 21.5-9.7c0-14.4-3.9-26.3-21.5-26.3"> </path> 
  <path d="M52 35.7c2.3-2.1 3-5.3 3-5.3l-1.5.3s1.8-1.7 1.3-5.4l-1.5 1.5s1.5-3.8.2-7.2l-1.7 1.1s.5-1.4 0-2.4l-.7.5s1.3-3.2.1-4.6c-.7 2-1.4 1.9-1.4 
  1.9s1-1.5.2-2.1c-.8 1.1-1.4.4-1.4.1c0-.4-.1-1.1 2.1-1.4c-1.8-1-3.9-.3-3.9-.3s.1-1 1.6-1C47 10.3 45 11 45 11l2.6 6.3l3.2 9.4l1.2 9"> </path> </g> 
- <ellipse cx="19.8" cy="28" rx="4" ry="3.9" fill="${color2 || "#d5ff83"}"> </ellipse> <ellipse cx="19.8" cy="28" rx="2.6" ry="2.5" fill="#3e4347"> </ellipse> 
- <ellipse cx="44.2" cy="28" rx="4" ry="3.9" fill="${color2 || "#d5ff83"}"> </ellipse> <ellipse cx="44.2" cy="28" rx="2.6" ry="2.5" fill="#3e4347"> </ellipse> 
+ <ellipse cx="19.8" cy="28" rx="4" ry="3.9" fill="${color2}"> </ellipse> <ellipse cx="19.8" cy="28" rx="2.6" ry="2.5" fill="#3e4347"> </ellipse> 
+ <ellipse cx="44.2" cy="28" rx="4" ry="3.9" fill="${color2}"> </ellipse> <ellipse cx="44.2" cy="28" rx="2.6" ry="2.5" fill="#3e4347"> </ellipse> 
  <path d="M24.8 34.2c0-5.9 4.8-8.2 7.2-8.2s7.2 2.3 7.2 8.2c0 7.5-2.6 9.3-7.2 9.3s-7.2-1.7-7.2-9.3" fill="#555e63"> </path> <path d="M27.7 55.8c0 
  5.1-3.2 6.2-7.1 6.2c-3.9 0-7.1-1.2-7.1-6.2c0-5.1 3.2-9.2 7.1-9.2s7.1 4.1 7.1 9.2" fill="#96a2aa"> </path> <path d="M25.6 57.1c0 3.6-2.3 4.4-5 4.4s-5-.8-5-4.4c0-3.6 2.3-6.5 5-6.5s5 3 5 6.5" 
  fill="#cfdae8"> </path> <path d="M50.6 55.8c0 5.1-3.2 6.2-7.1 6.2c-3.9 0-7.1-1.2-7.1-6.2c0-5.1 3.2-9.2 7.1-9.2c3.9 0 7.1 4.1 7.1 9.2" 
@@ -169,19 +189,19 @@ export const koala3 = (color1?: string, color2?: string) => `
 
 export const koala4 = (color1?: string, color2?: string) => `
  <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify iconify--emojione" preserveAspectRatio="xMidYMid meet" 
- fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g fill="${color1 || "#a8b2ba"}"> 
+ fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g fill="${color1}"> 
  <path d="M17.9 51.7c-3.4 5.8-6.2 6-8.7 4.6s-3.7-3.9-.3-9.7c3.4-5.8 10.2-12.8 12.7-11.4c2.5 1.4-.3 10.6-3.7 16.5"> </path> <path d="M55.1 46.5c3.4 5.8 2.2 8.3-.3 
  9.7c-2.5 1.4-5.3 1.3-8.7-4.6c-3.4-5.8-6.2-15.1-3.7-16.5c2.5-1.4 9.3 5.6 12.7 11.4"> </path> <ellipse cx="32" cy="52.1" rx="13.9" ry="8.4"> </ellipse> </g> 
  <ellipse cx="32" cy="46.6" rx="13" ry="9.3" fill="#cfdae8"> </ellipse> <path d="M62 13.8c0 6.5-5 11.8-11.1 11.8s-11.1-5.3-11.1-11.8c0-6.5 5-11.8 11.1-11.8S62 
- 7.3 62 13.8z" fill="${color1 || "#a8b2ba"}"> </path> <path d="M57.6 13.8c0 3.9-3 7.1-6.7 7.1s-6.7-3.2-6.7-7.1c0-3.9 3-7.1 6.7-7.1s6.7 3.2 6.7 7.1" fill="#cfdae8"> </path> 
- <ellipse cx="13.1" cy="13.8" rx="11.1" ry="11.8" fill="${color1 || "#a8b2ba"}"> </ellipse> <path d="M19.8 13.8c0 3.9-3 7.1-6.7 7.1s-6.7-3.2-6.7-7.1c0-3.9 3-7.1 6.7-7.1s6.7 
- 3.2 6.7 7.1" fill="#cfdae8"> </path> <g fill="${color1 || "#a8b2ba"}"> <path d="M12 35.7c-2.3-2.1-3-5.3-3-5.3l1.5.3S8.7 29 9.2 25.3l1.5 1.5s-1.5-3.8-.2-7.2l1.7 1.1s-.5-1.4 
+ 7.3 62 13.8z" fill="${color1}"> </path> <path d="M57.6 13.8c0 3.9-3 7.1-6.7 7.1s-6.7-3.2-6.7-7.1c0-3.9 3-7.1 6.7-7.1s6.7 3.2 6.7 7.1" fill="#cfdae8"> </path> 
+ <ellipse cx="13.1" cy="13.8" rx="11.1" ry="11.8" fill="${color1}"> </ellipse> <path d="M19.8 13.8c0 3.9-3 7.1-6.7 7.1s-6.7-3.2-6.7-7.1c0-3.9 3-7.1 6.7-7.1s6.7 
+ 3.2 6.7 7.1" fill="#cfdae8"> </path> <g fill="${color1}"> <path d="M12 35.7c-2.3-2.1-3-5.3-3-5.3l1.5.3S8.7 29 9.2 25.3l1.5 1.5s-1.5-3.8-.2-7.2l1.7 1.1s-.5-1.4 
  0-2.4l.7.5s-1.3-3.2-.1-4.6c.7 2 1.4 1.9 1.4 1.9s-1-1.5-.2-2.1c.8 1.1 1.4.4 1.4.1c0-.4.1-1.1-2.1-1.4c1.8-1 3.9-.3 3.9-.3s-.1-1-1.6-1C17 10.3 19 11 19 11l-2.6 
  6.3l-3.2 9.4l-1.2 9"> </path> <path d="M32 7.5c-17.6 0-21.5 11.9-21.5 26.3c0 1.5 9.6 9.7 21.5 9.7s21.5-8.2 21.5-9.7c0-14.4-3.9-26.3-21.5-26.3"> </path> 
  <path d="M52 35.7c2.3-2.1 3-5.3 3-5.3l-1.5.3s1.8-1.7 1.3-5.4l-1.5 1.5s1.5-3.8.2-7.2l-1.7 1.1s.5-1.4 0-2.4l-.7.5s1.3-3.2.1-4.6c-.7 2-1.4 1.9-1.4 
  1.9s1-1.5.2-2.1c-.8 1.1-1.4.4-1.4.1c0-.4-.1-1.1 2.1-1.4c-1.8-1-3.9-.3-3.9-.3s.1-1 1.6-1C47 10.3 45 11 45 11l2.6 6.3l3.2 9.4l1.2 9"> </path> </g> 
- <ellipse cx="19.8" cy="28" rx="4" ry="3.9" fill="${color2 || "#d5ff83"}"> </ellipse> <ellipse cx="19.8" cy="28" rx="2.6" ry="2.5" fill="#3e4347"> </ellipse> 
- <ellipse cx="44.2" cy="28" rx="4" ry="3.9" fill="${color2 || "#d5ff83"}"> </ellipse> <ellipse cx="44.2" cy="28" rx="2.6" ry="2.5" fill="#3e4347"> </ellipse> 
+ <ellipse cx="19.8" cy="28" rx="4" ry="3.9" fill="${color2}"> </ellipse> <ellipse cx="19.8" cy="28" rx="2.6" ry="2.5" fill="#3e4347"> </ellipse> 
+ <ellipse cx="44.2" cy="28" rx="4" ry="3.9" fill="${color2}"> </ellipse> <ellipse cx="44.2" cy="28" rx="2.6" ry="2.5" fill="#3e4347"> </ellipse> 
  <path d="M24.8 34.2c0-5.9 4.8-8.2 7.2-8.2s7.2 2.3 7.2 8.2c0 7.5-2.6 9.3-7.2 9.3s-7.2-1.7-7.2-9.3" fill="#555e63"> </path> <path d="M27.7 55.8c0 
  5.1-3.2 6.2-7.1 6.2c-3.9 0-7.1-1.2-7.1-6.2c0-5.1 3.2-9.2 7.1-9.2s7.1 4.1 7.1 9.2" fill="#96a2aa"> </path> <path d="M25.6 57.1c0 3.6-2.3 4.4-5 4.4s-5-.8-5-4.4c0-3.6 2.3-6.5 5-6.5s5 3 5 6.5" 
  fill="#cfdae8"> </path> <path d="M50.6 55.8c0 5.1-3.2 6.2-7.1 6.2c-3.9 0-7.1-1.2-7.1-6.2c0-5.1 3.2-9.2 7.1-9.2c3.9 0 7.1 4.1 7.1 9.2" 
@@ -190,19 +210,19 @@ export const koala4 = (color1?: string, color2?: string) => `
 
 export const koala5 = (color1?: string, color2?: string) => `
  <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify iconify--emojione" preserveAspectRatio="xMidYMid meet" 
- fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g fill="${color1 || "#a8b2ba"}"> 
+ fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g fill="${color1}"> 
  <path d="M17.9 51.7c-3.4 5.8-6.2 6-8.7 4.6s-3.7-3.9-.3-9.7c3.4-5.8 10.2-12.8 12.7-11.4c2.5 1.4-.3 10.6-3.7 16.5"> </path> <path d="M55.1 46.5c3.4 5.8 2.2 8.3-.3 
  9.7c-2.5 1.4-5.3 1.3-8.7-4.6c-3.4-5.8-6.2-15.1-3.7-16.5c2.5-1.4 9.3 5.6 12.7 11.4"> </path> <ellipse cx="32" cy="52.1" rx="13.9" ry="8.4"> </ellipse> </g> 
  <ellipse cx="32" cy="46.6" rx="13" ry="9.3" fill="#cfdae8"> </ellipse> <path d="M62 13.8c0 6.5-5 11.8-11.1 11.8s-11.1-5.3-11.1-11.8c0-6.5 5-11.8 11.1-11.8S62 
- 7.3 62 13.8z" fill="${color1 || "#a8b2ba"}"> </path> <path d="M57.6 13.8c0 3.9-3 7.1-6.7 7.1s-6.7-3.2-6.7-7.1c0-3.9 3-7.1 6.7-7.1s6.7 3.2 6.7 7.1" fill="#cfdae8"> </path> 
- <ellipse cx="13.1" cy="13.8" rx="11.1" ry="11.8" fill="${color1 || "#a8b2ba"}"> </ellipse> <path d="M19.8 13.8c0 3.9-3 7.1-6.7 7.1s-6.7-3.2-6.7-7.1c0-3.9 3-7.1 6.7-7.1s6.7 
- 3.2 6.7 7.1" fill="#cfdae8"> </path> <g fill="${color1 || "#a8b2ba"}"> <path d="M12 35.7c-2.3-2.1-3-5.3-3-5.3l1.5.3S8.7 29 9.2 25.3l1.5 1.5s-1.5-3.8-.2-7.2l1.7 1.1s-.5-1.4 
+ 7.3 62 13.8z" fill="${color1}"> </path> <path d="M57.6 13.8c0 3.9-3 7.1-6.7 7.1s-6.7-3.2-6.7-7.1c0-3.9 3-7.1 6.7-7.1s6.7 3.2 6.7 7.1" fill="#cfdae8"> </path> 
+ <ellipse cx="13.1" cy="13.8" rx="11.1" ry="11.8" fill="${color1}"> </ellipse> <path d="M19.8 13.8c0 3.9-3 7.1-6.7 7.1s-6.7-3.2-6.7-7.1c0-3.9 3-7.1 6.7-7.1s6.7 
+ 3.2 6.7 7.1" fill="#cfdae8"> </path> <g fill="${color1}"> <path d="M12 35.7c-2.3-2.1-3-5.3-3-5.3l1.5.3S8.7 29 9.2 25.3l1.5 1.5s-1.5-3.8-.2-7.2l1.7 1.1s-.5-1.4 
  0-2.4l.7.5s-1.3-3.2-.1-4.6c.7 2 1.4 1.9 1.4 1.9s-1-1.5-.2-2.1c.8 1.1 1.4.4 1.4.1c0-.4.1-1.1-2.1-1.4c1.8-1 3.9-.3 3.9-.3s-.1-1-1.6-1C17 10.3 19 11 19 11l-2.6 
  6.3l-3.2 9.4l-1.2 9"> </path> <path d="M32 7.5c-17.6 0-21.5 11.9-21.5 26.3c0 1.5 9.6 9.7 21.5 9.7s21.5-8.2 21.5-9.7c0-14.4-3.9-26.3-21.5-26.3"> </path> 
  <path d="M52 35.7c2.3-2.1 3-5.3 3-5.3l-1.5.3s1.8-1.7 1.3-5.4l-1.5 1.5s1.5-3.8.2-7.2l-1.7 1.1s.5-1.4 0-2.4l-.7.5s1.3-3.2.1-4.6c-.7 2-1.4 1.9-1.4 
  1.9s1-1.5.2-2.1c-.8 1.1-1.4.4-1.4.1c0-.4-.1-1.1 2.1-1.4c-1.8-1-3.9-.3-3.9-.3s.1-1 1.6-1C47 10.3 45 11 45 11l2.6 6.3l3.2 9.4l1.2 9"> </path> </g> 
- <ellipse cx="19.8" cy="28" rx="4" ry="3.9" fill="${color2 || "#d5ff83"}"> </ellipse> <ellipse cx="19.8" cy="28" rx="2.6" ry="2.5" fill="#3e4347"> </ellipse> 
- <ellipse cx="44.2" cy="28" rx="4" ry="3.9" fill="${color2 || "#d5ff83"}"> </ellipse> <ellipse cx="44.2" cy="28" rx="2.6" ry="2.5" fill="#3e4347"> </ellipse> 
+ <ellipse cx="19.8" cy="28" rx="4" ry="3.9" fill="${color2}"> </ellipse> <ellipse cx="19.8" cy="28" rx="2.6" ry="2.5" fill="#3e4347"> </ellipse> 
+ <ellipse cx="44.2" cy="28" rx="4" ry="3.9" fill="${color2}"> </ellipse> <ellipse cx="44.2" cy="28" rx="2.6" ry="2.5" fill="#3e4347"> </ellipse> 
  <path d="M24.8 34.2c0-5.9 4.8-8.2 7.2-8.2s7.2 2.3 7.2 8.2c0 7.5-2.6 9.3-7.2 9.3s-7.2-1.7-7.2-9.3" fill="#555e63"> </path> <path d="M27.7 55.8c0 
  5.1-3.2 6.2-7.1 6.2c-3.9 0-7.1-1.2-7.1-6.2c0-5.1 3.2-9.2 7.1-9.2s7.1 4.1 7.1 9.2" fill="#96a2aa"> </path> <path d="M25.6 57.1c0 3.6-2.3 4.4-5 4.4s-5-.8-5-4.4c0-3.6 2.3-6.5 5-6.5s5 3 5 6.5" 
  fill="#cfdae8"> </path> <path d="M50.6 55.8c0 5.1-3.2 6.2-7.1 6.2c-3.9 0-7.1-1.2-7.1-6.2c0-5.1 3.2-9.2 7.1-9.2c3.9 0 7.1 4.1 7.1 9.2" 
@@ -211,19 +231,19 @@ export const koala5 = (color1?: string, color2?: string) => `
 
 export const koala6 = (color1?: string, color2?: string) => `
  <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify iconify--emojione" preserveAspectRatio="xMidYMid meet" 
- fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g fill="${color1 || "#a8b2ba"}"> 
+ fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g fill="${color1}"> 
  <path d="M17.9 51.7c-3.4 5.8-6.2 6-8.7 4.6s-3.7-3.9-.3-9.7c3.4-5.8 10.2-12.8 12.7-11.4c2.5 1.4-.3 10.6-3.7 16.5"> </path> <path d="M55.1 46.5c3.4 5.8 2.2 8.3-.3 
  9.7c-2.5 1.4-5.3 1.3-8.7-4.6c-3.4-5.8-6.2-15.1-3.7-16.5c2.5-1.4 9.3 5.6 12.7 11.4"> </path> <ellipse cx="32" cy="52.1" rx="13.9" ry="8.4"> </ellipse> </g> 
  <ellipse cx="32" cy="46.6" rx="13" ry="9.3" fill="#cfdae8"> </ellipse> <path d="M62 13.8c0 6.5-5 11.8-11.1 11.8s-11.1-5.3-11.1-11.8c0-6.5 5-11.8 11.1-11.8S62 
- 7.3 62 13.8z" fill="${color1 || "#a8b2ba"}"> </path> <path d="M57.6 13.8c0 3.9-3 7.1-6.7 7.1s-6.7-3.2-6.7-7.1c0-3.9 3-7.1 6.7-7.1s6.7 3.2 6.7 7.1" fill="#cfdae8"> </path> 
- <ellipse cx="13.1" cy="13.8" rx="11.1" ry="11.8" fill="${color1 || "#a8b2ba"}"> </ellipse> <path d="M19.8 13.8c0 3.9-3 7.1-6.7 7.1s-6.7-3.2-6.7-7.1c0-3.9 3-7.1 6.7-7.1s6.7 
- 3.2 6.7 7.1" fill="#cfdae8"> </path> <g fill="${color1 || "#a8b2ba"}"> <path d="M12 35.7c-2.3-2.1-3-5.3-3-5.3l1.5.3S8.7 29 9.2 25.3l1.5 1.5s-1.5-3.8-.2-7.2l1.7 1.1s-.5-1.4 
+ 7.3 62 13.8z" fill="${color1}"> </path> <path d="M57.6 13.8c0 3.9-3 7.1-6.7 7.1s-6.7-3.2-6.7-7.1c0-3.9 3-7.1 6.7-7.1s6.7 3.2 6.7 7.1" fill="#cfdae8"> </path> 
+ <ellipse cx="13.1" cy="13.8" rx="11.1" ry="11.8" fill="${color1}"> </ellipse> <path d="M19.8 13.8c0 3.9-3 7.1-6.7 7.1s-6.7-3.2-6.7-7.1c0-3.9 3-7.1 6.7-7.1s6.7 
+ 3.2 6.7 7.1" fill="#cfdae8"> </path> <g fill="${color1}"> <path d="M12 35.7c-2.3-2.1-3-5.3-3-5.3l1.5.3S8.7 29 9.2 25.3l1.5 1.5s-1.5-3.8-.2-7.2l1.7 1.1s-.5-1.4 
  0-2.4l.7.5s-1.3-3.2-.1-4.6c.7 2 1.4 1.9 1.4 1.9s-1-1.5-.2-2.1c.8 1.1 1.4.4 1.4.1c0-.4.1-1.1-2.1-1.4c1.8-1 3.9-.3 3.9-.3s-.1-1-1.6-1C17 10.3 19 11 19 11l-2.6 
  6.3l-3.2 9.4l-1.2 9"> </path> <path d="M32 7.5c-17.6 0-21.5 11.9-21.5 26.3c0 1.5 9.6 9.7 21.5 9.7s21.5-8.2 21.5-9.7c0-14.4-3.9-26.3-21.5-26.3"> </path> 
  <path d="M52 35.7c2.3-2.1 3-5.3 3-5.3l-1.5.3s1.8-1.7 1.3-5.4l-1.5 1.5s1.5-3.8.2-7.2l-1.7 1.1s.5-1.4 0-2.4l-.7.5s1.3-3.2.1-4.6c-.7 2-1.4 1.9-1.4 
  1.9s1-1.5.2-2.1c-.8 1.1-1.4.4-1.4.1c0-.4-.1-1.1 2.1-1.4c-1.8-1-3.9-.3-3.9-.3s.1-1 1.6-1C47 10.3 45 11 45 11l2.6 6.3l3.2 9.4l1.2 9"> </path> </g> 
- <ellipse cx="19.8" cy="28" rx="4" ry="3.9" fill="${color2 || "#d5ff83"}"> </ellipse> <ellipse cx="19.8" cy="28" rx="2.6" ry="2.5" fill="#3e4347"> </ellipse> 
- <ellipse cx="44.2" cy="28" rx="4" ry="3.9" fill="${color2 || "#d5ff83"}"> </ellipse> <ellipse cx="44.2" cy="28" rx="2.6" ry="2.5" fill="#3e4347"> </ellipse> 
+ <ellipse cx="19.8" cy="28" rx="4" ry="3.9" fill="${color2}"> </ellipse> <ellipse cx="19.8" cy="28" rx="2.6" ry="2.5" fill="#3e4347"> </ellipse> 
+ <ellipse cx="44.2" cy="28" rx="4" ry="3.9" fill="${color2}"> </ellipse> <ellipse cx="44.2" cy="28" rx="2.6" ry="2.5" fill="#3e4347"> </ellipse> 
  <path d="M24.8 34.2c0-5.9 4.8-8.2 7.2-8.2s7.2 2.3 7.2 8.2c0 7.5-2.6 9.3-7.2 9.3s-7.2-1.7-7.2-9.3" fill="#555e63"> </path> <path d="M27.7 55.8c0 
  5.1-3.2 6.2-7.1 6.2c-3.9 0-7.1-1.2-7.1-6.2c0-5.1 3.2-9.2 7.1-9.2s7.1 4.1 7.1 9.2" fill="#96a2aa"> </path> <path d="M25.6 57.1c0 3.6-2.3 4.4-5 4.4s-5-.8-5-4.4c0-3.6 2.3-6.5 5-6.5s5 3 5 6.5" 
  fill="#cfdae8"> </path> <path d="M50.6 55.8c0 5.1-3.2 6.2-7.1 6.2c-3.9 0-7.1-1.2-7.1-6.2c0-5.1 3.2-9.2 7.1-9.2c3.9 0 7.1 4.1 7.1 9.2" 
@@ -232,19 +252,19 @@ export const koala6 = (color1?: string, color2?: string) => `
 
 export const koala7 = (color1?: string, color2?: string) => `
  <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify iconify--emojione" preserveAspectRatio="xMidYMid meet" 
- fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g fill="${color1 || "#a8b2ba"}"> 
+ fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g fill="${color1}"> 
  <path d="M17.9 51.7c-3.4 5.8-6.2 6-8.7 4.6s-3.7-3.9-.3-9.7c3.4-5.8 10.2-12.8 12.7-11.4c2.5 1.4-.3 10.6-3.7 16.5"> </path> <path d="M55.1 46.5c3.4 5.8 2.2 8.3-.3 
  9.7c-2.5 1.4-5.3 1.3-8.7-4.6c-3.4-5.8-6.2-15.1-3.7-16.5c2.5-1.4 9.3 5.6 12.7 11.4"> </path> <ellipse cx="32" cy="52.1" rx="13.9" ry="8.4"> </ellipse> </g> 
  <ellipse cx="32" cy="46.6" rx="13" ry="9.3" fill="#cfdae8"> </ellipse> <path d="M62 13.8c0 6.5-5 11.8-11.1 11.8s-11.1-5.3-11.1-11.8c0-6.5 5-11.8 11.1-11.8S62 
- 7.3 62 13.8z" fill="${color1 || "#a8b2ba"}"> </path> <path d="M57.6 13.8c0 3.9-3 7.1-6.7 7.1s-6.7-3.2-6.7-7.1c0-3.9 3-7.1 6.7-7.1s6.7 3.2 6.7 7.1" fill="#cfdae8"> </path> 
- <ellipse cx="13.1" cy="13.8" rx="11.1" ry="11.8" fill="${color1 || "#a8b2ba"}"> </ellipse> <path d="M19.8 13.8c0 3.9-3 7.1-6.7 7.1s-6.7-3.2-6.7-7.1c0-3.9 3-7.1 6.7-7.1s6.7 
- 3.2 6.7 7.1" fill="#cfdae8"> </path> <g fill="${color1 || "#a8b2ba"}"> <path d="M12 35.7c-2.3-2.1-3-5.3-3-5.3l1.5.3S8.7 29 9.2 25.3l1.5 1.5s-1.5-3.8-.2-7.2l1.7 1.1s-.5-1.4 
+ 7.3 62 13.8z" fill="${color1}"> </path> <path d="M57.6 13.8c0 3.9-3 7.1-6.7 7.1s-6.7-3.2-6.7-7.1c0-3.9 3-7.1 6.7-7.1s6.7 3.2 6.7 7.1" fill="#cfdae8"> </path> 
+ <ellipse cx="13.1" cy="13.8" rx="11.1" ry="11.8" fill="${color1}"> </ellipse> <path d="M19.8 13.8c0 3.9-3 7.1-6.7 7.1s-6.7-3.2-6.7-7.1c0-3.9 3-7.1 6.7-7.1s6.7 
+ 3.2 6.7 7.1" fill="#cfdae8"> </path> <g fill="${color1}"> <path d="M12 35.7c-2.3-2.1-3-5.3-3-5.3l1.5.3S8.7 29 9.2 25.3l1.5 1.5s-1.5-3.8-.2-7.2l1.7 1.1s-.5-1.4 
  0-2.4l.7.5s-1.3-3.2-.1-4.6c.7 2 1.4 1.9 1.4 1.9s-1-1.5-.2-2.1c.8 1.1 1.4.4 1.4.1c0-.4.1-1.1-2.1-1.4c1.8-1 3.9-.3 3.9-.3s-.1-1-1.6-1C17 10.3 19 11 19 11l-2.6 
  6.3l-3.2 9.4l-1.2 9"> </path> <path d="M32 7.5c-17.6 0-21.5 11.9-21.5 26.3c0 1.5 9.6 9.7 21.5 9.7s21.5-8.2 21.5-9.7c0-14.4-3.9-26.3-21.5-26.3"> </path> 
  <path d="M52 35.7c2.3-2.1 3-5.3 3-5.3l-1.5.3s1.8-1.7 1.3-5.4l-1.5 1.5s1.5-3.8.2-7.2l-1.7 1.1s.5-1.4 0-2.4l-.7.5s1.3-3.2.1-4.6c-.7 2-1.4 1.9-1.4 
  1.9s1-1.5.2-2.1c-.8 1.1-1.4.4-1.4.1c0-.4-.1-1.1 2.1-1.4c-1.8-1-3.9-.3-3.9-.3s.1-1 1.6-1C47 10.3 45 11 45 11l2.6 6.3l3.2 9.4l1.2 9"> </path> </g> 
- <ellipse cx="19.8" cy="28" rx="4" ry="3.9" fill="${color2 || "#d5ff83"}"> </ellipse> <ellipse cx="19.8" cy="28" rx="2.6" ry="2.5" fill="#3e4347"> </ellipse> 
- <ellipse cx="44.2" cy="28" rx="4" ry="3.9" fill="${color2 || "#d5ff83"}"> </ellipse> <ellipse cx="44.2" cy="28" rx="2.6" ry="2.5" fill="#3e4347"> </ellipse> 
+ <ellipse cx="19.8" cy="28" rx="4" ry="3.9" fill="${color2}"> </ellipse> <ellipse cx="19.8" cy="28" rx="2.6" ry="2.5" fill="#3e4347"> </ellipse> 
+ <ellipse cx="44.2" cy="28" rx="4" ry="3.9" fill="${color2}"> </ellipse> <ellipse cx="44.2" cy="28" rx="2.6" ry="2.5" fill="#3e4347"> </ellipse> 
  <path d="M24.8 34.2c0-5.9 4.8-8.2 7.2-8.2s7.2 2.3 7.2 8.2c0 7.5-2.6 9.3-7.2 9.3s-7.2-1.7-7.2-9.3" fill="#555e63"> </path> <path d="M27.7 55.8c0 
  5.1-3.2 6.2-7.1 6.2c-3.9 0-7.1-1.2-7.1-6.2c0-5.1 3.2-9.2 7.1-9.2s7.1 4.1 7.1 9.2" fill="#96a2aa"> </path> <path d="M25.6 57.1c0 3.6-2.3 4.4-5 4.4s-5-.8-5-4.4c0-3.6 2.3-6.5 5-6.5s5 3 5 6.5" 
  fill="#cfdae8"> </path> <path d="M50.6 55.8c0 5.1-3.2 6.2-7.1 6.2c-3.9 0-7.1-1.2-7.1-6.2c0-5.1 3.2-9.2 7.1-9.2c3.9 0 7.1 4.1 7.1 9.2" 
@@ -253,19 +273,19 @@ export const koala7 = (color1?: string, color2?: string) => `
 
 export const koala8 = (color1?: string, color2?: string) => `
  <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify iconify--emojione" preserveAspectRatio="xMidYMid meet" 
- fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g fill="${color1 || "#a8b2ba"}"> 
+ fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g fill="${color1}"> 
  <path d="M17.9 51.7c-3.4 5.8-6.2 6-8.7 4.6s-3.7-3.9-.3-9.7c3.4-5.8 10.2-12.8 12.7-11.4c2.5 1.4-.3 10.6-3.7 16.5"> </path> <path d="M55.1 46.5c3.4 5.8 2.2 8.3-.3 
  9.7c-2.5 1.4-5.3 1.3-8.7-4.6c-3.4-5.8-6.2-15.1-3.7-16.5c2.5-1.4 9.3 5.6 12.7 11.4"> </path> <ellipse cx="32" cy="52.1" rx="13.9" ry="8.4"> </ellipse> </g> 
  <ellipse cx="32" cy="46.6" rx="13" ry="9.3" fill="#cfdae8"> </ellipse> <path d="M62 13.8c0 6.5-5 11.8-11.1 11.8s-11.1-5.3-11.1-11.8c0-6.5 5-11.8 11.1-11.8S62 
- 7.3 62 13.8z" fill="${color1 || "#a8b2ba"}"> </path> <path d="M57.6 13.8c0 3.9-3 7.1-6.7 7.1s-6.7-3.2-6.7-7.1c0-3.9 3-7.1 6.7-7.1s6.7 3.2 6.7 7.1" fill="#cfdae8"> </path> 
- <ellipse cx="13.1" cy="13.8" rx="11.1" ry="11.8" fill="${color1 || "#a8b2ba"}"> </ellipse> <path d="M19.8 13.8c0 3.9-3 7.1-6.7 7.1s-6.7-3.2-6.7-7.1c0-3.9 3-7.1 6.7-7.1s6.7 
- 3.2 6.7 7.1" fill="#cfdae8"> </path> <g fill="${color1 || "#a8b2ba"}"> <path d="M12 35.7c-2.3-2.1-3-5.3-3-5.3l1.5.3S8.7 29 9.2 25.3l1.5 1.5s-1.5-3.8-.2-7.2l1.7 1.1s-.5-1.4 
+ 7.3 62 13.8z" fill="${color1}"> </path> <path d="M57.6 13.8c0 3.9-3 7.1-6.7 7.1s-6.7-3.2-6.7-7.1c0-3.9 3-7.1 6.7-7.1s6.7 3.2 6.7 7.1" fill="#cfdae8"> </path> 
+ <ellipse cx="13.1" cy="13.8" rx="11.1" ry="11.8" fill="${color1}"> </ellipse> <path d="M19.8 13.8c0 3.9-3 7.1-6.7 7.1s-6.7-3.2-6.7-7.1c0-3.9 3-7.1 6.7-7.1s6.7 
+ 3.2 6.7 7.1" fill="#cfdae8"> </path> <g fill="${color1}"> <path d="M12 35.7c-2.3-2.1-3-5.3-3-5.3l1.5.3S8.7 29 9.2 25.3l1.5 1.5s-1.5-3.8-.2-7.2l1.7 1.1s-.5-1.4 
  0-2.4l.7.5s-1.3-3.2-.1-4.6c.7 2 1.4 1.9 1.4 1.9s-1-1.5-.2-2.1c.8 1.1 1.4.4 1.4.1c0-.4.1-1.1-2.1-1.4c1.8-1 3.9-.3 3.9-.3s-.1-1-1.6-1C17 10.3 19 11 19 11l-2.6 
  6.3l-3.2 9.4l-1.2 9"> </path> <path d="M32 7.5c-17.6 0-21.5 11.9-21.5 26.3c0 1.5 9.6 9.7 21.5 9.7s21.5-8.2 21.5-9.7c0-14.4-3.9-26.3-21.5-26.3"> </path> 
  <path d="M52 35.7c2.3-2.1 3-5.3 3-5.3l-1.5.3s1.8-1.7 1.3-5.4l-1.5 1.5s1.5-3.8.2-7.2l-1.7 1.1s.5-1.4 0-2.4l-.7.5s1.3-3.2.1-4.6c-.7 2-1.4 1.9-1.4 
  1.9s1-1.5.2-2.1c-.8 1.1-1.4.4-1.4.1c0-.4-.1-1.1 2.1-1.4c-1.8-1-3.9-.3-3.9-.3s.1-1 1.6-1C47 10.3 45 11 45 11l2.6 6.3l3.2 9.4l1.2 9"> </path> </g> 
- <ellipse cx="19.8" cy="28" rx="4" ry="3.9" fill="${color2 || "#d5ff83"}"> </ellipse> <ellipse cx="19.8" cy="28" rx="2.6" ry="2.5" fill="#3e4347"> </ellipse> 
- <ellipse cx="44.2" cy="28" rx="4" ry="3.9" fill="${color2 || "#d5ff83"}"> </ellipse> <ellipse cx="44.2" cy="28" rx="2.6" ry="2.5" fill="#3e4347"> </ellipse> 
+ <ellipse cx="19.8" cy="28" rx="4" ry="3.9" fill="${color2}"> </ellipse> <ellipse cx="19.8" cy="28" rx="2.6" ry="2.5" fill="#3e4347"> </ellipse> 
+ <ellipse cx="44.2" cy="28" rx="4" ry="3.9" fill="${color2}"> </ellipse> <ellipse cx="44.2" cy="28" rx="2.6" ry="2.5" fill="#3e4347"> </ellipse> 
  <path d="M24.8 34.2c0-5.9 4.8-8.2 7.2-8.2s7.2 2.3 7.2 8.2c0 7.5-2.6 9.3-7.2 9.3s-7.2-1.7-7.2-9.3" fill="#555e63"> </path> <path d="M27.7 55.8c0 
  5.1-3.2 6.2-7.1 6.2c-3.9 0-7.1-1.2-7.1-6.2c0-5.1 3.2-9.2 7.1-9.2s7.1 4.1 7.1 9.2" fill="#96a2aa"> </path> <path d="M25.6 57.1c0 3.6-2.3 4.4-5 4.4s-5-.8-5-4.4c0-3.6 2.3-6.5 5-6.5s5 3 5 6.5" 
  fill="#cfdae8"> </path> <path d="M50.6 55.8c0 5.1-3.2 6.2-7.1 6.2c-3.9 0-7.1-1.2-7.1-6.2c0-5.1 3.2-9.2 7.1-9.2c3.9 0 7.1 4.1 7.1 9.2" 
@@ -274,19 +294,19 @@ export const koala8 = (color1?: string, color2?: string) => `
 
 export const koala9 = (color1?: string, color2?: string) => `
  <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify iconify--emojione" preserveAspectRatio="xMidYMid meet" 
- fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g fill="${color1 || "#a8b2ba"}"> 
+ fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g fill="${color1}"> 
  <path d="M17.9 51.7c-3.4 5.8-6.2 6-8.7 4.6s-3.7-3.9-.3-9.7c3.4-5.8 10.2-12.8 12.7-11.4c2.5 1.4-.3 10.6-3.7 16.5"> </path> <path d="M55.1 46.5c3.4 5.8 2.2 8.3-.3 
  9.7c-2.5 1.4-5.3 1.3-8.7-4.6c-3.4-5.8-6.2-15.1-3.7-16.5c2.5-1.4 9.3 5.6 12.7 11.4"> </path> <ellipse cx="32" cy="52.1" rx="13.9" ry="8.4"> </ellipse> </g> 
  <ellipse cx="32" cy="46.6" rx="13" ry="9.3" fill="#cfdae8"> </ellipse> <path d="M62 13.8c0 6.5-5 11.8-11.1 11.8s-11.1-5.3-11.1-11.8c0-6.5 5-11.8 11.1-11.8S62 
- 7.3 62 13.8z" fill="${color1 || "#a8b2ba"}"> </path> <path d="M57.6 13.8c0 3.9-3 7.1-6.7 7.1s-6.7-3.2-6.7-7.1c0-3.9 3-7.1 6.7-7.1s6.7 3.2 6.7 7.1" fill="#cfdae8"> </path> 
- <ellipse cx="13.1" cy="13.8" rx="11.1" ry="11.8" fill="${color1 || "#a8b2ba"}"> </ellipse> <path d="M19.8 13.8c0 3.9-3 7.1-6.7 7.1s-6.7-3.2-6.7-7.1c0-3.9 3-7.1 6.7-7.1s6.7 
- 3.2 6.7 7.1" fill="#cfdae8"> </path> <g fill="${color1 || "#a8b2ba"}"> <path d="M12 35.7c-2.3-2.1-3-5.3-3-5.3l1.5.3S8.7 29 9.2 25.3l1.5 1.5s-1.5-3.8-.2-7.2l1.7 1.1s-.5-1.4 
+ 7.3 62 13.8z" fill="${color1}"> </path> <path d="M57.6 13.8c0 3.9-3 7.1-6.7 7.1s-6.7-3.2-6.7-7.1c0-3.9 3-7.1 6.7-7.1s6.7 3.2 6.7 7.1" fill="#cfdae8"> </path> 
+ <ellipse cx="13.1" cy="13.8" rx="11.1" ry="11.8" fill="${color1}"> </ellipse> <path d="M19.8 13.8c0 3.9-3 7.1-6.7 7.1s-6.7-3.2-6.7-7.1c0-3.9 3-7.1 6.7-7.1s6.7 
+ 3.2 6.7 7.1" fill="#cfdae8"> </path> <g fill="${color1}"> <path d="M12 35.7c-2.3-2.1-3-5.3-3-5.3l1.5.3S8.7 29 9.2 25.3l1.5 1.5s-1.5-3.8-.2-7.2l1.7 1.1s-.5-1.4 
  0-2.4l.7.5s-1.3-3.2-.1-4.6c.7 2 1.4 1.9 1.4 1.9s-1-1.5-.2-2.1c.8 1.1 1.4.4 1.4.1c0-.4.1-1.1-2.1-1.4c1.8-1 3.9-.3 3.9-.3s-.1-1-1.6-1C17 10.3 19 11 19 11l-2.6 
  6.3l-3.2 9.4l-1.2 9"> </path> <path d="M32 7.5c-17.6 0-21.5 11.9-21.5 26.3c0 1.5 9.6 9.7 21.5 9.7s21.5-8.2 21.5-9.7c0-14.4-3.9-26.3-21.5-26.3"> </path> 
  <path d="M52 35.7c2.3-2.1 3-5.3 3-5.3l-1.5.3s1.8-1.7 1.3-5.4l-1.5 1.5s1.5-3.8.2-7.2l-1.7 1.1s.5-1.4 0-2.4l-.7.5s1.3-3.2.1-4.6c-.7 2-1.4 1.9-1.4 
  1.9s1-1.5.2-2.1c-.8 1.1-1.4.4-1.4.1c0-.4-.1-1.1 2.1-1.4c-1.8-1-3.9-.3-3.9-.3s.1-1 1.6-1C47 10.3 45 11 45 11l2.6 6.3l3.2 9.4l1.2 9"> </path> </g> 
- <ellipse cx="19.8" cy="28" rx="4" ry="3.9" fill="${color2 || "#d5ff83"}"> </ellipse> <ellipse cx="19.8" cy="28" rx="2.6" ry="2.5" fill="#3e4347"> </ellipse> 
- <ellipse cx="44.2" cy="28" rx="4" ry="3.9" fill="${color2 || "#d5ff83"}"> </ellipse> <ellipse cx="44.2" cy="28" rx="2.6" ry="2.5" fill="#3e4347"> </ellipse> 
+ <ellipse cx="19.8" cy="28" rx="4" ry="3.9" fill="${color2}"> </ellipse> <ellipse cx="19.8" cy="28" rx="2.6" ry="2.5" fill="#3e4347"> </ellipse> 
+ <ellipse cx="44.2" cy="28" rx="4" ry="3.9" fill="${color2}"> </ellipse> <ellipse cx="44.2" cy="28" rx="2.6" ry="2.5" fill="#3e4347"> </ellipse> 
  <path d="M24.8 34.2c0-5.9 4.8-8.2 7.2-8.2s7.2 2.3 7.2 8.2c0 7.5-2.6 9.3-7.2 9.3s-7.2-1.7-7.2-9.3" fill="#555e63"> </path> <path d="M27.7 55.8c0 
  5.1-3.2 6.2-7.1 6.2c-3.9 0-7.1-1.2-7.1-6.2c0-5.1 3.2-9.2 7.1-9.2s7.1 4.1 7.1 9.2" fill="#96a2aa"> </path> <path d="M25.6 57.1c0 3.6-2.3 4.4-5 4.4s-5-.8-5-4.4c0-3.6 2.3-6.5 5-6.5s5 3 5 6.5" 
  fill="#cfdae8"> </path> <path d="M50.6 55.8c0 5.1-3.2 6.2-7.1 6.2c-3.9 0-7.1-1.2-7.1-6.2c0-5.1 3.2-9.2 7.1-9.2c3.9 0 7.1 4.1 7.1 9.2" 
@@ -295,439 +315,19 @@ export const koala9 = (color1?: string, color2?: string) => `
 
 export const koala10 = (color1?: string, color2?: string) => `
  <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify iconify--emojione" preserveAspectRatio="xMidYMid meet" 
- fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g fill="${color1 || "#a8b2ba"}"> 
+ fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g fill="${color1}"> 
  <path d="M17.9 51.7c-3.4 5.8-6.2 6-8.7 4.6s-3.7-3.9-.3-9.7c3.4-5.8 10.2-12.8 12.7-11.4c2.5 1.4-.3 10.6-3.7 16.5"> </path> <path d="M55.1 46.5c3.4 5.8 2.2 8.3-.3 
  9.7c-2.5 1.4-5.3 1.3-8.7-4.6c-3.4-5.8-6.2-15.1-3.7-16.5c2.5-1.4 9.3 5.6 12.7 11.4"> </path> <ellipse cx="32" cy="52.1" rx="13.9" ry="8.4"> </ellipse> </g> 
  <ellipse cx="32" cy="46.6" rx="13" ry="9.3" fill="#cfdae8"> </ellipse> <path d="M62 13.8c0 6.5-5 11.8-11.1 11.8s-11.1-5.3-11.1-11.8c0-6.5 5-11.8 11.1-11.8S62 
- 7.3 62 13.8z" fill="${color1 || "#a8b2ba"}"> </path> <path d="M57.6 13.8c0 3.9-3 7.1-6.7 7.1s-6.7-3.2-6.7-7.1c0-3.9 3-7.1 6.7-7.1s6.7 3.2 6.7 7.1" fill="#cfdae8"> </path> 
- <ellipse cx="13.1" cy="13.8" rx="11.1" ry="11.8" fill="${color1 || "#a8b2ba"}"> </ellipse> <path d="M19.8 13.8c0 3.9-3 7.1-6.7 7.1s-6.7-3.2-6.7-7.1c0-3.9 3-7.1 6.7-7.1s6.7 
- 3.2 6.7 7.1" fill="#cfdae8"> </path> <g fill="${color1 || "#a8b2ba"}"> <path d="M12 35.7c-2.3-2.1-3-5.3-3-5.3l1.5.3S8.7 29 9.2 25.3l1.5 1.5s-1.5-3.8-.2-7.2l1.7 1.1s-.5-1.4 
+ 7.3 62 13.8z" fill="${color1}"> </path> <path d="M57.6 13.8c0 3.9-3 7.1-6.7 7.1s-6.7-3.2-6.7-7.1c0-3.9 3-7.1 6.7-7.1s6.7 3.2 6.7 7.1" fill="#cfdae8"> </path> 
+ <ellipse cx="13.1" cy="13.8" rx="11.1" ry="11.8" fill="${color1}"> </ellipse> <path d="M19.8 13.8c0 3.9-3 7.1-6.7 7.1s-6.7-3.2-6.7-7.1c0-3.9 3-7.1 6.7-7.1s6.7 
+ 3.2 6.7 7.1" fill="#cfdae8"> </path> <g fill="${color1}"> <path d="M12 35.7c-2.3-2.1-3-5.3-3-5.3l1.5.3S8.7 29 9.2 25.3l1.5 1.5s-1.5-3.8-.2-7.2l1.7 1.1s-.5-1.4 
  0-2.4l.7.5s-1.3-3.2-.1-4.6c.7 2 1.4 1.9 1.4 1.9s-1-1.5-.2-2.1c.8 1.1 1.4.4 1.4.1c0-.4.1-1.1-2.1-1.4c1.8-1 3.9-.3 3.9-.3s-.1-1-1.6-1C17 10.3 19 11 19 11l-2.6 
  6.3l-3.2 9.4l-1.2 9"> </path> <path d="M32 7.5c-17.6 0-21.5 11.9-21.5 26.3c0 1.5 9.6 9.7 21.5 9.7s21.5-8.2 21.5-9.7c0-14.4-3.9-26.3-21.5-26.3"> </path> 
  <path d="M52 35.7c2.3-2.1 3-5.3 3-5.3l-1.5.3s1.8-1.7 1.3-5.4l-1.5 1.5s1.5-3.8.2-7.2l-1.7 1.1s.5-1.4 0-2.4l-.7.5s1.3-3.2.1-4.6c-.7 2-1.4 1.9-1.4 
  1.9s1-1.5.2-2.1c-.8 1.1-1.4.4-1.4.1c0-.4-.1-1.1 2.1-1.4c-1.8-1-3.9-.3-3.9-.3s.1-1 1.6-1C47 10.3 45 11 45 11l2.6 6.3l3.2 9.4l1.2 9"> </path> </g> 
- <ellipse cx="19.8" cy="28" rx="4" ry="3.9" fill="${color2 || "#d5ff83"}"> </ellipse> <ellipse cx="19.8" cy="28" rx="2.6" ry="2.5" fill="#3e4347"> </ellipse> 
- <ellipse cx="44.2" cy="28" rx="4" ry="3.9" fill="${color2 || "#d5ff83"}"> </ellipse> <ellipse cx="44.2" cy="28" rx="2.6" ry="2.5" fill="#3e4347"> </ellipse> 
- <path d="M24.8 34.2c0-5.9 4.8-8.2 7.2-8.2s7.2 2.3 7.2 8.2c0 7.5-2.6 9.3-7.2 9.3s-7.2-1.7-7.2-9.3" fill="#555e63"> </path> <path d="M27.7 55.8c0 
- 5.1-3.2 6.2-7.1 6.2c-3.9 0-7.1-1.2-7.1-6.2c0-5.1 3.2-9.2 7.1-9.2s7.1 4.1 7.1 9.2" fill="#96a2aa"> </path> <path d="M25.6 57.1c0 3.6-2.3 4.4-5 4.4s-5-.8-5-4.4c0-3.6 2.3-6.5 5-6.5s5 3 5 6.5" 
- fill="#cfdae8"> </path> <path d="M50.6 55.8c0 5.1-3.2 6.2-7.1 6.2c-3.9 0-7.1-1.2-7.1-6.2c0-5.1 3.2-9.2 7.1-9.2c3.9 0 7.1 4.1 7.1 9.2" 
- fill="#96a2aa"> </path> <path d="M48.5 57.1c0 3.6-2.3 4.4-5 4.4s-5-.8-5-4.4c0-3.6 2.3-6.5 5-6.5s5 3 5 6.5" fill="#cfdae8"> </path> </g></svg>
- `;
-
-export const koala11 = (color1?: string, color2?: string) => `
- <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify iconify--emojione" preserveAspectRatio="xMidYMid meet" 
- fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g fill="${color1 || "#a8b2ba"}"> 
- <path d="M17.9 51.7c-3.4 5.8-6.2 6-8.7 4.6s-3.7-3.9-.3-9.7c3.4-5.8 10.2-12.8 12.7-11.4c2.5 1.4-.3 10.6-3.7 16.5"> </path> <path d="M55.1 46.5c3.4 5.8 2.2 8.3-.3 
- 9.7c-2.5 1.4-5.3 1.3-8.7-4.6c-3.4-5.8-6.2-15.1-3.7-16.5c2.5-1.4 9.3 5.6 12.7 11.4"> </path> <ellipse cx="32" cy="52.1" rx="13.9" ry="8.4"> </ellipse> </g> 
- <ellipse cx="32" cy="46.6" rx="13" ry="9.3" fill="#cfdae8"> </ellipse> <path d="M62 13.8c0 6.5-5 11.8-11.1 11.8s-11.1-5.3-11.1-11.8c0-6.5 5-11.8 11.1-11.8S62 
- 7.3 62 13.8z" fill="${color1 || "#a8b2ba"}"> </path> <path d="M57.6 13.8c0 3.9-3 7.1-6.7 7.1s-6.7-3.2-6.7-7.1c0-3.9 3-7.1 6.7-7.1s6.7 3.2 6.7 7.1" fill="#cfdae8"> </path> 
- <ellipse cx="13.1" cy="13.8" rx="11.1" ry="11.8" fill="${color1 || "#a8b2ba"}"> </ellipse> <path d="M19.8 13.8c0 3.9-3 7.1-6.7 7.1s-6.7-3.2-6.7-7.1c0-3.9 3-7.1 6.7-7.1s6.7 
- 3.2 6.7 7.1" fill="#cfdae8"> </path> <g fill="${color1 || "#a8b2ba"}"> <path d="M12 35.7c-2.3-2.1-3-5.3-3-5.3l1.5.3S8.7 29 9.2 25.3l1.5 1.5s-1.5-3.8-.2-7.2l1.7 1.1s-.5-1.4 
- 0-2.4l.7.5s-1.3-3.2-.1-4.6c.7 2 1.4 1.9 1.4 1.9s-1-1.5-.2-2.1c.8 1.1 1.4.4 1.4.1c0-.4.1-1.1-2.1-1.4c1.8-1 3.9-.3 3.9-.3s-.1-1-1.6-1C17 10.3 19 11 19 11l-2.6 
- 6.3l-3.2 9.4l-1.2 9"> </path> <path d="M32 7.5c-17.6 0-21.5 11.9-21.5 26.3c0 1.5 9.6 9.7 21.5 9.7s21.5-8.2 21.5-9.7c0-14.4-3.9-26.3-21.5-26.3"> </path> 
- <path d="M52 35.7c2.3-2.1 3-5.3 3-5.3l-1.5.3s1.8-1.7 1.3-5.4l-1.5 1.5s1.5-3.8.2-7.2l-1.7 1.1s.5-1.4 0-2.4l-.7.5s1.3-3.2.1-4.6c-.7 2-1.4 1.9-1.4 
- 1.9s1-1.5.2-2.1c-.8 1.1-1.4.4-1.4.1c0-.4-.1-1.1 2.1-1.4c-1.8-1-3.9-.3-3.9-.3s.1-1 1.6-1C47 10.3 45 11 45 11l2.6 6.3l3.2 9.4l1.2 9"> </path> </g> 
- <ellipse cx="19.8" cy="28" rx="4" ry="3.9" fill="${color2 || "#d5ff83"}"> </ellipse> <ellipse cx="19.8" cy="28" rx="2.6" ry="2.5" fill="#3e4347"> </ellipse> 
- <ellipse cx="44.2" cy="28" rx="4" ry="3.9" fill="${color2 || "#d5ff83"}"> </ellipse> <ellipse cx="44.2" cy="28" rx="2.6" ry="2.5" fill="#3e4347"> </ellipse> 
- <path d="M24.8 34.2c0-5.9 4.8-8.2 7.2-8.2s7.2 2.3 7.2 8.2c0 7.5-2.6 9.3-7.2 9.3s-7.2-1.7-7.2-9.3" fill="#555e63"> </path> <path d="M27.7 55.8c0 
- 5.1-3.2 6.2-7.1 6.2c-3.9 0-7.1-1.2-7.1-6.2c0-5.1 3.2-9.2 7.1-9.2s7.1 4.1 7.1 9.2" fill="#96a2aa"> </path> <path d="M25.6 57.1c0 3.6-2.3 4.4-5 4.4s-5-.8-5-4.4c0-3.6 2.3-6.5 5-6.5s5 3 5 6.5" 
- fill="#cfdae8"> </path> <path d="M50.6 55.8c0 5.1-3.2 6.2-7.1 6.2c-3.9 0-7.1-1.2-7.1-6.2c0-5.1 3.2-9.2 7.1-9.2c3.9 0 7.1 4.1 7.1 9.2" 
- fill="#96a2aa"> </path> <path d="M48.5 57.1c0 3.6-2.3 4.4-5 4.4s-5-.8-5-4.4c0-3.6 2.3-6.5 5-6.5s5 3 5 6.5" fill="#cfdae8"> </path> </g></svg>
- `;
-
-export const koala12 = (color1?: string, color2?: string) => `
- <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify iconify--emojione" preserveAspectRatio="xMidYMid meet" 
- fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g fill="${color1 || "#a8b2ba"}"> 
- <path d="M17.9 51.7c-3.4 5.8-6.2 6-8.7 4.6s-3.7-3.9-.3-9.7c3.4-5.8 10.2-12.8 12.7-11.4c2.5 1.4-.3 10.6-3.7 16.5"> </path> <path d="M55.1 46.5c3.4 5.8 2.2 8.3-.3 
- 9.7c-2.5 1.4-5.3 1.3-8.7-4.6c-3.4-5.8-6.2-15.1-3.7-16.5c2.5-1.4 9.3 5.6 12.7 11.4"> </path> <ellipse cx="32" cy="52.1" rx="13.9" ry="8.4"> </ellipse> </g> 
- <ellipse cx="32" cy="46.6" rx="13" ry="9.3" fill="#cfdae8"> </ellipse> <path d="M62 13.8c0 6.5-5 11.8-11.1 11.8s-11.1-5.3-11.1-11.8c0-6.5 5-11.8 11.1-11.8S62 
- 7.3 62 13.8z" fill="${color1 || "#a8b2ba"}"> </path> <path d="M57.6 13.8c0 3.9-3 7.1-6.7 7.1s-6.7-3.2-6.7-7.1c0-3.9 3-7.1 6.7-7.1s6.7 3.2 6.7 7.1" fill="#cfdae8"> </path> 
- <ellipse cx="13.1" cy="13.8" rx="11.1" ry="11.8" fill="${color1 || "#a8b2ba"}"> </ellipse> <path d="M19.8 13.8c0 3.9-3 7.1-6.7 7.1s-6.7-3.2-6.7-7.1c0-3.9 3-7.1 6.7-7.1s6.7 
- 3.2 6.7 7.1" fill="#cfdae8"> </path> <g fill="${color1 || "#a8b2ba"}"> <path d="M12 35.7c-2.3-2.1-3-5.3-3-5.3l1.5.3S8.7 29 9.2 25.3l1.5 1.5s-1.5-3.8-.2-7.2l1.7 1.1s-.5-1.4 
- 0-2.4l.7.5s-1.3-3.2-.1-4.6c.7 2 1.4 1.9 1.4 1.9s-1-1.5-.2-2.1c.8 1.1 1.4.4 1.4.1c0-.4.1-1.1-2.1-1.4c1.8-1 3.9-.3 3.9-.3s-.1-1-1.6-1C17 10.3 19 11 19 11l-2.6 
- 6.3l-3.2 9.4l-1.2 9"> </path> <path d="M32 7.5c-17.6 0-21.5 11.9-21.5 26.3c0 1.5 9.6 9.7 21.5 9.7s21.5-8.2 21.5-9.7c0-14.4-3.9-26.3-21.5-26.3"> </path> 
- <path d="M52 35.7c2.3-2.1 3-5.3 3-5.3l-1.5.3s1.8-1.7 1.3-5.4l-1.5 1.5s1.5-3.8.2-7.2l-1.7 1.1s.5-1.4 0-2.4l-.7.5s1.3-3.2.1-4.6c-.7 2-1.4 1.9-1.4 
- 1.9s1-1.5.2-2.1c-.8 1.1-1.4.4-1.4.1c0-.4-.1-1.1 2.1-1.4c-1.8-1-3.9-.3-3.9-.3s.1-1 1.6-1C47 10.3 45 11 45 11l2.6 6.3l3.2 9.4l1.2 9"> </path> </g> 
- <ellipse cx="19.8" cy="28" rx="4" ry="3.9" fill="${color2 || "#d5ff83"}"> </ellipse> <ellipse cx="19.8" cy="28" rx="2.6" ry="2.5" fill="#3e4347"> </ellipse> 
- <ellipse cx="44.2" cy="28" rx="4" ry="3.9" fill="${color2 || "#d5ff83"}"> </ellipse> <ellipse cx="44.2" cy="28" rx="2.6" ry="2.5" fill="#3e4347"> </ellipse> 
- <path d="M24.8 34.2c0-5.9 4.8-8.2 7.2-8.2s7.2 2.3 7.2 8.2c0 7.5-2.6 9.3-7.2 9.3s-7.2-1.7-7.2-9.3" fill="#555e63"> </path> <path d="M27.7 55.8c0 
- 5.1-3.2 6.2-7.1 6.2c-3.9 0-7.1-1.2-7.1-6.2c0-5.1 3.2-9.2 7.1-9.2s7.1 4.1 7.1 9.2" fill="#96a2aa"> </path> <path d="M25.6 57.1c0 3.6-2.3 4.4-5 4.4s-5-.8-5-4.4c0-3.6 2.3-6.5 5-6.5s5 3 5 6.5" 
- fill="#cfdae8"> </path> <path d="M50.6 55.8c0 5.1-3.2 6.2-7.1 6.2c-3.9 0-7.1-1.2-7.1-6.2c0-5.1 3.2-9.2 7.1-9.2c3.9 0 7.1 4.1 7.1 9.2" 
- fill="#96a2aa"> </path> <path d="M48.5 57.1c0 3.6-2.3 4.4-5 4.4s-5-.8-5-4.4c0-3.6 2.3-6.5 5-6.5s5 3 5 6.5" fill="#cfdae8"> </path> </g></svg>
- `;
-
-export const koala13 = (color1?: string, color2?: string) => `
- <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify iconify--emojione" preserveAspectRatio="xMidYMid meet" 
- fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g fill="${color1 || "#a8b2ba"}"> 
- <path d="M17.9 51.7c-3.4 5.8-6.2 6-8.7 4.6s-3.7-3.9-.3-9.7c3.4-5.8 10.2-12.8 12.7-11.4c2.5 1.4-.3 10.6-3.7 16.5"> </path> <path d="M55.1 46.5c3.4 5.8 2.2 8.3-.3 
- 9.7c-2.5 1.4-5.3 1.3-8.7-4.6c-3.4-5.8-6.2-15.1-3.7-16.5c2.5-1.4 9.3 5.6 12.7 11.4"> </path> <ellipse cx="32" cy="52.1" rx="13.9" ry="8.4"> </ellipse> </g> 
- <ellipse cx="32" cy="46.6" rx="13" ry="9.3" fill="#cfdae8"> </ellipse> <path d="M62 13.8c0 6.5-5 11.8-11.1 11.8s-11.1-5.3-11.1-11.8c0-6.5 5-11.8 11.1-11.8S62 
- 7.3 62 13.8z" fill="${color1 || "#a8b2ba"}"> </path> <path d="M57.6 13.8c0 3.9-3 7.1-6.7 7.1s-6.7-3.2-6.7-7.1c0-3.9 3-7.1 6.7-7.1s6.7 3.2 6.7 7.1" fill="#cfdae8"> </path> 
- <ellipse cx="13.1" cy="13.8" rx="11.1" ry="11.8" fill="${color1 || "#a8b2ba"}"> </ellipse> <path d="M19.8 13.8c0 3.9-3 7.1-6.7 7.1s-6.7-3.2-6.7-7.1c0-3.9 3-7.1 6.7-7.1s6.7 
- 3.2 6.7 7.1" fill="#cfdae8"> </path> <g fill="${color1 || "#a8b2ba"}"> <path d="M12 35.7c-2.3-2.1-3-5.3-3-5.3l1.5.3S8.7 29 9.2 25.3l1.5 1.5s-1.5-3.8-.2-7.2l1.7 1.1s-.5-1.4 
- 0-2.4l.7.5s-1.3-3.2-.1-4.6c.7 2 1.4 1.9 1.4 1.9s-1-1.5-.2-2.1c.8 1.1 1.4.4 1.4.1c0-.4.1-1.1-2.1-1.4c1.8-1 3.9-.3 3.9-.3s-.1-1-1.6-1C17 10.3 19 11 19 11l-2.6 
- 6.3l-3.2 9.4l-1.2 9"> </path> <path d="M32 7.5c-17.6 0-21.5 11.9-21.5 26.3c0 1.5 9.6 9.7 21.5 9.7s21.5-8.2 21.5-9.7c0-14.4-3.9-26.3-21.5-26.3"> </path> 
- <path d="M52 35.7c2.3-2.1 3-5.3 3-5.3l-1.5.3s1.8-1.7 1.3-5.4l-1.5 1.5s1.5-3.8.2-7.2l-1.7 1.1s.5-1.4 0-2.4l-.7.5s1.3-3.2.1-4.6c-.7 2-1.4 1.9-1.4 
- 1.9s1-1.5.2-2.1c-.8 1.1-1.4.4-1.4.1c0-.4-.1-1.1 2.1-1.4c-1.8-1-3.9-.3-3.9-.3s.1-1 1.6-1C47 10.3 45 11 45 11l2.6 6.3l3.2 9.4l1.2 9"> </path> </g> 
- <ellipse cx="19.8" cy="28" rx="4" ry="3.9" fill="${color2 || "#d5ff83"}"> </ellipse> <ellipse cx="19.8" cy="28" rx="2.6" ry="2.5" fill="#3e4347"> </ellipse> 
- <ellipse cx="44.2" cy="28" rx="4" ry="3.9" fill="${color2 || "#d5ff83"}"> </ellipse> <ellipse cx="44.2" cy="28" rx="2.6" ry="2.5" fill="#3e4347"> </ellipse> 
- <path d="M24.8 34.2c0-5.9 4.8-8.2 7.2-8.2s7.2 2.3 7.2 8.2c0 7.5-2.6 9.3-7.2 9.3s-7.2-1.7-7.2-9.3" fill="#555e63"> </path> <path d="M27.7 55.8c0 
- 5.1-3.2 6.2-7.1 6.2c-3.9 0-7.1-1.2-7.1-6.2c0-5.1 3.2-9.2 7.1-9.2s7.1 4.1 7.1 9.2" fill="#96a2aa"> </path> <path d="M25.6 57.1c0 3.6-2.3 4.4-5 4.4s-5-.8-5-4.4c0-3.6 2.3-6.5 5-6.5s5 3 5 6.5" 
- fill="#cfdae8"> </path> <path d="M50.6 55.8c0 5.1-3.2 6.2-7.1 6.2c-3.9 0-7.1-1.2-7.1-6.2c0-5.1 3.2-9.2 7.1-9.2c3.9 0 7.1 4.1 7.1 9.2" 
- fill="#96a2aa"> </path> <path d="M48.5 57.1c0 3.6-2.3 4.4-5 4.4s-5-.8-5-4.4c0-3.6 2.3-6.5 5-6.5s5 3 5 6.5" fill="#cfdae8"> </path> </g></svg>
- `;
-
-export const koala14 = (color1?: string, color2?: string) => `
- <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify iconify--emojione" preserveAspectRatio="xMidYMid meet" 
- fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g fill="${color1 || "#a8b2ba"}"> 
- <path d="M17.9 51.7c-3.4 5.8-6.2 6-8.7 4.6s-3.7-3.9-.3-9.7c3.4-5.8 10.2-12.8 12.7-11.4c2.5 1.4-.3 10.6-3.7 16.5"> </path> <path d="M55.1 46.5c3.4 5.8 2.2 8.3-.3 
- 9.7c-2.5 1.4-5.3 1.3-8.7-4.6c-3.4-5.8-6.2-15.1-3.7-16.5c2.5-1.4 9.3 5.6 12.7 11.4"> </path> <ellipse cx="32" cy="52.1" rx="13.9" ry="8.4"> </ellipse> </g> 
- <ellipse cx="32" cy="46.6" rx="13" ry="9.3" fill="#cfdae8"> </ellipse> <path d="M62 13.8c0 6.5-5 11.8-11.1 11.8s-11.1-5.3-11.1-11.8c0-6.5 5-11.8 11.1-11.8S62 
- 7.3 62 13.8z" fill="${color1 || "#a8b2ba"}"> </path> <path d="M57.6 13.8c0 3.9-3 7.1-6.7 7.1s-6.7-3.2-6.7-7.1c0-3.9 3-7.1 6.7-7.1s6.7 3.2 6.7 7.1" fill="#cfdae8"> </path> 
- <ellipse cx="13.1" cy="13.8" rx="11.1" ry="11.8" fill="${color1 || "#a8b2ba"}"> </ellipse> <path d="M19.8 13.8c0 3.9-3 7.1-6.7 7.1s-6.7-3.2-6.7-7.1c0-3.9 3-7.1 6.7-7.1s6.7 
- 3.2 6.7 7.1" fill="#cfdae8"> </path> <g fill="${color1 || "#a8b2ba"}"> <path d="M12 35.7c-2.3-2.1-3-5.3-3-5.3l1.5.3S8.7 29 9.2 25.3l1.5 1.5s-1.5-3.8-.2-7.2l1.7 1.1s-.5-1.4 
- 0-2.4l.7.5s-1.3-3.2-.1-4.6c.7 2 1.4 1.9 1.4 1.9s-1-1.5-.2-2.1c.8 1.1 1.4.4 1.4.1c0-.4.1-1.1-2.1-1.4c1.8-1 3.9-.3 3.9-.3s-.1-1-1.6-1C17 10.3 19 11 19 11l-2.6 
- 6.3l-3.2 9.4l-1.2 9"> </path> <path d="M32 7.5c-17.6 0-21.5 11.9-21.5 26.3c0 1.5 9.6 9.7 21.5 9.7s21.5-8.2 21.5-9.7c0-14.4-3.9-26.3-21.5-26.3"> </path> 
- <path d="M52 35.7c2.3-2.1 3-5.3 3-5.3l-1.5.3s1.8-1.7 1.3-5.4l-1.5 1.5s1.5-3.8.2-7.2l-1.7 1.1s.5-1.4 0-2.4l-.7.5s1.3-3.2.1-4.6c-.7 2-1.4 1.9-1.4 
- 1.9s1-1.5.2-2.1c-.8 1.1-1.4.4-1.4.1c0-.4-.1-1.1 2.1-1.4c-1.8-1-3.9-.3-3.9-.3s.1-1 1.6-1C47 10.3 45 11 45 11l2.6 6.3l3.2 9.4l1.2 9"> </path> </g> 
- <ellipse cx="19.8" cy="28" rx="4" ry="3.9" fill="${color2 || "#d5ff83"}"> </ellipse> <ellipse cx="19.8" cy="28" rx="2.6" ry="2.5" fill="#3e4347"> </ellipse> 
- <ellipse cx="44.2" cy="28" rx="4" ry="3.9" fill="${color2 || "#d5ff83"}"> </ellipse> <ellipse cx="44.2" cy="28" rx="2.6" ry="2.5" fill="#3e4347"> </ellipse> 
- <path d="M24.8 34.2c0-5.9 4.8-8.2 7.2-8.2s7.2 2.3 7.2 8.2c0 7.5-2.6 9.3-7.2 9.3s-7.2-1.7-7.2-9.3" fill="#555e63"> </path> <path d="M27.7 55.8c0 
- 5.1-3.2 6.2-7.1 6.2c-3.9 0-7.1-1.2-7.1-6.2c0-5.1 3.2-9.2 7.1-9.2s7.1 4.1 7.1 9.2" fill="#96a2aa"> </path> <path d="M25.6 57.1c0 3.6-2.3 4.4-5 4.4s-5-.8-5-4.4c0-3.6 2.3-6.5 5-6.5s5 3 5 6.5" 
- fill="#cfdae8"> </path> <path d="M50.6 55.8c0 5.1-3.2 6.2-7.1 6.2c-3.9 0-7.1-1.2-7.1-6.2c0-5.1 3.2-9.2 7.1-9.2c3.9 0 7.1 4.1 7.1 9.2" 
- fill="#96a2aa"> </path> <path d="M48.5 57.1c0 3.6-2.3 4.4-5 4.4s-5-.8-5-4.4c0-3.6 2.3-6.5 5-6.5s5 3 5 6.5" fill="#cfdae8"> </path> </g></svg>
- `;
-
-export const koala15 = (color1?: string, color2?: string) => `
- <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify iconify--emojione" preserveAspectRatio="xMidYMid meet" 
- fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g fill="${color1 || "#a8b2ba"}"> 
- <path d="M17.9 51.7c-3.4 5.8-6.2 6-8.7 4.6s-3.7-3.9-.3-9.7c3.4-5.8 10.2-12.8 12.7-11.4c2.5 1.4-.3 10.6-3.7 16.5"> </path> <path d="M55.1 46.5c3.4 5.8 2.2 8.3-.3 
- 9.7c-2.5 1.4-5.3 1.3-8.7-4.6c-3.4-5.8-6.2-15.1-3.7-16.5c2.5-1.4 9.3 5.6 12.7 11.4"> </path> <ellipse cx="32" cy="52.1" rx="13.9" ry="8.4"> </ellipse> </g> 
- <ellipse cx="32" cy="46.6" rx="13" ry="9.3" fill="#cfdae8"> </ellipse> <path d="M62 13.8c0 6.5-5 11.8-11.1 11.8s-11.1-5.3-11.1-11.8c0-6.5 5-11.8 11.1-11.8S62 
- 7.3 62 13.8z" fill="${color1 || "#a8b2ba"}"> </path> <path d="M57.6 13.8c0 3.9-3 7.1-6.7 7.1s-6.7-3.2-6.7-7.1c0-3.9 3-7.1 6.7-7.1s6.7 3.2 6.7 7.1" fill="#cfdae8"> </path> 
- <ellipse cx="13.1" cy="13.8" rx="11.1" ry="11.8" fill="${color1 || "#a8b2ba"}"> </ellipse> <path d="M19.8 13.8c0 3.9-3 7.1-6.7 7.1s-6.7-3.2-6.7-7.1c0-3.9 3-7.1 6.7-7.1s6.7 
- 3.2 6.7 7.1" fill="#cfdae8"> </path> <g fill="${color1 || "#a8b2ba"}"> <path d="M12 35.7c-2.3-2.1-3-5.3-3-5.3l1.5.3S8.7 29 9.2 25.3l1.5 1.5s-1.5-3.8-.2-7.2l1.7 1.1s-.5-1.4 
- 0-2.4l.7.5s-1.3-3.2-.1-4.6c.7 2 1.4 1.9 1.4 1.9s-1-1.5-.2-2.1c.8 1.1 1.4.4 1.4.1c0-.4.1-1.1-2.1-1.4c1.8-1 3.9-.3 3.9-.3s-.1-1-1.6-1C17 10.3 19 11 19 11l-2.6 
- 6.3l-3.2 9.4l-1.2 9"> </path> <path d="M32 7.5c-17.6 0-21.5 11.9-21.5 26.3c0 1.5 9.6 9.7 21.5 9.7s21.5-8.2 21.5-9.7c0-14.4-3.9-26.3-21.5-26.3"> </path> 
- <path d="M52 35.7c2.3-2.1 3-5.3 3-5.3l-1.5.3s1.8-1.7 1.3-5.4l-1.5 1.5s1.5-3.8.2-7.2l-1.7 1.1s.5-1.4 0-2.4l-.7.5s1.3-3.2.1-4.6c-.7 2-1.4 1.9-1.4 
- 1.9s1-1.5.2-2.1c-.8 1.1-1.4.4-1.4.1c0-.4-.1-1.1 2.1-1.4c-1.8-1-3.9-.3-3.9-.3s.1-1 1.6-1C47 10.3 45 11 45 11l2.6 6.3l3.2 9.4l1.2 9"> </path> </g> 
- <ellipse cx="19.8" cy="28" rx="4" ry="3.9" fill="${color2 || "#d5ff83"}"> </ellipse> <ellipse cx="19.8" cy="28" rx="2.6" ry="2.5" fill="#3e4347"> </ellipse> 
- <ellipse cx="44.2" cy="28" rx="4" ry="3.9" fill="${color2 || "#d5ff83"}"> </ellipse> <ellipse cx="44.2" cy="28" rx="2.6" ry="2.5" fill="#3e4347"> </ellipse> 
- <path d="M24.8 34.2c0-5.9 4.8-8.2 7.2-8.2s7.2 2.3 7.2 8.2c0 7.5-2.6 9.3-7.2 9.3s-7.2-1.7-7.2-9.3" fill="#555e63"> </path> <path d="M27.7 55.8c0 
- 5.1-3.2 6.2-7.1 6.2c-3.9 0-7.1-1.2-7.1-6.2c0-5.1 3.2-9.2 7.1-9.2s7.1 4.1 7.1 9.2" fill="#96a2aa"> </path> <path d="M25.6 57.1c0 3.6-2.3 4.4-5 4.4s-5-.8-5-4.4c0-3.6 2.3-6.5 5-6.5s5 3 5 6.5" 
- fill="#cfdae8"> </path> <path d="M50.6 55.8c0 5.1-3.2 6.2-7.1 6.2c-3.9 0-7.1-1.2-7.1-6.2c0-5.1 3.2-9.2 7.1-9.2c3.9 0 7.1 4.1 7.1 9.2" 
- fill="#96a2aa"> </path> <path d="M48.5 57.1c0 3.6-2.3 4.4-5 4.4s-5-.8-5-4.4c0-3.6 2.3-6.5 5-6.5s5 3 5 6.5" fill="#cfdae8"> </path> </g></svg>
- `;
-
-export const koala16 = (color1?: string, color2?: string) => `
- <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify iconify--emojione" preserveAspectRatio="xMidYMid meet" 
- fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g fill="${color1 || "#a8b2ba"}"> 
- <path d="M17.9 51.7c-3.4 5.8-6.2 6-8.7 4.6s-3.7-3.9-.3-9.7c3.4-5.8 10.2-12.8 12.7-11.4c2.5 1.4-.3 10.6-3.7 16.5"> </path> <path d="M55.1 46.5c3.4 5.8 2.2 8.3-.3 
- 9.7c-2.5 1.4-5.3 1.3-8.7-4.6c-3.4-5.8-6.2-15.1-3.7-16.5c2.5-1.4 9.3 5.6 12.7 11.4"> </path> <ellipse cx="32" cy="52.1" rx="13.9" ry="8.4"> </ellipse> </g> 
- <ellipse cx="32" cy="46.6" rx="13" ry="9.3" fill="#cfdae8"> </ellipse> <path d="M62 13.8c0 6.5-5 11.8-11.1 11.8s-11.1-5.3-11.1-11.8c0-6.5 5-11.8 11.1-11.8S62 
- 7.3 62 13.8z" fill="${color1 || "#a8b2ba"}"> </path> <path d="M57.6 13.8c0 3.9-3 7.1-6.7 7.1s-6.7-3.2-6.7-7.1c0-3.9 3-7.1 6.7-7.1s6.7 3.2 6.7 7.1" fill="#cfdae8"> </path> 
- <ellipse cx="13.1" cy="13.8" rx="11.1" ry="11.8" fill="${color1 || "#a8b2ba"}"> </ellipse> <path d="M19.8 13.8c0 3.9-3 7.1-6.7 7.1s-6.7-3.2-6.7-7.1c0-3.9 3-7.1 6.7-7.1s6.7 
- 3.2 6.7 7.1" fill="#cfdae8"> </path> <g fill="${color1 || "#a8b2ba"}"> <path d="M12 35.7c-2.3-2.1-3-5.3-3-5.3l1.5.3S8.7 29 9.2 25.3l1.5 1.5s-1.5-3.8-.2-7.2l1.7 1.1s-.5-1.4 
- 0-2.4l.7.5s-1.3-3.2-.1-4.6c.7 2 1.4 1.9 1.4 1.9s-1-1.5-.2-2.1c.8 1.1 1.4.4 1.4.1c0-.4.1-1.1-2.1-1.4c1.8-1 3.9-.3 3.9-.3s-.1-1-1.6-1C17 10.3 19 11 19 11l-2.6 
- 6.3l-3.2 9.4l-1.2 9"> </path> <path d="M32 7.5c-17.6 0-21.5 11.9-21.5 26.3c0 1.5 9.6 9.7 21.5 9.7s21.5-8.2 21.5-9.7c0-14.4-3.9-26.3-21.5-26.3"> </path> 
- <path d="M52 35.7c2.3-2.1 3-5.3 3-5.3l-1.5.3s1.8-1.7 1.3-5.4l-1.5 1.5s1.5-3.8.2-7.2l-1.7 1.1s.5-1.4 0-2.4l-.7.5s1.3-3.2.1-4.6c-.7 2-1.4 1.9-1.4 
- 1.9s1-1.5.2-2.1c-.8 1.1-1.4.4-1.4.1c0-.4-.1-1.1 2.1-1.4c-1.8-1-3.9-.3-3.9-.3s.1-1 1.6-1C47 10.3 45 11 45 11l2.6 6.3l3.2 9.4l1.2 9"> </path> </g> 
- <ellipse cx="19.8" cy="28" rx="4" ry="3.9" fill="${color2 || "#d5ff83"}"> </ellipse> <ellipse cx="19.8" cy="28" rx="2.6" ry="2.5" fill="#3e4347"> </ellipse> 
- <ellipse cx="44.2" cy="28" rx="4" ry="3.9" fill="${color2 || "#d5ff83"}"> </ellipse> <ellipse cx="44.2" cy="28" rx="2.6" ry="2.5" fill="#3e4347"> </ellipse> 
- <path d="M24.8 34.2c0-5.9 4.8-8.2 7.2-8.2s7.2 2.3 7.2 8.2c0 7.5-2.6 9.3-7.2 9.3s-7.2-1.7-7.2-9.3" fill="#555e63"> </path> <path d="M27.7 55.8c0 
- 5.1-3.2 6.2-7.1 6.2c-3.9 0-7.1-1.2-7.1-6.2c0-5.1 3.2-9.2 7.1-9.2s7.1 4.1 7.1 9.2" fill="#96a2aa"> </path> <path d="M25.6 57.1c0 3.6-2.3 4.4-5 4.4s-5-.8-5-4.4c0-3.6 2.3-6.5 5-6.5s5 3 5 6.5" 
- fill="#cfdae8"> </path> <path d="M50.6 55.8c0 5.1-3.2 6.2-7.1 6.2c-3.9 0-7.1-1.2-7.1-6.2c0-5.1 3.2-9.2 7.1-9.2c3.9 0 7.1 4.1 7.1 9.2" 
- fill="#96a2aa"> </path> <path d="M48.5 57.1c0 3.6-2.3 4.4-5 4.4s-5-.8-5-4.4c0-3.6 2.3-6.5 5-6.5s5 3 5 6.5" fill="#cfdae8"> </path> </g></svg>
- `;
-
-export const koala17 = (color1?: string, color2?: string) => `
- <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify iconify--emojione" preserveAspectRatio="xMidYMid meet" 
- fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g fill="${color1 || "#a8b2ba"}"> 
- <path d="M17.9 51.7c-3.4 5.8-6.2 6-8.7 4.6s-3.7-3.9-.3-9.7c3.4-5.8 10.2-12.8 12.7-11.4c2.5 1.4-.3 10.6-3.7 16.5"> </path> <path d="M55.1 46.5c3.4 5.8 2.2 8.3-.3 
- 9.7c-2.5 1.4-5.3 1.3-8.7-4.6c-3.4-5.8-6.2-15.1-3.7-16.5c2.5-1.4 9.3 5.6 12.7 11.4"> </path> <ellipse cx="32" cy="52.1" rx="13.9" ry="8.4"> </ellipse> </g> 
- <ellipse cx="32" cy="46.6" rx="13" ry="9.3" fill="#cfdae8"> </ellipse> <path d="M62 13.8c0 6.5-5 11.8-11.1 11.8s-11.1-5.3-11.1-11.8c0-6.5 5-11.8 11.1-11.8S62 
- 7.3 62 13.8z" fill="${color1 || "#a8b2ba"}"> </path> <path d="M57.6 13.8c0 3.9-3 7.1-6.7 7.1s-6.7-3.2-6.7-7.1c0-3.9 3-7.1 6.7-7.1s6.7 3.2 6.7 7.1" fill="#cfdae8"> </path> 
- <ellipse cx="13.1" cy="13.8" rx="11.1" ry="11.8" fill="${color1 || "#a8b2ba"}"> </ellipse> <path d="M19.8 13.8c0 3.9-3 7.1-6.7 7.1s-6.7-3.2-6.7-7.1c0-3.9 3-7.1 6.7-7.1s6.7 
- 3.2 6.7 7.1" fill="#cfdae8"> </path> <g fill="${color1 || "#a8b2ba"}"> <path d="M12 35.7c-2.3-2.1-3-5.3-3-5.3l1.5.3S8.7 29 9.2 25.3l1.5 1.5s-1.5-3.8-.2-7.2l1.7 1.1s-.5-1.4 
- 0-2.4l.7.5s-1.3-3.2-.1-4.6c.7 2 1.4 1.9 1.4 1.9s-1-1.5-.2-2.1c.8 1.1 1.4.4 1.4.1c0-.4.1-1.1-2.1-1.4c1.8-1 3.9-.3 3.9-.3s-.1-1-1.6-1C17 10.3 19 11 19 11l-2.6 
- 6.3l-3.2 9.4l-1.2 9"> </path> <path d="M32 7.5c-17.6 0-21.5 11.9-21.5 26.3c0 1.5 9.6 9.7 21.5 9.7s21.5-8.2 21.5-9.7c0-14.4-3.9-26.3-21.5-26.3"> </path> 
- <path d="M52 35.7c2.3-2.1 3-5.3 3-5.3l-1.5.3s1.8-1.7 1.3-5.4l-1.5 1.5s1.5-3.8.2-7.2l-1.7 1.1s.5-1.4 0-2.4l-.7.5s1.3-3.2.1-4.6c-.7 2-1.4 1.9-1.4 
- 1.9s1-1.5.2-2.1c-.8 1.1-1.4.4-1.4.1c0-.4-.1-1.1 2.1-1.4c-1.8-1-3.9-.3-3.9-.3s.1-1 1.6-1C47 10.3 45 11 45 11l2.6 6.3l3.2 9.4l1.2 9"> </path> </g> 
- <ellipse cx="19.8" cy="28" rx="4" ry="3.9" fill="${color2 || "#d5ff83"}"> </ellipse> <ellipse cx="19.8" cy="28" rx="2.6" ry="2.5" fill="#3e4347"> </ellipse> 
- <ellipse cx="44.2" cy="28" rx="4" ry="3.9" fill="${color2 || "#d5ff83"}"> </ellipse> <ellipse cx="44.2" cy="28" rx="2.6" ry="2.5" fill="#3e4347"> </ellipse> 
- <path d="M24.8 34.2c0-5.9 4.8-8.2 7.2-8.2s7.2 2.3 7.2 8.2c0 7.5-2.6 9.3-7.2 9.3s-7.2-1.7-7.2-9.3" fill="#555e63"> </path> <path d="M27.7 55.8c0 
- 5.1-3.2 6.2-7.1 6.2c-3.9 0-7.1-1.2-7.1-6.2c0-5.1 3.2-9.2 7.1-9.2s7.1 4.1 7.1 9.2" fill="#96a2aa"> </path> <path d="M25.6 57.1c0 3.6-2.3 4.4-5 4.4s-5-.8-5-4.4c0-3.6 2.3-6.5 5-6.5s5 3 5 6.5" 
- fill="#cfdae8"> </path> <path d="M50.6 55.8c0 5.1-3.2 6.2-7.1 6.2c-3.9 0-7.1-1.2-7.1-6.2c0-5.1 3.2-9.2 7.1-9.2c3.9 0 7.1 4.1 7.1 9.2" 
- fill="#96a2aa"> </path> <path d="M48.5 57.1c0 3.6-2.3 4.4-5 4.4s-5-.8-5-4.4c0-3.6 2.3-6.5 5-6.5s5 3 5 6.5" fill="#cfdae8"> </path> </g></svg>
- `;
-
-export const koala18 = (color1?: string, color2?: string) => `
- <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify iconify--emojione" preserveAspectRatio="xMidYMid meet" 
- fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g fill="${color1 || "#a8b2ba"}"> 
- <path d="M17.9 51.7c-3.4 5.8-6.2 6-8.7 4.6s-3.7-3.9-.3-9.7c3.4-5.8 10.2-12.8 12.7-11.4c2.5 1.4-.3 10.6-3.7 16.5"> </path> <path d="M55.1 46.5c3.4 5.8 2.2 8.3-.3 
- 9.7c-2.5 1.4-5.3 1.3-8.7-4.6c-3.4-5.8-6.2-15.1-3.7-16.5c2.5-1.4 9.3 5.6 12.7 11.4"> </path> <ellipse cx="32" cy="52.1" rx="13.9" ry="8.4"> </ellipse> </g> 
- <ellipse cx="32" cy="46.6" rx="13" ry="9.3" fill="#cfdae8"> </ellipse> <path d="M62 13.8c0 6.5-5 11.8-11.1 11.8s-11.1-5.3-11.1-11.8c0-6.5 5-11.8 11.1-11.8S62 
- 7.3 62 13.8z" fill="${color1 || "#a8b2ba"}"> </path> <path d="M57.6 13.8c0 3.9-3 7.1-6.7 7.1s-6.7-3.2-6.7-7.1c0-3.9 3-7.1 6.7-7.1s6.7 3.2 6.7 7.1" fill="#cfdae8"> </path> 
- <ellipse cx="13.1" cy="13.8" rx="11.1" ry="11.8" fill="${color1 || "#a8b2ba"}"> </ellipse> <path d="M19.8 13.8c0 3.9-3 7.1-6.7 7.1s-6.7-3.2-6.7-7.1c0-3.9 3-7.1 6.7-7.1s6.7 
- 3.2 6.7 7.1" fill="#cfdae8"> </path> <g fill="${color1 || "#a8b2ba"}"> <path d="M12 35.7c-2.3-2.1-3-5.3-3-5.3l1.5.3S8.7 29 9.2 25.3l1.5 1.5s-1.5-3.8-.2-7.2l1.7 1.1s-.5-1.4 
- 0-2.4l.7.5s-1.3-3.2-.1-4.6c.7 2 1.4 1.9 1.4 1.9s-1-1.5-.2-2.1c.8 1.1 1.4.4 1.4.1c0-.4.1-1.1-2.1-1.4c1.8-1 3.9-.3 3.9-.3s-.1-1-1.6-1C17 10.3 19 11 19 11l-2.6 
- 6.3l-3.2 9.4l-1.2 9"> </path> <path d="M32 7.5c-17.6 0-21.5 11.9-21.5 26.3c0 1.5 9.6 9.7 21.5 9.7s21.5-8.2 21.5-9.7c0-14.4-3.9-26.3-21.5-26.3"> </path> 
- <path d="M52 35.7c2.3-2.1 3-5.3 3-5.3l-1.5.3s1.8-1.7 1.3-5.4l-1.5 1.5s1.5-3.8.2-7.2l-1.7 1.1s.5-1.4 0-2.4l-.7.5s1.3-3.2.1-4.6c-.7 2-1.4 1.9-1.4 
- 1.9s1-1.5.2-2.1c-.8 1.1-1.4.4-1.4.1c0-.4-.1-1.1 2.1-1.4c-1.8-1-3.9-.3-3.9-.3s.1-1 1.6-1C47 10.3 45 11 45 11l2.6 6.3l3.2 9.4l1.2 9"> </path> </g> 
- <ellipse cx="19.8" cy="28" rx="4" ry="3.9" fill="${color2 || "#d5ff83"}"> </ellipse> <ellipse cx="19.8" cy="28" rx="2.6" ry="2.5" fill="#3e4347"> </ellipse> 
- <ellipse cx="44.2" cy="28" rx="4" ry="3.9" fill="${color2 || "#d5ff83"}"> </ellipse> <ellipse cx="44.2" cy="28" rx="2.6" ry="2.5" fill="#3e4347"> </ellipse> 
- <path d="M24.8 34.2c0-5.9 4.8-8.2 7.2-8.2s7.2 2.3 7.2 8.2c0 7.5-2.6 9.3-7.2 9.3s-7.2-1.7-7.2-9.3" fill="#555e63"> </path> <path d="M27.7 55.8c0 
- 5.1-3.2 6.2-7.1 6.2c-3.9 0-7.1-1.2-7.1-6.2c0-5.1 3.2-9.2 7.1-9.2s7.1 4.1 7.1 9.2" fill="#96a2aa"> </path> <path d="M25.6 57.1c0 3.6-2.3 4.4-5 4.4s-5-.8-5-4.4c0-3.6 2.3-6.5 5-6.5s5 3 5 6.5" 
- fill="#cfdae8"> </path> <path d="M50.6 55.8c0 5.1-3.2 6.2-7.1 6.2c-3.9 0-7.1-1.2-7.1-6.2c0-5.1 3.2-9.2 7.1-9.2c3.9 0 7.1 4.1 7.1 9.2" 
- fill="#96a2aa"> </path> <path d="M48.5 57.1c0 3.6-2.3 4.4-5 4.4s-5-.8-5-4.4c0-3.6 2.3-6.5 5-6.5s5 3 5 6.5" fill="#cfdae8"> </path> </g></svg>
- `;
-
-export const koala19 = (color1?: string, color2?: string) => `
- <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify iconify--emojione" preserveAspectRatio="xMidYMid meet" 
- fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g fill="${color1 || "#a8b2ba"}"> 
- <path d="M17.9 51.7c-3.4 5.8-6.2 6-8.7 4.6s-3.7-3.9-.3-9.7c3.4-5.8 10.2-12.8 12.7-11.4c2.5 1.4-.3 10.6-3.7 16.5"> </path> <path d="M55.1 46.5c3.4 5.8 2.2 8.3-.3 
- 9.7c-2.5 1.4-5.3 1.3-8.7-4.6c-3.4-5.8-6.2-15.1-3.7-16.5c2.5-1.4 9.3 5.6 12.7 11.4"> </path> <ellipse cx="32" cy="52.1" rx="13.9" ry="8.4"> </ellipse> </g> 
- <ellipse cx="32" cy="46.6" rx="13" ry="9.3" fill="#cfdae8"> </ellipse> <path d="M62 13.8c0 6.5-5 11.8-11.1 11.8s-11.1-5.3-11.1-11.8c0-6.5 5-11.8 11.1-11.8S62 
- 7.3 62 13.8z" fill="${color1 || "#a8b2ba"}"> </path> <path d="M57.6 13.8c0 3.9-3 7.1-6.7 7.1s-6.7-3.2-6.7-7.1c0-3.9 3-7.1 6.7-7.1s6.7 3.2 6.7 7.1" fill="#cfdae8"> </path> 
- <ellipse cx="13.1" cy="13.8" rx="11.1" ry="11.8" fill="${color1 || "#a8b2ba"}"> </ellipse> <path d="M19.8 13.8c0 3.9-3 7.1-6.7 7.1s-6.7-3.2-6.7-7.1c0-3.9 3-7.1 6.7-7.1s6.7 
- 3.2 6.7 7.1" fill="#cfdae8"> </path> <g fill="${color1 || "#a8b2ba"}"> <path d="M12 35.7c-2.3-2.1-3-5.3-3-5.3l1.5.3S8.7 29 9.2 25.3l1.5 1.5s-1.5-3.8-.2-7.2l1.7 1.1s-.5-1.4 
- 0-2.4l.7.5s-1.3-3.2-.1-4.6c.7 2 1.4 1.9 1.4 1.9s-1-1.5-.2-2.1c.8 1.1 1.4.4 1.4.1c0-.4.1-1.1-2.1-1.4c1.8-1 3.9-.3 3.9-.3s-.1-1-1.6-1C17 10.3 19 11 19 11l-2.6 
- 6.3l-3.2 9.4l-1.2 9"> </path> <path d="M32 7.5c-17.6 0-21.5 11.9-21.5 26.3c0 1.5 9.6 9.7 21.5 9.7s21.5-8.2 21.5-9.7c0-14.4-3.9-26.3-21.5-26.3"> </path> 
- <path d="M52 35.7c2.3-2.1 3-5.3 3-5.3l-1.5.3s1.8-1.7 1.3-5.4l-1.5 1.5s1.5-3.8.2-7.2l-1.7 1.1s.5-1.4 0-2.4l-.7.5s1.3-3.2.1-4.6c-.7 2-1.4 1.9-1.4 
- 1.9s1-1.5.2-2.1c-.8 1.1-1.4.4-1.4.1c0-.4-.1-1.1 2.1-1.4c-1.8-1-3.9-.3-3.9-.3s.1-1 1.6-1C47 10.3 45 11 45 11l2.6 6.3l3.2 9.4l1.2 9"> </path> </g> 
- <ellipse cx="19.8" cy="28" rx="4" ry="3.9" fill="${color2 || "#d5ff83"}"> </ellipse> <ellipse cx="19.8" cy="28" rx="2.6" ry="2.5" fill="#3e4347"> </ellipse> 
- <ellipse cx="44.2" cy="28" rx="4" ry="3.9" fill="${color2 || "#d5ff83"}"> </ellipse> <ellipse cx="44.2" cy="28" rx="2.6" ry="2.5" fill="#3e4347"> </ellipse> 
- <path d="M24.8 34.2c0-5.9 4.8-8.2 7.2-8.2s7.2 2.3 7.2 8.2c0 7.5-2.6 9.3-7.2 9.3s-7.2-1.7-7.2-9.3" fill="#555e63"> </path> <path d="M27.7 55.8c0 
- 5.1-3.2 6.2-7.1 6.2c-3.9 0-7.1-1.2-7.1-6.2c0-5.1 3.2-9.2 7.1-9.2s7.1 4.1 7.1 9.2" fill="#96a2aa"> </path> <path d="M25.6 57.1c0 3.6-2.3 4.4-5 4.4s-5-.8-5-4.4c0-3.6 2.3-6.5 5-6.5s5 3 5 6.5" 
- fill="#cfdae8"> </path> <path d="M50.6 55.8c0 5.1-3.2 6.2-7.1 6.2c-3.9 0-7.1-1.2-7.1-6.2c0-5.1 3.2-9.2 7.1-9.2c3.9 0 7.1 4.1 7.1 9.2" 
- fill="#96a2aa"> </path> <path d="M48.5 57.1c0 3.6-2.3 4.4-5 4.4s-5-.8-5-4.4c0-3.6 2.3-6.5 5-6.5s5 3 5 6.5" fill="#cfdae8"> </path> </g></svg>
- `;
-
-export const koala20 = (color1?: string, color2?: string) => `
- <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify iconify--emojione" preserveAspectRatio="xMidYMid meet" 
- fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g fill="${color1 || "#a8b2ba"}"> 
- <path d="M17.9 51.7c-3.4 5.8-6.2 6-8.7 4.6s-3.7-3.9-.3-9.7c3.4-5.8 10.2-12.8 12.7-11.4c2.5 1.4-.3 10.6-3.7 16.5"> </path> <path d="M55.1 46.5c3.4 5.8 2.2 8.3-.3 
- 9.7c-2.5 1.4-5.3 1.3-8.7-4.6c-3.4-5.8-6.2-15.1-3.7-16.5c2.5-1.4 9.3 5.6 12.7 11.4"> </path> <ellipse cx="32" cy="52.1" rx="13.9" ry="8.4"> </ellipse> </g> 
- <ellipse cx="32" cy="46.6" rx="13" ry="9.3" fill="#cfdae8"> </ellipse> <path d="M62 13.8c0 6.5-5 11.8-11.1 11.8s-11.1-5.3-11.1-11.8c0-6.5 5-11.8 11.1-11.8S62 
- 7.3 62 13.8z" fill="${color1 || "#a8b2ba"}"> </path> <path d="M57.6 13.8c0 3.9-3 7.1-6.7 7.1s-6.7-3.2-6.7-7.1c0-3.9 3-7.1 6.7-7.1s6.7 3.2 6.7 7.1" fill="#cfdae8"> </path> 
- <ellipse cx="13.1" cy="13.8" rx="11.1" ry="11.8" fill="${color1 || "#a8b2ba"}"> </ellipse> <path d="M19.8 13.8c0 3.9-3 7.1-6.7 7.1s-6.7-3.2-6.7-7.1c0-3.9 3-7.1 6.7-7.1s6.7 
- 3.2 6.7 7.1" fill="#cfdae8"> </path> <g fill="${color1 || "#a8b2ba"}"> <path d="M12 35.7c-2.3-2.1-3-5.3-3-5.3l1.5.3S8.7 29 9.2 25.3l1.5 1.5s-1.5-3.8-.2-7.2l1.7 1.1s-.5-1.4 
- 0-2.4l.7.5s-1.3-3.2-.1-4.6c.7 2 1.4 1.9 1.4 1.9s-1-1.5-.2-2.1c.8 1.1 1.4.4 1.4.1c0-.4.1-1.1-2.1-1.4c1.8-1 3.9-.3 3.9-.3s-.1-1-1.6-1C17 10.3 19 11 19 11l-2.6 
- 6.3l-3.2 9.4l-1.2 9"> </path> <path d="M32 7.5c-17.6 0-21.5 11.9-21.5 26.3c0 1.5 9.6 9.7 21.5 9.7s21.5-8.2 21.5-9.7c0-14.4-3.9-26.3-21.5-26.3"> </path> 
- <path d="M52 35.7c2.3-2.1 3-5.3 3-5.3l-1.5.3s1.8-1.7 1.3-5.4l-1.5 1.5s1.5-3.8.2-7.2l-1.7 1.1s.5-1.4 0-2.4l-.7.5s1.3-3.2.1-4.6c-.7 2-1.4 1.9-1.4 
- 1.9s1-1.5.2-2.1c-.8 1.1-1.4.4-1.4.1c0-.4-.1-1.1 2.1-1.4c-1.8-1-3.9-.3-3.9-.3s.1-1 1.6-1C47 10.3 45 11 45 11l2.6 6.3l3.2 9.4l1.2 9"> </path> </g> 
- <ellipse cx="19.8" cy="28" rx="4" ry="3.9" fill="${color2 || "#d5ff83"}"> </ellipse> <ellipse cx="19.8" cy="28" rx="2.6" ry="2.5" fill="#3e4347"> </ellipse> 
- <ellipse cx="44.2" cy="28" rx="4" ry="3.9" fill="${color2 || "#d5ff83"}"> </ellipse> <ellipse cx="44.2" cy="28" rx="2.6" ry="2.5" fill="#3e4347"> </ellipse> 
- <path d="M24.8 34.2c0-5.9 4.8-8.2 7.2-8.2s7.2 2.3 7.2 8.2c0 7.5-2.6 9.3-7.2 9.3s-7.2-1.7-7.2-9.3" fill="#555e63"> </path> <path d="M27.7 55.8c0 
- 5.1-3.2 6.2-7.1 6.2c-3.9 0-7.1-1.2-7.1-6.2c0-5.1 3.2-9.2 7.1-9.2s7.1 4.1 7.1 9.2" fill="#96a2aa"> </path> <path d="M25.6 57.1c0 3.6-2.3 4.4-5 4.4s-5-.8-5-4.4c0-3.6 2.3-6.5 5-6.5s5 3 5 6.5" 
- fill="#cfdae8"> </path> <path d="M50.6 55.8c0 5.1-3.2 6.2-7.1 6.2c-3.9 0-7.1-1.2-7.1-6.2c0-5.1 3.2-9.2 7.1-9.2c3.9 0 7.1 4.1 7.1 9.2" 
- fill="#96a2aa"> </path> <path d="M48.5 57.1c0 3.6-2.3 4.4-5 4.4s-5-.8-5-4.4c0-3.6 2.3-6.5 5-6.5s5 3 5 6.5" fill="#cfdae8"> </path> </g></svg>
- `;
-
-export const koala21 = (color1?: string, color2?: string) => `
- <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify iconify--emojione" preserveAspectRatio="xMidYMid meet" 
- fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g fill="${color1 || "#a8b2ba"}"> 
- <path d="M17.9 51.7c-3.4 5.8-6.2 6-8.7 4.6s-3.7-3.9-.3-9.7c3.4-5.8 10.2-12.8 12.7-11.4c2.5 1.4-.3 10.6-3.7 16.5"> </path> <path d="M55.1 46.5c3.4 5.8 2.2 8.3-.3 
- 9.7c-2.5 1.4-5.3 1.3-8.7-4.6c-3.4-5.8-6.2-15.1-3.7-16.5c2.5-1.4 9.3 5.6 12.7 11.4"> </path> <ellipse cx="32" cy="52.1" rx="13.9" ry="8.4"> </ellipse> </g> 
- <ellipse cx="32" cy="46.6" rx="13" ry="9.3" fill="#cfdae8"> </ellipse> <path d="M62 13.8c0 6.5-5 11.8-11.1 11.8s-11.1-5.3-11.1-11.8c0-6.5 5-11.8 11.1-11.8S62 
- 7.3 62 13.8z" fill="${color1 || "#a8b2ba"}"> </path> <path d="M57.6 13.8c0 3.9-3 7.1-6.7 7.1s-6.7-3.2-6.7-7.1c0-3.9 3-7.1 6.7-7.1s6.7 3.2 6.7 7.1" fill="#cfdae8"> </path> 
- <ellipse cx="13.1" cy="13.8" rx="11.1" ry="11.8" fill="${color1 || "#a8b2ba"}"> </ellipse> <path d="M19.8 13.8c0 3.9-3 7.1-6.7 7.1s-6.7-3.2-6.7-7.1c0-3.9 3-7.1 6.7-7.1s6.7 
- 3.2 6.7 7.1" fill="#cfdae8"> </path> <g fill="${color1 || "#a8b2ba"}"> <path d="M12 35.7c-2.3-2.1-3-5.3-3-5.3l1.5.3S8.7 29 9.2 25.3l1.5 1.5s-1.5-3.8-.2-7.2l1.7 1.1s-.5-1.4 
- 0-2.4l.7.5s-1.3-3.2-.1-4.6c.7 2 1.4 1.9 1.4 1.9s-1-1.5-.2-2.1c.8 1.1 1.4.4 1.4.1c0-.4.1-1.1-2.1-1.4c1.8-1 3.9-.3 3.9-.3s-.1-1-1.6-1C17 10.3 19 11 19 11l-2.6 
- 6.3l-3.2 9.4l-1.2 9"> </path> <path d="M32 7.5c-17.6 0-21.5 11.9-21.5 26.3c0 1.5 9.6 9.7 21.5 9.7s21.5-8.2 21.5-9.7c0-14.4-3.9-26.3-21.5-26.3"> </path> 
- <path d="M52 35.7c2.3-2.1 3-5.3 3-5.3l-1.5.3s1.8-1.7 1.3-5.4l-1.5 1.5s1.5-3.8.2-7.2l-1.7 1.1s.5-1.4 0-2.4l-.7.5s1.3-3.2.1-4.6c-.7 2-1.4 1.9-1.4 
- 1.9s1-1.5.2-2.1c-.8 1.1-1.4.4-1.4.1c0-.4-.1-1.1 2.1-1.4c-1.8-1-3.9-.3-3.9-.3s.1-1 1.6-1C47 10.3 45 11 45 11l2.6 6.3l3.2 9.4l1.2 9"> </path> </g> 
- <ellipse cx="19.8" cy="28" rx="4" ry="3.9" fill="${color2 || "#d5ff83"}"> </ellipse> <ellipse cx="19.8" cy="28" rx="2.6" ry="2.5" fill="#3e4347"> </ellipse> 
- <ellipse cx="44.2" cy="28" rx="4" ry="3.9" fill="${color2 || "#d5ff83"}"> </ellipse> <ellipse cx="44.2" cy="28" rx="2.6" ry="2.5" fill="#3e4347"> </ellipse> 
- <path d="M24.8 34.2c0-5.9 4.8-8.2 7.2-8.2s7.2 2.3 7.2 8.2c0 7.5-2.6 9.3-7.2 9.3s-7.2-1.7-7.2-9.3" fill="#555e63"> </path> <path d="M27.7 55.8c0 
- 5.1-3.2 6.2-7.1 6.2c-3.9 0-7.1-1.2-7.1-6.2c0-5.1 3.2-9.2 7.1-9.2s7.1 4.1 7.1 9.2" fill="#96a2aa"> </path> <path d="M25.6 57.1c0 3.6-2.3 4.4-5 4.4s-5-.8-5-4.4c0-3.6 2.3-6.5 5-6.5s5 3 5 6.5" 
- fill="#cfdae8"> </path> <path d="M50.6 55.8c0 5.1-3.2 6.2-7.1 6.2c-3.9 0-7.1-1.2-7.1-6.2c0-5.1 3.2-9.2 7.1-9.2c3.9 0 7.1 4.1 7.1 9.2" 
- fill="#96a2aa"> </path> <path d="M48.5 57.1c0 3.6-2.3 4.4-5 4.4s-5-.8-5-4.4c0-3.6 2.3-6.5 5-6.5s5 3 5 6.5" fill="#cfdae8"> </path> </g></svg>
- `;
-
-export const koala22 = (color1?: string, color2?: string) => `
- <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify iconify--emojione" preserveAspectRatio="xMidYMid meet" 
- fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g fill="${color1 || "#a8b2ba"}"> 
- <path d="M17.9 51.7c-3.4 5.8-6.2 6-8.7 4.6s-3.7-3.9-.3-9.7c3.4-5.8 10.2-12.8 12.7-11.4c2.5 1.4-.3 10.6-3.7 16.5"> </path> <path d="M55.1 46.5c3.4 5.8 2.2 8.3-.3 
- 9.7c-2.5 1.4-5.3 1.3-8.7-4.6c-3.4-5.8-6.2-15.1-3.7-16.5c2.5-1.4 9.3 5.6 12.7 11.4"> </path> <ellipse cx="32" cy="52.1" rx="13.9" ry="8.4"> </ellipse> </g> 
- <ellipse cx="32" cy="46.6" rx="13" ry="9.3" fill="#cfdae8"> </ellipse> <path d="M62 13.8c0 6.5-5 11.8-11.1 11.8s-11.1-5.3-11.1-11.8c0-6.5 5-11.8 11.1-11.8S62 
- 7.3 62 13.8z" fill="${color1 || "#a8b2ba"}"> </path> <path d="M57.6 13.8c0 3.9-3 7.1-6.7 7.1s-6.7-3.2-6.7-7.1c0-3.9 3-7.1 6.7-7.1s6.7 3.2 6.7 7.1" fill="#cfdae8"> </path> 
- <ellipse cx="13.1" cy="13.8" rx="11.1" ry="11.8" fill="${color1 || "#a8b2ba"}"> </ellipse> <path d="M19.8 13.8c0 3.9-3 7.1-6.7 7.1s-6.7-3.2-6.7-7.1c0-3.9 3-7.1 6.7-7.1s6.7 
- 3.2 6.7 7.1" fill="#cfdae8"> </path> <g fill="${color1 || "#a8b2ba"}"> <path d="M12 35.7c-2.3-2.1-3-5.3-3-5.3l1.5.3S8.7 29 9.2 25.3l1.5 1.5s-1.5-3.8-.2-7.2l1.7 1.1s-.5-1.4 
- 0-2.4l.7.5s-1.3-3.2-.1-4.6c.7 2 1.4 1.9 1.4 1.9s-1-1.5-.2-2.1c.8 1.1 1.4.4 1.4.1c0-.4.1-1.1-2.1-1.4c1.8-1 3.9-.3 3.9-.3s-.1-1-1.6-1C17 10.3 19 11 19 11l-2.6 
- 6.3l-3.2 9.4l-1.2 9"> </path> <path d="M32 7.5c-17.6 0-21.5 11.9-21.5 26.3c0 1.5 9.6 9.7 21.5 9.7s21.5-8.2 21.5-9.7c0-14.4-3.9-26.3-21.5-26.3"> </path> 
- <path d="M52 35.7c2.3-2.1 3-5.3 3-5.3l-1.5.3s1.8-1.7 1.3-5.4l-1.5 1.5s1.5-3.8.2-7.2l-1.7 1.1s.5-1.4 0-2.4l-.7.5s1.3-3.2.1-4.6c-.7 2-1.4 1.9-1.4 
- 1.9s1-1.5.2-2.1c-.8 1.1-1.4.4-1.4.1c0-.4-.1-1.1 2.1-1.4c-1.8-1-3.9-.3-3.9-.3s.1-1 1.6-1C47 10.3 45 11 45 11l2.6 6.3l3.2 9.4l1.2 9"> </path> </g> 
- <ellipse cx="19.8" cy="28" rx="4" ry="3.9" fill="${color2 || "#d5ff83"}"> </ellipse> <ellipse cx="19.8" cy="28" rx="2.6" ry="2.5" fill="#3e4347"> </ellipse> 
- <ellipse cx="44.2" cy="28" rx="4" ry="3.9" fill="${color2 || "#d5ff83"}"> </ellipse> <ellipse cx="44.2" cy="28" rx="2.6" ry="2.5" fill="#3e4347"> </ellipse> 
- <path d="M24.8 34.2c0-5.9 4.8-8.2 7.2-8.2s7.2 2.3 7.2 8.2c0 7.5-2.6 9.3-7.2 9.3s-7.2-1.7-7.2-9.3" fill="#555e63"> </path> <path d="M27.7 55.8c0 
- 5.1-3.2 6.2-7.1 6.2c-3.9 0-7.1-1.2-7.1-6.2c0-5.1 3.2-9.2 7.1-9.2s7.1 4.1 7.1 9.2" fill="#96a2aa"> </path> <path d="M25.6 57.1c0 3.6-2.3 4.4-5 4.4s-5-.8-5-4.4c0-3.6 2.3-6.5 5-6.5s5 3 5 6.5" 
- fill="#cfdae8"> </path> <path d="M50.6 55.8c0 5.1-3.2 6.2-7.1 6.2c-3.9 0-7.1-1.2-7.1-6.2c0-5.1 3.2-9.2 7.1-9.2c3.9 0 7.1 4.1 7.1 9.2" 
- fill="#96a2aa"> </path> <path d="M48.5 57.1c0 3.6-2.3 4.4-5 4.4s-5-.8-5-4.4c0-3.6 2.3-6.5 5-6.5s5 3 5 6.5" fill="#cfdae8"> </path> </g></svg>
- `;
-
-export const koala23 = (color1?: string, color2?: string) => `
- <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify iconify--emojione" preserveAspectRatio="xMidYMid meet" 
- fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g fill="${color1 || "#a8b2ba"}"> 
- <path d="M17.9 51.7c-3.4 5.8-6.2 6-8.7 4.6s-3.7-3.9-.3-9.7c3.4-5.8 10.2-12.8 12.7-11.4c2.5 1.4-.3 10.6-3.7 16.5"> </path> <path d="M55.1 46.5c3.4 5.8 2.2 8.3-.3 
- 9.7c-2.5 1.4-5.3 1.3-8.7-4.6c-3.4-5.8-6.2-15.1-3.7-16.5c2.5-1.4 9.3 5.6 12.7 11.4"> </path> <ellipse cx="32" cy="52.1" rx="13.9" ry="8.4"> </ellipse> </g> 
- <ellipse cx="32" cy="46.6" rx="13" ry="9.3" fill="#cfdae8"> </ellipse> <path d="M62 13.8c0 6.5-5 11.8-11.1 11.8s-11.1-5.3-11.1-11.8c0-6.5 5-11.8 11.1-11.8S62 
- 7.3 62 13.8z" fill="${color1 || "#a8b2ba"}"> </path> <path d="M57.6 13.8c0 3.9-3 7.1-6.7 7.1s-6.7-3.2-6.7-7.1c0-3.9 3-7.1 6.7-7.1s6.7 3.2 6.7 7.1" fill="#cfdae8"> </path> 
- <ellipse cx="13.1" cy="13.8" rx="11.1" ry="11.8" fill="${color1 || "#a8b2ba"}"> </ellipse> <path d="M19.8 13.8c0 3.9-3 7.1-6.7 7.1s-6.7-3.2-6.7-7.1c0-3.9 3-7.1 6.7-7.1s6.7 
- 3.2 6.7 7.1" fill="#cfdae8"> </path> <g fill="${color1 || "#a8b2ba"}"> <path d="M12 35.7c-2.3-2.1-3-5.3-3-5.3l1.5.3S8.7 29 9.2 25.3l1.5 1.5s-1.5-3.8-.2-7.2l1.7 1.1s-.5-1.4 
- 0-2.4l.7.5s-1.3-3.2-.1-4.6c.7 2 1.4 1.9 1.4 1.9s-1-1.5-.2-2.1c.8 1.1 1.4.4 1.4.1c0-.4.1-1.1-2.1-1.4c1.8-1 3.9-.3 3.9-.3s-.1-1-1.6-1C17 10.3 19 11 19 11l-2.6 
- 6.3l-3.2 9.4l-1.2 9"> </path> <path d="M32 7.5c-17.6 0-21.5 11.9-21.5 26.3c0 1.5 9.6 9.7 21.5 9.7s21.5-8.2 21.5-9.7c0-14.4-3.9-26.3-21.5-26.3"> </path> 
- <path d="M52 35.7c2.3-2.1 3-5.3 3-5.3l-1.5.3s1.8-1.7 1.3-5.4l-1.5 1.5s1.5-3.8.2-7.2l-1.7 1.1s.5-1.4 0-2.4l-.7.5s1.3-3.2.1-4.6c-.7 2-1.4 1.9-1.4 
- 1.9s1-1.5.2-2.1c-.8 1.1-1.4.4-1.4.1c0-.4-.1-1.1 2.1-1.4c-1.8-1-3.9-.3-3.9-.3s.1-1 1.6-1C47 10.3 45 11 45 11l2.6 6.3l3.2 9.4l1.2 9"> </path> </g> 
- <ellipse cx="19.8" cy="28" rx="4" ry="3.9" fill="${color2 || "#d5ff83"}"> </ellipse> <ellipse cx="19.8" cy="28" rx="2.6" ry="2.5" fill="#3e4347"> </ellipse> 
- <ellipse cx="44.2" cy="28" rx="4" ry="3.9" fill="${color2 || "#d5ff83"}"> </ellipse> <ellipse cx="44.2" cy="28" rx="2.6" ry="2.5" fill="#3e4347"> </ellipse> 
- <path d="M24.8 34.2c0-5.9 4.8-8.2 7.2-8.2s7.2 2.3 7.2 8.2c0 7.5-2.6 9.3-7.2 9.3s-7.2-1.7-7.2-9.3" fill="#555e63"> </path> <path d="M27.7 55.8c0 
- 5.1-3.2 6.2-7.1 6.2c-3.9 0-7.1-1.2-7.1-6.2c0-5.1 3.2-9.2 7.1-9.2s7.1 4.1 7.1 9.2" fill="#96a2aa"> </path> <path d="M25.6 57.1c0 3.6-2.3 4.4-5 4.4s-5-.8-5-4.4c0-3.6 2.3-6.5 5-6.5s5 3 5 6.5" 
- fill="#cfdae8"> </path> <path d="M50.6 55.8c0 5.1-3.2 6.2-7.1 6.2c-3.9 0-7.1-1.2-7.1-6.2c0-5.1 3.2-9.2 7.1-9.2c3.9 0 7.1 4.1 7.1 9.2" 
- fill="#96a2aa"> </path> <path d="M48.5 57.1c0 3.6-2.3 4.4-5 4.4s-5-.8-5-4.4c0-3.6 2.3-6.5 5-6.5s5 3 5 6.5" fill="#cfdae8"> </path> </g></svg>
- `;
-
-export const koala24 = (color1?: string, color2?: string) => `
- <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify iconify--emojione" preserveAspectRatio="xMidYMid meet" 
- fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g fill="${color1 || "#a8b2ba"}"> 
- <path d="M17.9 51.7c-3.4 5.8-6.2 6-8.7 4.6s-3.7-3.9-.3-9.7c3.4-5.8 10.2-12.8 12.7-11.4c2.5 1.4-.3 10.6-3.7 16.5"> </path> <path d="M55.1 46.5c3.4 5.8 2.2 8.3-.3 
- 9.7c-2.5 1.4-5.3 1.3-8.7-4.6c-3.4-5.8-6.2-15.1-3.7-16.5c2.5-1.4 9.3 5.6 12.7 11.4"> </path> <ellipse cx="32" cy="52.1" rx="13.9" ry="8.4"> </ellipse> </g> 
- <ellipse cx="32" cy="46.6" rx="13" ry="9.3" fill="#cfdae8"> </ellipse> <path d="M62 13.8c0 6.5-5 11.8-11.1 11.8s-11.1-5.3-11.1-11.8c0-6.5 5-11.8 11.1-11.8S62 
- 7.3 62 13.8z" fill="${color1 || "#a8b2ba"}"> </path> <path d="M57.6 13.8c0 3.9-3 7.1-6.7 7.1s-6.7-3.2-6.7-7.1c0-3.9 3-7.1 6.7-7.1s6.7 3.2 6.7 7.1" fill="#cfdae8"> </path> 
- <ellipse cx="13.1" cy="13.8" rx="11.1" ry="11.8" fill="${color1 || "#a8b2ba"}"> </ellipse> <path d="M19.8 13.8c0 3.9-3 7.1-6.7 7.1s-6.7-3.2-6.7-7.1c0-3.9 3-7.1 6.7-7.1s6.7 
- 3.2 6.7 7.1" fill="#cfdae8"> </path> <g fill="${color1 || "#a8b2ba"}"> <path d="M12 35.7c-2.3-2.1-3-5.3-3-5.3l1.5.3S8.7 29 9.2 25.3l1.5 1.5s-1.5-3.8-.2-7.2l1.7 1.1s-.5-1.4 
- 0-2.4l.7.5s-1.3-3.2-.1-4.6c.7 2 1.4 1.9 1.4 1.9s-1-1.5-.2-2.1c.8 1.1 1.4.4 1.4.1c0-.4.1-1.1-2.1-1.4c1.8-1 3.9-.3 3.9-.3s-.1-1-1.6-1C17 10.3 19 11 19 11l-2.6 
- 6.3l-3.2 9.4l-1.2 9"> </path> <path d="M32 7.5c-17.6 0-21.5 11.9-21.5 26.3c0 1.5 9.6 9.7 21.5 9.7s21.5-8.2 21.5-9.7c0-14.4-3.9-26.3-21.5-26.3"> </path> 
- <path d="M52 35.7c2.3-2.1 3-5.3 3-5.3l-1.5.3s1.8-1.7 1.3-5.4l-1.5 1.5s1.5-3.8.2-7.2l-1.7 1.1s.5-1.4 0-2.4l-.7.5s1.3-3.2.1-4.6c-.7 2-1.4 1.9-1.4 
- 1.9s1-1.5.2-2.1c-.8 1.1-1.4.4-1.4.1c0-.4-.1-1.1 2.1-1.4c-1.8-1-3.9-.3-3.9-.3s.1-1 1.6-1C47 10.3 45 11 45 11l2.6 6.3l3.2 9.4l1.2 9"> </path> </g> 
- <ellipse cx="19.8" cy="28" rx="4" ry="3.9" fill="${color2 || "#d5ff83"}"> </ellipse> <ellipse cx="19.8" cy="28" rx="2.6" ry="2.5" fill="#3e4347"> </ellipse> 
- <ellipse cx="44.2" cy="28" rx="4" ry="3.9" fill="${color2 || "#d5ff83"}"> </ellipse> <ellipse cx="44.2" cy="28" rx="2.6" ry="2.5" fill="#3e4347"> </ellipse> 
- <path d="M24.8 34.2c0-5.9 4.8-8.2 7.2-8.2s7.2 2.3 7.2 8.2c0 7.5-2.6 9.3-7.2 9.3s-7.2-1.7-7.2-9.3" fill="#555e63"> </path> <path d="M27.7 55.8c0 
- 5.1-3.2 6.2-7.1 6.2c-3.9 0-7.1-1.2-7.1-6.2c0-5.1 3.2-9.2 7.1-9.2s7.1 4.1 7.1 9.2" fill="#96a2aa"> </path> <path d="M25.6 57.1c0 3.6-2.3 4.4-5 4.4s-5-.8-5-4.4c0-3.6 2.3-6.5 5-6.5s5 3 5 6.5" 
- fill="#cfdae8"> </path> <path d="M50.6 55.8c0 5.1-3.2 6.2-7.1 6.2c-3.9 0-7.1-1.2-7.1-6.2c0-5.1 3.2-9.2 7.1-9.2c3.9 0 7.1 4.1 7.1 9.2" 
- fill="#96a2aa"> </path> <path d="M48.5 57.1c0 3.6-2.3 4.4-5 4.4s-5-.8-5-4.4c0-3.6 2.3-6.5 5-6.5s5 3 5 6.5" fill="#cfdae8"> </path> </g></svg>
- `;
-
-export const koala25 = (color1?: string, color2?: string) => `
- <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify iconify--emojione" preserveAspectRatio="xMidYMid meet" 
- fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g fill="${color1 || "#a8b2ba"}"> 
- <path d="M17.9 51.7c-3.4 5.8-6.2 6-8.7 4.6s-3.7-3.9-.3-9.7c3.4-5.8 10.2-12.8 12.7-11.4c2.5 1.4-.3 10.6-3.7 16.5"> </path> <path d="M55.1 46.5c3.4 5.8 2.2 8.3-.3 
- 9.7c-2.5 1.4-5.3 1.3-8.7-4.6c-3.4-5.8-6.2-15.1-3.7-16.5c2.5-1.4 9.3 5.6 12.7 11.4"> </path> <ellipse cx="32" cy="52.1" rx="13.9" ry="8.4"> </ellipse> </g> 
- <ellipse cx="32" cy="46.6" rx="13" ry="9.3" fill="#cfdae8"> </ellipse> <path d="M62 13.8c0 6.5-5 11.8-11.1 11.8s-11.1-5.3-11.1-11.8c0-6.5 5-11.8 11.1-11.8S62 
- 7.3 62 13.8z" fill="${color1 || "#a8b2ba"}"> </path> <path d="M57.6 13.8c0 3.9-3 7.1-6.7 7.1s-6.7-3.2-6.7-7.1c0-3.9 3-7.1 6.7-7.1s6.7 3.2 6.7 7.1" fill="#cfdae8"> </path> 
- <ellipse cx="13.1" cy="13.8" rx="11.1" ry="11.8" fill="${color1 || "#a8b2ba"}"> </ellipse> <path d="M19.8 13.8c0 3.9-3 7.1-6.7 7.1s-6.7-3.2-6.7-7.1c0-3.9 3-7.1 6.7-7.1s6.7 
- 3.2 6.7 7.1" fill="#cfdae8"> </path> <g fill="${color1 || "#a8b2ba"}"> <path d="M12 35.7c-2.3-2.1-3-5.3-3-5.3l1.5.3S8.7 29 9.2 25.3l1.5 1.5s-1.5-3.8-.2-7.2l1.7 1.1s-.5-1.4 
- 0-2.4l.7.5s-1.3-3.2-.1-4.6c.7 2 1.4 1.9 1.4 1.9s-1-1.5-.2-2.1c.8 1.1 1.4.4 1.4.1c0-.4.1-1.1-2.1-1.4c1.8-1 3.9-.3 3.9-.3s-.1-1-1.6-1C17 10.3 19 11 19 11l-2.6 
- 6.3l-3.2 9.4l-1.2 9"> </path> <path d="M32 7.5c-17.6 0-21.5 11.9-21.5 26.3c0 1.5 9.6 9.7 21.5 9.7s21.5-8.2 21.5-9.7c0-14.4-3.9-26.3-21.5-26.3"> </path> 
- <path d="M52 35.7c2.3-2.1 3-5.3 3-5.3l-1.5.3s1.8-1.7 1.3-5.4l-1.5 1.5s1.5-3.8.2-7.2l-1.7 1.1s.5-1.4 0-2.4l-.7.5s1.3-3.2.1-4.6c-.7 2-1.4 1.9-1.4 
- 1.9s1-1.5.2-2.1c-.8 1.1-1.4.4-1.4.1c0-.4-.1-1.1 2.1-1.4c-1.8-1-3.9-.3-3.9-.3s.1-1 1.6-1C47 10.3 45 11 45 11l2.6 6.3l3.2 9.4l1.2 9"> </path> </g> 
- <ellipse cx="19.8" cy="28" rx="4" ry="3.9" fill="${color2 || "#d5ff83"}"> </ellipse> <ellipse cx="19.8" cy="28" rx="2.6" ry="2.5" fill="#3e4347"> </ellipse> 
- <ellipse cx="44.2" cy="28" rx="4" ry="3.9" fill="${color2 || "#d5ff83"}"> </ellipse> <ellipse cx="44.2" cy="28" rx="2.6" ry="2.5" fill="#3e4347"> </ellipse> 
- <path d="M24.8 34.2c0-5.9 4.8-8.2 7.2-8.2s7.2 2.3 7.2 8.2c0 7.5-2.6 9.3-7.2 9.3s-7.2-1.7-7.2-9.3" fill="#555e63"> </path> <path d="M27.7 55.8c0 
- 5.1-3.2 6.2-7.1 6.2c-3.9 0-7.1-1.2-7.1-6.2c0-5.1 3.2-9.2 7.1-9.2s7.1 4.1 7.1 9.2" fill="#96a2aa"> </path> <path d="M25.6 57.1c0 3.6-2.3 4.4-5 4.4s-5-.8-5-4.4c0-3.6 2.3-6.5 5-6.5s5 3 5 6.5" 
- fill="#cfdae8"> </path> <path d="M50.6 55.8c0 5.1-3.2 6.2-7.1 6.2c-3.9 0-7.1-1.2-7.1-6.2c0-5.1 3.2-9.2 7.1-9.2c3.9 0 7.1 4.1 7.1 9.2" 
- fill="#96a2aa"> </path> <path d="M48.5 57.1c0 3.6-2.3 4.4-5 4.4s-5-.8-5-4.4c0-3.6 2.3-6.5 5-6.5s5 3 5 6.5" fill="#cfdae8"> </path> </g></svg>
- `;
-
-export const koala26 = (color1?: string, color2?: string) => `
- <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify iconify--emojione" preserveAspectRatio="xMidYMid meet" 
- fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g fill="${color1 || "#a8b2ba"}"> 
- <path d="M17.9 51.7c-3.4 5.8-6.2 6-8.7 4.6s-3.7-3.9-.3-9.7c3.4-5.8 10.2-12.8 12.7-11.4c2.5 1.4-.3 10.6-3.7 16.5"> </path> <path d="M55.1 46.5c3.4 5.8 2.2 8.3-.3 
- 9.7c-2.5 1.4-5.3 1.3-8.7-4.6c-3.4-5.8-6.2-15.1-3.7-16.5c2.5-1.4 9.3 5.6 12.7 11.4"> </path> <ellipse cx="32" cy="52.1" rx="13.9" ry="8.4"> </ellipse> </g> 
- <ellipse cx="32" cy="46.6" rx="13" ry="9.3" fill="#cfdae8"> </ellipse> <path d="M62 13.8c0 6.5-5 11.8-11.1 11.8s-11.1-5.3-11.1-11.8c0-6.5 5-11.8 11.1-11.8S62 
- 7.3 62 13.8z" fill="${color1 || "#a8b2ba"}"> </path> <path d="M57.6 13.8c0 3.9-3 7.1-6.7 7.1s-6.7-3.2-6.7-7.1c0-3.9 3-7.1 6.7-7.1s6.7 3.2 6.7 7.1" fill="#cfdae8"> </path> 
- <ellipse cx="13.1" cy="13.8" rx="11.1" ry="11.8" fill="${color1 || "#a8b2ba"}"> </ellipse> <path d="M19.8 13.8c0 3.9-3 7.1-6.7 7.1s-6.7-3.2-6.7-7.1c0-3.9 3-7.1 6.7-7.1s6.7 
- 3.2 6.7 7.1" fill="#cfdae8"> </path> <g fill="${color1 || "#a8b2ba"}"> <path d="M12 35.7c-2.3-2.1-3-5.3-3-5.3l1.5.3S8.7 29 9.2 25.3l1.5 1.5s-1.5-3.8-.2-7.2l1.7 1.1s-.5-1.4 
- 0-2.4l.7.5s-1.3-3.2-.1-4.6c.7 2 1.4 1.9 1.4 1.9s-1-1.5-.2-2.1c.8 1.1 1.4.4 1.4.1c0-.4.1-1.1-2.1-1.4c1.8-1 3.9-.3 3.9-.3s-.1-1-1.6-1C17 10.3 19 11 19 11l-2.6 
- 6.3l-3.2 9.4l-1.2 9"> </path> <path d="M32 7.5c-17.6 0-21.5 11.9-21.5 26.3c0 1.5 9.6 9.7 21.5 9.7s21.5-8.2 21.5-9.7c0-14.4-3.9-26.3-21.5-26.3"> </path> 
- <path d="M52 35.7c2.3-2.1 3-5.3 3-5.3l-1.5.3s1.8-1.7 1.3-5.4l-1.5 1.5s1.5-3.8.2-7.2l-1.7 1.1s.5-1.4 0-2.4l-.7.5s1.3-3.2.1-4.6c-.7 2-1.4 1.9-1.4 
- 1.9s1-1.5.2-2.1c-.8 1.1-1.4.4-1.4.1c0-.4-.1-1.1 2.1-1.4c-1.8-1-3.9-.3-3.9-.3s.1-1 1.6-1C47 10.3 45 11 45 11l2.6 6.3l3.2 9.4l1.2 9"> </path> </g> 
- <ellipse cx="19.8" cy="28" rx="4" ry="3.9" fill="${color2 || "#d5ff83"}"> </ellipse> <ellipse cx="19.8" cy="28" rx="2.6" ry="2.5" fill="#3e4347"> </ellipse> 
- <ellipse cx="44.2" cy="28" rx="4" ry="3.9" fill="${color2 || "#d5ff83"}"> </ellipse> <ellipse cx="44.2" cy="28" rx="2.6" ry="2.5" fill="#3e4347"> </ellipse> 
- <path d="M24.8 34.2c0-5.9 4.8-8.2 7.2-8.2s7.2 2.3 7.2 8.2c0 7.5-2.6 9.3-7.2 9.3s-7.2-1.7-7.2-9.3" fill="#555e63"> </path> <path d="M27.7 55.8c0 
- 5.1-3.2 6.2-7.1 6.2c-3.9 0-7.1-1.2-7.1-6.2c0-5.1 3.2-9.2 7.1-9.2s7.1 4.1 7.1 9.2" fill="#96a2aa"> </path> <path d="M25.6 57.1c0 3.6-2.3 4.4-5 4.4s-5-.8-5-4.4c0-3.6 2.3-6.5 5-6.5s5 3 5 6.5" 
- fill="#cfdae8"> </path> <path d="M50.6 55.8c0 5.1-3.2 6.2-7.1 6.2c-3.9 0-7.1-1.2-7.1-6.2c0-5.1 3.2-9.2 7.1-9.2c3.9 0 7.1 4.1 7.1 9.2" 
- fill="#96a2aa"> </path> <path d="M48.5 57.1c0 3.6-2.3 4.4-5 4.4s-5-.8-5-4.4c0-3.6 2.3-6.5 5-6.5s5 3 5 6.5" fill="#cfdae8"> </path> </g></svg>
- `;
-
-export const koala27 = (color1?: string, color2?: string) => `
- <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify iconify--emojione" preserveAspectRatio="xMidYMid meet" 
- fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g fill="${color1 || "#a8b2ba"}"> 
- <path d="M17.9 51.7c-3.4 5.8-6.2 6-8.7 4.6s-3.7-3.9-.3-9.7c3.4-5.8 10.2-12.8 12.7-11.4c2.5 1.4-.3 10.6-3.7 16.5"> </path> <path d="M55.1 46.5c3.4 5.8 2.2 8.3-.3 
- 9.7c-2.5 1.4-5.3 1.3-8.7-4.6c-3.4-5.8-6.2-15.1-3.7-16.5c2.5-1.4 9.3 5.6 12.7 11.4"> </path> <ellipse cx="32" cy="52.1" rx="13.9" ry="8.4"> </ellipse> </g> 
- <ellipse cx="32" cy="46.6" rx="13" ry="9.3" fill="#cfdae8"> </ellipse> <path d="M62 13.8c0 6.5-5 11.8-11.1 11.8s-11.1-5.3-11.1-11.8c0-6.5 5-11.8 11.1-11.8S62 
- 7.3 62 13.8z" fill="${color1 || "#a8b2ba"}"> </path> <path d="M57.6 13.8c0 3.9-3 7.1-6.7 7.1s-6.7-3.2-6.7-7.1c0-3.9 3-7.1 6.7-7.1s6.7 3.2 6.7 7.1" fill="#cfdae8"> </path> 
- <ellipse cx="13.1" cy="13.8" rx="11.1" ry="11.8" fill="${color1 || "#a8b2ba"}"> </ellipse> <path d="M19.8 13.8c0 3.9-3 7.1-6.7 7.1s-6.7-3.2-6.7-7.1c0-3.9 3-7.1 6.7-7.1s6.7 
- 3.2 6.7 7.1" fill="#cfdae8"> </path> <g fill="${color1 || "#a8b2ba"}"> <path d="M12 35.7c-2.3-2.1-3-5.3-3-5.3l1.5.3S8.7 29 9.2 25.3l1.5 1.5s-1.5-3.8-.2-7.2l1.7 1.1s-.5-1.4 
- 0-2.4l.7.5s-1.3-3.2-.1-4.6c.7 2 1.4 1.9 1.4 1.9s-1-1.5-.2-2.1c.8 1.1 1.4.4 1.4.1c0-.4.1-1.1-2.1-1.4c1.8-1 3.9-.3 3.9-.3s-.1-1-1.6-1C17 10.3 19 11 19 11l-2.6 
- 6.3l-3.2 9.4l-1.2 9"> </path> <path d="M32 7.5c-17.6 0-21.5 11.9-21.5 26.3c0 1.5 9.6 9.7 21.5 9.7s21.5-8.2 21.5-9.7c0-14.4-3.9-26.3-21.5-26.3"> </path> 
- <path d="M52 35.7c2.3-2.1 3-5.3 3-5.3l-1.5.3s1.8-1.7 1.3-5.4l-1.5 1.5s1.5-3.8.2-7.2l-1.7 1.1s.5-1.4 0-2.4l-.7.5s1.3-3.2.1-4.6c-.7 2-1.4 1.9-1.4 
- 1.9s1-1.5.2-2.1c-.8 1.1-1.4.4-1.4.1c0-.4-.1-1.1 2.1-1.4c-1.8-1-3.9-.3-3.9-.3s.1-1 1.6-1C47 10.3 45 11 45 11l2.6 6.3l3.2 9.4l1.2 9"> </path> </g> 
- <ellipse cx="19.8" cy="28" rx="4" ry="3.9" fill="${color2 || "#d5ff83"}"> </ellipse> <ellipse cx="19.8" cy="28" rx="2.6" ry="2.5" fill="#3e4347"> </ellipse> 
- <ellipse cx="44.2" cy="28" rx="4" ry="3.9" fill="${color2 || "#d5ff83"}"> </ellipse> <ellipse cx="44.2" cy="28" rx="2.6" ry="2.5" fill="#3e4347"> </ellipse> 
- <path d="M24.8 34.2c0-5.9 4.8-8.2 7.2-8.2s7.2 2.3 7.2 8.2c0 7.5-2.6 9.3-7.2 9.3s-7.2-1.7-7.2-9.3" fill="#555e63"> </path> <path d="M27.7 55.8c0 
- 5.1-3.2 6.2-7.1 6.2c-3.9 0-7.1-1.2-7.1-6.2c0-5.1 3.2-9.2 7.1-9.2s7.1 4.1 7.1 9.2" fill="#96a2aa"> </path> <path d="M25.6 57.1c0 3.6-2.3 4.4-5 4.4s-5-.8-5-4.4c0-3.6 2.3-6.5 5-6.5s5 3 5 6.5" 
- fill="#cfdae8"> </path> <path d="M50.6 55.8c0 5.1-3.2 6.2-7.1 6.2c-3.9 0-7.1-1.2-7.1-6.2c0-5.1 3.2-9.2 7.1-9.2c3.9 0 7.1 4.1 7.1 9.2" 
- fill="#96a2aa"> </path> <path d="M48.5 57.1c0 3.6-2.3 4.4-5 4.4s-5-.8-5-4.4c0-3.6 2.3-6.5 5-6.5s5 3 5 6.5" fill="#cfdae8"> </path> </g></svg>
- `;
-
-export const koala28 = (color1?: string, color2?: string) => `
- <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify iconify--emojione" preserveAspectRatio="xMidYMid meet" 
- fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g fill="${color1 || "#a8b2ba"}"> 
- <path d="M17.9 51.7c-3.4 5.8-6.2 6-8.7 4.6s-3.7-3.9-.3-9.7c3.4-5.8 10.2-12.8 12.7-11.4c2.5 1.4-.3 10.6-3.7 16.5"> </path> <path d="M55.1 46.5c3.4 5.8 2.2 8.3-.3 
- 9.7c-2.5 1.4-5.3 1.3-8.7-4.6c-3.4-5.8-6.2-15.1-3.7-16.5c2.5-1.4 9.3 5.6 12.7 11.4"> </path> <ellipse cx="32" cy="52.1" rx="13.9" ry="8.4"> </ellipse> </g> 
- <ellipse cx="32" cy="46.6" rx="13" ry="9.3" fill="#cfdae8"> </ellipse> <path d="M62 13.8c0 6.5-5 11.8-11.1 11.8s-11.1-5.3-11.1-11.8c0-6.5 5-11.8 11.1-11.8S62 
- 7.3 62 13.8z" fill="${color1 || "#a8b2ba"}"> </path> <path d="M57.6 13.8c0 3.9-3 7.1-6.7 7.1s-6.7-3.2-6.7-7.1c0-3.9 3-7.1 6.7-7.1s6.7 3.2 6.7 7.1" fill="#cfdae8"> </path> 
- <ellipse cx="13.1" cy="13.8" rx="11.1" ry="11.8" fill="${color1 || "#a8b2ba"}"> </ellipse> <path d="M19.8 13.8c0 3.9-3 7.1-6.7 7.1s-6.7-3.2-6.7-7.1c0-3.9 3-7.1 6.7-7.1s6.7 
- 3.2 6.7 7.1" fill="#cfdae8"> </path> <g fill="${color1 || "#a8b2ba"}"> <path d="M12 35.7c-2.3-2.1-3-5.3-3-5.3l1.5.3S8.7 29 9.2 25.3l1.5 1.5s-1.5-3.8-.2-7.2l1.7 1.1s-.5-1.4 
- 0-2.4l.7.5s-1.3-3.2-.1-4.6c.7 2 1.4 1.9 1.4 1.9s-1-1.5-.2-2.1c.8 1.1 1.4.4 1.4.1c0-.4.1-1.1-2.1-1.4c1.8-1 3.9-.3 3.9-.3s-.1-1-1.6-1C17 10.3 19 11 19 11l-2.6 
- 6.3l-3.2 9.4l-1.2 9"> </path> <path d="M32 7.5c-17.6 0-21.5 11.9-21.5 26.3c0 1.5 9.6 9.7 21.5 9.7s21.5-8.2 21.5-9.7c0-14.4-3.9-26.3-21.5-26.3"> </path> 
- <path d="M52 35.7c2.3-2.1 3-5.3 3-5.3l-1.5.3s1.8-1.7 1.3-5.4l-1.5 1.5s1.5-3.8.2-7.2l-1.7 1.1s.5-1.4 0-2.4l-.7.5s1.3-3.2.1-4.6c-.7 2-1.4 1.9-1.4 
- 1.9s1-1.5.2-2.1c-.8 1.1-1.4.4-1.4.1c0-.4-.1-1.1 2.1-1.4c-1.8-1-3.9-.3-3.9-.3s.1-1 1.6-1C47 10.3 45 11 45 11l2.6 6.3l3.2 9.4l1.2 9"> </path> </g> 
- <ellipse cx="19.8" cy="28" rx="4" ry="3.9" fill="${color2 || "#d5ff83"}"> </ellipse> <ellipse cx="19.8" cy="28" rx="2.6" ry="2.5" fill="#3e4347"> </ellipse> 
- <ellipse cx="44.2" cy="28" rx="4" ry="3.9" fill="${color2 || "#d5ff83"}"> </ellipse> <ellipse cx="44.2" cy="28" rx="2.6" ry="2.5" fill="#3e4347"> </ellipse> 
- <path d="M24.8 34.2c0-5.9 4.8-8.2 7.2-8.2s7.2 2.3 7.2 8.2c0 7.5-2.6 9.3-7.2 9.3s-7.2-1.7-7.2-9.3" fill="#555e63"> </path> <path d="M27.7 55.8c0 
- 5.1-3.2 6.2-7.1 6.2c-3.9 0-7.1-1.2-7.1-6.2c0-5.1 3.2-9.2 7.1-9.2s7.1 4.1 7.1 9.2" fill="#96a2aa"> </path> <path d="M25.6 57.1c0 3.6-2.3 4.4-5 4.4s-5-.8-5-4.4c0-3.6 2.3-6.5 5-6.5s5 3 5 6.5" 
- fill="#cfdae8"> </path> <path d="M50.6 55.8c0 5.1-3.2 6.2-7.1 6.2c-3.9 0-7.1-1.2-7.1-6.2c0-5.1 3.2-9.2 7.1-9.2c3.9 0 7.1 4.1 7.1 9.2" 
- fill="#96a2aa"> </path> <path d="M48.5 57.1c0 3.6-2.3 4.4-5 4.4s-5-.8-5-4.4c0-3.6 2.3-6.5 5-6.5s5 3 5 6.5" fill="#cfdae8"> </path> </g></svg>
- `;
-
-export const koala29 = (color1?: string, color2?: string) => `
- <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify iconify--emojione" preserveAspectRatio="xMidYMid meet" 
- fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g fill="${color1 || "#a8b2ba"}"> 
- <path d="M17.9 51.7c-3.4 5.8-6.2 6-8.7 4.6s-3.7-3.9-.3-9.7c3.4-5.8 10.2-12.8 12.7-11.4c2.5 1.4-.3 10.6-3.7 16.5"> </path> <path d="M55.1 46.5c3.4 5.8 2.2 8.3-.3 
- 9.7c-2.5 1.4-5.3 1.3-8.7-4.6c-3.4-5.8-6.2-15.1-3.7-16.5c2.5-1.4 9.3 5.6 12.7 11.4"> </path> <ellipse cx="32" cy="52.1" rx="13.9" ry="8.4"> </ellipse> </g> 
- <ellipse cx="32" cy="46.6" rx="13" ry="9.3" fill="#cfdae8"> </ellipse> <path d="M62 13.8c0 6.5-5 11.8-11.1 11.8s-11.1-5.3-11.1-11.8c0-6.5 5-11.8 11.1-11.8S62 
- 7.3 62 13.8z" fill="${color1 || "#a8b2ba"}"> </path> <path d="M57.6 13.8c0 3.9-3 7.1-6.7 7.1s-6.7-3.2-6.7-7.1c0-3.9 3-7.1 6.7-7.1s6.7 3.2 6.7 7.1" fill="#cfdae8"> </path> 
- <ellipse cx="13.1" cy="13.8" rx="11.1" ry="11.8" fill="${color1 || "#a8b2ba"}"> </ellipse> <path d="M19.8 13.8c0 3.9-3 7.1-6.7 7.1s-6.7-3.2-6.7-7.1c0-3.9 3-7.1 6.7-7.1s6.7 
- 3.2 6.7 7.1" fill="#cfdae8"> </path> <g fill="${color1 || "#a8b2ba"}"> <path d="M12 35.7c-2.3-2.1-3-5.3-3-5.3l1.5.3S8.7 29 9.2 25.3l1.5 1.5s-1.5-3.8-.2-7.2l1.7 1.1s-.5-1.4 
- 0-2.4l.7.5s-1.3-3.2-.1-4.6c.7 2 1.4 1.9 1.4 1.9s-1-1.5-.2-2.1c.8 1.1 1.4.4 1.4.1c0-.4.1-1.1-2.1-1.4c1.8-1 3.9-.3 3.9-.3s-.1-1-1.6-1C17 10.3 19 11 19 11l-2.6 
- 6.3l-3.2 9.4l-1.2 9"> </path> <path d="M32 7.5c-17.6 0-21.5 11.9-21.5 26.3c0 1.5 9.6 9.7 21.5 9.7s21.5-8.2 21.5-9.7c0-14.4-3.9-26.3-21.5-26.3"> </path> 
- <path d="M52 35.7c2.3-2.1 3-5.3 3-5.3l-1.5.3s1.8-1.7 1.3-5.4l-1.5 1.5s1.5-3.8.2-7.2l-1.7 1.1s.5-1.4 0-2.4l-.7.5s1.3-3.2.1-4.6c-.7 2-1.4 1.9-1.4 
- 1.9s1-1.5.2-2.1c-.8 1.1-1.4.4-1.4.1c0-.4-.1-1.1 2.1-1.4c-1.8-1-3.9-.3-3.9-.3s.1-1 1.6-1C47 10.3 45 11 45 11l2.6 6.3l3.2 9.4l1.2 9"> </path> </g> 
- <ellipse cx="19.8" cy="28" rx="4" ry="3.9" fill="${color2 || "#d5ff83"}"> </ellipse> <ellipse cx="19.8" cy="28" rx="2.6" ry="2.5" fill="#3e4347"> </ellipse> 
- <ellipse cx="44.2" cy="28" rx="4" ry="3.9" fill="${color2 || "#d5ff83"}"> </ellipse> <ellipse cx="44.2" cy="28" rx="2.6" ry="2.5" fill="#3e4347"> </ellipse> 
- <path d="M24.8 34.2c0-5.9 4.8-8.2 7.2-8.2s7.2 2.3 7.2 8.2c0 7.5-2.6 9.3-7.2 9.3s-7.2-1.7-7.2-9.3" fill="#555e63"> </path> <path d="M27.7 55.8c0 
- 5.1-3.2 6.2-7.1 6.2c-3.9 0-7.1-1.2-7.1-6.2c0-5.1 3.2-9.2 7.1-9.2s7.1 4.1 7.1 9.2" fill="#96a2aa"> </path> <path d="M25.6 57.1c0 3.6-2.3 4.4-5 4.4s-5-.8-5-4.4c0-3.6 2.3-6.5 5-6.5s5 3 5 6.5" 
- fill="#cfdae8"> </path> <path d="M50.6 55.8c0 5.1-3.2 6.2-7.1 6.2c-3.9 0-7.1-1.2-7.1-6.2c0-5.1 3.2-9.2 7.1-9.2c3.9 0 7.1 4.1 7.1 9.2" 
- fill="#96a2aa"> </path> <path d="M48.5 57.1c0 3.6-2.3 4.4-5 4.4s-5-.8-5-4.4c0-3.6 2.3-6.5 5-6.5s5 3 5 6.5" fill="#cfdae8"> </path> </g></svg>
- `;
-
-export const koala30 = (color1?: string, color2?: string) => `
- <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify iconify--emojione" preserveAspectRatio="xMidYMid meet" 
- fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g fill="${color1 || "#a8b2ba"}"> 
- <path d="M17.9 51.7c-3.4 5.8-6.2 6-8.7 4.6s-3.7-3.9-.3-9.7c3.4-5.8 10.2-12.8 12.7-11.4c2.5 1.4-.3 10.6-3.7 16.5"> </path> <path d="M55.1 46.5c3.4 5.8 2.2 8.3-.3 
- 9.7c-2.5 1.4-5.3 1.3-8.7-4.6c-3.4-5.8-6.2-15.1-3.7-16.5c2.5-1.4 9.3 5.6 12.7 11.4"> </path> <ellipse cx="32" cy="52.1" rx="13.9" ry="8.4"> </ellipse> </g> 
- <ellipse cx="32" cy="46.6" rx="13" ry="9.3" fill="#cfdae8"> </ellipse> <path d="M62 13.8c0 6.5-5 11.8-11.1 11.8s-11.1-5.3-11.1-11.8c0-6.5 5-11.8 11.1-11.8S62 
- 7.3 62 13.8z" fill="${color1 || "#a8b2ba"}"> </path> <path d="M57.6 13.8c0 3.9-3 7.1-6.7 7.1s-6.7-3.2-6.7-7.1c0-3.9 3-7.1 6.7-7.1s6.7 3.2 6.7 7.1" fill="#cfdae8"> </path> 
- <ellipse cx="13.1" cy="13.8" rx="11.1" ry="11.8" fill="${color1 || "#a8b2ba"}"> </ellipse> <path d="M19.8 13.8c0 3.9-3 7.1-6.7 7.1s-6.7-3.2-6.7-7.1c0-3.9 3-7.1 6.7-7.1s6.7 
- 3.2 6.7 7.1" fill="#cfdae8"> </path> <g fill="${color1 || "#a8b2ba"}"> <path d="M12 35.7c-2.3-2.1-3-5.3-3-5.3l1.5.3S8.7 29 9.2 25.3l1.5 1.5s-1.5-3.8-.2-7.2l1.7 1.1s-.5-1.4 
- 0-2.4l.7.5s-1.3-3.2-.1-4.6c.7 2 1.4 1.9 1.4 1.9s-1-1.5-.2-2.1c.8 1.1 1.4.4 1.4.1c0-.4.1-1.1-2.1-1.4c1.8-1 3.9-.3 3.9-.3s-.1-1-1.6-1C17 10.3 19 11 19 11l-2.6 
- 6.3l-3.2 9.4l-1.2 9"> </path> <path d="M32 7.5c-17.6 0-21.5 11.9-21.5 26.3c0 1.5 9.6 9.7 21.5 9.7s21.5-8.2 21.5-9.7c0-14.4-3.9-26.3-21.5-26.3"> </path> 
- <path d="M52 35.7c2.3-2.1 3-5.3 3-5.3l-1.5.3s1.8-1.7 1.3-5.4l-1.5 1.5s1.5-3.8.2-7.2l-1.7 1.1s.5-1.4 0-2.4l-.7.5s1.3-3.2.1-4.6c-.7 2-1.4 1.9-1.4 
- 1.9s1-1.5.2-2.1c-.8 1.1-1.4.4-1.4.1c0-.4-.1-1.1 2.1-1.4c-1.8-1-3.9-.3-3.9-.3s.1-1 1.6-1C47 10.3 45 11 45 11l2.6 6.3l3.2 9.4l1.2 9"> </path> </g> 
- <ellipse cx="19.8" cy="28" rx="4" ry="3.9" fill="${color2 || "#d5ff83"}"> </ellipse> <ellipse cx="19.8" cy="28" rx="2.6" ry="2.5" fill="#3e4347"> </ellipse> 
- <ellipse cx="44.2" cy="28" rx="4" ry="3.9" fill="${color2 || "#d5ff83"}"> </ellipse> <ellipse cx="44.2" cy="28" rx="2.6" ry="2.5" fill="#3e4347"> </ellipse> 
+ <ellipse cx="19.8" cy="28" rx="4" ry="3.9" fill="${color2}"> </ellipse> <ellipse cx="19.8" cy="28" rx="2.6" ry="2.5" fill="#3e4347"> </ellipse> 
+ <ellipse cx="44.2" cy="28" rx="4" ry="3.9" fill="${color2}"> </ellipse> <ellipse cx="44.2" cy="28" rx="2.6" ry="2.5" fill="#3e4347"> </ellipse> 
  <path d="M24.8 34.2c0-5.9 4.8-8.2 7.2-8.2s7.2 2.3 7.2 8.2c0 7.5-2.6 9.3-7.2 9.3s-7.2-1.7-7.2-9.3" fill="#555e63"> </path> <path d="M27.7 55.8c0 
  5.1-3.2 6.2-7.1 6.2c-3.9 0-7.1-1.2-7.1-6.2c0-5.1 3.2-9.2 7.1-9.2s7.1 4.1 7.1 9.2" fill="#96a2aa"> </path> <path d="M25.6 57.1c0 3.6-2.3 4.4-5 4.4s-5-.8-5-4.4c0-3.6 2.3-6.5 5-6.5s5 3 5 6.5" 
  fill="#cfdae8"> </path> <path d="M50.6 55.8c0 5.1-3.2 6.2-7.1 6.2c-3.9 0-7.1-1.2-7.1-6.2c0-5.1 3.2-9.2 7.1-9.2c3.9 0 7.1 4.1 7.1 9.2" 

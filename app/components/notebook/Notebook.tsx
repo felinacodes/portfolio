@@ -1194,7 +1194,11 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.2 }}
           >
-            <Modal isOpen={isModalOpen} setIsOpen={setIsModalOpen} />
+            <Modal
+              isOpen={isModalOpen}
+              setIsOpen={setIsModalOpen}
+              setMessages={setMessages}
+            />
           </motion.div>
         )}
       </AnimatePresence>

@@ -87,6 +87,14 @@ export const messages: LeaveMessage[] = [
     color1: "#d02edb",
     color2: "#de4923",
   },
+
+  {
+    id: "12",
+    author: "Liam",
+    sticker: "tea",
+    color1: "",
+    color2: "",
+  },
 ];
 
 export async function fakeFetchMessages(): Promise<LeaveMessage[]> {
