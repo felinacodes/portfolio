@@ -105,22 +105,30 @@ export const LeaveSomethingBlocks = (args?: RenderContext) => {
                   key={item.message.id}
                   className=" flex flex-col gap-4 items-center justify-center"
                 >
-                  <div className="relative w-32 aspect-square rounded-lg overflow-hidden ">
+                  <div className="relative w-32 aspect-square rounded-lg overflow-hidden">
                     <Image
                       src={createStickerUrl(
                         item.message.sticker,
                         item.message.color1,
                         item.message.color2,
                       )}
-                      alt={item.message.author}
+                      alt="sticker"
                       fill
                       className="object-cover"
                     />
                   </div>
 
-                  <div>
+                  {item.message.signature && (
+                    <img
+                      src={URL.createObjectURL(item.message.signature)}
+                      alt="signature"
+                      className="w-32 h-auto"
+                    />
+                  )}
+
+                  {/* <div>
                     <h2 className="font-bold">{item.message.author}</h2>
-                  </div>
+                  </div> */}
                 </div>
               );
             })}

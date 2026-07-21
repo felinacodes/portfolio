@@ -1,8 +1,9 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState, useRef } from "react";
 import { X } from "lucide-react";
 import { stickers, StickerName } from "../../../lib/stickerMap";
 import { createStickerUrl } from "../../../lib/createStickerUrl";
 import { LeaveMessage } from "@/lib/fakeFetchMessages";
+import SignatureCanvas, { SignatureCanvasHandle } from "./SignatureCanvas";
 
 interface ModalProps {
   isOpen: boolean;
@@ -22,6 +23,8 @@ const Modal = ({ isOpen, setIsOpen, setMessages }: ModalProps) => {
   const [color2, setColor2] = useState<string>(
     stickers[activeSticker].defaults.color2,
   );
+
+  const signatureRef = useRef<SignatureCanvasHandle>(null);
 
   useEffect(() => {
     setColor1(stickers[activeSticker].defaults.color1);
@@ -46,6 +49,21 @@ const Modal = ({ isOpen, setIsOpen, setMessages }: ModalProps) => {
   const filteredStickers = stickerList.filter((sticker) =>
     sticker.toLowerCase().includes(search.toLowerCase()),
   );
+
+  const handleAddToNotebook = async () => {
+    const signatureBlob = (await signatureRef.current?.getBlob()) ?? null;
+
+    setMessages?.((prev) => [
+      ...prev,
+      {
+        id: crypto.randomUUID(),
+        sticker: activeSticker,
+        color1,
+        color2,
+        signature: signatureBlob,
+      },
+    ]);
+  };
 
   return (
     <div
@@ -161,6 +179,10 @@ const Modal = ({ isOpen, setIsOpen, setMessages }: ModalProps) => {
                 <input type="color" value={color2} onChange={handleColor2} />
               </div>
 
+              <div>
+                <SignatureCanvas ref={signatureRef} />
+              </div>
+
               <div className="text-center mt-2">
                 <button
                   className="
@@ -168,19 +190,8 @@ const Modal = ({ isOpen, setIsOpen, setMessages }: ModalProps) => {
                   rounded-lg px-4 py-2
                   transition
                   duration-200
-                   "
-                  onClick={() => {
-                    setMessages?.((prev) => [
-                      ...prev,
-                      {
-                        id: crypto.randomUUID(),
-                        author: "Felina",
-                        sticker: activeSticker,
-                        color1: color1,
-                        color2: color2,
-                      },
-                    ]);
-                  }}
+                  "
+                  onClick={handleAddToNotebook}
                 >
                   Add to notebook
                 </button>
