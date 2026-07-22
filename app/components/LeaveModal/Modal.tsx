@@ -4,6 +4,8 @@ import { stickers, StickerName } from "../../../lib/stickerMap";
 import { createStickerUrl } from "../../../lib/createStickerUrl";
 import { LeaveMessage } from "@/lib/fakeFetchMessages";
 import SignatureCanvas, { SignatureCanvasHandle } from "./SignatureCanvas";
+import { blobToBase64 } from "@/lib/blobToBase64";
+import Turnstile from "react-turnstile";
 
 interface ModalProps {
   isOpen: boolean;
@@ -23,8 +25,12 @@ const Modal = ({ isOpen, setIsOpen, setMessages }: ModalProps) => {
   const [color2, setColor2] = useState<string>(
     stickers[activeSticker].defaults.color2,
   );
+  const [modalMessage, setModalMessage] = useState("");
+  const [hasError, setHasError] = useState(false);
+  const [token, setToken] = useState("");
 
   const signatureRef = useRef<SignatureCanvasHandle>(null);
+  const websiteRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     setColor1(stickers[activeSticker].defaults.color1);
@@ -51,18 +57,53 @@ const Modal = ({ isOpen, setIsOpen, setMessages }: ModalProps) => {
   );
 
   const handleAddToNotebook = async () => {
-    const signatureBlob = (await signatureRef.current?.getBlob()) ?? null;
+    if (!signatureRef.current?.hasSignature()) {
+      setModalMessage("Please add your signature.");
+      setHasError(true);
+      return;
+    }
 
-    setMessages?.((prev) => [
-      ...prev,
-      {
-        id: crypto.randomUUID(),
+    const signatureBlob = await signatureRef.current.getBlob();
+
+    if (!signatureBlob) return;
+    setHasError(false);
+    setModalMessage("");
+
+    let signatureBase64: string;
+
+    try {
+      signatureBase64 = await blobToBase64(signatureBlob);
+    } catch (error) {
+      setHasError(true);
+      setModalMessage("Could not process signature. Please try again.");
+      return;
+    }
+    const res = await fetch("/api/messages", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
         sticker: activeSticker,
         color1,
         color2,
-        signature: signatureBlob,
-      },
-    ]);
+        signature: signatureBase64,
+        website: websiteRef.current?.value,
+        turnstileToken: token,
+      }),
+    });
+
+    const data = await res.json();
+
+    if (data.success) {
+      setMessages?.((prev) => [...prev, data.message]);
+      setHasError(false);
+      setModalMessage("Thanks for your gift. Once reviewed, it will be added.");
+      // setIsOpen(false);
+    } else {
+      setHasError(true);
+      setModalMessage(data.error || "Something went wrong.");
+    }
   };
 
   return (
@@ -183,6 +224,15 @@ const Modal = ({ isOpen, setIsOpen, setMessages }: ModalProps) => {
                 <SignatureCanvas ref={signatureRef} />
               </div>
 
+              <input
+                ref={websiteRef}
+                type="text"
+                name="website"
+                tabIndex={-1}
+                autoComplete="off"
+                className="hidden"
+              />
+
               <div className="text-center mt-2">
                 <button
                   className="
@@ -196,7 +246,20 @@ const Modal = ({ isOpen, setIsOpen, setMessages }: ModalProps) => {
                   Add to notebook
                 </button>
               </div>
+              <p
+                className={`text-sm text-center ${
+                  hasError ? "text-red-500" : "text-green-500"
+                }`}
+              >
+                {modalMessage}
+              </p>
             </div>
+            <Turnstile
+              sitekey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY!}
+              onSuccess={setToken}
+              onExpire={() => setToken("")}
+              onError={() => setToken("")}
+            />
           </div>
         </div>
       </div>

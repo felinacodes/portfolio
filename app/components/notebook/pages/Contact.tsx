@@ -60,7 +60,9 @@ export const ContactBlocks = (args?: RenderContext) => {
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
 
-      const formData = new FormData(e.currentTarget);
+      const form = e.currentTarget;
+
+      const formData = new FormData(form);
 
       const name = formData.get("name")?.toString() || "";
       const email = formData.get("email")?.toString() || "";
@@ -80,7 +82,7 @@ export const ContactBlocks = (args?: RenderContext) => {
 
       // Email validation
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (!email && !emailRegex.test(email)) {
+      if (!email || !emailRegex.test(email)) {
         newErrors.email = "Please enter a valid email address.";
       }
 
@@ -106,15 +108,13 @@ export const ContactBlocks = (args?: RenderContext) => {
       const data = await res.json();
 
       if (data.success) {
-        // alert("Sent!");
         setFeedbackMessage("Message Send! I will get back to you soon.");
-        e.currentTarget.reset();
+        form.reset();
         setErrors({ name: "", email: "", message: "" });
       } else {
         setFeedbackMessage(
           `Failed to send message: ${data.error || " Unknown error"}`,
         );
-        // alert(JSON.stringify(data, null, 2));
       }
     };
 

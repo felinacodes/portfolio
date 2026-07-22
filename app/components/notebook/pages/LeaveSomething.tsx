@@ -120,7 +120,7 @@ export const LeaveSomethingBlocks = (args?: RenderContext) => {
 
                   {item.message.signature && (
                     <img
-                      src={URL.createObjectURL(item.message.signature)}
+                      src={item.message.signature}
                       alt="signature"
                       className="w-32 h-auto"
                     />

@@ -1,5 +1,15 @@
-function validateContact({ name, email, message }) {
-  const errors = [];
+import { NextRequest } from "next/server";
+import { getIp } from "@/lib/server/getIp";
+import { rateLimit } from "@/lib/server/rateLimit";
+
+interface ContactData {
+  name: string;
+  email: string;
+  message: string;
+}
+
+function validateContact({ name, email, message }: ContactData) {
+  const errors: string[] = [];
 
   if (!name || name.length < 3) {
     errors.push("Name too short");
@@ -30,48 +40,19 @@ function validateContact({ name, email, message }) {
   return errors;
 }
 
-const ipMap = new Map();
-
-function rateLimit(ip) {
-  const now = Date.now();
-  const windowMs = 60 * 1000;
-  const maxRequests = 5;
-
-  const record = ipMap.get(ip) || { count: 0, start: now };
-
-  if (now - record.start > windowMs) {
-    record.count = 1;
-    record.start = now;
-    ipMap.set(ip, record);
-    return false;
-  }
-
-  record.count += 1;
-  ipMap.set(ip, record);
-
-  return record.count > maxRequests;
-}
-
-function getIp(req) {
-  const xfwd = req.headers.get("x-forwarded-for");
-
-  if (xfwd) {
-    return xfwd.split(",")[0].trim();
-  }
-
-  const realIp = req.headers.get("x-real-ip");
-
-  if (realIp) return realIp;
-
-  return "unknown";
-}
-
-export async function POST(req) {
+export async function POST(req: NextRequest) {
   const body = await req.json();
 
   const ip = getIp(req);
 
-  if (rateLimit(ip)) {
+  if (
+    rateLimit({
+      key: "contact",
+      ip,
+      maxRequests: 5,
+      windowMs: 60 * 1000,
+    })
+  ) {
     return Response.json(
       { success: false, error: "Too many requests" },
       { status: 429 },
