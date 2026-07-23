@@ -2,10 +2,10 @@ import { useEffect, useMemo, useState, useRef } from "react";
 import { X } from "lucide-react";
 import { stickers, StickerName } from "../../../lib/stickerMap";
 import { createStickerUrl } from "../../../lib/createStickerUrl";
-import { LeaveMessage } from "@/lib/fakeFetchMessages";
 import SignatureCanvas, { SignatureCanvasHandle } from "./SignatureCanvas";
 import { blobToBase64 } from "@/lib/blobToBase64";
 import Turnstile from "react-turnstile";
+import { LeaveMessage } from "@/lib/fetchMessages";
 
 interface ModalProps {
   isOpen: boolean;
@@ -94,8 +94,11 @@ const Modal = ({ isOpen, setIsOpen, setMessages }: ModalProps) => {
     });
 
     const data = await res.json();
+    console.log(data);
 
     if (data.success) {
+      console.log("Adding message", data.message);
+
       setMessages?.((prev) => [...prev, data.message]);
       setHasError(false);
       setModalMessage("Thanks for your gift. Once reviewed, it will be added.");

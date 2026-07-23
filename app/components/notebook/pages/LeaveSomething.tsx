@@ -4,11 +4,11 @@ import ChapterIntro from "./ChapterIntro";
 import { RenderContext } from "../Notebook";
 import { Plus } from "lucide-react";
 import { createStickerUrl } from "@/lib/createStickerUrl";
+import { StickerName } from "@/lib/stickerMap";
 
 export const LeaveSomethingBlocks = (args?: RenderContext) => {
   const chapter = args?.chapter;
   const messages = args?.messages ?? [];
-  const setMessages = args?.setMessages;
   const setIsModalOpen = args?.setIsModalOpen;
 
   const MESSAGES_PER_PAGE = 6;
@@ -66,16 +66,6 @@ export const LeaveSomethingBlocks = (args?: RenderContext) => {
                     <button
                       onClick={() => {
                         setIsModalOpen?.(true);
-
-                        // setMessages?.((prev) => [
-                        //   ...prev,
-                        //   {
-                        //     id: crypto.randomUUID(),
-                        //     author: "Felina",
-                        //     imageUrl:
-                        //       "https://www.svgrepo.com/show/530366/coffee.svg",
-                        //   },
-                        // ]);
                       }}
                       className="
         flex items-center justify-center
@@ -106,29 +96,26 @@ export const LeaveSomethingBlocks = (args?: RenderContext) => {
                   className=" flex flex-col gap-4 items-center justify-center"
                 >
                   <div className="relative w-32 aspect-square rounded-lg overflow-hidden">
-                    <Image
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
                       src={createStickerUrl(
-                        item.message.sticker,
+                        item.message.sticker as StickerName,
                         item.message.color1,
                         item.message.color2,
                       )}
                       alt="sticker"
-                      fill
-                      className="object-cover"
+                      className="w-32 h-32 object-contain"
                     />
                   </div>
-
                   {item.message.signature && (
-                    <img
+                    <Image
                       src={item.message.signature}
                       alt="signature"
+                      width={128}
+                      height={128}
                       className="w-32 h-auto"
                     />
                   )}
-
-                  {/* <div>
-                    <h2 className="font-bold">{item.message.author}</h2>
-                  </div> */}
                 </div>
               );
             })}

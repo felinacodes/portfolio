@@ -28,8 +28,9 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useTheme } from "next-themes";
 import { useSound } from "@/contexts/SoundContext";
 import { SoundName } from "@/lib/sounds";
-import { fakeFetchMessages, type LeaveMessage } from "@/lib/fakeFetchMessages";
+// import { fakeFetchMessages, type LeaveMessage } from "@/lib/fakeFetchMessages";
 import Modal from "../LeaveModal/Modal";
+import { fetchMessages, type LeaveMessage } from "@/lib/fetchMessages";
 // import useMeasure from '../useMeasure'
 
 type NotebookProps = {
@@ -41,7 +42,6 @@ export type RenderContext = {
   ctx?: Map<string, number>;
   goToIndex?: (id: string) => void;
   messages?: LeaveMessage[];
-  loadingMessages?: boolean;
   setMessages?: React.Dispatch<React.SetStateAction<LeaveMessage[]>>;
   setIsModalOpen?: React.Dispatch<React.SetStateAction<boolean>>;
 };
@@ -144,7 +144,6 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
   const [toggleAnimation, setToggleAnimation] = useState(true);
 
   const [messages, setMessages] = useState<LeaveMessage[]>([]);
-  const [loadingMessages, setLoadingMessages] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const isDraggingRef = useRef(false);
@@ -165,7 +164,6 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
           ? {
               chapter: chapterIndex,
               messages,
-              loadingMessages,
               setMessages,
               setIsModalOpen,
             }
@@ -184,7 +182,7 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
         },
       }));
     });
-  }, [messages, loadingMessages]);
+  }, [messages]);
 
   const numberOfBlanks = sections.length % 2 === 0 ? 2 : 3;
 
@@ -263,10 +261,12 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
   useEffect(() => {
     async function loadMessages() {
       try {
-        const data = await fakeFetchMessages();
-        setMessages(data);
+        const data = await fetchMessages();
+
+        setMessages(data.messages);
+      } catch (error) {
+        console.error(error);
       } finally {
-        setLoadingMessages(false);
       }
     }
 
@@ -937,7 +937,7 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
         >
           {sheet.render({
             messages,
-            loadingMessages,
+
             setMessages,
           })}
         </Page>
@@ -953,10 +953,6 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
           pageId={sheet.id}
         >
           {sheet.render({})}
-          {/* {sheet.render({
-            messages,
-            loadingMessages,
-          })} */}
         </Page>
       );
     }
