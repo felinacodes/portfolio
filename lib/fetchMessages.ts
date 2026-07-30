@@ -4,6 +4,8 @@ export interface LeaveMessage {
   color1: string;
   color2: string;
   signature: string;
+  created_at?: string;
+  status?: boolean;
 }
 
 interface MessagesResponse {

@@ -2,7 +2,7 @@ import { NextRequest } from "next/server";
 import { getIp } from "@/lib/server/getIp";
 import { rateLimit } from "@/lib/server/rateLimit";
 import { supabase } from "@/lib/server/supabase";
-import type { StickerName } from "@/lib/stickerMap";
+import { stickers, type StickerName } from "@/lib/stickerMap";
 import { LeaveMessage } from "@/lib/fetchMessages";
 
 export async function POST(req: NextRequest) {
@@ -93,15 +93,13 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  if (!sticker) {
+  if (!(sticker in stickers)) {
     return Response.json(
       {
         success: false,
-        error: "Missing sticker",
+        error: "Invalid sticker.",
       },
-      {
-        status: 400,
-      },
+      { status: 400 },
     );
   }
 
@@ -207,8 +205,8 @@ export async function POST(req: NextRequest) {
 export async function GET() {
   const { data, error } = await supabase
     .from("messages")
-    .select("*")
-    // .eq("approved", true)
+    .select("id, sticker_name, color1, color2, signature_url")
+    .eq("approved", true)
     .order("created_at", {
       ascending: true,
     });
