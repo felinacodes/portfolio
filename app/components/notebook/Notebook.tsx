@@ -145,6 +145,7 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
 
   const [messages, setMessages] = useState<LeaveMessage[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [called, setCalled] = useState("");
 
   const isDraggingRef = useRef(false);
   const startPosRef = useRef({ x: 0, y: 0 });
@@ -185,6 +186,7 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
   }, [messages]);
 
   const numberOfBlanks = sections.length % 2 === 0 ? 2 : 3;
+  // const numberOfBlanks = 1;
 
   const sheet: Sheet[] = useMemo(
     () => [
@@ -250,9 +252,23 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
     [sections, numberOfBlanks],
   );
 
-  const correctSheet = isTwoPages
-    ? sheet
-    : sheet.filter((s) => !(s.type === "cover" && s.face === "inside"));
+  const correctSheet = useMemo(() => {
+    return isTwoPages
+      ? sheet
+      : sheet.filter((s) => !(s.type === "cover" && s.face === "inside"));
+  }, [sheet, isTwoPages]);
+
+  const firstPageId = useMemo(() => {
+    const first = [...correctSheet].find((s) => s.type !== "cover");
+
+    return first?.id;
+  }, [correctSheet]);
+
+  const lastPageId = useMemo(() => {
+    const last = [...correctSheet].reverse().find((s) => s.type !== "cover");
+
+    return last?.id;
+  }, [correctSheet]);
 
   useEffect(() => {
     setIsmounted(true);
@@ -307,22 +323,42 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
 
   // HANDLE HOW MANY PAGES TO SHOW
   useEffect(() => {
-    const pages = isTwoPages && isOpen ? 2 : 1;
-    setPagesPerView(pages);
-    // }, [pagesPerView, isTwoPages, isOpen, visibleItems])
-  }, [pagesPerView, isTwoPages, isOpen, visibleItems]);
+    setPagesPerView(isTwoPages && isOpen ? 2 : 1);
+  }, [isTwoPages, isOpen]);
 
   // OPEN - CLOSE LOGIC
-  useEffect(() => {
-    if (visibleItems.some((i) => i.type === "cover" && i.face === "outside")) {
-      {
-        setIsOpen(false);
-        return;
-      }
-    }
-    setIsOpen(true);
-  }, [visibleItems]);
+  // useEffect(() => {
+  //   console.log("OPEN - CLOSE LOGIC useEffect called");
+  //   setCalled("called");
+  //   // if (pagesPerView === 1) setIsOpen(false);
 
+  //   if (visibleItems.some((i) => i.type === "cover" && i.face === "outside")) {
+  //     {
+  //       setIsOpen(false);
+  //       return;
+  //     }
+  //   }
+  //   setIsOpen(true);
+  //   setCalled("finished");
+  //   console.log("OPEN - CLOSE LOGIC useEffect finished");
+  // }, [visibleItems]);
+
+  // useEffect(() => {
+  //   console.log("OPEN - CLOSE LOGIC useEffect called");
+  //   const shouldBeOpen = !visibleItems.some(
+  //     (i) => i.type === "cover" && i.face === "outside",
+  //   );
+
+  //   setIsOpen((prev) => (prev === shouldBeOpen ? prev : shouldBeOpen));
+  // }, [visibleItems]);
+
+  useLayoutEffect(() => {
+    const shouldBeOpen = !visibleItems.some(
+      (i) => i.type === "cover" && i.face === "outside",
+    );
+
+    setIsOpen((prev) => (prev === shouldBeOpen ? prev : shouldBeOpen));
+  }, [visibleItems]);
   // Handle URL's
   useEffect(() => {
     let newUrl;
@@ -483,11 +519,17 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
 
   const handleNext = useCallback(
     (id: string) => {
-      if (!id.startsWith("cover")) {
+      const skipAnimation = !isTwoPages && id === lastPageId;
+
+      if (!id.startsWith("cover") && !skipAnimation) {
         handleSound("flip");
       }
 
-      if (!toggleAnimation) {
+      if (skipAnimation) {
+        handleSound("close");
+      }
+
+      if (!toggleAnimation || skipAnimation) {
         next();
         return;
       }
@@ -498,16 +540,22 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
       setFlipping({ direction: "next", id });
       flippingRef.current = { direction: "next", id };
     },
-    [toggleAnimation, next, handleSound],
+    [toggleAnimation, next, handleSound, isTwoPages, lastPageId],
   );
 
   const handlePrev = useCallback(
     (id: string) => {
-      if (!id.startsWith("cover")) {
+      const skipAnimation = !isTwoPages && id === firstPageId;
+
+      if (!id.startsWith("cover") && !skipAnimation) {
         handleSound("flip");
       }
 
-      if (!toggleAnimation) {
+      if (skipAnimation) {
+        handleSound("close");
+      }
+
+      if (!toggleAnimation || skipAnimation) {
         prev();
         return;
       }
@@ -515,10 +563,11 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
       if (flippingRef.current) {
         flippingRef.current = null;
       }
+
       setFlipping({ direction: "prev", id });
       flippingRef.current = { direction: "prev", id };
     },
-    [toggleAnimation, prev, handleSound],
+    [toggleAnimation, prev, handleSound, isTwoPages, firstPageId],
   );
 
   const handleCoverNavigation = useCallback(
@@ -704,7 +753,7 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
             : "flipPrev",
       );
     }
-  }, [flipping, toggleAnimation, isOpen]);
+  }, [flipping, toggleAnimation, isOpen, pagesPerView, isTwoPages]);
 
   const handleGoTo = (id: string, source?: string) => {
     // if (source === "bookmark" && !bookmarkedPage) {
@@ -966,6 +1015,7 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
 
   return (
     <div className="flex w-full h-full m-2 flex-col md:flex-row">
+      <div className="z-100 flex justify-center items-center gap-5"></div>
       <div
         className={` order-2 md:order-1 relative font-baskervville  flex flex-col md:items-center md:justify-center w-full h-full ${!toggleAnimation ? "no-anim" : ""}`}
       >
