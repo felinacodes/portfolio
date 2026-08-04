@@ -603,6 +603,14 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
+      if (
+        (e.target as HTMLElement).matches(
+          "input, textarea, [contenteditable='true']",
+        )
+      ) {
+        return;
+      }
+
       const now = Date.now();
 
       if (now - lastPressRef.current < 200) return;
@@ -612,13 +620,16 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
         e.preventDefault();
 
         const rightPage = visibleItems[visibleItems.length - 1];
+
         if (rightPage) {
           if (rightPage.type === "cover") {
             if (rightPage.face === "outside" && rightPage.side === "back")
               return;
+
             handleCoverNavigation(rightPage);
             return;
           }
+
           handleNext(rightPage.id);
         }
       }
@@ -630,6 +641,7 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
           if (leftPage.type === "cover") {
             if (leftPage.face === "outside" && leftPage.side === "front")
               return;
+
             handleCoverNavigation(leftPage);
             return;
           }

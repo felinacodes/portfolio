@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import ChapterIntro from "./ChapterIntro";
 import { RenderContext } from "../Notebook";
 import { SiFiverr, SiUpwork } from "react-icons/si";
+import { useNotebook } from "@/contexts/NotebookContext";
 
 const contactSections = [
   {
@@ -44,6 +45,7 @@ export const ContactBlocks = (args?: RenderContext) => {
   const chapter = args?.chapter;
 
   const ContactPage = () => {
+    const { inputs, setInput } = useNotebook();
     const [errors, setErrors] = useState({
       name: "",
       email: "",
@@ -157,6 +159,8 @@ export const ContactBlocks = (args?: RenderContext) => {
             <div className="self-center">
               <label htmlFor="name">Name:</label>
               <input
+                value={inputs["contact-name"] ?? ""}
+                onChange={(e) => setInput("contact-name", e.target.value)}
                 type="text"
                 placeholder="Your Name"
                 name="name"
@@ -171,6 +175,8 @@ export const ContactBlocks = (args?: RenderContext) => {
             <div className="self-center">
               <label htmlFor="email">Email:</label>
               <input
+                value={inputs["contact-email"] ?? ""}
+                onChange={(e) => setInput("contact-email", e.target.value)}
                 type="email"
                 placeholder="Your Email"
                 name="email"
@@ -186,9 +192,11 @@ export const ContactBlocks = (args?: RenderContext) => {
               <label htmlFor="message"></label>
               <textarea
                 placeholder="Your Message"
+                value={inputs["contact-message"] ?? ""}
+                onChange={(e) => setInput("contact-message", e.target.value)}
                 name="message"
-                className="m-2 border rounded-md p-1 h-auto resize-none overflow-auto min-h-[70%]"
                 onInput={handleAutoResize}
+                className="m-2 border rounded-md p-1 h-auto resize-none overflow-auto min-h-[70%]"
               />
               {errors.message && (
                 <p className="text-myPinkDark text-sm ml-2 pb-2 ">
