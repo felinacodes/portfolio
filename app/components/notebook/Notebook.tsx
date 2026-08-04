@@ -674,7 +674,8 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
     // ignore if text is selected
     const selection = window.getSelection();
     if (selection && selection.toString().length > 0) {
-      return;
+      // fix getting stuck in drawing mode if text was already selected.
+      if (!drawingEnabled) return;
     }
 
     // one page mode within a no-phone device
