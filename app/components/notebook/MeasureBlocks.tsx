@@ -1,33 +1,33 @@
-import React, { useEffect, useRef, useLayoutEffect } from 'react'
-import Page from './Page'
+import React, { useEffect, useRef, useLayoutEffect } from "react";
+import Page from "./Page";
 
 type Props = {
-  blocks: React.ReactNode[]
-  width?: number
-  onMeasured?: (heights: number[]) => void
-}
+  blocks: React.ReactNode[];
+  width?: number;
+  onMeasured?: (heights: number[]) => void;
+};
 export default function MeasureBlocks({ blocks, width, onMeasured }: Props) {
-  const refs = useRef<HTMLDivElement[]>([])
+  const refs = useRef<HTMLDivElement[]>([]);
 
   useLayoutEffect(() => {
     const heights = refs.current.map(
       (el) => el?.getBoundingClientRect().height || 0,
-    )
-    onMeasured?.(heights)
-    console.log('measured heights', heights, 'width:', width)
-  }, [blocks, onMeasured, width])
+    );
+    onMeasured?.(heights);
+    console.log("measured heights", heights, "width:", width);
+  }, [blocks, onMeasured, width]);
 
   return (
     <div
       className="absolute -left-[9999px] top-0"
-      style={{ width: width || 'auto' }}
+      style={{ width: width || "auto" }}
     >
       {/* <Page> */}
       {blocks.map((block, i) => (
         <div
           key={i}
           ref={(el) => {
-            if (el) refs.current[i] = el
+            if (el) refs.current[i] = el;
           }}
         >
           {block}
@@ -35,7 +35,7 @@ export default function MeasureBlocks({ blocks, width, onMeasured }: Props) {
       ))}
       {/* </Page> */}
     </div>
-  )
+  );
 }
 
 // export default function MeasureBlocks({ blocks, width, onMeasured }: Props) {

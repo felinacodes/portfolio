@@ -250,7 +250,7 @@ export default function DrawingCanvas({ pageId }: DrawingCanvasProps) {
       onPointerMove={draw}
       onPointerUp={stopDrawing}
       onPointerLeave={stopDrawing}
-      className={` absolute inset-0 z-10 w-full h-full ${
+      className={` absolute inset-0 z-10 w-full h-full touch-none ${
         drawingEnabled ? "pointer-events-auto" : "pointer-events-none"
       }`}
       style={{

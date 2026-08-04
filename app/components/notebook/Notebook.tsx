@@ -32,6 +32,7 @@ import { SoundName } from "@/lib/sounds";
 import Modal from "../LeaveModal/Modal";
 import { fetchMessages, type LeaveMessage } from "@/lib/fetchMessages";
 // import useMeasure from '../useMeasure'
+import { useDrawing } from "@/contexts/DrawingContext";
 
 type NotebookProps = {
   initialPage?: string;
@@ -153,6 +154,7 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
   const touchEnd = useRef({ x: 0, y: 0 });
 
   const { theme, setTheme } = useTheme();
+  const { drawingEnabled } = useDrawing();
 
   const SWIPE_THRESHOLD = 50;
 
@@ -185,7 +187,7 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
     });
   }, [messages]);
 
-  const numberOfBlanks = sections.length % 2 === 0 ? 2 : 3;
+  const numberOfBlanks = sections.length % 2 === 0 ? 2 : 1;
   // const numberOfBlanks = 1;
 
   const sheet: Sheet[] = useMemo(
@@ -663,7 +665,7 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
 
     if (
       target.closest(
-        "button, a, input, textarea, select, label, img, [role='button'], [data-no-flip]",
+        "button, a, input, textarea, select, label, [role='button'], [data-no-flip]",
       )
     ) {
       return;
@@ -710,6 +712,8 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
 
       const dx = touchEnd.current.x - touchStart.current.x;
       const dy = touchEnd.current.y - touchStart.current.y;
+
+      if (drawingEnabled) return;
 
       if (Math.abs(dx) < SWIPE_THRESHOLD) return;
 
