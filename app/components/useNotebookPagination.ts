@@ -6,6 +6,7 @@ import React, {
   useLayoutEffect,
   useRef,
 } from "react";
+import { usePathname } from "next/navigation";
 
 import type { Sheet } from "./notebook/Notebook";
 
@@ -21,6 +22,9 @@ export function useNotebookPagination(
   const decodedInitialPage = initialPage
     ? decodeURIComponent(initialPage)
     : undefined;
+  const pathname = usePathname();
+  const prevPathname = useRef(pathname);
+
   const [leftIndex, setLeftIndex] = useState(() => {
     if (!initialPage) return 0;
 
@@ -34,19 +38,26 @@ export function useNotebookPagination(
   //BUG FIX : when switching from 1 page view to 2 goes back to initialPage instead of following current index.
   const initialRef = useRef(initialPage);
 
+  /* Fix syncing between 2 pages view and 1 page view */
+  useEffect(() => {
+    if (prevPathname.current !== pathname) {
+      initialRef.current = undefined;
+    }
+    prevPathname.current = pathname;
+  }, [pathname]);
+
   useLayoutEffect(() => {
     if (!initialRef.current) return;
     const index = items.findIndex((i) => i.id === decodedInitialPage);
 
     if (index === -1) return;
-
     let newIndex = index;
-    if (isSetTwoPages) newIndex = index % 2 === 0 ? index - 1 : index;
+    if (isSetTwoPages) {
+      newIndex = index % 2 === 0 ? index - 1 : index;
+      // initialRef.current = undefined;
+    }
     // eslint-disable-next-line
     setLeftIndex(Math.max(0, newIndex));
-
-    // disable after first run
-    // initialRef.current = undefined;
   }, [items, isSetTwoPages, decodedInitialPage]);
 
   useEffect(() => {
