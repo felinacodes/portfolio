@@ -4,17 +4,10 @@ import React, {
   useMemo,
   useCallback,
   useLayoutEffect,
+  useRef,
 } from "react";
 
 import type { Sheet } from "./notebook/Notebook";
-
-function getLastBlankId(items: Sheet[]): string | undefined {
-  for (let i = items.length - 1; i >= 0; i--) {
-    if (items[i].type === "blank") {
-      return items[i].id;
-    }
-  }
-}
 
 export function useNotebookPagination(
   // allItems: Sheet[],
@@ -25,11 +18,13 @@ export function useNotebookPagination(
   isSetTwoPages: boolean,
   initialPage?: string,
 ) {
-  // const [leftIndex, setLeftIndex] = useState(0)
+  const decodedInitialPage = initialPage
+    ? decodeURIComponent(initialPage)
+    : undefined;
   const [leftIndex, setLeftIndex] = useState(() => {
     if (!initialPage) return 0;
 
-    const index = items.findIndex((i) => i.id === initialPage);
+    const index = items.findIndex((i) => i.id === decodedInitialPage);
     if (index === -1) return 0;
 
     return index;
@@ -37,30 +32,29 @@ export function useNotebookPagination(
   const maxLeftIndex = Math.max(0, items.length - pagesPerView);
 
   //BUG FIX : when switching from 1 page view to 2 goes back to initialPage instead of following current index.
-  const initialRef = React.useRef(initialPage);
+  const initialRef = useRef(initialPage);
 
   useLayoutEffect(() => {
-    if (!initialRef.current || !isSetTwoPages) return;
-
-    const index = items.findIndex((i) => i.id === initialRef.current);
+    if (!initialRef.current) return;
+    const index = items.findIndex((i) => i.id === decodedInitialPage);
 
     if (index === -1) return;
 
     let newIndex = index;
-    newIndex = index % 2 === 0 ? index - 1 : index;
+    if (isSetTwoPages) newIndex = index % 2 === 0 ? index - 1 : index;
     // eslint-disable-next-line
     setLeftIndex(Math.max(0, newIndex));
 
     // disable after first run
-    initialRef.current = undefined;
-  }, [items, isSetTwoPages]);
+    // initialRef.current = undefined;
+  }, [items, isSetTwoPages, decodedInitialPage]);
 
   useEffect(() => {
     // eslint-disable-next-line
     setLeftIndex((prev) => Math.min(prev, maxLeftIndex));
   }, [maxLeftIndex]);
 
-  const prevTwoPages = React.useRef(isSetTwoPages);
+  const prevTwoPages = useRef(isSetTwoPages);
 
   // BUG FIX : when switching from 1 page view to 2 page view, and lands  on last blank page.
   useEffect(() => {
@@ -93,18 +87,6 @@ export function useNotebookPagination(
     }
     setLeftIndex(newIndex);
   };
-
-  // useEffect(() => {
-  //   const lastBlankId = getLastBlankId(items)
-
-  //   if (!isSetTwoPages) return
-
-  //   if (visibleItems.some((i) => i.id === lastBlankId)) {
-  //     // eslint-disable-next-line
-  //     setLeftIndex((prev) => Math.min(prev, maxLeftIndex) - 1)
-  //     return
-  //   }
-  // }, [isSetTwoPages])
 
   const next = () => {
     let newIndex = Math.min(leftIndex + pagesPerView, maxLeftIndex);

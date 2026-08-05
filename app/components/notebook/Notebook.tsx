@@ -146,7 +146,7 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
 
   const [messages, setMessages] = useState<LeaveMessage[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [called, setCalled] = useState("");
+  const [messagesLoaded, setMessagesLoaded] = useState(false);
 
   const isDraggingRef = useRef(false);
   const startPosRef = useRef({ x: 0, y: 0 });
@@ -280,11 +280,11 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
     async function loadMessages() {
       try {
         const data = await fetchMessages();
-
         setMessages(data.messages);
       } catch (error) {
         console.error(error);
       } finally {
+        setMessagesLoaded(true);
       }
     }
 
@@ -367,7 +367,10 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
     if (!visibleItems.length) return;
 
     const firstPage = visibleItems.find(
-      (item) => item.type === "page" || item.type === "context",
+      (item) =>
+        item.type === "page" ||
+        item.type === "context" ||
+        item.type === "leave-something",
     );
 
     if (!firstPage) {
@@ -385,7 +388,10 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
   useEffect(() => {
     // ignore pages that don't have a bookmark
     const sectionPages = visibleItems.filter(
-      (item) => item.type === "page" || item.type === "context",
+      (item) =>
+        item.type === "page" ||
+        item.type === "context" ||
+        item.type === "leave-something",
     );
 
     if (!sectionPages.length) {
