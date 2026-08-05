@@ -29,11 +29,20 @@ export default function DrawingCanvas({ pageId }: DrawingCanvasProps) {
 
   const { startLoop, stopLoop } = useSound();
 
+  const getContext = () => {
+    const canvas = canvasRef.current;
+    if (!canvas) return null;
+
+    return canvas.getContext("2d", {
+      willReadFrequently: true,
+    });
+  };
+
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
-    const ctx = canvas.getContext("2d");
+    const ctx = getContext();
     if (!ctx) return;
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -44,7 +53,7 @@ export default function DrawingCanvas({ pageId }: DrawingCanvasProps) {
     if (!canvas) return;
 
     const resize = () => {
-      const ctx = canvas.getContext("2d");
+      const ctx = getContext();
       if (!ctx) return;
 
       let saved: ImageData | null = null;
@@ -78,7 +87,7 @@ export default function DrawingCanvas({ pageId }: DrawingCanvasProps) {
         const canvas = canvasRef.current;
         if (!canvas) return;
 
-        const ctx = canvas.getContext("2d");
+        const ctx = getContext();
         if (!ctx) return;
 
         ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -113,15 +122,11 @@ export default function DrawingCanvas({ pageId }: DrawingCanvasProps) {
     load();
   }, [pageId, getDrawing, saveDrawing]);
 
-  const getContext = () => {
-    return canvasRef.current?.getContext("2d");
-  };
-
   const saveCurrentDrawing = () => {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
-    const ctx = canvas.getContext("2d");
+    const ctx = getContext();
     if (!ctx) return;
 
     const data = ctx.getImageData(0, 0, canvas.width, canvas.height);
