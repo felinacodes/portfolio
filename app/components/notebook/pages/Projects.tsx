@@ -105,6 +105,7 @@ export const ProjectsBlocks = (args?: RenderContext) => {
                 src={project.image}
                 alt={project.alt}
                 fill
+                sizes="192px"
                 className="object-cover grayscale hover:grayscale-0 active:grayscale-0 transition duration-1000 ease-in"
               />
             </div>

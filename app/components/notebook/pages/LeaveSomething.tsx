@@ -68,12 +68,12 @@ export const LeaveSomethingBlocks = (args?: RenderContext) => {
                         setIsModalOpen?.(true);
                       }}
                       className="
-        flex items-center justify-center
-        w-32 h-32 rounded-full
-        bg-gray-200   
-        transition-colors duration-200
-        group
-      "
+                    flex items-center justify-center
+                    w-32 h-32 rounded-full
+                    bg-gray-200   
+                    transition-colors duration-200
+                    group
+                   "
                     >
                       <Plus
                         size={48}
@@ -108,13 +108,15 @@ export const LeaveSomethingBlocks = (args?: RenderContext) => {
                     />
                   </div>
                   {item.message.signature && (
-                    <Image
-                      src={item.message.signature}
-                      alt="signature"
-                      width={128}
-                      height={128}
-                      className="w-32 h-auto"
-                    />
+                    <div className="relative w-32 h-12">
+                      <Image
+                        src={item.message.signature}
+                        alt="signature"
+                        fill
+                        sizes="128px"
+                        className="object-contain"
+                      />
+                    </div>
                   )}
                 </div>
               );
