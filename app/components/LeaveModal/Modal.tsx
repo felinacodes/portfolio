@@ -261,7 +261,10 @@ const Modal = ({ isOpen, setIsOpen, setMessages }: ModalProps) => {
               sitekey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY!}
               onSuccess={setToken}
               onExpire={() => setToken("")}
-              onError={() => setToken("")}
+              onError={(err) => {
+                console.error("Turnstile error:", err);
+                setToken("");
+              }}
             />
           </div>
         </div>

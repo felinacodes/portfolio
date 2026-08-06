@@ -298,7 +298,7 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
       clearTimeout(timeout);
       timeout = setTimeout(() => {
         // setPagesPerView(window.innerWidth >= 768 ? 2 : 1)
-        setIsTwoPages(window.innerWidth >= 768 ? true : false);
+        setIsTwoPages(window.innerWidth >= 850 ? true : false);
       }, 100);
     };
 
@@ -1047,8 +1047,8 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
 
         {
           <div
-            className={`   relative  book-scene min-h-[350px] h-[90vh] md:h-[85vh]  
-            max-h-[800px] grid grid-cols-1 md:self-center w-[${pageWidth}vw]
+            className={`relative  book-scene min-h-[350px] h-[90vh] md:h-[85vh]  
+            max-h-[800px] grid grid-cols-1 md:self-center w-[80vw] max-w-[2000px]
                  
           ${
             isOpen

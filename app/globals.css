@@ -48,6 +48,8 @@ body,
   --color-myPink: #ffc0cb;
   --color-myPinkDark: #df7e8e;
   --color-myPinkLight: #f8dae0f3;
+
+  --breakpoint-md: 850px;
 }
 
 /* @layer utilities {
@@ -887,7 +889,7 @@ body {
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 850px) {
   .odd-page::before,
   .even-page::before {
     box-shadow:

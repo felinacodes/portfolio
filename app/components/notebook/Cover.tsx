@@ -106,15 +106,15 @@ const Cover = ({
               <div className="relative barcode w-full h-full border-r-2 "></div>
               <p className="font-mono w-full max-w-full text-center flex items-center justify-between pl-2 pr-2">
                 <span>2</span>
-                <span>4</span>
-                <span>5</span>
-                <span>3</span>
-                <span>5</span>
-                <span>5</span>
-                <span>2</span>
+                <span>8</span>
                 <span>0</span>
+                <span>6</span>
+                <span>4</span>
+                <span>2</span>
                 <span>1</span>
-                <span>5</span>
+                <span>2</span>
+                {/* <span>1</span>
+                <span>5</span> */}
               </p>
               {/* </div> */}
             </div>
