@@ -147,6 +147,7 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
   const [messages, setMessages] = useState<LeaveMessage[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [messagesLoaded, setMessagesLoaded] = useState(false);
+  const [isDesktop, setIsDesktop] = useState(false);
 
   const isDraggingRef = useRef(false);
   const startPosRef = useRef({ x: 0, y: 0 });
@@ -253,6 +254,17 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
     ],
     [sections, numberOfBlanks],
   );
+
+  useEffect(() => {
+    const query = window.matchMedia("(min-width: 850px)");
+
+    const update = () => setIsDesktop(query.matches);
+
+    update();
+    query.addEventListener("change", update);
+
+    return () => query.removeEventListener("change", update);
+  }, []);
 
   const correctSheet = useMemo(() => {
     return isTwoPages
@@ -1160,17 +1172,17 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
             {isOpen && (
               <div
                 className="
-      absolute
-      top-10
-      left-full
-      ml-[-20px]
+                absolute
+                top-10
+                left-full
+                ml-[-20px]
 
-      flex
-      flex-col
-      gap-2
+                flex
+                flex-col
+                gap-2
 
-      z-10
-    "
+                z-10
+              "
               >
                 <Bookmarks
                   sectionIds={sections.map((s) => s.id)}
@@ -1224,7 +1236,7 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
           </div>
         }
       </div>
-      <div className="z-100 text-myPinkDark absolute top-2 right-2 hover:text-myPink ">
+      <div className="z-100 text-myPinkDark absolute top-2 right-2  hover:text-myPinkLight ">
         <button
           onClick={() => setOptionsOpen(!optionsOpen)}
           className="text-center cursor-pointer  "
@@ -1236,11 +1248,29 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
       <AnimatePresence>
         {optionsOpen && (
           <motion.div
-            className="order-1"
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            transition={{ duration: 0.2 }}
+            className="order-1 "
+            initial={{
+              opacity: 0,
+              scaleY: 0.8,
+              x: isDesktop ? 20 : 0,
+              y: isDesktop ? 0 : -8,
+            }}
+            animate={{
+              opacity: 1,
+              scaleY: 1,
+              x: 0,
+              y: 0,
+            }}
+            exit={{
+              opacity: 0,
+              scaleY: 0.8,
+              x: isDesktop ? 20 : 0,
+              y: isDesktop ? 0 : -8,
+            }}
+            transition={{
+              duration: 0.5,
+              ease: [0.22, 1, 0.36, 1],
+            }}
           >
             <Options
               darkMode={theme}
