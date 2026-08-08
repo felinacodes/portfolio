@@ -662,13 +662,13 @@ body {
   transform: translateZ(-2px); - behind cover
 */
 
-.book-scene:has(.page-flip:hover .odd-page) .bookmark-visible {
+/* .book-scene:has(.page-flip:hover .odd-page) .bookmark-visible {
   animation: animateNextHoverBookmark 0.8s ease-in forwards;
 }
 
 .book-scene:has(.page-flip:hover .even-page) .bookmark-visible {
   animation: animatePrevHoverBookmark 0.8s ease-in forwards;
-}
+} */
 
 .flipNext::after {
   content: "";
@@ -816,7 +816,7 @@ body {
   }
 }
 
-@keyframes animateNextHoverBookmark {
+/* @keyframes animateNextHoverBookmark {
   0% {
     transform: rotateY(0deg) translateZ(0);
   }
@@ -842,7 +842,7 @@ body {
   100% {
     transform: translateX(20px) translateZ(2px);
   }
-}
+} */
 
 @keyframes animateCoverPrev {
   0% {
@@ -913,14 +913,6 @@ body {
       12px 20px 30px rgba(0, 0, 0, 0.16);
   }
 
-  /* .flipPrev {
-    animation: animatePrevSinglePage 0.8s ease-in forwards;
-  }
-
-  .flipNext {
-    animation: animateNextSinglePage 0.8s ease-in forwards;
-  } */
-
   .odd-page,
   .even-page {
     background-image: linear-gradient(
@@ -938,6 +930,15 @@ body {
       rgba(58, 57, 57, 0) 5%
     );
   }
+
+  /*shouldnt this make it no happe animation on 1 page view? */
+  /* .book-scene:has(.page-flip:hover .odd-page) .bookmark-visible {
+    animation: none;
+  }
+
+  .book-scene:has(.page-flip:hover .even-page) .bookmark-visible {
+    animation: none;
+  } */
 }
 
 @media (hover: none) {
@@ -950,12 +951,12 @@ body {
   }
 }
 
-@media (hover: none) {
+/* @media (hover: none) {
   .book-scene:has(.page-flip:hover .odd-page) .bookmark-visible {
     animation: none;
   }
 
   .book-scene:has(.page-flip:hover .even-page) .bookmark-visible {
     animation: none;
-  }
-}
+  } 
+} */

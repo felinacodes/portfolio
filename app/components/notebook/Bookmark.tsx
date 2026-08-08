@@ -1,12 +1,12 @@
 import React, { useState } from "react";
-import { useSound } from "@/contexts/SoundContext";
-
+import { motion } from "framer-motion";
 interface BookmarkProps {
   handleGoTo: (id: string, source?: string) => void;
   setBookmarkedPage?: (id: string) => void;
   bookmarkedPage: string;
   setDraggingBookmark?: (value: boolean) => void;
   draggingBookmark?: boolean;
+  hoverDirection?: "next" | "prev" | null;
 }
 
 const Bookmark = ({
@@ -15,12 +15,33 @@ const Bookmark = ({
   bookmarkedPage,
   setDraggingBookmark,
   draggingBookmark,
+  hoverDirection,
 }: BookmarkProps) => {
-  const { play } = useSound();
-  const crystals = Array.from({ length: 15 });
-  const [canPlay, setCanPlay] = useState(true);
+  const crystals = Array.from({ length: 6 });
+
   return (
-    <button
+    <motion.button
+      animate={{
+        x: hoverDirection === "next" ? -15 : hoverDirection === "prev" ? 15 : 0,
+
+        y: hoverDirection === "next" ? 1 : hoverDirection === "prev" ? -1 : 0,
+
+        rotateY:
+          hoverDirection === "next" ? -2 : hoverDirection === "prev" ? 2 : 0,
+
+        rotateZ:
+          hoverDirection === "next"
+            ? -0.2
+            : hoverDirection === "prev"
+              ? 0.2
+              : 0,
+
+        z: hoverDirection ? 3 : 1,
+      }}
+      transition={{
+        duration: 3,
+        ease: [0.22, 1, 0.36, 1],
+      }}
       onPointerDown={(e) => {
         e.stopPropagation();
         e.currentTarget.setPointerCapture(e.pointerId);
@@ -51,35 +72,24 @@ const Bookmark = ({
         }
         if (draggingBookmark && !pageId) {
           if (setBookmarkedPage) setBookmarkedPage("");
-          setCanPlay(false);
         }
       }}
       onClick={(e) => {
-        if (!bookmarkedPage && canPlay) {
-          play("error");
-        }
         e.stopPropagation();
         handleGoTo(bookmarkedPage, "bookmark");
-        setCanPlay(true);
       }}
-      className={`bookmark touch-none cursor-grab active:cursor-grab w-10 md:w-15 h-210 
+      className={`bookmark touch-none cursor-grab active:cursor-grab w-[clamp(2.5rem,5vw,3rem)] h-[105%]
         
        ${bookmarkedPage ? "bookmarked-bookmark" : "no-bookmarked-bookmark"} `}
     >
       <div className=" w-full h-full flex ">
-        <div className="w-full h-full flex justify-around items-center flex-col m-[3px]">
-          {crystals.map((_, i) => (
-            <div key={i} className="crystal" />
-          ))}
-        </div>
-
-        <div className=" w-full h-full flex justify-around items-center flex-col m-[3px]">
+        <div className="w-full h-full flex justify-around items-center flex-col ">
           {crystals.map((_, i) => (
             <div key={i} className="crystal" />
           ))}
         </div>
       </div>
-    </button>
+    </motion.button>
   );
 };
 

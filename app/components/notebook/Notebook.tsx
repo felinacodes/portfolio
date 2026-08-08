@@ -24,7 +24,12 @@ import MeasureBlocks from "./MeasureBlocks";
 import Bookmark from "./Bookmark";
 import Options from "../Options";
 import { Settings } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
+import {
+  motion,
+  AnimatePresence,
+  useMotionValue,
+  useTransform,
+} from "framer-motion";
 import { useTheme } from "next-themes";
 import { useSound } from "@/contexts/SoundContext";
 import { SoundName } from "@/lib/sounds";
@@ -139,6 +144,9 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
   const [correctAnimation, setCorrectAnimation] = useState("");
 
   const [draggingBookmark, setDraggingBookmark] = useState(false);
+  const [hoverDirection, setHoverDirection] = useState<"next" | "prev" | null>(
+    null,
+  );
 
   const [optionsOpen, setOptionsOpen] = useState(false);
 
@@ -159,6 +167,11 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
 
   const SWIPE_THRESHOLD = 50;
 
+  const flipProgress = useMotionValue(0);
+
+  const rotateY = useTransform(flipProgress, [0, 0.5, 1], [0, -90, -180]);
+
+  const translateZ = useTransform(flipProgress, [0, 0.5, 1], [0, 150, 0]);
   // const correctSheet = isTwoPages ? TwoPagesheets : OnePagesheets
 
   const sections = useMemo(() => {
@@ -1089,13 +1102,13 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
                   {/* Leave the isLeftPage and isRightPage logic for 2 pages
                 so the hover animation works as intented.*/}
                   {isOpen && isLeftPage && prevSheet && isTwoPages && (
-                    <div className="absolute inset-0 -z-10">
+                    <div className="absolute inset-0 -z-10 pointer-events-none">
                       {renderSheet(prevSheet)}
                     </div>
                   )}
 
                   {isOpen && isRightPage && nextSheet && isTwoPages && (
-                    <div className="absolute inset-0 -z-10">
+                    <div className="absolute inset-0 -z-10 pointer-events-none">
                       {renderSheet(nextSheet)}
                     </div>
                   )}
@@ -1105,7 +1118,7 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
                     flipping?.direction === "prev" &&
                     prevSheet &&
                     !isTwoPages && (
-                      <div className="absolute inset-0 -z-10">
+                      <div className="absolute inset-0 -z-10 pointer-events-none ">
                         {renderSheet(prevSheet)}
                       </div>
                     )}
@@ -1115,7 +1128,7 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
                     flipping?.direction === "next" &&
                     nextSheet &&
                     !isTwoPages && (
-                      <div className="absolute inset-0 -z-10">
+                      <div className="absolute inset-0 -z-10 pointer-events-none">
                         {renderSheet(nextSheet)}
                       </div>
                     )}
@@ -1124,7 +1137,7 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
                 1 and 2 pages view
                 */}
                   {!isOpen && flipping?.direction === "next" && nextSheet && (
-                    <div className="absolute inset-0 z-0 flex justify-center">
+                    <div className="absolute inset-0 z-0 flex justify-center pointer-events-none">
                       <div className="w-full md:w-1/2 h-full">
                         {renderSheet(nextSheet)}
                       </div>
@@ -1133,7 +1146,7 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
 
                   {/* Show last inside page while closing back cover */}
                   {!isOpen && flipping?.direction === "prev" && prevSheet && (
-                    <div className="absolute inset-0 z-0 flex justify-center">
+                    <div className="absolute inset-0 z-0 flex justify-center pointer-events-none">
                       <div className="w-full md:w-1/2 h-full">
                         {renderSheet(prevSheet)}
                       </div>
@@ -1157,6 +1170,24 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
                       startPosRef.current = { x: e.clientX, y: e.clientY };
                     }}
                     onAnimationEnd={finishFlip}
+                    onMouseEnter={() => {
+                      if (
+                        !isTwoPages ||
+                        sheet.type === "cover" ||
+                        !isBookmarkVisible
+                      ) {
+                        return;
+                      }
+
+                      const pageNumber = numberedMap.get(sheet.id);
+
+                      if (!pageNumber) return;
+
+                      setHoverDirection(pageNumber % 2 === 1 ? "next" : "prev");
+                    }}
+                    onMouseLeave={() => {
+                      setHoverDirection(null);
+                    }}
                     className={` page-flip w-full h-full relative flex justify-center ${
                       sheet.id === flipping?.id ? correctAnimation : ""
                     }
@@ -1195,19 +1226,15 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
             {isOpen && (
               <div
                 className={`
-              absolute
-              top-[-30px]
-
-              left-0
-              m-1
-
-              translate-x-0
-
-              md:left-1/2
-              md:-translate-x-1/2
-              md:m-0
-              z-[-100]
-
+                absolute
+                top-[-20px]
+                h-full
+                left-0
+                translate-x-0
+                md:left-1/2
+                md:-translate-x-1/2
+                md:m-0
+                z-[-100]
               ${
                 bookmarkPosition === "previous"
                   ? "md:left-[47%]"
@@ -1230,6 +1257,7 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
                   bookmarkedPage={bookmarkedPage}
                   setDraggingBookmark={setDraggingBookmark}
                   draggingBookmark={draggingBookmark}
+                  hoverDirection={hoverDirection}
                 />
               </div>
             )}
