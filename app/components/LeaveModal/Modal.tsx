@@ -6,6 +6,7 @@ import SignatureCanvas, { SignatureCanvasHandle } from "./SignatureCanvas";
 import { blobToBase64 } from "@/lib/blobToBase64";
 import Turnstile from "react-turnstile";
 import { LeaveMessage } from "@/lib/fetchMessages";
+import { AnimatePresence, motion } from "framer-motion";
 
 interface ModalProps {
   isOpen: boolean;
@@ -31,11 +32,20 @@ const Modal = ({ isOpen, setIsOpen, setMessages }: ModalProps) => {
 
   const signatureRef = useRef<SignatureCanvasHandle>(null);
   const websiteRef = useRef<HTMLInputElement>(null);
+  const color1InputRef = useRef<HTMLInputElement>(null);
+  const color2InputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     setColor1(stickers[activeSticker].defaults.color1);
     setColor2(stickers[activeSticker].defaults.color2);
   }, [activeSticker]);
+
+  useEffect(() => {
+    if (isOpen) {
+      setModalMessage("");
+      setHasError(false);
+    }
+  }, [isOpen]);
 
   const handleColor1 = (e: React.ChangeEvent<HTMLInputElement>) => {
     setColor1(e.target.value);
@@ -119,156 +129,244 @@ const Modal = ({ isOpen, setIsOpen, setMessages }: ModalProps) => {
         flex items-center justify-center
       "
     >
-      <div
+      <motion.div
         onClick={(e) => e.stopPropagation()}
-        className="
-          bg-white
-          rounded-xl
-          p-6
-          m-4
+        className="      
+          bg-background
+          rounded-xl        
           shadow-xl
-          w-full
-          max-w-2xl
+          w-[calc(100%-3rem)]
+          max-w-3xl
+          max-h-[90vh]               
         "
+        initial={{
+          opacity: 0,
+          scaleY: 0,
+        }}
+        animate={{
+          opacity: 1,
+          scaleY: 1,
+        }}
+        exit={{
+          opacity: 0,
+          scaleY: 0,
+        }}
+        transition={{
+          duration: 0.5,
+          ease: [0.22, 1, 0.36, 1],
+        }}
       >
-        <div className="mb-6">
-          <div className="flex items-center justify-between mb-4">
-            <h3 className="text-lg font-semibold">Select a sticker</h3>
+        <div
+          className="
+          flex flex-col gap-4  p-6
+          m-4
+          max-h-[calc(90vh-3rem)]
+          overflow-y-auto
+          md:overflow-x-hidden
+          min-h-0
+          "
+        >
+          <div className="mb-6 ">
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-lg font-semibold text-center">
+                Select a sticker
+              </h3>
 
-            <button
-              onClick={() => setIsOpen(false)}
-              className="rounded-md p-1 hover:bg-gray-200 transition-colors"
-            >
-              <X size={20} />
-            </button>
-          </div>
-
-          <input
-            type="text"
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            placeholder="Search stickers..."
-            className="
-      w-full
-      rounded-lg
-      border
-      border-gray-300
-      px-3
-      py-2
-      text-sm
-      outline-none
-      focus:border-blue-400
-      focus:ring-2
-      focus:ring-blue-100
-    "
-          />
-        </div>
-        <div className="flex flex-col md:flex-row gap-4 items-center justify-between border-2 border-blue-200">
-          <div
-            className="grid grid-cols-4  border-2 border-yellow-200
-           w-full  max-h-[400px] overflow-auto m-0 p-0"
-          >
-            {filteredStickers.map((sticker) => (
               <button
-                key={sticker}
-                onClick={() => {
-                  setActiveSticker(sticker);
-                }}
-                className="
-                aspect-square           
-                bg-gray-500
-                hover:bg-gray-200
-                transition
-                border-2 border-blue-500
-                m-0 p-0
-                
-              "
+                onClick={() => setIsOpen(false)}
+                className="rounded-md p-1 hover:bg-gray-200 transition-colors cursor-pointer"
               >
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={createStickerUrl(sticker)}
-                  alt={sticker}
-                  className="w-full h-full object-contain block"
-                />
+                <X size={20} />
               </button>
-            ))}
-          </div>
-          <div className="flex flex-col items-center justify-center gap-4 border-2 border-green-500 w-full h-full">
-            <div>
-              {activeSticker && (
-                <div className="flex flex-col items-center justify-center gap-4 border-2 border-pink-200">
-                  <button
-                    onClick={() => {}}
-                    className="
-                w-32 h-32
-              
-                bg-gray-100
-                
-                transition
-              "
-                  >
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
-                      src={previewUrl}
-                      alt={activeSticker}
-                      className="w-full h-full object-contain"
-                    />
-                  </button>
-                </div>
-              )}
-
-              <div>
-                <input type="color" value={color1} onChange={handleColor1} />
-
-                <input type="color" value={color2} onChange={handleColor2} />
-              </div>
-
-              <div>
-                <SignatureCanvas ref={signatureRef} />
-              </div>
-
-              <input
-                ref={websiteRef}
-                type="text"
-                name="website"
-                tabIndex={-1}
-                autoComplete="off"
-                className="hidden"
-              />
-
-              <div className="text-center mt-2">
-                <button
-                  className="
-                  text-lg bg-gray-200 hover:bg-gray-300 cursor-pointer 
-                  rounded-lg px-4 py-2
-                  transition
-                  duration-200
-                  "
-                  onClick={handleAddToNotebook}
-                >
-                  Add to notebook
-                </button>
-              </div>
-              <p
-                className={`text-sm text-center ${
-                  hasError ? "text-red-500" : "text-green-500"
-                }`}
-              >
-                {modalMessage}
-              </p>
             </div>
-            <Turnstile
-              sitekey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY!}
-              onSuccess={setToken}
-              onExpire={() => setToken("")}
-              onError={(err) => {
-                console.error("Turnstile error:", err);
-                setToken("");
-              }}
+
+            <input
+              type="text"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              placeholder="Search stickers..."
+              className="
+            w-full
+            rounded-lg
+            border
+            border-gray-300
+            px-3
+            py-2
+            text-sm
+            outline-none
+            focus:border-myDarkPink
+            focus:ring-2
+            focus:ring-myPink
+              "
             />
           </div>
+          <div
+            className="flex flex-col md:flex-row gap-4
+           border-gray-300 rounded-md h-full"
+          >
+            <div
+              className=" grid
+            grid-cols-[repeat(auto-fill,minmax(50px,70px))]
+            auto-rows-[60px]
+            gap-2
+            w-full
+            h-full
+            overflow-auto
+            p-2
+            border-2
+            rounded-md
+            border-gray-300
+            content-center
+            justify-center
+            "
+            >
+              {filteredStickers.map((sticker) => (
+                <button
+                  key={sticker}
+                  onClick={() => {
+                    setActiveSticker(sticker);
+                  }}
+                  className="             
+                bg-gray-400
+                hover:bg-gray-200
+                dark:bg-gray-400 dark:hover:bg-gray-500
+                transition
+                m-0
+                p-0
+                "
+                >
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={createStickerUrl(sticker)}
+                    alt={sticker}
+                    className="w-full h-full object-contain"
+                  />
+                </button>
+              ))}
+            </div>
+            <div
+              className="m-2 flex flex-col items-center justify-center 
+          gap-4  w-full h-full min-w-0"
+            >
+              <div className="">
+                {activeSticker && (
+                  <div className="relative flex flex-row items-center justify-evenly gap-4 ">
+                    <button
+                      className="
+                    p-2
+                    w-32 h-32       
+                    transition"
+                    >
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img
+                        src={previewUrl}
+                        alt={activeSticker}
+                        className="w-full h-full object-contain"
+                      />
+                    </button>
+
+                    <div
+                      className="m-2 top-0 right-0 absolute flex flex-col items-center justify-center 
+                  gap-4"
+                    >
+                      <motion.button
+                        whileTap={{
+                          scale: 0.92,
+                        }}
+                        onClick={() => color1InputRef.current?.click()}
+                        className="z-1 relative cursor-pointer"
+                        aria-label="Choose primary color"
+                      >
+                        <div
+                          className="w-5 h-5 rounded-full border cursor-pointer"
+                          style={{ backgroundColor: color1 }}
+                        />
+                      </motion.button>
+
+                      <motion.input
+                        ref={color1InputRef}
+                        type="color"
+                        value={color1}
+                        onChange={handleColor1}
+                        className="opacity-0 absolute pointer-events-none"
+                      />
+
+                      <motion.button
+                        whileTap={{
+                          scale: 0.92,
+                        }}
+                        onClick={() => color2InputRef.current?.click()}
+                        className="z-1 relative cursor-pointer"
+                        aria-label="Choose secondary color"
+                      >
+                        <div
+                          className="w-5 h-5 rounded-full border cursor-pointer"
+                          style={{ backgroundColor: color2 }}
+                        />
+                      </motion.button>
+
+                      <motion.input
+                        ref={color2InputRef}
+                        type="color"
+                        value={color2}
+                        onChange={handleColor2}
+                        className="opacity-0 absolute pointer-events-none"
+                      />
+                    </div>
+                  </div>
+                )}
+
+                <div className="w-full min-w-0 flex justify-center">
+                  <SignatureCanvas ref={signatureRef} />
+                </div>
+
+                <input
+                  ref={websiteRef}
+                  type="text"
+                  name="website"
+                  tabIndex={-1}
+                  autoComplete="off"
+                  className="hidden"
+                />
+
+                <div className="text-center mt-2">
+                  <motion.button
+                    whileTap={{
+                      scale: 0.92,
+                    }}
+                    className="
+                    text-lg bg-gray-200 dark:bg-gray-400 dark:hover:bg-gray-500 hover:bg-gray-300 cursor-pointer 
+                    rounded-lg px-4 py-2
+                    border
+                    transition-colors
+                    duration-200
+                  "
+                    onClick={handleAddToNotebook}
+                  >
+                    Add to notebook
+                  </motion.button>
+                </div>
+                <p
+                  className={`m-2 text-sm text-center ${
+                    hasError ? "text-red-500" : "text-green-500"
+                  }`}
+                >
+                  {modalMessage}
+                </p>
+              </div>
+              <Turnstile
+                sitekey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY!}
+                onSuccess={setToken}
+                onExpire={() => setToken("")}
+                onError={(err) => {
+                  console.error("Turnstile error:", err);
+                  setToken("");
+                }}
+              />
+            </div>
+          </div>
         </div>
-      </div>
+      </motion.div>
     </div>
   );
 };

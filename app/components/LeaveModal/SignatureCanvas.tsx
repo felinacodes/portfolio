@@ -9,6 +9,7 @@ import {
 } from "react";
 import { Trash2 } from "lucide-react";
 import { penCursor, svgToCursor } from "@/lib/svgUtils";
+import { motion } from "framer-motion";
 
 export interface SignatureCanvasHandle {
   getBlob: () => Promise<Blob | null>;
@@ -23,6 +24,7 @@ const SignatureCanvas = forwardRef<SignatureCanvasHandle>((_, ref) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const drawing = useRef(false);
   const hasDrawn = useRef(false);
+  const colorInputRef = useRef<HTMLInputElement>(null);
 
   useImperativeHandle(ref, () => ({
     getBlob: () =>
@@ -49,7 +51,7 @@ const SignatureCanvas = forwardRef<SignatureCanvasHandle>((_, ref) => {
 
     if (!ctx) return;
 
-    ctx.lineWidth = 2;
+    ctx.lineWidth = 1.3;
     ctx.lineCap = "round";
     ctx.strokeStyle = color;
   }, [color]);
@@ -101,33 +103,60 @@ const SignatureCanvas = forwardRef<SignatureCanvasHandle>((_, ref) => {
   };
 
   return (
-    <div className="flex flex-col gap-3">
-      <button
-        onClick={clear}
-        className="
-            rounded-md
-            p-2
-            hover:bg-gray-200
-            transition-colors
-          "
-        aria-label="Clear signature"
-      >
-        <Trash2 size={20} />
-      </button>
+    <div className="relative ">
+      <div className="m-2 absolute top-0 right-0 flex flex-col items-center justify-center">
+        <div className="">
+          <motion.button
+            whileTap={{
+              scale: 0.92,
+            }}
+            onClick={() => colorInputRef.current?.click()}
+            className="relative z-1 cursor-pointer"
+            aria-label="Choose color "
+          >
+            <div
+              className="w-5 h-5 rounded-full border cursor-pointer"
+              style={{ backgroundColor: color }}
+            />
+          </motion.button>
 
-      <input
-        type="color"
-        value={color}
-        onChange={(e) => setColor(e.target.value)}
-      />
+          <motion.input
+            ref={colorInputRef}
+            type="color"
+            value={color}
+            onChange={(e) => setColor(e.target.value)}
+            className="absolute opacity-0 pointer-events-none"
+          />
+        </div>
+
+        <button
+          onClick={clear}
+          className="         
+            m-2
+            rounded-md        
+            transition-colors
+            cursor-pointer
+          "
+          aria-label="Clear signature"
+        >
+          <Trash2 size={20} color="black" />
+        </button>
+      </div>
 
       <canvas
-        className="touch-none"
+        className="touch-none
+        border-2
+        rounded-md
+        border-gray-300
+        bg-amber-100
+        w-[250px]
+        max-w-full
+        aspect-[5/3]"
         ref={canvasRef}
-        width={400}
+        width={250}
         height={150}
         style={{
-          cursor: svgToCursor(penCursor(color), 10, 122),
+          cursor: svgToCursor(penCursor(color), 5, 124),
         }}
         onPointerDown={startDrawing}
         onPointerMove={draw}

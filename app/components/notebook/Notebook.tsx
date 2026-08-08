@@ -1285,21 +1285,13 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
       </AnimatePresence>
 
       <AnimatePresence>
-        {isModalOpen && (
-          <motion.div
-            className="order-1"
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            transition={{ duration: 0.2 }}
-          >
-            <Modal
-              isOpen={isModalOpen}
-              setIsOpen={setIsModalOpen}
-              setMessages={setMessages}
-            />
-          </motion.div>
-        )}
+        <motion.div className="order-1 origin-center">
+          <Modal
+            isOpen={isModalOpen}
+            setIsOpen={setIsModalOpen}
+            setMessages={setMessages}
+          />
+        </motion.div>
       </AnimatePresence>
     </div>
   );
