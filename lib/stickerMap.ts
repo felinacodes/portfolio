@@ -3,15 +3,17 @@ import {
   coconutCoctail,
   breakingBad,
   koala,
-  koala2,
-  koala3,
-  koala4,
-  koala5,
-  koala6,
-  koala7,
-  koala8,
-  koala9,
-  koala10,
+  avocado,
+  coffee,
+  icedCoffee,
+  fish,
+  strawberrySmoothie,
+  burger,
+  rabbit,
+  shrimp,
+  drink,
+  donut,
+  iceCream,
 } from "./svgStickers";
 
 import {
@@ -19,6 +21,17 @@ import {
   coconutCoctailDefaults,
   breakingBadDefaults,
   koalaDefaults,
+  avocadoDefaults,
+  coffeeDefaults,
+  icedCoffeeDefaults,
+  fishDefaults,
+  strawberrySmoothieDefaults,
+  burgerDefaults,
+  rabbitDefaults,
+  shrimpDefaults,
+  drinkDefaults,
+  donutDefaults,
+  iceCreamDefaults,
 } from "./svgStickers";
 
 export const stickers = {
@@ -51,67 +64,82 @@ export const stickers = {
       color2: koalaDefaults.color2,
     },
   },
-  koala2: {
-    svg: koala2,
+  avocado: {
+    svg: avocado,
     defaults: {
-      color1: koalaDefaults.color1,
-      color2: koalaDefaults.color2,
+      color1: avocadoDefaults.color1,
+      color2: avocadoDefaults.color2,
     },
   },
-  koala3: {
-    svg: koala3,
+  coffee: {
+    svg: coffee,
     defaults: {
-      color1: koalaDefaults.color1,
-      color2: koalaDefaults.color2,
+      color1: coffeeDefaults.color1,
+      color2: coffeeDefaults.color2,
     },
   },
-  koala4: {
-    svg: koala4,
+  icedCoffee: {
+    svg: icedCoffee,
     defaults: {
-      color1: koalaDefaults.color1,
-      color2: koalaDefaults.color2,
+      color1: icedCoffeeDefaults.color1,
+      color2: icedCoffeeDefaults.color2,
     },
   },
-  koala5: {
-    svg: koala5,
+  fish: {
+    svg: fish,
     defaults: {
-      color1: koalaDefaults.color1,
-      color2: koalaDefaults.color2,
+      color1: fishDefaults.color1,
+      color2: fishDefaults.color2,
     },
   },
-  koala6: {
-    svg: koala6,
+  strawberrySmoothie: {
+    svg: strawberrySmoothie,
     defaults: {
-      color1: koalaDefaults.color1,
-      color2: koalaDefaults.color2,
+      color1: strawberrySmoothieDefaults.color1,
+      color2: strawberrySmoothieDefaults.color2,
     },
   },
-  koala7: {
-    svg: koala7,
+  burger: {
+    svg: burger,
     defaults: {
-      color1: koalaDefaults.color1,
-      color2: koalaDefaults.color2,
+      color1: burgerDefaults.color1,
+      color2: burgerDefaults.color2,
     },
   },
-  koala8: {
-    svg: koala8,
+  rabbit: {
+    svg: rabbit,
     defaults: {
-      color1: koalaDefaults.color1,
-      color2: koalaDefaults.color2,
+      color1: rabbitDefaults.color1,
+      color2: rabbitDefaults.color2,
     },
   },
-  koala9: {
-    svg: koala9,
+  shrimp: {
+    svg: shrimp,
     defaults: {
-      color1: koalaDefaults.color1,
-      color2: koalaDefaults.color2,
+      color1: shrimpDefaults.color1,
+      color2: shrimpDefaults.color2,
     },
   },
-  koala10: {
-    svg: koala10,
+  drink: {
+    svg: drink,
     defaults: {
-      color1: koalaDefaults.color1,
-      color2: koalaDefaults.color2,
+      color1: drinkDefaults.color1,
+      color2: drinkDefaults.color2,
+    },
+  },
+
+  donut: {
+    svg: donut,
+    defaults: {
+      color1: donutDefaults.color1,
+      color2: donutDefaults.color2,
+    },
+  },
+  iceCream: {
+    svg: iceCream,
+    defaults: {
+      color1: iceCreamDefaults.color1,
+      color2: iceCreamDefaults.color2,
     },
   },
 } as const;

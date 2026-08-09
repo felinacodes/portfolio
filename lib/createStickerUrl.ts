@@ -8,17 +8,27 @@ export function createStickerUrl(
   color1?: string,
   color2?: string,
 ) {
-  const defaults = stickers[sticker].defaults;
+  const stickerData = stickers[sticker];
 
-  const finalColor1 = color1 || defaults.color1;
-  const finalColor2 = color2 || defaults.color2;
+  if (!stickerData) {
+    console.warn(`Unknown sticker: "${sticker}"`);
+    return "";
+  }
+
+  const defaults = stickerData.defaults;
+
+  const finalColor1 = color1 ?? defaults.color1;
+  const finalColor2 = color2 ?? defaults.color2;
+
   const key = JSON.stringify([sticker, finalColor1, finalColor2]);
 
   const cached = cache.get(key);
-  if (cached) return cached;
 
-  const svg = stickers[sticker].svg(finalColor1, finalColor2);
+  if (cached) {
+    return cached;
+  }
 
+  const svg = stickerData.svg(finalColor1, finalColor2);
   const url = svgToDataUrl(svg);
 
   cache.set(key, url);
