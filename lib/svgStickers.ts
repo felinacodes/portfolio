@@ -23,7 +23,7 @@ export const koalaDefaults = {
 
 export const tea = (color1?: string, color2?: string) => `
      <svg version="1.0" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
-	 width="800px" height="800px" viewBox="0 0 64 64" enable-background="new 0 0 64 64" xml:space="preserve">
+	viewBox="0 0 64 64" enable-background="new 0 0 64 64" xml:space="preserve">
 <g>
 	<path fill="${color1}" d="M62,29.998c0,13.256-10.745,24-24,24c-10.871,0-20.049-7.23-23-17.143l-0.243-0.857
 		c-0.494-1.918-0.757-3.93-0.757-6v-10h47.005c0.551,0.004,0.995,0.447,0.995,1V29.998z"/>

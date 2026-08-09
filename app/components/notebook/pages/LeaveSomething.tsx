@@ -5,6 +5,7 @@ import { RenderContext } from "../Notebook";
 import { Plus } from "lucide-react";
 import { createStickerUrl } from "@/lib/createStickerUrl";
 import { StickerName } from "@/lib/stickerMap";
+import { ArrowRight } from "lucide-react";
 
 export const LeaveSomethingBlocks = (args?: RenderContext) => {
   const chapter = args?.chapter;
@@ -42,8 +43,9 @@ export const LeaveSomethingBlocks = (args?: RenderContext) => {
   ];
 
   return itemPages.map((pageItems, pageIndex) => {
-    const LeaveSomethingPage = () => {
+    const LeaveSomethingPage = (pageArgs: RenderContext) => {
       const isIntroPage = pageIndex === 0;
+      const jumpToLastLeaveSomething = pageArgs.handleJumpToLastLeaveSomething;
 
       return (
         <section
@@ -55,6 +57,43 @@ export const LeaveSomethingBlocks = (args?: RenderContext) => {
             <ChapterIntro name="Leave Something" chapterNumber={chapter} />
           )}
 
+          {isIntroPage && (
+            <div className="flex justify-center mt-2">
+              <button
+                onClick={() => {
+                  jumpToLastLeaveSomething?.();
+                  console.log("jump to last page");
+                }}
+                className="
+                group
+                flex items-center gap-2
+                px-4 py-2
+                rounded-full
+                border border-gray-300
+                bg-white/70
+                text-sm text-gray-600
+                shadow-sm
+                transition-all duration-200
+                hover:border-gray-400
+                hover:bg-gray-100
+                hover:text-gray-800
+                hover:shadow-md
+                active:scale-95
+                "
+              >
+                <span>Jump to last page</span>
+
+                <ArrowRight
+                  size={17}
+                  strokeWidth={2}
+                  className="
+                  transition-transform duration-200
+                  group-hover:translate-x-1
+                   "
+                />
+              </button>
+            </div>
+          )}
           <div className="grid grid-cols-2 gap-6 w-full h-full">
             {pageItems.map((item, index) => {
               if (item.type === "button") {

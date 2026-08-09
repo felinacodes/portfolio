@@ -50,6 +50,7 @@ export type RenderContext = {
   messages?: LeaveMessage[];
   setMessages?: React.Dispatch<React.SetStateAction<LeaveMessage[]>>;
   setIsModalOpen?: React.Dispatch<React.SetStateAction<boolean>>;
+  handleJumpToLastLeaveSomething?: () => void;
 };
 
 export type Sheet =
@@ -803,70 +804,75 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
     }
   }, [flipping, toggleAnimation, isOpen, pagesPerView, isTwoPages]);
 
-  const handleGoTo = (id: string, source?: string) => {
-    // if (source === "bookmark" && !bookmarkedPage) {
-    //   play("error");
-    //   return;
-    // }
-    if (!id) return;
+  const handleGoTo = useCallback(
+    (id: string, source?: string) => {
+      if (!id) return;
 
-    const leftPage = visibleItems[0];
-    const rightPage = visibleItems[visibleItems.length - 1];
+      const leftPage = visibleItems[0];
+      const rightPage = visibleItems[visibleItems.length - 1];
 
-    if (leftPage.id === id || rightPage.id === id) {
-      return;
-    }
+      if (leftPage.id === id || rightPage.id === id) {
+        return;
+      }
 
-    handleSound("flip");
+      handleSound("flip");
 
-    if (!toggleAnimation) {
-      goToIndex(id);
-      return;
-    }
+      if (!toggleAnimation) {
+        goToIndex(id);
+        return;
+      }
 
-    if (!visibleItems.length) {
-      goToIndex(id);
-      return;
-    }
+      if (!visibleItems.length) {
+        goToIndex(id);
+        return;
+      }
 
-    const currentIndex = numberedMap.get(leftPage.id) ?? 0;
-    const targetIndex = numberedMap.get(id) ?? 0;
+      const currentIndex = numberedMap.get(leftPage.id) ?? 0;
+      const targetIndex = numberedMap.get(id) ?? 0;
 
-    const isNext = targetIndex > currentIndex;
+      const isNext = targetIndex > currentIndex;
 
-    let animatingId = leftPage.id;
-    let direction: "next" | "prev" = "prev";
+      let animatingId = leftPage.id;
+      let direction: "next" | "prev" = "prev";
 
-    if (isTwoPages) {
-      if (isNext) {
-        animatingId = rightPage.id;
-        direction = "next";
+      if (isTwoPages) {
+        if (isNext) {
+          animatingId = rightPage.id;
+          direction = "next";
+        } else {
+          animatingId = leftPage.id;
+          direction = "prev";
+        }
       } else {
         animatingId = leftPage.id;
-        direction = "prev";
+        direction = isNext ? "next" : "prev";
       }
-    } else {
-      animatingId = leftPage.id;
-      direction = isNext ? "next" : "prev";
-    }
 
-    // store where we actually want to go
+      pendingNavRef.current = id;
+      setBookmarkNav(true);
 
-    pendingNavRef.current = id;
-    setBookmarkNav(true);
+      setFlipping({ direction, id: animatingId });
 
-    setFlipping({ direction, id: animatingId });
-    // setCorrectAnimation(direction === "next" ? "flipNext" : "flipPrev");
-    setCorrectAnimation(
-      !isOpen
-        ? direction === "next"
-          ? "coverPrev"
-          : "coverNext"
-        : direction === "next"
-          ? "flipNext"
-          : "flipPrev",
-    );
-  };
+      setCorrectAnimation(
+        !isOpen
+          ? direction === "next"
+            ? "coverPrev"
+            : "coverNext"
+          : direction === "next"
+            ? "flipNext"
+            : "flipPrev",
+      );
+    },
+    [
+      visibleItems,
+      handleSound,
+      toggleAnimation,
+      goToIndex,
+      numberedMap,
+      isTwoPages,
+      isOpen,
+    ],
+  );
 
   const getSpreadTarget = useCallback(
     (id: string) => {
@@ -987,6 +993,19 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
     currentSheet.side === "back" &&
     currentSheet.face === "outside";
 
+  const lastLeaveSomethingPageId = useMemo(() => {
+    const leavePages = sections.filter(
+      (section) => section.chapterName === "Leave Something",
+    );
+    return leavePages.at(-1)?.id;
+  }, [sections]);
+
+  const handleJumpToLastLeaveSomething = useCallback(() => {
+    if (!lastLeaveSomethingPageId) return;
+
+    handleGoTo(lastLeaveSomethingPageId);
+  }, [lastLeaveSomethingPageId, handleGoTo]);
+
   const renderSheet = (sheet: Sheet) => {
     if (sheet.type === "cover") {
       return (
@@ -1034,8 +1053,8 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
         >
           {sheet.render({
             messages,
-
             setMessages,
+            handleJumpToLastLeaveSomething,
           })}
         </Page>
       );
