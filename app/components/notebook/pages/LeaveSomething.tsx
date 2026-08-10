@@ -2,18 +2,17 @@ import React from "react";
 import Image from "next/image";
 import ChapterIntro from "./ChapterIntro";
 import { RenderContext } from "../Notebook";
-import { Plus } from "lucide-react";
+import { Plus, ArrowRight } from "lucide-react";
 import { createStickerUrl } from "@/lib/createStickerUrl";
 import { StickerName } from "@/lib/stickerMap";
-import { ArrowRight } from "lucide-react";
 
 export const LeaveSomethingBlocks = (args?: RenderContext) => {
   const chapter = args?.chapter;
   const messages = args?.messages ?? [];
   const setIsModalOpen = args?.setIsModalOpen;
 
-  const MESSAGES_PER_PAGE = 6;
-  const FIRST_PAGE_MESSAGES = MESSAGES_PER_PAGE - 2;
+  const MESSAGES_PER_PAGE = 9;
+  const FIRST_PAGE_MESSAGES = MESSAGES_PER_PAGE - 3;
 
   const items = [
     ...messages.map((message) => ({
@@ -49,7 +48,7 @@ export const LeaveSomethingBlocks = (args?: RenderContext) => {
 
       return (
         <section
-          className={`flex flex-col gap-6  ${
+          className={`flex flex-col gap-6 ${
             isIntroPage ? "section-wrapper" : "mt-4"
           }`}
         >
@@ -62,23 +61,22 @@ export const LeaveSomethingBlocks = (args?: RenderContext) => {
               <button
                 onClick={() => {
                   jumpToLastLeaveSomething?.();
-                  console.log("jump to last page");
                 }}
                 className="
-                group
-                flex items-center gap-2
-                px-4 py-2
-                rounded-full
-                border border-gray-300
-                bg-white/70
-                text-sm text-gray-600
-                shadow-sm
-                transition-all duration-200
-                hover:border-gray-400
-                hover:bg-gray-100
-                hover:text-gray-800
-                hover:shadow-md
-                active:scale-95
+                  group
+                  flex items-center gap-2
+                  px-4 py-2
+                  rounded-full
+                  border border-gray-300
+                  bg-white/70
+                  text-sm text-gray-600
+                  shadow-sm
+                  transition-all duration-200
+                  hover:border-gray-400
+                  hover:bg-gray-100
+                  hover:text-gray-800
+                  hover:shadow-md
+                  active:scale-95
                 "
               >
                 <span>Jump to last page</span>
@@ -87,42 +85,44 @@ export const LeaveSomethingBlocks = (args?: RenderContext) => {
                   size={17}
                   strokeWidth={2}
                   className="
-                  transition-transform duration-200
-                  group-hover:translate-x-1
-                   "
+                    transition-transform duration-200
+                    group-hover:translate-x-1
+                  "
                 />
               </button>
             </div>
           )}
-          <div className="grid grid-cols-2 gap-6 w-full h-full">
-            {pageItems.map((item, index) => {
+
+          <div className="grid lg:grid-cols-3 grid-cols-2 gap-4 w-full h-full">
+            {pageItems.map((item) => {
               if (item.type === "button") {
                 return (
                   <div
                     key="button"
-                    className="flex items-center justify-center "
+                    className="flex items-center justify-center"
                   >
                     <button
                       onClick={() => {
                         setIsModalOpen?.(true);
                       }}
                       className="
-                    flex items-center justify-center
-                    w-32 h-32 rounded-full
-                    bg-gray-200   
-                    transition-colors duration-200
-                    group
-                   "
+                        flex items-center justify-center
+                        w-32 h-32
+                        rounded-full
+                        bg-gray-200
+                        transition-colors duration-200
+                        group
+                      "
                     >
                       <Plus
                         size={48}
                         strokeWidth={2.5}
                         className="
-                      text-gray-500
-                      group-hover:text-gray-700        
-                      transition-colors duration-200
-                      cursor-pointer
-        "
+                          text-gray-500
+                          group-hover:text-gray-700
+                          transition-colors duration-200
+                          cursor-pointer
+                        "
                       />
                     </button>
                   </div>
@@ -132,9 +132,29 @@ export const LeaveSomethingBlocks = (args?: RenderContext) => {
               return (
                 <div
                   key={item.message.id}
-                  className=" flex flex-col gap-4 items-center justify-center"
+                  className="
+                    flex
+                    flex-col
+                    gap-4
+                    items-center
+                    justify-center
+                   
+                  "
                 >
-                  <div className="relative w-32 aspect-square rounded-lg overflow-hidden">
+                  {/* Sticker */}
+                  <div
+                    className="
+                      group
+                      relative
+                     md:w-32
+                     w-24
+                      
+                      flex
+                      items-center
+                      justify-center
+                      overflow-visible
+                    "
+                  >
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
                       src={createStickerUrl(
@@ -143,11 +163,59 @@ export const LeaveSomethingBlocks = (args?: RenderContext) => {
                         item.message.color2,
                       )}
                       alt="sticker"
-                      className="w-32 h-32 object-contain"
+                      draggable={false}
+                      className="
+                        relative         
+                        object-contain
+                        select-none
+                        transition-transform
+                        duration-300
+                        ease-out
+                        drop-shadow-[0_10px_8px_rgba(0,0,0,0.40)]
+                        drop-shadow-[0_18px_16px_rgba(0,0,0,0.25)]
+                        group-hover:scale-[1.01]
+                      "
+                    />
+
+                    {/* Glossy sticker reflection */}
+                    <div
+                      className="
+                        pointer-events-none
+                        absolute
+                        top-1/2
+                        left-1/2
+                        w-[45%]
+                        h-[45%]
+                        -translate-x-1/2
+                        -translate-y-1/2
+                        rounded-[40%]
+                        opacity-0
+                        transition-opacity
+                        duration-300
+                        group-hover:opacity-100
+                      "
+                      style={{
+                        background: `
+                          linear-gradient(
+                            135deg,
+                            rgba(255,255,255,0.4) 0%,
+                            rgba(255,255,255,0.2) 30%,
+                            rgba(255,255,255,0) 65%
+                          )
+                        `,
+                        filter: "blur(8px)",
+                        mixBlendMode: "screen",
+                      }}
                     />
                   </div>
+
+                  {/* Signature */}
                   {item.message.signature && (
-                    <div className="relative w-32 h-12">
+                    <div
+                      className="relative   md:w-32
+                     w-24
+                      h-[clamp(32px,40px,50px)]"
+                    >
                       <Image
                         src={item.message.signature}
                         alt="signature"
