@@ -4,10 +4,10 @@ import { createStickerUrl } from "@/lib/createStickerUrl";
 import { StickerName } from "@/lib/stickerMap";
 import { useCallback, useEffect, useState } from "react";
 import { LeaveMessage } from "@/lib/fetchMessages";
-import { Check, X } from "lucide-react";
+import { Check, X, Sun, Moon } from "lucide-react";
 import { supabaseClient } from "@/lib/supabase/browser";
 import { useRouter } from "next/navigation";
-
+import { useTheme } from "next-themes";
 interface MessagesResponse {
   success: boolean;
   messages: LeaveMessage[];
@@ -20,6 +20,7 @@ export default function AdminPage() {
   const [filter, setFilter] = useState<Filter>("pending");
 
   const router = useRouter();
+  const { theme, setTheme } = useTheme();
 
   async function logout() {
     const { error } = await supabaseClient.auth.signOut();
@@ -129,7 +130,7 @@ export default function AdminPage() {
 
         <h2 className="text-xl font-bold">Messages</h2>
 
-        <div className="flex gap-4 ">
+        <div className="flex gap-4 text-black ">
           <button
             onClick={() => setFilter("all")}
             className={`
@@ -273,6 +274,31 @@ export default function AdminPage() {
           </div>
         ))}
       </div>
+
+      <div className="absolute top-20 right-4">
+        <button
+          onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+          className="
+          flex items-center justify-center
+          w-10 h-10
+          rounded-full
+          border
+          bg-gray-100
+          dark:bg-gray-800
+          text-gray-700
+          dark:text-gray-200
+          hover:bg-gray-200
+          dark:hover:bg-gray-700
+          transition-colors
+          cursor-pointer
+           "
+          title="Toggle theme"
+          aria-label="Toggle theme"
+        >
+          {theme === "dark" ? <Sun size={20} /> : <Moon size={20} />}
+        </button>
+      </div>
+
       <div className="absolute top-4 right-4">
         <button
           onClick={logout}
