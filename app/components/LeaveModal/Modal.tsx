@@ -205,20 +205,22 @@ const Modal = ({ isOpen, setIsOpen, setMessages }: ModalProps) => {
            border-gray-300 rounded-md h-full"
           >
             <div
-              className=" grid
-            grid-cols-[repeat(auto-fill,minmax(50px,70px))]
-            auto-rows-[60px]
-            gap-2
-            w-full
-            h-full
-            overflow-auto
-            p-2
-            border-2
-            rounded-md
-            border-gray-300
-            content-center
-            justify-center
-            "
+              className="
+    grid
+    grid-cols-[repeat(auto-fit,minmax(35px,90px))]
+    auto-rows-[60px]
+    gap-2
+    w-full
+    max-h-[400px]
+    overflow-y-auto
+    overflow-x-hidden
+    p-2
+    border-2
+    rounded-md
+    border-gray-300
+    content-start
+    justify-center
+  "
             >
               {filteredStickers.map((sticker) => (
                 <button
@@ -226,14 +228,17 @@ const Modal = ({ isOpen, setIsOpen, setMessages }: ModalProps) => {
                   onClick={() => {
                     setActiveSticker(sticker);
                   }}
-                  className="             
-                bg-gray-400
-                hover:bg-gray-200
-                dark:bg-gray-800 dark:hover:bg-gray-700
-                transition
-                m-0
-                p-0
-                "
+                  className="
+        bg-gray-400
+        hover:bg-gray-200
+        dark:bg-gray-800
+        dark:hover:bg-gray-700
+        transition
+        m-0
+        p-0
+        w-full
+        h-full
+      "
                 >
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
