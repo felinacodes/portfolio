@@ -19,6 +19,7 @@ export async function PATCH(
       },
     );
   }
+
   const { id } = await params;
 
   const { error } = await supabase
@@ -29,7 +30,7 @@ export async function PATCH(
     .eq("id", id);
 
   if (error) {
-    console.error(error);
+    console.error("Failed to approve message:", error);
 
     return Response.json(
       {
@@ -64,6 +65,7 @@ export async function DELETE(
       },
     );
   }
+
   const { id } = await params;
 
   const { data: message, error: fetchError } = await supabase
@@ -73,7 +75,7 @@ export async function DELETE(
     .single();
 
   if (fetchError) {
-    console.error(fetchError);
+    console.error("Failed to find message for deletion:", fetchError);
 
     return Response.json(
       {
@@ -92,7 +94,7 @@ export async function DELETE(
       .remove([fileName]);
 
     if (storageError) {
-      console.error(storageError);
+      console.error("Failed to delete signature:", storageError);
 
       return Response.json(
         {
@@ -107,7 +109,7 @@ export async function DELETE(
   const { error } = await supabase.from("messages").delete().eq("id", id);
 
   if (error) {
-    console.error(error);
+    console.error("Failed to delete message:", error);
 
     return Response.json(
       {

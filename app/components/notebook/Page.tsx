@@ -1,7 +1,5 @@
 import React, { forwardRef } from "react";
-import Bookmark from "./Bookmark";
 import DrawingCanvas from "./DrawingCanvas";
-import { useDrawing } from "@/contexts/DrawingContext";
 
 interface PageProps {
   children?: React.ReactNode;
@@ -12,14 +10,12 @@ interface PageProps {
 
 const Page = forwardRef<HTMLDivElement, PageProps>(
   ({ children, index, chapterName, pageId }, ref) => {
-    const { activeTool } = useDrawing();
     const isOdd = index ? index % 2 === 1 : false;
     return (
       <div
         className={`w-full h-full relative ${
           isOdd ? "md:pr-2 md:pl-0" : "md:pl-2 md:pr-0"
         } `}
-        // onClick={() => play("flip")}
       >
         <div
           className={`  w-full h-full bg-white dark:bg-background flex flex-col justify-between p-2 relative ${
@@ -42,7 +38,7 @@ const Page = forwardRef<HTMLDivElement, PageProps>(
             ref={ref}
             className="flex-1 overflow-auto w-full p-4 pt-10 font-baskervville font-medium
             text-[0.95rem] md:text-[1rem] lg:text-[1.05rem]
-            leading-[1.5] md:leading-[1.6]
+            leading-normal md:leading-[1.6]
 
             text-justify
             [text-justify:inter-word]

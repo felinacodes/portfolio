@@ -172,7 +172,9 @@ export async function POST(req: NextRequest) {
     .single();
 
   if (error) {
-    console.error(error);
+    console.error("Failed to save message:", error);
+
+    await supabase.storage.from("Portfolio - Signatures").remove([fileName]);
 
     return Response.json(
       {
@@ -184,11 +186,6 @@ export async function POST(req: NextRequest) {
       },
     );
   }
-
-  // return Response.json({
-  //   success: true,
-  //   message,
-  // });
 
   return Response.json({
     success: true,
@@ -212,7 +209,7 @@ export async function GET() {
     });
 
   if (error) {
-    console.error(error);
+    console.error("Failed to fetch messages:", error);
 
     return Response.json(
       {

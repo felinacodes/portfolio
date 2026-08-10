@@ -20,23 +20,16 @@ import { ContactBlocks } from "./pages/Contact";
 import { ScrapbookBlocks } from "./pages/Scrapbook";
 import { TableOfContentsBlocks } from "./pages/TableOfContents";
 import Bookmarks from "./Bookmarks";
-import MeasureBlocks from "./MeasureBlocks";
+// import MeasureBlocks from "./MeasureBlocks";
 import Bookmark from "./Bookmark";
 import Options from "../Options";
 import { Settings } from "lucide-react";
-import {
-  motion,
-  AnimatePresence,
-  useMotionValue,
-  useTransform,
-} from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { useTheme } from "next-themes";
 import { useSound } from "@/contexts/SoundContext";
 import { SoundName } from "@/lib/sounds";
-// import { fakeFetchMessages, type LeaveMessage } from "@/lib/fakeFetchMessages";
 import Modal from "../LeaveModal/Modal";
 import { fetchMessages, type LeaveMessage } from "@/lib/fetchMessages";
-// import useMeasure from '../useMeasure'
 import { useDrawing } from "@/contexts/DrawingContext";
 
 type NotebookProps = {
@@ -115,10 +108,10 @@ export const transform = (s: string): string => {
 
 const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
   const outerRef = useRef<HTMLDivElement | null>(null);
-  const [height, setHeight] = useState<number>(0);
-  const [measuredHeights, setMeasuredHeights] = useState<
-    Record<string, number[]>
-  >({});
+  // const [height, setHeight] = useState<number>(0);
+  // const [measuredHeights, setMeasuredHeights] = useState<
+  //   Record<string, number[]>
+  // >({});
   const [isOpen, setIsOpen] = useState(false);
   const [pagesPerView, setPagesPerView] = useState(1);
 
@@ -129,7 +122,7 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
   // )
   const [bookmarkedPage, setBookmarkedPage] = useState("");
   const [active, setActive] = React.useState<string>("");
-  const [mounted, setIsmounted] = useState(false);
+  // const [mounted, setIsmounted] = useState(false);
   const [flipping, setFlipping] = useState<null | {
     direction: "next" | "prev";
     id: string;
@@ -167,13 +160,6 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
   const { drawingEnabled } = useDrawing();
 
   const SWIPE_THRESHOLD = 50;
-
-  const flipProgress = useMotionValue(0);
-
-  const rotateY = useTransform(flipProgress, [0, 0.5, 1], [0, -90, -180]);
-
-  const translateZ = useTransform(flipProgress, [0, 0.5, 1], [0, 150, 0]);
-  // const correctSheet = isTwoPages ? TwoPagesheets : OnePagesheets
 
   const sections = useMemo(() => {
     return SECTION_CONFIG.flatMap(({ key, blocks }, chapterIndex) => {
@@ -298,9 +284,9 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
     return last?.id;
   }, [correctSheet]);
 
-  useEffect(() => {
-    setIsmounted(true);
-  }, []);
+  // useEffect(() => {
+  //   setIsmounted(true);
+  // }, []);
 
   useEffect(() => {
     async function loadMessages() {
@@ -323,7 +309,6 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
     const update = () => {
       clearTimeout(timeout);
       timeout = setTimeout(() => {
-        // setPagesPerView(window.innerWidth >= 768 ? 2 : 1)
         setIsTwoPages(window.innerWidth >= 850 ? true : false);
       }, 100);
     };
@@ -347,7 +332,7 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
     initialPage,
   );
 
-  const { soundEnabled, toggleSound, play } = useSound();
+  const { play } = useSound();
 
   // HANDLE HOW MANY PAGES TO SHOW
   useEffect(() => {
@@ -355,30 +340,6 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
   }, [isTwoPages, isOpen]);
 
   // OPEN - CLOSE LOGIC
-  // useEffect(() => {
-  //   console.log("OPEN - CLOSE LOGIC useEffect called");
-  //   setCalled("called");
-  //   // if (pagesPerView === 1) setIsOpen(false);
-
-  //   if (visibleItems.some((i) => i.type === "cover" && i.face === "outside")) {
-  //     {
-  //       setIsOpen(false);
-  //       return;
-  //     }
-  //   }
-  //   setIsOpen(true);
-  //   setCalled("finished");
-  //   console.log("OPEN - CLOSE LOGIC useEffect finished");
-  // }, [visibleItems]);
-
-  // useEffect(() => {
-  //   console.log("OPEN - CLOSE LOGIC useEffect called");
-  //   const shouldBeOpen = !visibleItems.some(
-  //     (i) => i.type === "cover" && i.face === "outside",
-  //   );
-
-  //   setIsOpen((prev) => (prev === shouldBeOpen ? prev : shouldBeOpen));
-  // }, [visibleItems]);
 
   useLayoutEffect(() => {
     const shouldBeOpen = !visibleItems.some(
@@ -506,10 +467,6 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
     return zeroIndexMap;
   }, [pageIndexMap]);
 
-  // const pageMultiplier = isTwoPages && !isOpen ? 0.5 : 1
-  // const pageWidth = isTwoPages && !isOpen ? 40 : 80
-  const pageWidth = 80;
-
   //Fixes Flickering bad bad SEO
   // if (!mounted) {
   //   return <div>...Loading...</div>
@@ -606,10 +563,6 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
 
   const handleCoverNavigation = useCallback(
     (sheet: Extract<Sheet, { type: "cover" }>) => {
-      // no animation for covers
-      // setFlipping(null);
-      // flippingRef.current = null;
-
       if (sheet.face === "outside" && sheet.side === "front") {
         handleNext(sheet.id);
         return;
@@ -702,7 +655,6 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
       return;
 
     if (sheet.type === "cover") {
-      // if (!toggleAnimation && active) return;
       handleCoverNavigation(sheet);
       return;
     }
@@ -1224,7 +1176,7 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
                 absolute
                 top-10
                 left-full
-                ml-[-20px]
+                -ml-5
 
                 flex
                 flex-col
@@ -1245,7 +1197,7 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
               <div
                 className={`
                 absolute
-                top-[-20px]
+                -top-5
                 h-full
                 left-0
                 translate-x-0

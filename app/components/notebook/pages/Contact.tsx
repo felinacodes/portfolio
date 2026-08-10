@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState } from "react";
 import ChapterIntro from "./ChapterIntro";
 import { RenderContext } from "../Notebook";
 import { SiFiverr, SiUpwork } from "react-icons/si";

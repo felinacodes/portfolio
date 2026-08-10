@@ -25,7 +25,7 @@ export async function GET() {
     });
 
   if (error) {
-    console.error(error);
+    console.error("Failed to fetch admin messages:", error);
 
     return Response.json(
       {

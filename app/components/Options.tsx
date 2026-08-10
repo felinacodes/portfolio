@@ -9,10 +9,7 @@ import {
   Pause,
   Eraser,
   Highlighter,
-  PenOff,
   Pencil,
-  PencilOff,
-  Minus,
   Pen,
   Trash,
 } from "lucide-react";
@@ -40,12 +37,10 @@ const containerVariants = {
 const optionItemVariants = {
   hidden: {
     opacity: 0,
-    // x: -20,
     scale: 0.95,
   },
   visible: {
     opacity: 1,
-    // x: 0,
     scale: 1,
     transition: {
       duration: 0.05,
@@ -62,7 +57,6 @@ const Options = ({
 }: OptionsProps) => {
   const { play, soundEnabled, toggleSound } = useSound();
   const {
-    drawingEnabled,
     activeTool,
     selectTool,
     disableDrawing,

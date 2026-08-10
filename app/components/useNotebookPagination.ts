@@ -115,7 +115,6 @@ export function useNotebookPagination(
 
   const goToIndex = useCallback(
     (id: string) => {
-      console.log("goToIndex called with id: ", id);
       // const index = items.findIndex((i) => i.type !== 'blank' && i.id === id)
       const index = items.findIndex((i) => i.id === id);
 

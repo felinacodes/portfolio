@@ -17,7 +17,6 @@ const Bookmarks = ({
 }: BookmarkProps) => {
   function handleClick(id: string) {
     if (transform(active) === id) return;
-    // play("flip");
     setActive(id);
     handleGoTo(id);
   }
@@ -33,35 +32,27 @@ const Bookmarks = ({
           <div
             key={id}
             className="
-  w-24
+            w-24
+            text-[clamp(0.7rem,1vw,1rem)]
+            rounded-r-lg
+            px-3 py-2
+            bg-[#b5b8bbe7]
+            shadow-[4px_0_6px_rgba(0,0,0,0.2)]
+            border
+            border-black/10
+            hover:translate-x-0.5
+            hover:bg-[#9d9ea0e7]
+            active:bg-[#9d9ea0e7]
 
-  text-[clamp(0.7rem,1vw,1rem)]
-  rounded-r-lg
-  px-3 py-2
-
-  bg-[#b5b8bbe7]
-
-  shadow-[4px_0_6px_rgba(0,0,0,0.2)]
-
-  border
-  border-black/10
-
-  hover:translate-x-[2px]
-  hover:bg-[#9d9ea0e7]
-  active:bg-[#9d9ea0e7]
-
-  transition-transform duration-200
-
-  m-1
-  z-[10]
-
-  in-[.bookmarks-back]:shadow-inner
-  in-[.bookmarks-back]:rounded-r-none
-  in-[.bookmarks-back]:rounded-l-lg
-"
+            transition-transform duration-200
+            m-1
+            z-10
+            in-[.bookmarks-back]:shadow-inner
+            in-[.bookmarks-back]:rounded-r-none
+            in-[.bookmarks-back]:rounded-l-lg
+            "
           >
             <button
-              // onClick={() => handleClick(id)}
               onClick={(e) => {
                 e.stopPropagation();
                 handleClick(id);

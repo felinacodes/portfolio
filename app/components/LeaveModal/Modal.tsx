@@ -6,7 +6,7 @@ import SignatureCanvas, { SignatureCanvasHandle } from "./SignatureCanvas";
 import { blobToBase64 } from "@/lib/blobToBase64";
 import Turnstile from "react-turnstile";
 import { LeaveMessage } from "@/lib/fetchMessages";
-import { AnimatePresence, motion } from "framer-motion";
+import { motion } from "framer-motion";
 
 interface ModalProps {
   isOpen: boolean;
@@ -124,7 +124,7 @@ const Modal = ({ isOpen, setIsOpen, setMessages }: ModalProps) => {
       onClick={() => setIsOpen(false)}
       className="
         fixed inset-0
-        z-[9999]
+        z-9999
         bg-black/40
         flex items-center justify-center
       "

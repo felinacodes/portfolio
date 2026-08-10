@@ -1,9 +1,7 @@
 import React from "react";
 import { transform, RenderContext } from "../Notebook";
 
-export const TableOfContentsBlocks = (args?: RenderContext) => {
-  // const chapter = args?.chapter;
-
+export const TableOfContentsBlocks = () => {
   return [
     function TableOfContentsPage(props?: RenderContext) {
       const ctx = props?.ctx;

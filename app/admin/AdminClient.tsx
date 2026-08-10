@@ -105,9 +105,7 @@ export default function AdminPage() {
           loadMessages();
         },
       )
-      .subscribe((status) => {
-        console.log("Realtime status:", status);
-      });
+      .subscribe(() => {});
 
     return () => {
       supabaseClient.removeChannel(channel);

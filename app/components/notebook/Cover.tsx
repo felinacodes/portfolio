@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 import Bookmarks from "./Bookmarks";
 import Bookmark from "./Bookmark";
 
-import { Section, Sheet } from "./Notebook";
+import { Section } from "./Notebook";
 import { useSound } from "@/contexts/SoundContext";
 
 // had to pass additional props to make bookmarks work with cover to stay aligned when closed.
@@ -43,7 +43,7 @@ const Cover = ({
       className={`
       
     ${animationClass ?? ""}
-    text-center h-full w-full relative group z-[20] 
+    text-center h-full w-full relative group z-20
 
     ${face === "outside" ? "cover-closed md:w-[50%]" : "cover-opened"}
 
@@ -61,9 +61,8 @@ const Cover = ({
           //    from-white/20 bg-gradient-to-r shadow-[inset_4px_1px_3px_#ffffff60,inset_0_-1px_2px_#00000080]`}
           // >
           className={` z-0 cover-front-out text-[clamp(0.9rem,1vw,1rem)] relative flex justify-center items-start h-full ml-8 border-l-2 border-l-black/10
-           from-white/20 bg-gradient-to-r shadow-[inset_4px_1px_3px_#ffffff60,inset_0_-1px_2px_#00000080]
+           from-white/20 bg-linear-to-r shadow-[inset_4px_1px_3px_#ffffff60,inset_0_-1px_2px_#00000080]
            `}
-          // onClick={() => play("open")}
         >
           <div className="cover-light"></div>
           <div className="max-w-[80%] mt-[40%] lg:mt-[25%] w-[clamp(200px,300px,400px)] h-[clamp(10rem,15vw,12rem)] p-2 bg-[#f4f5f0] border-[9px] border-double border-[#438bce] rounded-[40px]">
@@ -92,10 +91,8 @@ const Cover = ({
         <div
           className="z-3 text-myDark cover-back-out font-handwriting text-[clamp(0.9rem,1vw,1rem)] 
         relative flex justify-center items-end h-full ml-0 mr-8 border-r-2 border-r-black/10 
-         from-white/20 bg-gradient-to-l  shadow-[inset_-4px_1px_3px_#ffffff60,inset_0_-1px_2px_#00000080]
-        
+         from-white/20 bg-linear-to-l  shadow-[inset_-4px_1px_3px_#ffffff60,inset_0_-1px_2px_#00000080]       
          "
-          // onClick={() => play("open")}
         >
           <div className="cover-light "></div>
           <div className="drop-shadow-sm max-w-[50%]  w-[clamp(150px,250px,300px)] h-[clamp(10rem,15vh,12rem)] mb-10 bg-white  p-3 rounded-sm">
@@ -113,10 +110,7 @@ const Cover = ({
                 <span>2</span>
                 <span>1</span>
                 <span>2</span>
-                {/* <span>1</span>
-                <span>5</span> */}
               </p>
-              {/* </div> */}
             </div>
           </div>
         </div>
@@ -124,21 +118,17 @@ const Cover = ({
         // INSIDE COVER
         <div
           className={`w-full h-full ${side === "front" ? "cover-inside-front" : "cover-inside-back"}`}
-          // onClick={() =>
-          //   play(face === "inside" && side === "front" ? "close" : "open")
-          // }
           onClick={() => play("close")}
         ></div>
       )}
-      {/* <div className=" absolute w-full h-full "></div> */}
 
       {!isOpen && !animationClass && face !== "inside" && (
         <div
           className={
             face === "outside" && side === "front"
-              ? "absolute top-10 right-[-90px] ml-2 flex flex-col gap-2 bookmarks-front group-hover:right-[-100px] group-active:right-[-100px]"
+              ? "absolute top-10 -right-22.5 ml-2 flex flex-col gap-2 bookmarks-front group-hover:-right-25 group-active:-right-25"
               : face === "outside" && side === "back"
-                ? "absolute top-10 left-[-98px] ml-2 flex flex-col gap-2 z-2 bookmarks-back group-hover:left-[-108px] group-active:left-[-108px]"
+                ? "absolute top-10 -left-24.5 ml-2 flex flex-col gap-2 z-2 bookmarks-back group-hover:-left-27 group-active:-left-27"
                 : ""
           }
         >
@@ -154,9 +144,9 @@ const Cover = ({
         <div
           className={
             !isOpen && face === "outside" && side === "front"
-              ? " absolute bookmark-translateZ top-[-20px] left-[30px]  h-full "
+              ? " absolute bookmark-translateZ -top-5 left-7.5  h-full "
               : !isOpen && face === "outside" && side === "back"
-                ? "absolute bookmark-translateZ top-[-20px] right-[30px] h-full "
+                ? "absolute bookmark-translateZ -top-5 right-7.5 h-full "
                 : "opacity-0"
           }
         >

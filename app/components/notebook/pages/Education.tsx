@@ -1,5 +1,4 @@
 import React from "react";
-import Image from "next/image";
 import ChapterIntro from "./ChapterIntro";
 import { RenderContext } from "../Notebook";
 

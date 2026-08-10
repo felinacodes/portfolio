@@ -181,8 +181,7 @@ export const ScrapbookBlocks = (args?: RenderContext) => {
                         transition-transform
                         duration-300
                         ease-out
-                        drop-shadow-[0_10px_8px_rgba(0,0,0,0.40)]
-                        drop-shadow-[0_18px_16px_rgba(0,0,0,0.25)]
+                        drop-shadow-[0_14px_12px_rgba(0,0,0,0.20)]
                         group-hover:scale-[1.01]
                       "
                     />

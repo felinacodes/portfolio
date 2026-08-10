@@ -163,8 +163,6 @@ export default function Login() {
     const { data: aal } =
       await supabaseClient.auth.mfa.getAuthenticatorAssuranceLevel();
 
-    console.log(aal);
-
     if (aal?.currentLevel === "aal2") {
       router.push("/admin");
       router.refresh();

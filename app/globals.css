@@ -16,7 +16,6 @@ body,
   --paper-highlight: white;
   --paper-shadow: rgba(0, 0, 0, 0.2);
   font-family: Arial, Helvetica, sans-serif;
-  /* height: 100%; */
 }
 
 .dark {
@@ -36,10 +35,7 @@ body,
   --color-myDark: var(--myDark);
   --font-handwriting: var(--font-handwriting);
   --font-indie-flower: var(--font-indie-flower);
-  --font-gloria-hallelujah: var(--font-gloria-hallelujah);
   --font-handlee: var(--font-handlee);
-  --font-bad-script: var(--font-bad-script);
-  --font-playfair-display: var(--font-playfair-display);
   --font-baskervville: var(--font-baskervville);
   --font-jost: var(--font-jost);
   --font-homemade-apple: var(--font-homemade-apple);
@@ -51,32 +47,6 @@ body,
 
   --breakpoint-md: 850px;
 }
-
-/* @layer utilities {
-  .cursor-highlighter {
-    cursor:
-      url("/cursors/highlighter.png") 4 28,
-      auto;
-  }
-
-  .cursor-pencil {
-    cursor:
-      url("/images/cursors/pencil.webp") 5 30,
-      auto;
-  }
-
-  .cursor-eraser {
-    cursor:
-      url("/cursors/eraser.png") 12 12,
-      auto;
-  }
-} */
-/* @media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-} */
 
 body {
   background: var(--background);
@@ -113,10 +83,6 @@ body {
     rgba(80, 77, 77, 0.562) 0%,
     rgba(58, 57, 57, 0) 5%
   );
-}
-
-.page-wrapper {
-  /* position: relative; */
 }
 
 .odd-page::before {
@@ -166,20 +132,6 @@ body {
   box-shadow: none;
   /* pointer-events: none; */
 }
-
-/* .cover {
-  backface-visibility: hidden;
-  background: #ffc0cb;
-  border-radius: 3px;
-  box-shadow:
-    inset 4px 1px 3px #ffffff54,
-    inset 0 -1px 2px #00000080;
-  background-image: linear-gradient(
-    90deg,
-    rgba(255, 255, 255, 0.2) 0%,
-    rgba(255, 255, 255, 0) 100%
-  );
-} */
 
 .cover-opened {
   backface-visibility: diplay;
@@ -314,7 +266,6 @@ body {
 .cover-inside {
   margin: 5px;
   padding: 5px;
-  /* border: 2px solid red; */
   color: #fabac5;
 }
 
@@ -437,15 +388,14 @@ body {
 }
 
 .section-wrapper {
-  /* color: #111827; text-gray-900 */
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
   height: 100%;
   width: 100%;
-  padding: 0.5rem; /* p-2 = 8px */
-  gap: 0.5rem; /* gap-2 = 8px */
+  padding: 0.5rem;
+  gap: 0.5rem;
 }
 
 .page-text-wrapper::first-letter {
@@ -462,16 +412,13 @@ body {
 }
 
 .flipNext {
-  /* border: 10px solid blue; */
   transform-style: preserve-3d;
   transform-origin: left;
   backface-visibility: hidden;
   animation: animateNext 0.8s ease-in forwards;
-  /* animation: animateNext 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards; */
 }
 
 .flipPrev {
-  /* border: 10px solid green; */
   transform-style: preserve-3d;
   transform-origin: right;
   backface-visibility: hidden;
@@ -483,7 +430,6 @@ body {
   transform-style: preserve-3d;
   transform-origin: right center;
   animation: animateCoverPrev 2s ease-in forwards;
-  /* border: 2px solid red; */
 }
 
 .coverPrev {
@@ -658,23 +604,10 @@ body {
   background: rgba(255, 255, 255, 0.9);
 }
 
-/* transform: translateZ(0px); - behind pages
-  transform: translateZ(-2px); - behind cover
-*/
-
-/* .book-scene:has(.page-flip:hover .odd-page) .bookmark-visible {
-  animation: animateNextHoverBookmark 0.8s ease-in forwards;
-}
-
-.book-scene:has(.page-flip:hover .even-page) .bookmark-visible {
-  animation: animatePrevHoverBookmark 0.8s ease-in forwards;
-} */
-
 .flipNext::after {
   content: "";
   position: absolute;
   inset: 0;
-  /* background: linear-gradient(to right, rgba(0, 0, 0, 0.25), transparent); */
   pointer-events: none;
 }
 
@@ -682,14 +615,12 @@ body {
   content: "";
   position: absolute;
   inset: 0;
-  /* background: linear-gradient(to left, rgba(0, 0, 0, 0.25), transparent); */
   pointer-events: none;
 }
 
 .cover-out {
   backface-visibility: hidden;
   perspective: 1500px;
-  /* transform-style: preserve-3d; */
   position: relative;
 }
 
@@ -816,34 +747,6 @@ body {
   }
 }
 
-/* @keyframes animateNextHoverBookmark {
-  0% {
-    transform: rotateY(0deg) translateZ(0);
-  }
-
-  50% {
-    transform: translateX(-10px) translateZ(2px);
-  }
-
-  100% {
-    transform: translateX(-20px) translateZ(2px);
-  }
-}
-
-@keyframes animatePrevHoverBookmark {
-  0% {
-    transform: rotateY(0deg) translateZ(0px);
-  }
-
-  50% {
-    transform: translateX(10px) translateZ(2px);
-  }
-
-  100% {
-    transform: translateX(20px) translateZ(2px);
-  }
-} */
-
 @keyframes animateCoverPrev {
   0% {
     transform: rotateY(0deg);
@@ -930,15 +833,6 @@ body {
       rgba(58, 57, 57, 0) 5%
     );
   }
-
-  /*shouldnt this make it no happe animation on 1 page view? */
-  /* .book-scene:has(.page-flip:hover .odd-page) .bookmark-visible {
-    animation: none;
-  }
-
-  .book-scene:has(.page-flip:hover .even-page) .bookmark-visible {
-    animation: none;
-  } */
 }
 
 @media (hover: none) {
@@ -950,13 +844,3 @@ body {
       12px 20px 30px rgba(0, 0, 0, 0.16);
   }
 }
-
-/* @media (hover: none) {
-  .book-scene:has(.page-flip:hover .odd-page) .bookmark-visible {
-    animation: none;
-  }
-
-  .book-scene:has(.page-flip:hover .even-page) .bookmark-visible {
-    animation: none;
-  } 
-} */

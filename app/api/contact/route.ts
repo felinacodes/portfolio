@@ -41,7 +41,19 @@ function validateContact({ name, email, message }: ContactData) {
 }
 
 export async function POST(req: NextRequest) {
-  const body = await req.json();
+  let body;
+
+  try {
+    body = await req.json();
+  } catch {
+    return Response.json(
+      {
+        success: false,
+        error: "Invalid request.",
+      },
+      { status: 400 },
+    );
+  }
 
   const ip = getIp(req);
 
@@ -102,6 +114,7 @@ export async function POST(req: NextRequest) {
 
     return Response.json({ success: true });
   } catch (err) {
+    console.error("Failed to send contact email:", err);
     return Response.json(
       {
         success: false,
