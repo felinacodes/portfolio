@@ -20,7 +20,7 @@ export const IntroBlocks = (args?: RenderContext) => {
             alt="Portrait"
             fill
             sizes="192px"
-            className="object-cover grayscale hover:grayscale-0 active:grayscale-0 transition duration-1000 ease-in"
+            className="object-cover grayscale  ease-in"
           />
         </div>
 

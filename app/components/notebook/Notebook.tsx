@@ -17,7 +17,7 @@ import { EducationBlocks } from "./pages/Education";
 import { SkillsBlocks } from "./pages/Skills";
 import { ProjectsBlocks } from "./pages/Projects";
 import { ContactBlocks } from "./pages/Contact";
-import { LeaveSomethingBlocks } from "./pages/LeaveSomething";
+import { ScrapbookBlocks } from "./pages/Scrapbook";
 import { TableOfContentsBlocks } from "./pages/TableOfContents";
 import Bookmarks from "./Bookmarks";
 import MeasureBlocks from "./MeasureBlocks";
@@ -50,7 +50,7 @@ export type RenderContext = {
   messages?: LeaveMessage[];
   setMessages?: React.Dispatch<React.SetStateAction<LeaveMessage[]>>;
   setIsModalOpen?: React.Dispatch<React.SetStateAction<boolean>>;
-  handleJumpToLastLeaveSomething?: () => void;
+  handleJumpToLastScrapbook?: () => void;
 };
 
 export type Sheet =
@@ -72,7 +72,7 @@ export type Sheet =
       render: (args?: RenderContext) => React.ReactNode;
     }
   | {
-      type: "leave-something";
+      type: "Scrapbook";
       id: string;
       render: (args?: RenderContext) => React.ReactNode;
       chapterName: string;
@@ -106,7 +106,7 @@ const SECTION_CONFIG: SectionConfig[] = [
   { key: "Skills", blocks: SkillsBlocks },
   { key: "Projects", blocks: ProjectsBlocks },
   { key: "Contact", blocks: ContactBlocks },
-  { key: "Leave Something", blocks: LeaveSomethingBlocks },
+  { key: "Scrapbook", blocks: ScrapbookBlocks },
 ];
 
 export const transform = (s: string): string => {
@@ -178,7 +178,7 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
   const sections = useMemo(() => {
     return SECTION_CONFIG.flatMap(({ key, blocks }, chapterIndex) => {
       const context =
-        key === "Leave Something"
+        key === "Scrapbook"
           ? {
               chapter: chapterIndex,
               messages,
@@ -230,9 +230,9 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
           };
         }
 
-        if (s.id.startsWith("Leave")) {
+        if (s.id.startsWith("Scrapbook")) {
           return {
-            type: "leave-something" as const,
+            type: "Scrapbook" as const,
             id: s.id,
             chapterName: s.chapterName,
             render: s.render,
@@ -396,7 +396,7 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
       (item) =>
         item.type === "page" ||
         item.type === "context" ||
-        item.type === "leave-something",
+        item.type === "Scrapbook",
     );
 
     if (!firstPage) {
@@ -417,7 +417,7 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
       (item) =>
         item.type === "page" ||
         item.type === "context" ||
-        item.type === "leave-something",
+        item.type === "Scrapbook",
     );
 
     if (!sectionPages.length) {
@@ -464,7 +464,7 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
         sheet.type === "page" ||
         sheet.type === "blank" ||
         sheet.type === "context" ||
-        sheet.type === "leave-something" ||
+        sheet.type === "Scrapbook" ||
         sheet.type === "cover"
       ) {
         count++;
@@ -485,7 +485,7 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
         sheet.type === "page" ||
         sheet.type === "blank" ||
         sheet.type === "context" ||
-        sheet.type === "leave-something"
+        sheet.type === "Scrapbook"
       ) {
         count++;
         map.set(sheet.id, count);
@@ -993,19 +993,18 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
     currentSheet.side === "back" &&
     currentSheet.face === "outside";
 
-  const lastLeaveSomethingPageId = useMemo(() => {
-    const leavePages = sections.filter(
-      (section) => section.chapterName === "Leave Something",
+  const lastLScrapbookPageId = useMemo(() => {
+    const ScrapbookPages = sections.filter(
+      (section) => section.chapterName === "Scrapbook",
     );
-    return leavePages.at(-1)?.id;
+    return ScrapbookPages.at(-1)?.id;
   }, [sections]);
 
-  const handleJumpToLastLeaveSomething = useCallback(() => {
-    if (!lastLeaveSomethingPageId) return;
+  const handleJumpToLastScrapbook = useCallback(() => {
+    if (!lastLScrapbookPageId) return;
 
-    handleGoTo(lastLeaveSomethingPageId);
-  }, [lastLeaveSomethingPageId, handleGoTo]);
-
+    handleGoTo(lastLScrapbookPageId);
+  }, [lastLScrapbookPageId, handleGoTo]);
   const renderSheet = (sheet: Sheet) => {
     if (sheet.type === "cover") {
       return (
@@ -1043,7 +1042,7 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
       );
     }
 
-    if (sheet.type === "leave-something") {
+    if (sheet.type === "Scrapbook") {
       return (
         <Page
           ref={outerRef}
@@ -1054,7 +1053,7 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
           {sheet.render({
             messages,
             setMessages,
-            handleJumpToLastLeaveSomething,
+            handleJumpToLastScrapbook,
           })}
         </Page>
       );

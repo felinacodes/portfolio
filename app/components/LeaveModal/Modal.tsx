@@ -229,7 +229,7 @@ const Modal = ({ isOpen, setIsOpen, setMessages }: ModalProps) => {
                   className="             
                 bg-gray-400
                 hover:bg-gray-200
-                dark:bg-gray-400 dark:hover:bg-gray-500
+                dark:bg-gray-800 dark:hover:bg-gray-700
                 transition
                 m-0
                 p-0
@@ -335,7 +335,7 @@ const Modal = ({ isOpen, setIsOpen, setMessages }: ModalProps) => {
                       scale: 0.92,
                     }}
                     className="
-                    text-lg bg-gray-200 dark:bg-gray-400 dark:hover:bg-gray-500 hover:bg-gray-300 cursor-pointer 
+                    text-lg bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 hover:bg-gray-300 cursor-pointer 
                     rounded-lg px-4 py-2
                     border
                     transition-colors

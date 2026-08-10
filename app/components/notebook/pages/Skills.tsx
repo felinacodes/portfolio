@@ -41,10 +41,15 @@ const skillSections = [
         icon: "devicon-nextjs-plain",
         hover: "hover:text-gray-300 active:text-gray-300",
       },
+      {
+        name: "FramerMotion",
+        icon: "devicon-framermotion-plain",
+        hover: "hover:text-fuchsia-600 active:text-fuchsia-600",
+      },
     ],
   },
   {
-    title: "Back-End",
+    title: "Full-Stack",
     skills: [
       {
         name: "Node.js",
@@ -62,8 +67,8 @@ const skillSections = [
         hover: "hover:text-blue-700 active:text-blue-700",
       },
       {
-        name: "MongoDB",
-        icon: "devicon-mongodb-plain",
+        name: "Supabase",
+        icon: "devicon-supabase-plain",
         hover: "hover:text-green-500 active:text-green-500",
       },
     ],

@@ -6,7 +6,7 @@ import { Plus, ArrowRight } from "lucide-react";
 import { createStickerUrl } from "@/lib/createStickerUrl";
 import { StickerName } from "@/lib/stickerMap";
 
-export const LeaveSomethingBlocks = (args?: RenderContext) => {
+export const ScrapbookBlocks = (args?: RenderContext) => {
   const chapter = args?.chapter;
   const messages = args?.messages ?? [];
   const setIsModalOpen = args?.setIsModalOpen;
@@ -42,9 +42,9 @@ export const LeaveSomethingBlocks = (args?: RenderContext) => {
   ];
 
   return itemPages.map((pageItems, pageIndex) => {
-    const LeaveSomethingPage = (pageArgs: RenderContext) => {
+    const ScrapbookBlocksPage = (pageArgs: RenderContext) => {
       const isIntroPage = pageIndex === 0;
-      const jumpToLastLeaveSomething = pageArgs.handleJumpToLastLeaveSomething;
+      const jumpToLastScrapbookBlocks = pageArgs.handleJumpToLastScrapbook;
 
       return (
         <section
@@ -53,14 +53,14 @@ export const LeaveSomethingBlocks = (args?: RenderContext) => {
           }`}
         >
           {isIntroPage && (
-            <ChapterIntro name="Leave Something" chapterNumber={chapter} />
+            <ChapterIntro name="Scrapbook" chapterNumber={chapter} />
           )}
 
           {isIntroPage && (
             <div className="flex justify-center mt-2">
               <button
                 onClick={() => {
-                  jumpToLastLeaveSomething?.();
+                  jumpToLastScrapbookBlocks?.();
                 }}
                 className="
                   group
@@ -90,6 +90,16 @@ export const LeaveSomethingBlocks = (args?: RenderContext) => {
                   "
                 />
               </button>
+            </div>
+          )}
+
+          {isIntroPage && (
+            <div className="flex mt-2 order-3 w-full">
+              <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-300  leading-relaxed  mx-auto">
+                * Go to the last scrapbook page, choose a sticker, and add your
+                signature or drawing. As long as it&lsquo;s SFW, your
+                contribution will become a permanent part of the notebook.
+              </p>
             </div>
           )}
 
@@ -233,6 +243,6 @@ export const LeaveSomethingBlocks = (args?: RenderContext) => {
       );
     };
 
-    return LeaveSomethingPage;
+    return ScrapbookBlocksPage;
   });
 };

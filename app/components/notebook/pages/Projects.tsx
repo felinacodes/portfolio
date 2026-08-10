@@ -54,10 +54,10 @@ const projects = [
     description:
       "Developed a movie web application using Express and EJS, featuring dynamic content rendering and structured routing. Implemented server-side logic to manage movie data and user interactions.",
     features: [
-      "Database design and hosting",
+      "Database management using PostgreSQL",
       "Image upload and hosting using Cloudinary",
+      "Full stack functionality",
       "All CRUD operations",
-      "Searching functionality",
     ],
     tech: [
       "devicon-express-original hover:text-gray-400 active:text-gray-400",
@@ -106,12 +106,12 @@ export const ProjectsBlocks = (args?: RenderContext) => {
                 alt={project.alt}
                 fill
                 sizes="192px"
-                className="object-cover grayscale hover:grayscale-0 active:grayscale-0 transition duration-1000 ease-in"
+                className="object-cover grayscale hover:grayscale-0 active:grayscale-0 transition duration-300 ease-in"
               />
             </div>
 
             <div className="flex flex-col items-center justify-center gap-4 m-4">
-              <h1 className="text-center font-bold text-md xl:text-xl mb-2 border-b-2 border-b-gray-500 dark:border-b-gray-200 w-max">
+              <h1 className="text-center font-bold text-md xl:text-xl mb-2 border-b border-b-gray-500 dark:border-b-gray-200 w-max">
                 {project.title}
               </h1>
 
@@ -163,7 +163,6 @@ export const ProjectsBlocks = (args?: RenderContext) => {
               {project.tech.map((tech, i) => (
                 <span key={i}>
                   <i
-                    data-no-flip
                     className={`${tech} text-gray-500 dark:text-gray-200 text-xl lg:text-3xl`}
                   />
                 </span>

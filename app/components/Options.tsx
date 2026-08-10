@@ -99,7 +99,6 @@ const Options = ({
           variants={optionItemVariants}
           whileHover={{
             scale: 1.12,
-            y: -2,
           }}
           whileTap={{
             scale: 0.92,
@@ -124,7 +123,6 @@ const Options = ({
           variants={optionItemVariants}
           whileHover={{
             scale: 1.12,
-            y: -2,
           }}
           whileTap={{
             scale: 0.92,
@@ -149,7 +147,6 @@ const Options = ({
           variants={optionItemVariants}
           whileHover={{
             scale: 1.12,
-            y: -2,
           }}
           whileTap={{
             scale: 0.92,
@@ -178,7 +175,6 @@ const Options = ({
           }}
           whileHover={{
             scale: 1.12,
-            y: -2,
           }}
           whileTap={{
             scale: 0.92,
@@ -215,7 +211,6 @@ const Options = ({
           }}
           whileHover={{
             scale: 1.12,
-            y: -2,
           }}
           whileTap={{
             scale: 0.92,
@@ -253,7 +248,6 @@ const Options = ({
           }}
           whileHover={{
             scale: 1.12,
-            y: -2,
           }}
           whileTap={{
             scale: 0.92,
@@ -287,7 +281,6 @@ const Options = ({
           }}
           whileHover={{
             scale: 1.12,
-            y: -2,
           }}
           whileTap={{
             scale: 0.92,
@@ -320,7 +313,6 @@ const Options = ({
           variants={optionItemVariants}
           whileHover={{
             scale: 1.12,
-            y: -2,
           }}
           whileTap={{
             scale: 0.92,
@@ -345,7 +337,7 @@ const Options = ({
           variants={optionItemVariants}
           whileHover={{
             scale: 1.12,
-            y: -2,
+
             transition: {
               duration: 0.1,
               ease: "easeInOut",
