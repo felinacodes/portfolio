@@ -91,6 +91,8 @@ type SectionConfig = {
   blocks: (args?: RenderContext) => React.ComponentType<RenderContext>[];
 };
 
+const VERSION = process.env.NEXT_PUBLIC_FULL_VERSION === "true";
+
 const SECTION_CONFIG: SectionConfig[] = [
   { key: "Contents", blocks: TableOfContentsBlocks },
   { key: "Intro", blocks: IntroBlocks },
@@ -98,7 +100,9 @@ const SECTION_CONFIG: SectionConfig[] = [
   { key: "Education", blocks: EducationBlocks },
   { key: "Skills", blocks: SkillsBlocks },
   { key: "Projects", blocks: ProjectsBlocks },
-  { key: "Contact", blocks: ContactBlocks },
+
+  ...(VERSION ? [{ key: "Contact", blocks: ContactBlocks }] : []),
+
   { key: "Scrapbook", blocks: ScrapbookBlocks },
 ];
 
@@ -1291,6 +1295,9 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
           />
         </motion.div>
       </AnimatePresence>
+      <div className="absolute bottom-2 right-2 text-center w-full text-gray-300 text-sm">
+        <p>© 2026. All rights reserved.</p>
+      </div>
     </div>
   );
 };
