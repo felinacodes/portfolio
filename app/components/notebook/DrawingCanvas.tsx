@@ -215,9 +215,14 @@ export default function DrawingCanvas({ pageId }: DrawingCanvasProps) {
 
     applyTool(ctx);
 
-    const events = e.nativeEvent.getCoalescedEvents(); //for clear continues line - no single points
+    const nativeEvent = e.nativeEvent;
 
-    const points = events.length > 0 ? events : [e.nativeEvent];
+    const events =
+      typeof nativeEvent.getCoalescedEvents === "function"
+        ? nativeEvent.getCoalescedEvents()
+        : [];
+
+    const points = events.length > 0 ? events : [nativeEvent];
 
     const rect = canvasRef.current!.getBoundingClientRect();
 
