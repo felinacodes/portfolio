@@ -57,7 +57,7 @@ const merriweather = Merriweather({
 
 export const metadata: Metadata = {
   metadataBase: new URL("http://localhost:3000"),
-  title: "Felina | Web Developer",
+  title: "Felina 🎀 ",
   description:
     "Portfolio of Felina, a freelance web developer creating interactive web applications.",
   openGraph: {
