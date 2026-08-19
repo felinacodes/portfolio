@@ -57,13 +57,13 @@ const Cover = ({
       {/*FRONT COVER  */}
       {face === "outside" && side === "front" ? (
         <div
-          className={` z-0 cover-front-out text-[clamp(0.9rem,1vw,1rem)] relative flex justify-center items-start h-full ml-8 border-l-2 border-l-black/10
+          className={`-0 cover-front-out text-[clamp(0.9rem,1vw,1rem)] relative flex justify-center items-start h-full ml-8 border-l-2 border-l-black/10
            from-white/20 bg-linear-to-r shadow-[inset_4px_1px_3px_#ffffff60,inset_0_-1px_2px_#00000080]
            `}
         >
           <div className="cover-light"></div>
-          <div className="max-w-[80%] mt-[40%] lg:mt-[25%] w-[clamp(200px,300px,400px)] h-[clamp(10rem,15vw,12rem)] p-2 bg-[#f4f5f0] border-[9px] border-double border-[#438bce] rounded-[40px]">
-            <div className="text-myDark flex flex-col items-start gap-2  justify-center w-full h-full bg-[repeating-linear-gradient(to_bottom,transparent,transparent_30px,#00000030_30px)] p-4">
+          <div className="max-w-[85%] mt-[40%] lg:mt-[25%] w-[clamp(200px,300px,400px)] h-[clamp(10rem,15vw,12rem)]  bg-[#f4f5f0] border-[9px] border-double border-[#438bce] rounded-[40px]">
+            <div className=" text-myDark flex flex-col items-start gap-2  justify-center w-full h-full bg-[repeating-linear-gradient(to_bottom,transparent,transparent_30px,#00000030_30px)] p-4">
               <h1 className=" text-start w-full border-b-2 border-dotted border-gray-300 leading-none pt-2">
                 <strong className="font-handlee mr-2 font-bold text-[clamp(1rem,1vw,1.2rem)]">
                   Name:
@@ -74,10 +74,10 @@ const Cover = ({
               </h1>
               <h1 className="text-start w-full border-b-2 border-dotted border-gray-300 leading-none pt-2">
                 <strong className="font-handlee mr-2 font-bold text-[clamp(1rem,1vw,1.2rem)]">
-                  Role:
+                  Field:
                 </strong>
                 <span className="font-handlee font-semibold text-blue-800 text-[clamp(1rem,0.8vw,1.2rem)]">
-                  Web Developer
+                  Software Engineering
                 </span>
               </h1>
             </div>

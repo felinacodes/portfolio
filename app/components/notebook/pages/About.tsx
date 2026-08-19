@@ -65,24 +65,25 @@ export const aboutBlocks = (args?: RenderContext) => {
     );
   };
 
-  const AboutClient = () => {
-    return (
-      <section className="section-wrapper">
-        <div className="text-[0.9rem] sm:text-[1rem] xl:text-[1.2rem] leading-snug max-w-[65ch] space-y-2 lg:space-y-4">
-          <p className="mt-4">
-            When it comes to working with clients, I find it very important to
-            customize the experience for each client and project. I like to
-            understand their needs and create the best possible solution for
-            them, which doesn&apos;t always mean using React. I aim to be
-            transparent and communicative throughout the process. Working
-            alongside an existing team is also something I enjoy, as I get to
-            meet people with similar interests, exchange ideas, and learn from
-            different perspectives.
-          </p>
-        </div>
-      </section>
-    );
-  };
+  // const AboutClient = () => {
+  //   return (
+  //     <section className="section-wrapper">
+  //       <div className="text-[0.9rem] sm:text-[1rem] xl:text-[1.2rem] leading-snug max-w-[65ch] space-y-2 lg:space-y-4">
+  //         <p className="mt-4">
+  //           When it comes to working with clients, I find it very important to
+  //           customize the experience for each client and project. I like to
+  //           understand their needs and create the best possible solution for
+  //           them, which doesn&apos;t always mean using React. I aim to be
+  //           transparent and communicative throughout the process. Working
+  //           alongside an existing team is also something I enjoy, as I get to
+  //           meet people with similar interests, exchange ideas, and learn from
+  //           different perspectives.
+  //         </p>
+  //       </div>
+  //     </section>
+  //   );
+  // };
 
-  return [AboutMain, AboutDeveloping, AboutClient];
+  // return [AboutMain, AboutDeveloping, AboutClient];
+  return [AboutMain, AboutDeveloping];
 };

@@ -96,9 +96,9 @@ export const ScrapbookBlocks = (args?: RenderContext) => {
           {isIntroPage && (
             <div className="flex mt-2 order-3 w-full">
               <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-300  leading-relaxed  mx-auto">
-                * Go to the last scrapbook page, choose a sticker, and add your
-                signature or drawing. As long as it&lsquo;s SFW, your
-                contribution will become a permanent part of the notebook.
+                * Go to the last scrapbook page and select the + button. Choose
+                a sticker, and add your signature/drawing. As long as it is SFW,
+                it will be added permanently.
               </p>
             </div>
           )}

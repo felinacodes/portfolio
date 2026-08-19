@@ -48,7 +48,6 @@ import {
   star,
   iceCreamPopsicle,
   magicHat,
-  scissors,
   gingerCookie,
   christmasDecoration,
   candle,
@@ -119,7 +118,6 @@ import {
   starDefaults,
   iceCreamPopsicleDefaults,
   magicHatDefaults,
-  scissorsDefaults,
   gingerCookieDefaults,
   christmasDecorationDefaults,
   candleDefaults,
@@ -484,13 +482,6 @@ export const stickers = {
     },
   },
 
-  scissors: {
-    svg: scissors,
-    defaults: {
-      color1: scissorsDefaults.color1,
-      color2: scissorsDefaults.color2,
-    },
-  },
   breakingBad: {
     svg: breakingBad,
     defaults: {
