@@ -237,15 +237,30 @@ body {
   opacity: 0.2;
 }
 
-.cover-closed:hover {
+.cover-closed:active {
   transform: perspective(1200px) rotateY(0deg) translateX(0px) scaleX(1);
   transform-style: preserve-3d;
 }
 
-.cover-closed:hover::after {
+.cover-closed:active::after {
   box-shadow:
     6px 6px 12px -1px rgba(0, 0, 0, 0.1),
     20px 14px 16px -6px rgba(0, 0, 0, 0.1);
+}
+
+/* Fix "hang" state on phones*/
+
+@media (hover: hover) and (pointer: fine) {
+  .cover-closed:hover {
+    transform: perspective(1200px) rotateY(0deg) translateX(0px) scaleX(1);
+    transform-style: preserve-3d;
+  }
+
+  .cover-closed:hover::after {
+    box-shadow:
+      6px 6px 12px -1px rgba(0, 0, 0, 0.1),
+      20px 14px 16px -6px rgba(0, 0, 0, 0.1);
+  }
 }
 
 .cover-light:active {

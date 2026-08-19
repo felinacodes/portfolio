@@ -57,9 +57,6 @@ const Cover = ({
       {/*FRONT COVER  */}
       {face === "outside" && side === "front" ? (
         <div
-          //   className={`${animationClass ?? ""} cover-front-out text-[clamp(0.9rem,1vw,1rem)] relative flex justify-center items-start h-full ml-8 border-l-2 border-l-black/10
-          //    from-white/20 bg-gradient-to-r shadow-[inset_4px_1px_3px_#ffffff60,inset_0_-1px_2px_#00000080]`}
-          // >
           className={` z-0 cover-front-out text-[clamp(0.9rem,1vw,1rem)] relative flex justify-center items-start h-full ml-8 border-l-2 border-l-black/10
            from-white/20 bg-linear-to-r shadow-[inset_4px_1px_3px_#ffffff60,inset_0_-1px_2px_#00000080]
            `}
@@ -126,9 +123,9 @@ const Cover = ({
         <div
           className={
             face === "outside" && side === "front"
-              ? "absolute top-10 -right-22.5 ml-2 flex flex-col gap-2 bookmarks-front group-hover:-right-25 group-active:-right-25"
+              ? "absolute top-10 -right-11 md:-right-22.5 ml-2 flex flex-col gap-2 bookmarks-front group-hover:-right-13 group-active:-right-13 md:group-hover:-right-25 md:group-active:-right-25"
               : face === "outside" && side === "back"
-                ? "absolute top-10 -left-24.5 ml-2 flex flex-col gap-2 z-2 bookmarks-back group-hover:-left-27 group-active:-left-27"
+                ? " absolute top-10 -left-13 md:-left-24.5 ml-2 flex flex-col gap-2 z-2 bookmarks-back  group-hover:-left-15 group-active:-left-15 md:group-hover:-left-27 md:group-active:-left-27"
                 : ""
           }
         >

@@ -1036,25 +1036,25 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
   };
 
   return (
-    <div className="flex w-full h-full m-2 flex-col md:flex-row">
+    <div className=" flex w-full h-full flex-col md:flex-row">
       <div className="z-100 flex justify-center items-center gap-5"></div>
       <div
-        className={` order-2 md:order-1 relative font-baskervville  flex flex-col md:items-center md:justify-center w-full h-full ${!toggleAnimation ? "no-anim" : ""}`}
+        className={` order-2 md:order-1 relative font-baskervville  flex flex-col items-center justify-center w-full h-full ${!toggleAnimation ? "no-anim" : ""}`}
       >
         {/* <div className="w-[80vw] h-[80vh] min-h-[300px] max-h-[800px] flex"> */}
         {/* Initial Load fix for flickering and LCP*/}
 
         {
           <div
-            className={`relative  book-scene min-h-[350px] h-[90vh] md:h-[85vh]  
-            max-h-[800px] grid grid-cols-1 md:self-center w-[80vw] max-w-[2000px]
+            className={` relative  book-scene min-h-[350px] h-[90vh] md:h-[85vh]  
+            max-h-[800px] grid grid-cols-1 self-center w-[80vw] max-w-[2000px] 
                  
           ${
             isOpen
-              ? "md:grid-cols-2  p-2 pl-0 md:pl-2 shadow-[3px_6px_20px_0_rgba(0,0,0,0.35)] cover-opened  "
+              ? "md:grid-cols-2  p-2  shadow-[3px_6px_20px_0_rgba(0,0,0,0.35)] cover-opened  "
               : `md:grid-cols-1  `
           }
-          ${isBackCover ? "self-end mr-1 ml-0 md:mr-0 md:ml-0" : "self-start ml-1 mr-0 md:mr-0 md:ml-0"}
+         
           `}
           >
             {visibleItems.map((sheet, i) => {
@@ -1181,11 +1181,9 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
                 top-10
                 left-full
                 -ml-5
-
                 flex
                 flex-col
                 gap-2
-
                 z-10
               "
               >
@@ -1201,6 +1199,8 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
               <div
                 className={`
                 absolute
+                pt-2
+                pb-2
                 -top-5
                 h-full
                 left-0
@@ -1211,14 +1211,14 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
                 z-[-100]
               ${
                 bookmarkPosition === "previous"
-                  ? "md:left-[47%]"
+                  ? "md:left-[47%] left-[10] "
                   : bookmarkPosition === "next"
-                    ? "md:left-[53%]"
+                    ? "md:left-[53%] left-[10]"
                     : ""
               }
               ${
                 !bookmarkedPage
-                  ? "bookmark-translateZ"
+                  ? "bookmark-translateZ "
                   : isBookmarkVisible
                     ? "bookmark-visible left-0 m-1 translate-x-0 md:left-0 md:translate-x-0 md:m-0"
                     : ""
@@ -1295,9 +1295,6 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
           />
         </motion.div>
       </AnimatePresence>
-      <div className="absolute bottom-2 right-2 text-center w-full text-gray-300 text-sm">
-        <p>© 2026. All rights reserved.</p>
-      </div>
     </div>
   );
 };

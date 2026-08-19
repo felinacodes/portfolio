@@ -116,23 +116,26 @@ export const ScrapbookBlocks = (args?: RenderContext) => {
                         setIsModalOpen?.(true);
                       }}
                       className="
-                        flex items-center justify-center
-                        w-32 h-32
-                        rounded-full
-                        bg-gray-200
-                        transition-colors duration-200
-                        group
+                      flex items-center justify-center
+                      w-[clamp(5rem,20vw,8rem)]
+                      h-[clamp(5rem,20vw,8rem)]
+                      shrink-0
+                      aspect-square
+                      rounded-full
+                      bg-gray-200
+                      transition-colors duration-200
+                      group
                       "
                     >
                       <Plus
                         size={48}
                         strokeWidth={2.5}
                         className="
-                          text-gray-500
-                          group-hover:text-gray-700
-                          transition-colors duration-200
-                          cursor-pointer
-                        "
+                      text-gray-500
+                      group-hover:text-gray-700
+                      transition-colors duration-200
+                      cursor-pointer
+                       "
                       />
                     </button>
                   </div>

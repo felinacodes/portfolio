@@ -78,12 +78,12 @@ const Bookmark = ({
         e.stopPropagation();
         handleGoTo(bookmarkedPage, "bookmark");
       }}
-      className={`bookmark touch-none cursor-grab active:cursor-grab w-[clamp(2.5rem,5vw,3rem)] h-[105%]
+      className={`bookmark touch-none cursor-grab active:cursor-grab w-[clamp(2.5rem,2.5vw,2.8rem)] h-[105%]
         
        ${bookmarkedPage ? "bookmarked-bookmark" : "no-bookmarked-bookmark"} `}
     >
-      <div className=" w-full h-full flex ">
-        <div className="w-full h-full flex justify-around items-center flex-col ">
+      <div className=" w-full h-full flex">
+        <div className="w-full h-full flex justify-around items-center flex-col">
           {crystals.map((_, i) => (
             <div key={i} className="crystal" />
           ))}
