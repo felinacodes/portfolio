@@ -104,11 +104,8 @@ const Modal = ({ isOpen, setIsOpen, setMessages }: ModalProps) => {
     });
 
     const data = await res.json();
-    console.log(data);
 
     if (data.success) {
-      console.log("Adding message", data.message);
-
       setMessages?.((prev) => [...prev, data.message]);
       setHasError(false);
       setModalMessage("Thanks for your gift. Once reviewed, it will be added.");
