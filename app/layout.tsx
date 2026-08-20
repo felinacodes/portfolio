@@ -8,6 +8,7 @@ import { Baskervville } from "next/font/google";
 import { Jost } from "next/font/google";
 import { Merriweather } from "next/font/google";
 import { Providers } from "./providers";
+import { Analytics } from "@vercel/analytics/next";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -56,7 +57,9 @@ const merriweather = Merriweather({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("http://localhost:3000"),
+  metadataBase: new URL(
+    process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000",
+  ),
   title: "Felina 🎀 ",
   description:
     "Portfolio of Felina, a freelance web developer creating interactive web applications.",
@@ -111,6 +114,7 @@ export default function RootLayout({
         antialiased`}
       >
         <Providers>{children}</Providers>
+        <Analytics />
       </body>
     </html>
   );
