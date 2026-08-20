@@ -68,7 +68,7 @@ export const metadata: Metadata = {
     title: "Felina | Web Developer",
     description:
       "Portfolio of Felina, a freelance web developer creating interactive web applications.",
-    url: "",
+    url: process.env.NEXT_PUBLIC_SITE_URL,
     siteName: "Felina",
     type: "website",
     images: [
