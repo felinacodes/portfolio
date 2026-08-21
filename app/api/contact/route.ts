@@ -61,7 +61,7 @@ export async function POST(req: NextRequest) {
     rateLimit({
       key: "contact",
       ip,
-      maxRequests: 5,
+      maxRequests: 3,
       windowMs: 60 * 1000,
     })
   ) {
