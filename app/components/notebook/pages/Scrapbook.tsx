@@ -97,8 +97,8 @@ export const ScrapbookBlocks = (args?: RenderContext) => {
             <div className="flex mt-2 order-3 w-full">
               <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-300  leading-relaxed  mx-auto">
                 * Go to the last scrapbook page and select the + button. Choose
-                a sticker, and add your signature/drawing. As long as it is SFW,
-                it will be added permanently.
+                a sticker - pick your colors, and add your signature/drawing. As
+                long as it is SFW, it will be added permanently.
               </p>
             </div>
           )}

@@ -1,7 +1,6 @@
 import {
   tea,
   coconutCoctail,
-  breakingBad,
   koala,
   avocado,
   coffee,
@@ -15,7 +14,6 @@ import {
   iceCream,
   gift,
   lollipop,
-  money,
   like,
   dislike,
   flower,
@@ -64,14 +62,16 @@ import {
   faceAngel,
   book,
   cherryBlossom,
-  lipstick,
   nails,
+  butterflyDefaults,
+  butterfly,
+  party,
+  partyDefaults,
 } from "./svgStickers";
 
 import {
   teaDefaults,
   coconutCoctailDefaults,
-  breakingBadDefaults,
   koalaDefaults,
   avocadoDefaults,
   coffeeDefaults,
@@ -85,7 +85,6 @@ import {
   iceCreamDefaults,
   giftDefaults,
   lollipopDefaults,
-  moneyDefaults,
   likeDefaults,
   dislikeDefaults,
   flowerDefaults,
@@ -134,7 +133,6 @@ import {
   faceAngelDefaults,
   bookDefaults,
   cherryBlossomDefaults,
-  lipstickDefaults,
   nailsDefaults,
 } from "./svgStickers";
 
@@ -266,6 +264,13 @@ export const stickers = {
     defaults: {
       color1: fishDefaults.color1,
       color2: fishDefaults.color2,
+    },
+  },
+  butterfly: {
+    svg: butterfly,
+    defaults: {
+      color1: butterflyDefaults.color1,
+      color2: butterflyDefaults.color2,
     },
   },
 
@@ -443,6 +448,13 @@ export const stickers = {
       color2: starDefaults.color2,
     },
   },
+  party: {
+    svg: party,
+    defaults: {
+      color1: partyDefaults.color1,
+      color2: partyDefaults.color2,
+    },
+  },
   converse: {
     svg: converse,
     defaults: {
@@ -458,35 +470,11 @@ export const stickers = {
     },
   },
 
-  lipstick: {
-    svg: lipstick,
-    defaults: {
-      color1: lipstickDefaults.color1,
-      color2: lipstickDefaults.color2,
-    },
-  },
-
   nails: {
     svg: nails,
     defaults: {
       color1: nailsDefaults.color1,
       color2: nailsDefaults.color2,
-    },
-  },
-
-  money: {
-    svg: money,
-    defaults: {
-      color1: moneyDefaults.color1,
-      color2: moneyDefaults.color2,
-    },
-  },
-
-  breakingBad: {
-    svg: breakingBad,
-    defaults: {
-      color1: breakingBadDefaults.color1,
-      color2: breakingBadDefaults.color2,
     },
   },
 
