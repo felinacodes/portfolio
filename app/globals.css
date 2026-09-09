@@ -45,7 +45,7 @@ body,
   --color-myPinkDark: #df7e8e;
   --color-myPinkLight: #f8dae0f3;
 
-  --breakpoint-md: 850px;
+  /* --breakpoint-md: 720px; */
 }
 
 body {
@@ -807,7 +807,7 @@ body {
   }
 }
 
-@media (max-width: 850px) {
+@media (max-width: 768px) {
   .odd-page::before,
   .even-page::before {
     box-shadow:
