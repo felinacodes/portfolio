@@ -129,12 +129,14 @@ const Cover = ({
                 : ""
           }
         >
-          <Bookmarks
-            sectionIds={sections.map((s) => s.id)}
-            active={active}
-            setActive={setActive}
-            handleGoTo={handleGoTo}
-          />
+          <div className="hidden md:block">
+            <Bookmarks
+              sectionIds={sections.map((s) => s.id)}
+              active={active}
+              setActive={setActive}
+              handleGoTo={handleGoTo}
+            />
+          </div>
         </div>
       )}
       {!isOpen && face !== "inside" && (

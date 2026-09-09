@@ -20,6 +20,7 @@ import { ContactBlocks } from "./pages/Contact";
 import { ScrapbookBlocks } from "./pages/Scrapbook";
 import { TableOfContentsBlocks } from "./pages/TableOfContents";
 import Bookmarks from "./Bookmarks";
+import MobileBookmarks from "./MobileBookmarks";
 // import MeasureBlocks from "./MeasureBlocks";
 import Bookmark from "./Bookmark";
 import Options from "../Options";
@@ -260,7 +261,7 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
   );
 
   useEffect(() => {
-    const query = window.matchMedia("(min-width: 850px)");
+    const query = window.matchMedia("(min-width: 768px)");
 
     const update = () => setIsDesktop(query.matches);
 
@@ -313,7 +314,7 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
     const update = () => {
       clearTimeout(timeout);
       timeout = setTimeout(() => {
-        setIsTwoPages(window.innerWidth >= 850 ? true : false);
+        setIsTwoPages(window.innerWidth >= 768 ? true : false);
       }, 100);
     };
 
@@ -1036,10 +1037,18 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
   };
 
   return (
-    <div className=" flex w-full h-full flex-col md:flex-row">
+    <div className="flex w-full h-full flex-col md:flex-row">
+      {/* Mobile navigation */}
+      <MobileBookmarks
+        sectionIds={sections.map((s) => s.id)}
+        active={active}
+        setActive={setActive}
+        handleGoTo={handleGoTo}
+      />
+
       <div className="z-100 flex justify-center items-center gap-5"></div>
       <div
-        className={` order-2 md:order-1 relative font-baskervville  flex flex-col items-center justify-center w-full h-full ${!toggleAnimation ? "no-anim" : ""}`}
+        className={` p-2 md:p-0 order-2 md:order-1 relative font-baskervville  flex flex-col items-center justify-center w-full h-full ${!toggleAnimation ? "no-anim" : ""}`}
       >
         {/* <div className="w-[80vw] h-[80vh] min-h-[300px] max-h-[800px] flex"> */}
         {/* Initial Load fix for flickering and LCP*/}
@@ -1047,7 +1056,7 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
         {
           <div
             className={` relative  book-scene min-h-[350px] h-[90vh] md:h-[85vh]  
-            max-h-[800px] grid grid-cols-1 self-center w-[80vw] max-w-[2000px] 
+            max-h-[800px] grid grid-cols-1 self-center  w-full md:w-[80vw] max-w-[2000px] 
                  
           ${
             isOpen
@@ -1174,19 +1183,9 @@ const Notebook: React.FC<NotebookProps> = ({ initialPage }) => {
               );
             })}
 
+            {/* Desktop */}
             {isOpen && (
-              <div
-                className="
-                absolute
-                top-10
-                left-full
-                -ml-5
-                flex
-                flex-col
-                gap-2
-                z-10
-              "
-              >
+              <div className="hidden md:block absolute top-10 left-full -ml-5 z-10">
                 <Bookmarks
                   sectionIds={sections.map((s) => s.id)}
                   active={active}
