@@ -24,13 +24,7 @@ const contactSections = [
         icon: "devicon-linkedin-plain",
         hover: "hover:text-blue-700 active:text-blue-700 cursor-pointer",
         href: "https://www.linkedin.com/in/maria-a-0069a13a3/",
-      },
-      {
-        name: "Fiverr",
-        icon: "devicon-fiverr-plain",
-        hover: "hover:text-green-500 active:text-green-500 cursor-pointer",
-        href: "https://www.fiverr.com/felinacodes",
-      },
+      }, 
       {
         name: "Upwork",
         icon: "devicon-upwork-plain",
