@@ -61,30 +61,27 @@ export const metadata: Metadata = {
   metadataBase: new URL(
     process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000",
   ),
-  title: "Felina 🎀 ",
-  description:
-    "Portfolio of Felina, a freelance web developer creating interactive web applications.",
+  title: "🎀",
+  description: "interactive web applications.",
   openGraph: {
-    title: "Felina | Web Developer",
-    description:
-      "Portfolio of Felina, a freelance web developer creating interactive web applications.",
+    title: "Web Applications Development",
+    description: "interactive web applications.",
     url: process.env.NEXT_PUBLIC_SITE_URL,
-    siteName: "Felina",
+    siteName: "Web Applications Development",
     type: "website",
     images: [
       {
         url: "/og-image.png",
         width: 1200,
         height: 630,
-        alt: "Felina | Web Developer",
+        alt: "Web Applications Development",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Felina | Web Developer",
-    description:
-      "Portfolio of Felina, a freelance web developer creating interactive web applications.",
+    title: "Web Applications Development",
+    description: "interactive web applications.",
     images: ["/og-image.png"],
   },
 

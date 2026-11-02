@@ -62,7 +62,6 @@ import {
   faceAngel,
   book,
   cherryBlossom,
-  nails,
   butterflyDefaults,
   butterfly,
   party,
@@ -133,7 +132,6 @@ import {
   faceAngelDefaults,
   bookDefaults,
   cherryBlossomDefaults,
-  nailsDefaults,
 } from "./svgStickers";
 
 export const stickers = {
@@ -467,14 +465,6 @@ export const stickers = {
     defaults: {
       color1: bookDefaults.color1,
       color2: bookDefaults.color2,
-    },
-  },
-
-  nails: {
-    svg: nails,
-    defaults: {
-      color1: nailsDefaults.color1,
-      color2: nailsDefaults.color2,
     },
   },
 

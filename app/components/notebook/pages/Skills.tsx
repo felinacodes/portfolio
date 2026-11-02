@@ -42,8 +42,8 @@ const skillSections = [
         hover: "hover:text-gray-300 active:text-gray-300",
       },
       {
-        name: "FramerMotion",
-        icon: "devicon-framermotion-plain",
+        name: "Motion",
+        icon: "devicon-motion-plain",
         hover: "hover:text-fuchsia-600 active:text-fuchsia-600",
       },
     ],

@@ -12,9 +12,9 @@ const projects = [
     live: "https://gamehub.nile.hmu.gr/",
     github: null,
     description:
-      "As part of my Thesis, I redesigned and developed the front-end of an existing web application. I focused on improving the UX and visual design of the app while maintaining the existing functionality and integrating with the existing back-end API.",
+      "I redesigned and developed the front-end of an existing web application used to host educational games. I focused on improving the UX and visual design of the app while maintaining the existing functionality and integrating with the existing back-end API.",
     features: [
-      "Mobile-first responsive layout",
+      "Gamification elements for user engagement",
       "Interactive elements and animations",
       "Aligned UI with brand guidelines",
     ],
@@ -26,38 +26,17 @@ const projects = [
     ],
   },
   {
-    title: "Pilates Studio Landing Page",
-    image: "/images/pilates-studio.webp",
-    alt: "pilates-studio",
-    live: "https://mypilateslandingpage.netlify.app/",
-    github: "https://github.com/felinacodes/pilates-studio",
-    description:
-      "Designed and developed a modern landing page for a pilates studio, focusing on performance, clean visual hierarchy, and conversion-friendly layout. Optimized for fast load times and smooth responsiveness across devices.",
-    features: [
-      "Mobile-first responsive layout",
-      "Optimized performance",
-      "Clean UI structure",
-    ],
-    tech: [
-      "devicon-react-original hover:text-blue-400 active:text-blue-400",
-      "devicon-tailwindcss-plain hover:text-cyan-400 active:text-cyan-400",
-      "devicon-typescript-plain hover:text-blue-700 active:text-blue-700",
-      "devicon-vite-original transition hover:scale-110 active:scale-110 hover:bg-gradient-to-r active:bg-gradient-to-r hover:from-purple-500 active:from-purple-500 hover:via-pink-500 active:via-pink-500 hover:to-yellow-400 active:to-yellow-400 hover:text-transparent active:text-transparent hover:bg-clip-text",
-    ],
-  },
-  {
     title: "Movie Inventory App",
     image: "/images/movie-inventory.webp",
     alt: "movie-inventory",
     live: "https://inventoryapplication-ejfd.onrender.com/",
     github: "https://github.com/felinacodes/inventoryApplication",
     description:
-      "Developed a movie web application using Express and EJS, featuring dynamic content rendering and structured routing. Implemented server-side logic to manage movie data and user interactions.",
+      "Developed a movie web application using Express, featuring dynamic content rendering and structured routing. Implemented server-side logic to manage movie data and user interactions.",
     features: [
       "Database management using PostgreSQL",
       "Image upload and hosting using Cloudinary",
       "Full stack functionality",
-      "All CRUD operations",
     ],
     tech: [
       "devicon-express-original hover:text-gray-400 active:text-gray-400",
@@ -66,22 +45,22 @@ const projects = [
       "devicon-postgresql-plain hover:text-blue-700 active:text-blue-700",
     ],
   },
-  {
-    title: "Battleship Game",
-    image: "/images/battleship.webp",
-    alt: "battleship",
-    live: "https://felinacodes.github.io/battleship/",
-    github: "https://github.com/felinacodes/battleship",
-    description:
-      "The classic game of Battleship, where players try to sink the opponent's ships by shooting them with their own ships. The game features a unique board design, where each square on the board represents a ship. The game was developed using the TDD approach.",
-    features: ["TDD approach", "Scorring system", "Game reset and restart"],
-    tech: [
-      "devicon-javascript-plain hover:text-yellow-400 active:text-yellow-400",
-      "devicon-css3-plain hover:text-blue-600 active:text-blue-600",
-      "devicon-jest-plain hover:text-pink-500 active:text-pink-500",
-      "devicon-webpack-plain hover:text-blue-700 active:text-blue-700",
-    ],
-  },
+  // {
+  //   title: "Battleship Game",
+  //   image: "/images/battleship.webp",
+  //   alt: "battleship",
+  //   live: "https://felinacodes.github.io/battleship/",
+  //   github: "https://github.com/felinacodes/battleship",
+  //   description:
+  //     "The classic game of Battleship, where players try to sink the opponent's ships by shooting them with their own ships. The game features a unique board design, where each square on the board represents a ship. The game was developed using the TDD approach.",
+  //   features: ["TDD approach", "Scorring system", "Game reset and restart"],
+  //   tech: [
+  //     "devicon-javascript-plain hover:text-yellow-400 active:text-yellow-400",
+  //     "devicon-css3-plain hover:text-blue-600 active:text-blue-600",
+  //     "devicon-jest-plain hover:text-pink-500 active:text-pink-500",
+  //     "devicon-webpack-plain hover:text-blue-700 active:text-blue-700",
+  //   ],
+  // },
 ];
 
 export const ProjectsBlocks = (args?: RenderContext) => {

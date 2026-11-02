@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import ChapterIntro from "./ChapterIntro";
 import { RenderContext } from "../Notebook";
-import { SiFiverr, SiUpwork } from "react-icons/si";
+import { SiUpwork } from "react-icons/si";
 import { useNotebook } from "@/contexts/NotebookContext";
 
 const contactSections = [
@@ -24,12 +24,6 @@ const contactSections = [
         icon: "devicon-linkedin-plain",
         hover: "hover:text-blue-700 active:text-blue-700 cursor-pointer",
         href: "https://www.linkedin.com/in/maria-a-0069a13a3/",
-      }, 
-      {
-        name: "Upwork",
-        icon: "devicon-upwork-plain",
-        hover: "hover:text-green-600 active:text-green-600 cursor-pointer",
-        href: "https://www.upwork.com/freelancers/~01e5baf4ad0985aea7",
       },
     ],
   },
@@ -131,13 +125,7 @@ export const ContactBlocks = (args?: RenderContext) => {
                       target="_blank"
                       rel="noopener noreferrer"
                     >
-                      {contact.name === "Fiverr" ? (
-                        <SiFiverr className="text-3xl" />
-                      ) : contact.name === "Upwork" ? (
-                        <SiUpwork className="text-3xl" />
-                      ) : (
-                        <i className={`${contact.icon} text-3xl`} />
-                      )}
+                      <i className={`${contact.icon} text-3xl`} />
                     </a>
                   </li>
                 ))}
